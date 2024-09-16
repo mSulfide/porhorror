@@ -3,6 +3,6 @@ import IDrawer from "../structures/IDrawer";
 
 export default class MegaDrawer implements IDrawer {
     drawSprite(position: Point): void {
-        console.log(position, "123");
+        console.log(position);
     }
 }
