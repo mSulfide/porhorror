@@ -4,7 +4,6 @@ import Player from "./entities/Player";
 import IDrawer from "./structures/IDrawer";
 import MegaDrawer from "./entities/MegaDrawer";
 
-
 const Game: React.FC = () => {
     const gameObjects: GameObject[] = [ new Player("player01") ];
     const drawer: IDrawer | null = new MegaDrawer();
@@ -13,15 +12,22 @@ const Game: React.FC = () => {
         gameObjects.forEach(gameObject => {
             gameObject.update(deltaTime);
         });
-    }
+    };
 
     const render = () => {
         if (drawer) {
+            // Очищаем канвас перед каждой отрисовкой
+            const canvas = document.getElementById('yourCanvasId') as HTMLCanvasElement;
+            const ctx = canvas?.getContext('2d');
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
+            }
+
             gameObjects.forEach(gameObject => {
                 gameObject.draw(drawer);
             });
         }
-    }
+    };
 
     useEffect(() => {
         let currentFPS = 0;
@@ -38,7 +44,7 @@ const Game: React.FC = () => {
             if (currentTimestamp - timestamp >= 1000) {
                 timestamp = currentTimestamp;
                 currentFPS = FPS;
-                //setFPS(currentFPS);
+                //setFPS(currentFPS); // Если нужно, можете добавить отображение FPS
                 FPS = 0;
             }
 
@@ -49,16 +55,20 @@ const Game: React.FC = () => {
             render();
 
             idLoop = window.requestAnimationFrame(loop);
-        }
+        };
 
         loop();
 
         return () => {
             window.cancelAnimationFrame(idLoop);
-        }
+        };
     });
-    
-    return(<></>);
+
+    return (
+        <>
+            <canvas id="yourCanvasId" width={800} height={600}></canvas> {/* Добавили канвас */}
+        </>
+    );
 }
 
 export default Game;
