@@ -3,11 +3,12 @@ import { GameObject } from "./structures";
 import Player from "./entities/Player";
 import IDrawer from "./structures/IDrawer";
 import MegaDrawer from "./entities/MegaDrawer";
+import ThreeDrawer from "./entities/ThreeDrawer"
 
 
 const Game: React.FC = () => {
     const gameObjects: GameObject[] = [ new Player("player01") ];
-    const drawer: IDrawer | null = new MegaDrawer();
+    const drawer: IDrawer | null = new ThreeDrawer();
 
     const update = (deltaTime: number) => {
         gameObjects.forEach(gameObject => {

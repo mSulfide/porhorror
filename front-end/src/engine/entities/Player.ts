@@ -8,8 +8,8 @@ export default class Player extends GameObject {
         this.time += deltaTime;
 
         const range = 5;
-        this.position.x = Math.sin(this.time) * range;
-        this.position.y = Math.cos(this.time) * range;
+        this.position.x = Math.sin(this.time ) * range;
+        this.position.y = Math.cos(this.time ) * range;
     }
     
     public draw(drawer: IDrawer): void {
