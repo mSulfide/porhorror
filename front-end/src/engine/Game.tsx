@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { GameObject } from "./structures";
 import Player from "./entities/Player";
 import IDrawer from "./structures/IDrawer";
-import MegaDrawer from "./entities/MegaDrawer";
+import CanvasDrawer from "./entities/CanvasDrawer";
 
 const Game: React.FC = () => {
-    const gameObjects: GameObject[] = [ new Player("player01") ];
-    const drawer: IDrawer | null = new MegaDrawer();
+    const gameObjects: GameObject[] = [ new Player("player01", { x: 0, y: 0 }) ];
+
+    //const gameObjects: GameObject[] = [ new Player("player01") ];
+    const drawer: IDrawer | null = new CanvasDrawer();
 
     const update = (deltaTime: number) => {
         gameObjects.forEach(gameObject => {
