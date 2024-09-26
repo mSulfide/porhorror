@@ -37,6 +37,6 @@ export default class MainScreen {
             x: Math.abs(circle.position.x - this._position.x),
             y: Math.abs(circle.position.y - this._position.y)
         }
-        return (distance.x <= (this._width/2)) || (distance.y <= (this._height/2));
+        return (distance.x <= (this._width / 2)) && (distance.y <= (this._height / 2));
     }
 }
