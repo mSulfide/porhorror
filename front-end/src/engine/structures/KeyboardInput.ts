@@ -68,10 +68,10 @@ export default class KeyboardInput implements IInput {
 
     getAxisY(): number {
         if (this.isWPressed) {
-            return -1;
+            return 1;
         }
         if (this.isSPressed) {
-            return 1;
+            return -1;
         }
         return 0;
     }
