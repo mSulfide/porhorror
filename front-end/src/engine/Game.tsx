@@ -4,9 +4,11 @@ import ConsoleDrawer from "./structures/ConsoleDrawer";
 import MainScreen from "./structures/MainScreen";
 import Player from "./entities/objects/Player";
 import KeyboardInput from "./structures/KeyboardInput";
+import IInput from "./interfaces/IInput";
 
 const Game: React.FC = () => {
-    const scene: Scene = new Scene([new Player(new KeyboardInput)]);
+    const input: IInput = new KeyboardInput;
+    const scene: Scene = new Scene([new Player(input)]);
 
     const update = (deltaTime: number) => {
         scene.forEach(gameObject => {
@@ -15,9 +17,6 @@ const Game: React.FC = () => {
     };
 
     useEffect(() => {
-        let currentFPS = 0;
-        let FPS = 0;
-        let timestamp = Date.now();
         let idLoop: number;
 
         let dTimestamp = Date.now();
@@ -26,13 +25,7 @@ const Game: React.FC = () => {
         const screen: MainScreen = new MainScreen(new ConsoleDrawer());
 
         const loop = () => {
-            FPS++;
             const currentTimestamp = Date.now();
-            if (currentTimestamp - timestamp >= 1000) {
-                timestamp = currentTimestamp;
-                currentFPS = FPS;
-                FPS = 0;
-            }
 
             deltaTime = (currentTimestamp - dTimestamp) / 1000;
             dTimestamp = currentTimestamp;
