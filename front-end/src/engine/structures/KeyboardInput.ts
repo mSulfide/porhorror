@@ -2,81 +2,54 @@ import IInput from "../interfaces/IInput";
 import { TPoint } from "../types";
 
 export default class KeyboardInput implements IInput {
-    cursorPosition: TPoint = { x: 0, y: 0}; // Начальная позиция курсора
+
+    // Конструктор класса
+    public constructor() {
+        // Привязываем обработчики событий клавиатуры
+        window.addEventListener('keydown', this.handleKey.bind(this, true));
+        window.addEventListener('keyup', this.handleKey.bind(this, false));
+    }
+
+    // Поля
+    public cursorPosition: TPoint = { x: 0, y: 0 }; // Начальная позиция курсора
 
     // Флаги для отслеживания состояния каждой клавиши
-    private isWPressed: boolean = false; // Для движения вверх W
-    private isAPressed: boolean = false; // Для движения влево A
-    private isSPressed: boolean = false; // Для движения вниз S
-    private isDPressed: boolean = false; // Для движения вправо D
-    private isSpacePressed: boolean = false; // Для кнопки действия пробел
-    constructor() {
-        // Привязываем обработчики событий клавиатуры
-        window.addEventListener('keydown', this.handleKeyDown.bind(this));
-        window.addEventListener('keyup', this.handleKeyUp.bind(this));
+    private _isWPressed: boolean = false; // Для движения вверх W
+    private _isAPressed: boolean = false; // Для движения влево A
+    private _isSPressed: boolean = false; // Для движения вниз S
+    private _isDPressed: boolean = false; // Для движения вправо D
+    private _isSpacePressed: boolean = false; // Для кнопки действия пробел
+
+    // Методы
+    public getAxisX(): number {
+        return Number(this._isDPressed) - Number(this._isAPressed);
     }
 
-    private handleKeyDown(event: KeyboardEvent): void {
+    public getAxisY(): number {
+        return Number(this._isWPressed) - Number(this._isSPressed);
+    }
+
+    public getActionButton(): boolean {
+        return this._isSpacePressed;
+    }
+
+    private handleKey(pressed: boolean, event: KeyboardEvent): void {
         switch (event.key) {
             case 'w':
-                this.isWPressed = true; 
+                this._isWPressed = pressed;
                 break;
             case 'a':
-                this.isAPressed = true; 
+                this._isAPressed = pressed;
                 break;
             case 's':
-                this.isSPressed = true; 
+                this._isSPressed = pressed;
                 break;
             case 'd':
-                this.isDPressed = true; 
+                this._isDPressed = pressed;
                 break;
             case ' ':
-                this.isSpacePressed = true; 
+                this._isSpacePressed = pressed;
                 break;
         }
     }
-
-    private handleKeyUp(event: KeyboardEvent): void {
-        switch (event.key) {
-            case 'w':
-                this.isWPressed = false; 
-                break;
-            case 'a':
-                this.isAPressed = false;
-                break;
-            case 's':
-                this.isSPressed = false; 
-                break;
-            case 'd':
-                this.isDPressed = false; 
-                break;
-            case ' ':
-                this.isSpacePressed = false; 
-                break;
-        }
-    }
-
-    getAxisX(): number {
-        if (this.isAPressed) {
-            return -1;
-        }
-        if (this.isDPressed) {
-            return 1;
-        }
-        return 0;
-    }
-
-    getAxisY(): number {
-        if (this.isWPressed) {
-            return 1;
-        }
-        if (this.isSPressed) {
-            return -1;
-        }
-        return 0;
-    }
-
-    getActionButton(): boolean {
-        return this.isSpacePressed; 
-    }    
 }
