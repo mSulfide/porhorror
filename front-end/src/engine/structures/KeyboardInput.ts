@@ -3,13 +3,6 @@ import { TPoint } from "../types";
 
 export default class KeyboardInput implements IInput {
 
-    // Конструктор класса
-    public constructor() {
-        // Привязываем обработчики событий клавиатуры
-        window.addEventListener('keydown', this.handleKey.bind(this, true));
-        window.addEventListener('keyup', this.handleKey.bind(this, false));
-    }
-
     // Поля
     public cursorPosition: TPoint = { x: 0, y: 0 }; // Начальная позиция курсора
 
@@ -19,6 +12,13 @@ export default class KeyboardInput implements IInput {
     private _isSPressed: boolean = false; // Для движения вниз S
     private _isDPressed: boolean = false; // Для движения вправо D
     private _isSpacePressed: boolean = false; // Для кнопки действия пробел
+
+    // Конструктор класса
+    public constructor() {
+        // Привязываем обработчики событий клавиатуры
+        window.addEventListener('keydown', this.handleKey.bind(this, true));
+        window.addEventListener('keyup', this.handleKey.bind(this, false));
+    }
 
     // Методы
     public getAxisX(): number {
