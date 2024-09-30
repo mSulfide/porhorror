@@ -1,11 +1,6 @@
 import IDrawer from "../interfaces/IDrawer";
 import Scene from "./Scene";
-import { TPoint, TDrawRequest } from "../types";
-
-type TCircle = {
-    position: TPoint;
-    radius: number;
-}
+import { TPoint, TDrawRequest, TCircle } from "../types";
 
 export default class MainScreen {
 
