@@ -1,3 +1,5 @@
+import { TPoint } from "../types";
+
 export default interface IInput {
     cursorPosition: TPoint; //The current cursor position in pixel coordinates
 
