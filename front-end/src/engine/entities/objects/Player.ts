@@ -16,6 +16,6 @@ export default class Player extends GameObject {
     }
 
     public render(addDrawRequest: (drawRequest: TDrawRequest) => void): void {
-        addDrawRequest({ position: this.position, radius: 1 });
+        addDrawRequest({ viewCollider: { position: this.position, radius: 1 } });
     }
 }

@@ -3,7 +3,11 @@ export type TPoint = {
     y: number
 }
 
+export type TCircle = {
+    position: TPoint;
+    radius: number;
+}
+
 export type TDrawRequest = {
-    position: TPoint,
-    radius: number
+    viewCollider: TCircle;
 };
