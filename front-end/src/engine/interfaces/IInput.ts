@@ -1,5 +1,5 @@
 export default interface IInput {
-    /*cursorPosition: TPoint; //The current cursor position in pixel coordinates*/
+    cursorPosition: TPoint; //The current cursor position in pixel coordinates
 
     getAxisX(): number; //Returns the value of the virtual X axis ∈ [-1; 1]
 
