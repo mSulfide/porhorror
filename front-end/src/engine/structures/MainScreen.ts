@@ -1,6 +1,11 @@
 import IDrawer from "../interfaces/IDrawer";
 import Scene from "./Scene";
-import { TPoint, TDrawRequest, TCircle } from "../types";
+import { TPoint, TDrawRequest } from "../types";
+
+type TCircle = {
+    position: TPoint;
+    radius: number;
+}
 
 export default class MainScreen {
 
@@ -25,8 +30,7 @@ export default class MainScreen {
             });
         });
         drawRequests.forEach(request => {
-            const collider = request.viewCollider;
-            if (this.isVisible(collider)) {
+            if (this.isVisible({ radius: request.radius, position: request.position })) {
                 this._drawer.draw(request);
             }
         });
