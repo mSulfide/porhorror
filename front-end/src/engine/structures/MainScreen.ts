@@ -26,6 +26,7 @@ export default class MainScreen {
         });
         drawRequests.forEach(request => {
             if (this.isVisible({ radius: request.radius, position: request.position })) {
+                request.position = { x: request.position.x / this._width, y: request.position.y / this._height }
                 this._drawer.draw(request);
             }
         });
