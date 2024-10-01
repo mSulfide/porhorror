@@ -11,8 +11,16 @@ class CanvasDrawer implements IDrawer {
   }
 
   draw(request: TDrawRequest): void {
+    const width = this._canvas.width;
+    const height = this._canvas.height;
     this._ctx.beginPath();
-    this._ctx.arc(request.position.x, request.position.y, request.radius, 0, 2 * Math.PI);
+    this._ctx.arc(
+      (request.position.x + 0.5) * width,
+      -(request.position.y - 0.5) * height,
+      request.radius * 10,
+      0,
+      2 * Math.PI
+    );
     this._ctx.fill();
   }
 

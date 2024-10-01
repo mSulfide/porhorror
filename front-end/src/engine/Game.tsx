@@ -51,7 +51,7 @@ const Game: React.FC = () => {
 
   return (
     <>
-      <canvas ref={canvasRef} width={32} height={18} /> 
+      <canvas ref={canvasRef} width={400} height={300} /> 
     </> //добавлено
   );
 };
