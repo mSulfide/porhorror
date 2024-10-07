@@ -1,4 +1,5 @@
 export type TDrawOption = {
+    image: HTMLImageElement,
     /** x ∈ [-1, 1] */
     x: number,
     /** y ∈ [-1, 1] */

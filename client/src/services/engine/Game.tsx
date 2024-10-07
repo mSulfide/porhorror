@@ -1,9 +1,6 @@
 import { useEffect, useRef } from 'react'; 
-import Scene from './structures/Scene/Scene';
-import Player from './entities/objects/Player';
 import KeyboardInput from './structures/KeyboardInput';
 import IInput from './interfaces/IInput';
-import CanvasDrawer from './structures/CanvasDrawer'; 
 
 const Game: React.FC = () => {
 
@@ -22,7 +19,6 @@ const Game: React.FC = () => {
     let deltaTime = 0;
 
     const canvas = canvasRef.current!; 
-    const drawer = new CanvasDrawer(canvas); 
 
     const loop = () => {
       const currentTimestamp = Date.now();
