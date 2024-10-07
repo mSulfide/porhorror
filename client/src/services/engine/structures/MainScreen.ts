@@ -16,10 +16,10 @@ export default class MainScreen {
         this._position = position;
     }
 
-    public render(scene: Scene) {
+    public render(scene?: Scene) {
         const drawRequests: TDrawRequest[] = [];
         this._drawer.clear();
-        scene.forEach(gameObject => {
+        scene?.forEach(gameObject => {
             gameObject.render((request: TDrawRequest) => {
                 drawRequests.push(request);
             });
