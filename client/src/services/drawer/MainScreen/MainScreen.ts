@@ -1,6 +1,5 @@
 import { IDrawer } from "../IDrawer";
 
-
 export default class MainScreen {
     private drawer: IDrawer;
 

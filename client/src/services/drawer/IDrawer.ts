@@ -1,5 +1,7 @@
 export type TDrawOption = {
+    /** x ∈ [-1, 1] */
     x: number,
+    /** y ∈ [-1, 1] */
     y: number
 }
 
