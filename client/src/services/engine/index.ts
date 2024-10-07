@@ -1,10 +1,10 @@
-export type Point = {
+export type TPoint = {
     x: number,
     y: number
 }
 
 export interface IGameObject {
-    position: Point;
+    position: TPoint;
 
     update(deltaTime: number): void;
 }

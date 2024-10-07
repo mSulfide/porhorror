@@ -1,5 +1,5 @@
 import { Scene } from "../engine/structures";
-import { TGameOptions } from "./types";
+import { TGameOptions } from ".";
 
 class Game {
     private dTimeStamp: number;

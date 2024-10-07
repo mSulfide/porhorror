@@ -13,7 +13,7 @@ class Scene {
         this.objects.forEach(action);
     }
 
-    public addObject(object: IGameObject, parent: IGameObject): void {
+    public addObject(object: IGameObject): void {
         this.objects.push(object);
     }
 }
