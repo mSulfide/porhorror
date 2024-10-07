@@ -1,6 +1,6 @@
 import { IGameObject } from "../..";
 
-export default class Scene {
+class Scene {
     private objects: IGameObject[] = [];
 
     constructor(objects: IGameObject[] = []) {
@@ -17,3 +17,5 @@ export default class Scene {
         this.objects.push(object);
     }
 }
+
+export default Scene;

@@ -5,7 +5,6 @@ export type Point = {
 
 export interface IGameObject {
     position: Point;
-    localPosition: Point;
 
     update(deltaTime: number): void;
 }
