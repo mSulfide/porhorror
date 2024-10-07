@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'; 
-import Scene from './structures/Scene';
+import Scene from './structures/Scene/Scene';
 import MainScreen from './structures/MainScreen';
 import Player from './entities/objects/Player';
 import KeyboardInput from './structures/KeyboardInput';

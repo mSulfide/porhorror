@@ -1,5 +1,5 @@
 import IDrawer from "../interfaces/IDrawer";
-import Scene from "./Scene";
+import Scene from "./Scene/Scene";
 import { TPoint, TDrawRequest, TCircle } from "../types";
 
 export default class MainScreen {

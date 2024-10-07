@@ -1,4 +1,4 @@
-import Scene from "../engine/structures/Scene";
+import { Scene } from "../engine/structures";
 import { TGameOptions } from "./types";
 
 class Game {
@@ -7,7 +7,7 @@ class Game {
 
     constructor(options: TGameOptions) {
         this.dTimeStamp = Date.now();
-        this.scene = new Scene([]);
+        this.scene = options.scene || new Scene([]);
     }
 
     public update() {
