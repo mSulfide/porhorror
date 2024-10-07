@@ -1,13 +1,12 @@
 import { useEffect, useRef } from "react";
-import MainScreen from "../../services/engine/structures/MainScreen";
-import CanvasDrawer from "../../services/engine/structures/CanvasDrawer";
 import Game from "../../services/Game/Game";
+import { CanvasDrawer, MainScreen } from "../../services/drawer";
 
 const GamePage: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const game = new Game({});
 
     useEffect(() => {
+        const game = new Game({});
         const screen = new MainScreen(new CanvasDrawer(canvasRef.current!));
 
         let idLoop: number;
