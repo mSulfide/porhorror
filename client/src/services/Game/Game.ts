@@ -1,5 +1,5 @@
 import { Scene } from "../engine/structures";
-import { TGameOptions } from ".";
+import { TGameOptions, TGameState } from ".";
 
 class Game {
     private dTimeStamp: number;
@@ -15,6 +15,10 @@ class Game {
         this.scene.forEach((gameObject) => {
             gameObject.update(deltaTime);
         });
+    }
+
+    public getState(): TGameState {
+        return { scene: this.scene };
     }
 }
 
