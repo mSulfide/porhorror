@@ -1,0 +1,144 @@
+@import '../../scss/variables';
+
+@keyframes dots-move {
+    1% { box-shadow: -5px 9999px 0 -4px currentColor; }
+    50% { box-shadow: 15px 9999px 0 0px currentColor; }
+    100% { box-shadow: 30px 9999px 0 -4px currentColor; }
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background-image: url('../../assets/img/background/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    color: $text-color;
+
+    >span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 16px;
+        transform: translate(-40%, 10px);
+    }
+
+    >div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+    
+        width: 100%;
+        height: 100vh;
+        background-color: #000B;
+    }
+}
+
+.preloader__dots {
+    $size: 8px;
+
+    position: relative;
+    top: -9999px;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background-color: currentColor;
+    box-shadow: 22.5px 9999px 0 -5px currentColor;
+    animation: dots-move 1.5s infinite linear;
+    animation-delay: -0.85s;
+
+    &::after, &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        background-color: currentColor;
+        color: currentColor;
+    }
+
+    &::before {
+        box-shadow: 22.5px 9999px 0 -5px currentColor;
+        animation: dots-move 1.5s infinite linear;
+        animation-delay: -1.85s;
+    }
+
+    &::after {
+        box-shadow: 22.5px 9999px 0 -5px currentColor;
+        animation: dots-move 1.5s infinite linear;
+        animation-delay: -2.85s;
+    }
+}
+
+.preloader__authors {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    font-size: 18px;
+
+    >h1 { font-size: 16px; }
+
+    >* {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin: 2px 0;
+    }
+
+    >div {
+        position: relative;
+        height: 32px;
+
+        >span {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        &::before {
+            content: '';
+            display: block;
+            min-width: 32px;
+            min-height: 32px;
+            width: 32px;
+            height: 32px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        &.alex {
+            &::before {
+                background-image: url('../../assets/img/authors/alex_pixel-art.png');
+                background-size: 140%;
+            }
+        }
+    }
+}

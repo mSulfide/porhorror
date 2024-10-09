@@ -1,0 +1,16 @@
+@import '../../scss/variables';
+
+.button {
+    font-size: 2vh;
+    background-color: $button-background-color;
+    border-radius: 10px;
+    border: solid $button-border-color 3px;
+    min-width: 120px;
+    text-align: center;
+    padding: 0 5px 8px 5px;
+
+    &:hover {
+        background-color: $button-hover-color;
+    }
+}
+
