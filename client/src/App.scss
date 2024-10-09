@@ -1,0 +1,24 @@
+@use './scss/variables.scss' as *;
+
+@font-face {
+    font-family: 'Play';
+    src: url('./assets/fonts/Play-Regular.ttf');
+}
+
+.app {
+    position: relative;
+    display: flex;
+    text-align: center;
+    background-color: $main-theme;
+
+    padding: 20px;
+    margin: 10px;
+    border: solid $button-border-color 3px;
+    border-radius: 10px;
+}
+
+.absolute {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+}

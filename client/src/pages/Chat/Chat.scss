@@ -1,0 +1,22 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+
+    &-inputs {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            margin: 10px;
+            padding: 0 10px 5px 10px;
+            background-color: aquamarine;
+            width: 300px;
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        justify-content: space-between;
+        max-width: 500px;
+    }
+}

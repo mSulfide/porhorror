@@ -2,8 +2,12 @@ import { useEffect, useRef } from "react";
 import Game from "../../services/Game/Game";
 import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { testScene } from "../../services/engine/structures/Scene/scenes";
+import { IBasePage, PAGES } from "../PageManager";
+import Button from "../../components/Button/Button";
 
-const GamePage: React.FC = () => {
+const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
+    const backClickHandler = () => props.setPage(PAGES.CHAT);
+
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -26,8 +30,9 @@ const GamePage: React.FC = () => {
     });
 
     return <div>
-        <canvas ref={canvasRef} width={800} height={600}/>
+        <canvas ref={canvasRef} width={600} height={450}/>
+        <Button onClick={backClickHandler} text='Назад' />
     </div>;
 }
 
-export default GamePage;
+export default PHGame;
