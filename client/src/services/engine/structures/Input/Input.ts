@@ -1,34 +1,34 @@
 class Input {
     // Флаг для отслеживания состояния кнопки
     private isButtonActive: boolean = false;
-   
+
     // Флаги для отслеживания событий нажатия и отпускания кнопки
     private isButtonDown: boolean = false;
     private isButtonUp: boolean = false;
-   
+
     // Виртуальные оси
     private axisX: number = 0;
     private axisY: number = 0;
-   
+
     // Методы
     public getActiveButton(): boolean {
-     return this.isButtonActive;
+        return this.isButtonActive;
     }
-   
+
     public getActiveButtonDown(): boolean {
-     return this.isButtonDown;
+        return this.isButtonDown;
     }
-   
+
     public getActiveButtonUp(): boolean {
-     return this.isButtonUp;
+        return this.isButtonUp;
     }
-   
+
     public setActiveButton(value: boolean): void {
-     this.isButtonDown = value && !this.isButtonActive;
-     this.isButtonUp = !value && this.isButtonActive;
-     this.isButtonActive = value;
+        this.isButtonDown = value && !this.isButtonActive;
+        this.isButtonUp = !value && this.isButtonActive;
+        this.isButtonActive = value;
     }
-   
+
     public getAxisX(): number {
         return this.axisX;
     }
@@ -46,12 +46,12 @@ class Input {
         // Ограничение значения в диапазоне [-1, 1]
         this.axisY = Math.max(-1, Math.min(1, value));
     }
-   
+
     // Обновление флагов событий нажатия/отпускания кнопки перед каждым кадром
     public update() {
-     this.isButtonDown = false;
-     this.isButtonUp = false;
+        this.isButtonDown = false;
+        this.isButtonUp = false;
     }
-   }
-   
-   export default Input;
+}
+
+export default Input;
