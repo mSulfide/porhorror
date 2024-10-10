@@ -1,3 +1,5 @@
+import Input from "./structures/Input/Input";
+
 export type TPoint = {
     x: number,
     y: number
@@ -6,5 +8,5 @@ export type TPoint = {
 export interface IGameObject {
     position: TPoint;
 
-    update(deltaTime: number): void;
+    update(deltaTime: number, input: Input): void;
 }
