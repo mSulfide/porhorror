@@ -4,9 +4,9 @@ class PhysicalBehaviour implements IGameObject {
 
     position: TPoint;
     weight: number;
-    velocity: number = 0.02;
+    velocity: number = 0.5;
     velocityDirection: TPoint = {x: 1, y: 1}
-    friction: number = 0.01;
+    friction: number = 1;
 
     constructor(position: TPoint, weight: number = 1) {
         this.position = position
