@@ -4,7 +4,8 @@ class PhysicalBehaviour implements IGameObject {
 
     position: TPoint;
     weight: number;
-    velocity: TPoint = {x: 0.13, y: 0.12};
+    velocity: number = 0.02;
+    velocityDirection: TPoint = {x: 1, y: 1}
     friction: number = 0.01;
 
     constructor(position: TPoint, weight: number = 1) {
@@ -12,39 +13,34 @@ class PhysicalBehaviour implements IGameObject {
         this.weight = weight;
     }
 
-    setVelocity(velocity: TPoint) {
-        this.velocity.x = velocity.x;
-        this.velocity.y = velocity.y;
+    setVelocityDirection(direction: TPoint) {
+        this.velocityDirection.x = direction.x;
+        this.velocityDirection.y = direction.y;
     }
 
-    addVelocity(velocity: TPoint) {
-        this.velocity.x += velocity.x;
-        this.velocity.y += velocity.y;
+    setVelocity(velocity: number) {
+        this.velocity = velocity;
+    }
+
+    addVelocity(velocity: number) {
+        this.velocity += velocity;
     }
 
     update(deltaTime: number): void {
-        if (this.velocity.x || this.velocity.y) {
-            this.position.x += this.velocity.x * deltaTime;
-            this.position.y += this.velocity.y * deltaTime;
+        let x = this.position.x;
+        let y = this.position.y;
+        if (this.velocity) {
             let frictionAcceleration = this.friction * this.weight * deltaTime;
-            let overallVelocity = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
-            if (overallVelocity < frictionAcceleration) {
-                this.velocity.x = 0;
-                this.velocity.y = 0;
+            if (this.velocity < frictionAcceleration) {
+                this.velocity = 0;
             } else {
-                if (this.velocity.x > 0) {
-                    this.velocity.x -= frictionAcceleration * this.velocity.x / overallVelocity;
-                } else {
-                    this.velocity.x += frictionAcceleration * this.velocity.x / overallVelocity;
-                }
-                if (this.velocity.y > 0) {
-                    this.velocity.y -= frictionAcceleration * this.velocity.y / overallVelocity;
-                } else {
-                    this.velocity.y += frictionAcceleration * this.velocity.y / overallVelocity;
-                }
+                this.position.x += this.velocityDirection.x * this.velocity * deltaTime;
+                this.position.y += this.velocityDirection.y * this.velocity * deltaTime;
+                this.velocity -= frictionAcceleration * this.velocity
             }
         }
-        console.log(this.position.x, " ", this.position.y)
+        console.log(Math.sqrt(this.position.x ** 2 + this.position.y ** 2) - 
+            Math.sqrt(x ** 2 + y ** 2));
     }
 }
 
