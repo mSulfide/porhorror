@@ -24,13 +24,17 @@ class Game {
     update(): void {
         // Обновление состояния ввода
         this.input.update();
-  
+
         // Обработка движения
-        const dx = this.input.getAxisX();
-        const dy = this.input.getAxisY();
+        let dx = this.input.getAxisX();
+        let dy = this.input.getAxisY();
+
+        // Ограничение значений осей в диапазоне [-1; 1]
+        dx = Math.max(-1, Math.min(1, dx));
+        dy = Math.max(-1, Math.min(1, dy));
         this.move(dx, dy);
-      }
-  
+    }
+
 
     move(dx: number, dy: number): void {
         if ((dx > 0 && this.kapitoshka.x + dx <= WIDTH - 1) ||
