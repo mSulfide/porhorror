@@ -5,15 +5,22 @@ import { testScene } from "../../services/engine/structures/Scene/scenes";
 import { IBasePage, PAGES } from "../PageManager";
 import Button from "../../components/Button/Button";
 import useKeyboard from "./hooks/useKeyboard";
+import { KeyboardBinding } from "./hooks/useKeyboard";
 import Input from "../../services/engine/structures/Input/Input";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = () => props.setPage(PAGES.CHAT);
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const input = new Input(); 
-
-    useKeyboard(input, canvasRef);
+    const input = new Input();
+    const bindings: KeyboardBinding[] = [
+        { key: 'KeyW', method: input.setActiveButton },
+        { key: 'KeyA', method: input.setActiveButton },
+        { key: 'KeyS', method: input.setActiveButton },
+        { key: 'KeyD', method: input.setActiveButton },
+        { key: 'Space', method: input.setActiveButton }, // Используйте "Space" вместо "KeySpace"
+    ];
+    useKeyboard(input, canvasRef, bindings);
 
     useEffect(() => {
         const game = new Game({ scene: testScene });
@@ -35,7 +42,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     });
 
     return <div>
-        <canvas ref={canvasRef} width={600} height={450}/>
+        <canvas ref={canvasRef} width={600} height={450} />
         <Button onClick={backClickHandler} text='Назад' />
     </div>;
 }

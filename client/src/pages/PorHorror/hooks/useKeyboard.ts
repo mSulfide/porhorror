@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Input from '../../../services/engine/structures/Input/Input';
 
-interface KeyboardBinding {
+export interface KeyboardBinding {
     key: string;
     method: (value: boolean) => void;
 }
 
-const useKeyboard = (input: Input, canvasRef: React.RefObject<HTMLCanvasElement>): void => {
-    const [bindings, setBindings] = useState<KeyboardBinding[]>([]); // bindings: Состояние, хранящее массив объектов KeyboardBinding - описание всех привязок клавиш к методам.
+const useKeyboard = (input: Input, canvasRef: React.RefObject<HTMLCanvasElement>, bindings: KeyboardBinding[]): void => {
     const isKeyDown = useRef<Record<string, boolean>>({}); // Ref, который хранит объект, где ключи - коды клавиш, а значения - булевы флаги, показывающие, нажата ли клавиша или нет.
     const animationFrameRef = useRef<number>(0); // Добавляение ref для хранения ID анимации
 
@@ -45,7 +44,7 @@ const useKeyboard = (input: Input, canvasRef: React.RefObject<HTMLCanvasElement>
     }, [bindings, canvasRef]);
 
     // Обновление Input в каждом кадре
-    useEffect(() => {
+    /*useEffect(() => {
         const animate = () => {
             bindings.forEach(binding => {
                 binding.method(isKeyDown.current[binding.key]);
@@ -56,18 +55,7 @@ const useKeyboard = (input: Input, canvasRef: React.RefObject<HTMLCanvasElement>
         animate(); // Запуск анимации
 
         return () => cancelAnimationFrame(animationFrameRef.current); // Отмена анимации
-    }, [bindings]);
-
-    // Привязка клавиш
-    useEffect(() => {
-        setBindings([
-            { key: 'KeyW', method: input.setActiveButton },
-            { key: 'KeyA', method: input.setActiveButton },
-            { key: 'KeyS', method: input.setActiveButton },
-            { key: 'KeyD', method: input.setActiveButton },
-            { key: 'KeySpace', method: input.setActiveButton },
-        ]);
-    }, [input]);
+    }, [bindings]);*/
 };
 
 export default useKeyboard;
