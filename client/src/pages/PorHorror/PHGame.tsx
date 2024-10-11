@@ -5,7 +5,6 @@ import { testScene } from "../../services/engine/structures/Scene/scenes";
 import { IBasePage, PAGES } from "../PageManager";
 import Button from "../../components/Button/Button";
 import useKeyboard from "./hooks/useKeyboard";
-import { KeyboardBinding } from "./hooks/useKeyboard";
 import Input from "../../services/engine/structures/Input/Input";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
@@ -13,14 +12,8 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const input = new Input();
-    const bindings: KeyboardBinding[] = [
-        { key: 'KeyW', method: input.setActiveButton },
-        { key: 'KeyA', method: input.setActiveButton },
-        { key: 'KeyS', method: input.setActiveButton },
-        { key: 'KeyD', method: input.setActiveButton },
-        { key: 'Space', method: input.setActiveButton }, // Используйте "Space" вместо "KeySpace"
-    ];
-    useKeyboard(input, canvasRef, bindings);
+
+    useKeyboard(input);
 
     useEffect(() => {
         const game = new Game({ scene: testScene });

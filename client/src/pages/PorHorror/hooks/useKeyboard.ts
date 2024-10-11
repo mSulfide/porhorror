@@ -6,14 +6,18 @@ export interface KeyboardBinding {
     method: (value: boolean) => void;
 }
 
-const useKeyboard = (input: Input, canvasRef: React.RefObject<HTMLCanvasElement>, bindings: KeyboardBinding[]): void => {
-    const isKeyDown = useRef<Record<string, boolean>>({}); // Ref, который хранит объект, где ключи - коды клавиш, а значения - булевы флаги, показывающие, нажата ли клавиша или нет.
-    const animationFrameRef = useRef<number>(0); // Добавляение ref для хранения ID анимации
+const useKeyboard = (input: Input): void => {
+    const bindings: KeyboardBinding[] = [
+        { key: 'w', method: () => input.setAxisY(-1) }, // Вверх
+        { key: 's', method: () => input.setAxisY(1) }, // Вниз
+        { key: 'a', method: () => input.setAxisX(-1) }, // Влево
+        { key: 's', method: () => input.setAxisX(1) }, // Вправо
+        { key: ' ', method: () => input.setActiveButton(true) }, // Пробел 
+    ];
 
     useEffect(() => {
-        if (canvasRef.current) {
             const handleKeyDown = (event: KeyboardEvent) => {
-                isKeyDown.current[event.code] = true;
+                console.log(event);
                 const binding = bindings.find(b => b.key === event.code);
                 if (binding) {
                     binding.method(true);
@@ -21,41 +25,22 @@ const useKeyboard = (input: Input, canvasRef: React.RefObject<HTMLCanvasElement>
             };
 
             const handleKeyUp = (event: KeyboardEvent) => {
-                isKeyDown.current[event.code] = false;
                 const binding = bindings.find(b => b.key === event.code);
                 if (binding) {
                     binding.method(false);
                 }
             };
 
-            if (canvasRef.current) {
-                canvasRef.current.addEventListener('keydown', handleKeyDown);
-                canvasRef.current.addEventListener('keyup', handleKeyUp);
-            }
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keyup', handleKeyUp);
+
 
             return () => {
-                if (canvasRef.current) {
-                    canvasRef.current.removeEventListener('keydown', handleKeyDown);
-                    canvasRef.current.removeEventListener('keyup', handleKeyUp);
-                }
-                cancelAnimationFrame(animationFrameRef.current);
+                document.removeEventListener('keydown', handleKeyDown);
+                document.removeEventListener('keyup', handleKeyUp);
             };
-        }
-    }, [bindings, canvasRef]);
-
-    // Обновление Input в каждом кадре
-    /*useEffect(() => {
-        const animate = () => {
-            bindings.forEach(binding => {
-                binding.method(isKeyDown.current[binding.key]);
-            });
-            animationFrameRef.current = requestAnimationFrame(animate); // Обновление ID анимации
-        };
-
-        animate(); // Запуск анимации
-
-        return () => cancelAnimationFrame(animationFrameRef.current); // Отмена анимации
-    }, [bindings]);*/
+        
+    }, [bindings]);
 };
 
 export default useKeyboard;
