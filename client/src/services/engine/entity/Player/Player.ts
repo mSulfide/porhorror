@@ -1,4 +1,5 @@
 import { IGameObject, TPoint } from "../..";
+import Input from "../../structures/Input/Input";
 
 class Player implements IGameObject {
     position: TPoint;
@@ -8,8 +9,9 @@ class Player implements IGameObject {
         this.position = { x, y };
     }
 
-    update(deltaTime: number): void {
-        
+    update(deltaTime: number, input: Input): void {
+        this.position.x += input.getAxisX() * deltaTime;
+        this.position.y += input.getAxisY() * deltaTime;
     }
 }
 
