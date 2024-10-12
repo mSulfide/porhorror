@@ -4,9 +4,9 @@ class PhysicalBehaviour implements IGameObject {
 
     position: TPoint;
     weight: number;
-    velocity: number = 0.5;
-    velocityDirection: TPoint = {x: 1, y: 1}
-    friction: number = 1;
+    velocity: number = 0;
+    velocityDirection: TPoint = {x: 0, y: 0}
+    friction: number = 0;
 
     constructor(position: TPoint, weight: number = 1) {
         this.position = position
@@ -27,8 +27,6 @@ class PhysicalBehaviour implements IGameObject {
     }
 
     update(deltaTime: number): void {
-        let x = this.position.x;
-        let y = this.position.y;
         if (this.velocity) {
             let frictionAcceleration = this.friction * this.weight * deltaTime;
             if (this.velocity < frictionAcceleration) {
@@ -39,8 +37,6 @@ class PhysicalBehaviour implements IGameObject {
                 this.velocity -= frictionAcceleration * this.velocity
             }
         }
-        console.log(Math.sqrt(this.position.x ** 2 + this.position.y ** 2) - 
-            Math.sqrt(x ** 2 + y ** 2));
     }
 }
 
