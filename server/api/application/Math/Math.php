@@ -51,8 +51,6 @@ function spline(array $points) {
             'b' => $b1,
             'c' => $c1,
             'd' => $y1,
-            'x_start' => $x1,
-            'x_end' => $x2,
         ];
     }
 
