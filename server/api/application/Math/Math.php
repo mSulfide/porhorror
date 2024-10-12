@@ -16,7 +16,7 @@ function derivative($func, $x, $eps) {
 function spline(array $points) {
     $n = count($points);
     if ($n < 3) {
-        throw new InvalidArgumentException("Необходимо минимум 3 точки для сплайна.");
+        return ['error' => 303];
     }
 
     $coefficients = [];
