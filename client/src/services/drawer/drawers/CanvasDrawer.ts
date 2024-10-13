@@ -25,6 +25,27 @@ class CanvasDrawer implements IDrawer {
         this.ctx.fill();
     }
 
+    drawFunction(
+        func: (x: number) => number,
+        color: string = 'black',
+        lineWidth: number = 2,
+
+    ): void {
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = lineWidth;
+
+        for (let x = 0; x < width; x++) {
+            const normalizedX = (x / width) * 2 - 1; // Нормализуем x в диапазон [-1, 1]
+            const y = (height / 2) - func(normalizedX) * (height / 2);
+            this.ctx.lineTo(x, y);
+        }
+
+        this.ctx.stroke();
+    }
 }
 
 export default CanvasDrawer;
