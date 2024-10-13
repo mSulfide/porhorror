@@ -13,7 +13,8 @@ const UserPoints: React.FC<UserPointsProps> = ({ onPointsSubmit }) => {
     };
 
     const handleSubmit = () => {
-        const points = inputValue.split(';').map(point => point.split(',').map(Number));
+        const points = inputValue.split(';').map(point => point.split(',').map(Number))
+        .filter(coords => coords.length === 2);
         onPointsSubmit(points);
         setInputValue("");
     };
