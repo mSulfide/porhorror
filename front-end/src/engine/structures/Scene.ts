@@ -1,4 +1,6 @@
 import GameObject from "./GameObject";
+import Obstacle from "../entities/objects/Obstacle";
+import { TPoint } from "../types/index"; 
 
 export default class Scene {
     private _objects: GameObject[] = [];
@@ -11,5 +13,10 @@ export default class Scene {
 
     public forEach(action: (gameObject: GameObject) => void) {
         this._objects.forEach(action);
+    }
+
+    public addObstacle(position: TPoint, radius: number): void {
+        const obstacle = new Obstacle(position, radius);
+        this._objects.push(obstacle);
     }
 }
