@@ -14,6 +14,7 @@ type Obstacle = {
 let obstacleIdCounter = 0; 
 const obstacles: Obstacle[] = []; 
 
+
 export function createObstacle(position: TPoint, radius: number): Obstacle {
     const newObstacle: Obstacle = {
         id: obstacleIdCounter++,
@@ -21,19 +22,26 @@ export function createObstacle(position: TPoint, radius: number): Obstacle {
     };
     
     obstacles.push(newObstacle);
-
+    
     
 
     return newObstacle;
 }
 
+
+export function addObstacleFunction(position: TPoint, radius: number): () => Obstacle {
+    return () => createObstacle(position, radius);
+}
+
+
 export function removeObstacle(id: number): void {
     const index = obstacles.findIndex(obstacle => obstacle.id === id);
     if (index !== -1) {
         obstacles.splice(index, 1);
-        
+       
     }
 }
+
 
 export function checkCollisions(circle: Circle) {
     for (const obstacle of obstacles) {
