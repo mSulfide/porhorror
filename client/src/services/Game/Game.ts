@@ -17,11 +17,13 @@ class Game {
         const deltaTime = (Date.now() - this.dTimeStamp) / 1000;
         this.dTimeStamp = Date.now();
 
+        const input: Input = this.input;
+
         this.scene.forEach((gameObject) => {
-            gameObject.update(deltaTime, this.input);
+            gameObject.update({ deltaTime, input });
         });
 
-        this.input.update();
+        input.update();
     }
 
     public getState(): TGameState {

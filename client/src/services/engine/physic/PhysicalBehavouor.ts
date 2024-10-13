@@ -1,4 +1,4 @@
-import { IGameObject, TPoint } from "..";
+import { IGameObject, TPoint, TUpdateParameters } from "..";
 
 class PhysicalBehaviour implements IGameObject {
 
@@ -26,14 +26,14 @@ class PhysicalBehaviour implements IGameObject {
         this.velocity += velocity;
     }
 
-    update(deltaTime: number): void {
+    update(game: TUpdateParameters): void {
         if (this.velocity) {
-            let frictionAcceleration = this.friction * this.weight * deltaTime;
+            let frictionAcceleration = this.friction * this.weight * game.deltaTime;
             if (this.velocity < frictionAcceleration) {
                 this.velocity = 0;
             } else {
-                this.position.x += this.velocityDirection.x * this.velocity * deltaTime;
-                this.position.y += this.velocityDirection.y * this.velocity * deltaTime;
+                this.position.x += this.velocityDirection.x * this.velocity * game.deltaTime;
+                this.position.y += this.velocityDirection.y * this.velocity * game.deltaTime;
                 this.velocity -= frictionAcceleration * this.velocity
             }
         }

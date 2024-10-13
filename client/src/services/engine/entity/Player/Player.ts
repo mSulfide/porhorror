@@ -1,4 +1,4 @@
-import { IGameObject, TPoint } from "../..";
+import { IGameObject, TPoint, TUpdateParameters } from "../..";
 
 class Player implements IGameObject {
     position: TPoint;
@@ -8,7 +8,7 @@ class Player implements IGameObject {
         this.position = { x, y };
     }
 
-    update(deltaTime: number): void {
+    update(game: TUpdateParameters): void {
         
     }
 }

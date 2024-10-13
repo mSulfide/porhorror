@@ -5,8 +5,13 @@ export type TPoint = {
     y: number
 }
 
+export type TUpdateParameters = {
+    deltaTime: number,
+    input: Input
+}
+
 export interface IGameObject {
     position: TPoint;
 
-    update(deltaTime: number, input: Input): void;
+    update(game: TUpdateParameters): void;
 }
