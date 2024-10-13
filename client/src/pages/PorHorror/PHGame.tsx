@@ -4,7 +4,7 @@ import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { testScene } from "../../services/engine/structures/Scene/scenes";
 import { IBasePage, PAGES } from "../PageManager";
 import Button from "../../components/Button/Button";
-
+import UserPoints from "./UserPoints";
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = () => props.setPage(PAGES.CHAT);
 
@@ -29,10 +29,17 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         };
     });
 
-    return <div>
-        <canvas ref={canvasRef} width={600} height={450}/>
-        <Button onClick={backClickHandler} text='Назад' />
-    </div>;
+    const handlePointsSubmit = (points: number[][]) => {
+        console.log('Введенные точки:', points);
+    };
+
+    return (
+        <div>
+            <canvas ref={canvasRef} width={600} height={450} />
+            <UserPoints onPointsSubmit={handlePointsSubmit} />
+            <Button onClick={backClickHandler} text='Назад' />
+        </div>
+    );
 }
 
 export default PHGame;
