@@ -64,7 +64,7 @@ const useKeyboard = (input: Input): void => {
             document.removeEventListener('keyup', handleKeyUp);
         };
 
-    }, []);
+    });
 };
 
 export default useKeyboard;
