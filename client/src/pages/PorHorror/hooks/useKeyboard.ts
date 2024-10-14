@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Input from '../../../services/engine/structures/Input/Input';
 
 export interface KeyboardBinding {
@@ -7,39 +7,36 @@ export interface KeyboardBinding {
 }
 
 const useKeyboard = (input: Input): void => {
+
+    let yAxis = 0;
+    let xAxis = 0;
+
     const bindings: KeyboardBinding[] = [
-        { key: 'w', method: () => input.setAxisY(-1) }, // Вверх
-        { key: 's', method: () => input.setAxisY(1) }, // Вниз
-        { key: 'a', method: () => input.setAxisX(-1) }, // Влево
-        { key: 's', method: () => input.setAxisX(1) }, // Вправо
-        { key: ' ', method: () => input.setActiveButton(true) }, // Пробел 
+        { key: 'w', method: (value) => { yAxis += value ? -1 : 1; input.setAxisY(yAxis); } }, // Вверх
+        { key: 's', method: (value) => { yAxis += value ? 1 : -1; input.setAxisY(yAxis); } }, // Вниз
+        { key: 'a', method: (value) => { xAxis += value ? -1 : 1; input.setAxisX(xAxis); } }, // Влево 
+        { key: 'd', method: (value) => { xAxis += value ? 1 : -1; input.setAxisX(xAxis); } }, // Вправо
+        { key: ' ', method: (value) => input.setActiveButton(value) }, // Пробел
     ];
 
     useEffect(() => {
-            const handleKeyDown = (event: KeyboardEvent) => {
-                console.log(event);
-                const binding = bindings.find(b => b.key === event.code);
-                if (binding) {
-                    binding.method(true);
-                }
-            };
+        const handleKeyDown = (event: KeyboardEvent) => {
+            console.log(event);
+            bindings.find(b => b.key === event.code)?.method(true);
+        };
 
-            const handleKeyUp = (event: KeyboardEvent) => {
-                const binding = bindings.find(b => b.key === event.code);
-                if (binding) {
-                    binding.method(false);
-                }
-            };
+        const handleKeyUp = (event: KeyboardEvent) => {
+            bindings.find(b => b.key === event.code)?.method(false);
+        };
 
-            document.addEventListener('keydown', handleKeyDown);
-            document.addEventListener('keyup', handleKeyUp);
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keyup', handleKeyUp);
 
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp);
+        };
 
-            return () => {
-                document.removeEventListener('keydown', handleKeyDown);
-                document.removeEventListener('keyup', handleKeyUp);
-            };
-        
     }, [bindings]);
 };
 
