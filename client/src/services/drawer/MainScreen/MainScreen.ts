@@ -23,5 +23,11 @@ export default class MainScreen {
             if (this.isReady)
                 this.drawer.draw({ image: this.image, x, y });
         });
+        //пример использования метода drawFunction
+        this.drawer.drawFunction(
+            (x)=>x,
+            'red',
+            3
+        )
     }
 }

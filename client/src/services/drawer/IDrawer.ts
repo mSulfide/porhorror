@@ -10,4 +10,11 @@ export interface IDrawer {
     clear(): void;
 
     draw(option: TDrawOption): void;
+
+    drawFunction(
+        func: (x: number) => number,
+        color: string,
+        lineWidth: number,
+
+    ): void
 }
