@@ -44,12 +44,10 @@ const useKeyboard = (input: Input): void => {
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            console.log(event);
             bindings.find(b => b.key === event.code)?.method(true);
         };
 
         const handleKeyUp = (event: KeyboardEvent) => {
-            console.log(event);
             bindings.find(b => b.key === event.code)?.method(false);
         };
 

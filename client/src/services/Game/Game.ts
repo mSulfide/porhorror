@@ -10,7 +10,7 @@ class Game {
     constructor(options: TGameOptions) {
         this.dTimeStamp = Date.now();
         this.scene = options.scene || new Scene([]);
-        this.input = new Input();
+        this.input = options.input || new Input();
     }
 
     public update() {
