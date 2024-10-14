@@ -13,8 +13,13 @@ const useKeyboard = (input: Input): void => {
     let isSPressed: boolean = false; // Для движения вниз S
     let isDPressed: boolean = false; // Для движения вправо D
 
-    const axisX = () => { input.setAxisX(Number(isDPressed) - Number(isAPressed)); }
-    const axisY = () => { input.setAxisY(Number(isWPressed) - Number(isSPressed)); }
+    const axisX = () => { 
+        input.setAxisX(Number(isDPressed) - Number(isAPressed)); 
+    }
+    
+    const axisY = () => { 
+        input.setAxisY(Number(isWPressed) - Number(isSPressed)); 
+    }
 
     const bindings: KeyboardBinding[] = [
         { key: 'KeyW', method: (value) => { 
@@ -59,7 +64,7 @@ const useKeyboard = (input: Input): void => {
             document.removeEventListener('keyup', handleKeyUp);
         };
 
-    }, [bindings]);
+    }, []);
 };
 
 export default useKeyboard;
