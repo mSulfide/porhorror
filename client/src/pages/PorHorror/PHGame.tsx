@@ -16,7 +16,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     useKeyboard(input);
 
     useEffect(() => {
-        const game = new Game({ scene: testScene });
+        const game = new Game({ scene: testScene, input: input });
         const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), game.getState().scene);
 
         let idLoop: number;

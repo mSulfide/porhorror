@@ -7,16 +7,39 @@ export interface KeyboardBinding {
 }
 
 const useKeyboard = (input: Input): void => {
+    // Флаги для отслеживания состояния каждой клавиши
+    let isWPressed: boolean = false; // Для движения вверх W
+    let isAPressed: boolean = false; // Для движения влево A
+    let isSPressed: boolean = false; // Для движения вниз S
+    let isDPressed: boolean = false; // Для движения вправо D
 
-    let yAxis = 0;
-    let xAxis = 0;
+    const axisX = () => { input.setAxisX(Number(isDPressed) - Number(isAPressed)); }
+    const axisY = () => { input.setAxisY(Number(isWPressed) - Number(isSPressed)); }
 
     const bindings: KeyboardBinding[] = [
-        { key: 'w', method: (value) => { yAxis += value ? -1 : 1; input.setAxisY(yAxis); } }, // Вверх
-        { key: 's', method: (value) => { yAxis += value ? 1 : -1; input.setAxisY(yAxis); } }, // Вниз
-        { key: 'a', method: (value) => { xAxis += value ? -1 : 1; input.setAxisX(xAxis); } }, // Влево 
-        { key: 'd', method: (value) => { xAxis += value ? 1 : -1; input.setAxisX(xAxis); } }, // Вправо
-        { key: ' ', method: (value) => input.setActiveButton(value) }, // Пробел
+        { key: 'KeyW', method: (value) => { 
+            isWPressed = value; 
+            axisY(); 
+        } },
+
+        { key: 'KeyS', method: (value) => { 
+            isSPressed = value; 
+            axisY(); 
+        } },
+        
+        { key: 'KeyA', method: (value) => { 
+            isAPressed = value; 
+            axisX(); 
+        } },
+        
+        { key: 'KeyD', method: (value) => { 
+            isDPressed = value; 
+            axisX(); 
+        } },
+        
+        { key: 'Space', method: (value) => { 
+            input.setActiveButton(value); 
+        } },
     ];
 
     useEffect(() => {
@@ -26,6 +49,7 @@ const useKeyboard = (input: Input): void => {
         };
 
         const handleKeyUp = (event: KeyboardEvent) => {
+            console.log(event);
             bindings.find(b => b.key === event.code)?.method(false);
         };
 
