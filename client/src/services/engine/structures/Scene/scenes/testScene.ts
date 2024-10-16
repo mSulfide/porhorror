@@ -1,6 +1,7 @@
 import { Player } from "../../../entity";
 import { CircleCollider } from "../../Physic";
 import Scene from "../Scene";
+import Obstacle from "../../../entity/Obstacle/Obstacle";
 
 const player: Player = new Player();
 const playerCollider = new CircleCollider(0.1, player.position);
