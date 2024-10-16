@@ -5,7 +5,6 @@ $font-size: 30px; // 1920x1080
 @import './scss/variables';
 
 body {
-    overflow: hidden;
     background-color: $main-theme;
     color: $text-color;
     margin: 0;
