@@ -1,5 +1,6 @@
 import { CircleCollider, THitInfo } from ".";
 import { Vector } from "..";
+import { TPoint } from "../..";
 import Scene from "../Scene/Scene";
 
 type TTransposition = {
@@ -9,7 +10,7 @@ type TTransposition = {
 }
 
 class Physic {
-    private transpositions: TTransposition[] = [];
+    private movements: TTransposition[] = [];
     private scene: Scene;
 
     constructor(scene: Scene) {
@@ -17,39 +18,25 @@ class Physic {
     }
 
     update() {
-        this.scene.forEachStatic(colliderA => {
-            this.scene.forEachDynamic(colliderB => {
-                if (colliderA.collide(colliderB)) {
-                    const collision = this.transpositions.find((transposition: TTransposition) => transposition.collider == colliderB);
-                    if (collision) {
-                        collision.collider.position.x -= collision.offset.x;
-                        collision.collider.position.y -= collision.offset.y;
-                        collision.offset.x = 0;
-                        collision.offset.y = 0;
-                    }
-                }
-            });
+        this.movements.forEach(move => {
+            const point = this.findCollision(move.collider);
         });
-        this.scene.forEachDynamic(colliderA => {
-            this.scene.forEachDynamic(colliderB => {
-                if (colliderA != colliderB && colliderA.collide(colliderB)) {
-                    const collision = this.transpositions.find((transposition: TTransposition) => transposition.collider == colliderB);
-                    if (collision) {
-                        collision.collider.position.x -= collision.offset.x;
-                        collision.collider.position.y -= collision.offset.y;
-                        collision.offset.x = 0;
-                        collision.offset.y = 0;
-                    }
-                }
-            });
-        });
-        this.transpositions.splice(0, this.transpositions.length);
+
+        this.movements.splice(0, this.movements.length);
     }
 
     translate(collider: CircleCollider, offset: Vector) {
-        collider.position.x += offset.x;
-        collider.position.y += offset.y;
-        this.transpositions.push({ collider, offset });
+        this.movements.push({ collider, offset });
+    }
+
+    private findCollision(colliderA: CircleCollider): TPoint | null {
+        const scene = this.scene;
+        scene.forEachStatic(colliderB => {
+            const point = colliderB.collide(colliderA);
+            if (point)
+                return point;
+        })
+        return null;
     }
 }
 

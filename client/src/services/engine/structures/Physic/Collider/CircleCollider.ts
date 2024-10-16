@@ -1,4 +1,4 @@
-import { ICollider } from "..";
+import { ICollider, THitInfo } from "..";
 import { IGameObject, TPoint, TUpdateParameters } from "../../..";
 import { add, mlt, norm, smod, sub } from "../../../math";
 
@@ -11,11 +11,12 @@ class CircleCollider implements ICollider, IGameObject {
         this.position = position || { x: 0, y: 0 };
     }
 
-    collide(collider: CircleCollider): TPoint | null {
+    collide(collider: CircleCollider): THitInfo | null {
         const ab = sub(collider.position, this.position);
         if (smod(ab) > (this.radius + collider.radius) ** 2)
             return null;
-        return add(this.position, mlt(norm(ab), this.radius));
+        const normal = norm(ab);
+        return { point: add(this.position, mlt(normal, this.radius)), normal };
     }
 
     update(game: TUpdateParameters): void {
