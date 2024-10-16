@@ -27,9 +27,13 @@ export default class Vector {
         return this.x * other.x + this.y * other.y;
     }
 
+    sqrLength(): number {
+        return this.x * this.x + this.y * this.y;
+    }
+
     // Длина вектора
     length(): number {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+        return Math.sqrt(this.sqrLength());
     }
 
     // Нормализация вектора

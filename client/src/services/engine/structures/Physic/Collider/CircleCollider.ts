@@ -1,5 +1,6 @@
 import { ICollider } from "..";
 import { TPoint } from "../../..";
+import Vector from "../../Vector/Vector";
 
 class CircleCollider implements ICollider {
     position: TPoint;
@@ -11,7 +12,7 @@ class CircleCollider implements ICollider {
     }
 
     collide(collider: CircleCollider): boolean {
-        return false;
+        return new Vector(this.position.x, this.position.y).subtract(new Vector(collider.position.x, collider.position.y)).sqrLength() <= (this.radius + collider.radius) ** 2;
     }
 }
 
