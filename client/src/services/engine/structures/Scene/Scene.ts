@@ -26,6 +26,14 @@ class Scene {
         this.objects.forEach(action);
     }
 
+    public forEachStatic(action: (collider: ICollider) => void) {
+        this.staticColliders.forEach(action);
+    }
+
+    public forEachDynamic(action: (collider: CircleCollider) => void) {
+        this.dynamicColliders.forEach(action);
+    }
+
     public updateScene(scene: TScene) {
         this.update(this.objects, scene.updatable);
         this.update(this.staticColliders, scene.staticColliders);
