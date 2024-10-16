@@ -5,7 +5,8 @@ class Answer {
         '101' => 'Param method not setted',
         '102' => 'Method not found',
         '242' => 'Params not set fully',
-        '303' => 'Incorrect number of points'
+        '243' => 'Incorrect data about circles',
+        '303' => 'Incorrect number of points',
         '705' => 'User is not found',
         '1001' => 'Is it unique login?',
         '1002' => 'Wrong login or password',
