@@ -1,6 +1,6 @@
 import { ICollider } from "..";
 import { IGameObject, TPoint, TUpdateParameters } from "../../..";
-import Vector from "../../Vector/Vector";
+import { add, mlt, norm, smod, sub } from "../../../math";
 
 class CircleCollider implements ICollider, IGameObject {
     position: TPoint;
@@ -10,12 +10,16 @@ class CircleCollider implements ICollider, IGameObject {
         this.radius = Math.max(0, radius);
         this.position = position || { x: 0, y: 0 };
     }
-    update(game: TUpdateParameters): void {
-        
+
+    collide(collider: CircleCollider): TPoint | null {
+        const ab = sub(collider.position, this.position);
+        if (smod(ab) > (this.radius + collider.radius) ** 2)
+            return null;
+        return add(this.position, mlt(norm(ab), this.radius));
     }
 
-    collide(collider: CircleCollider): boolean {
-        return new Vector(this.position.x, this.position.y).subtract(new Vector(collider.position.x, collider.position.y)).sqrLength() <= (this.radius + collider.radius) ** 2;
+    update(game: TUpdateParameters): void {
+        
     }
 }
 
