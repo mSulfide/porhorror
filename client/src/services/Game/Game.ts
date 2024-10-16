@@ -1,7 +1,5 @@
-import { Scene } from "../engine/structures";
+import { Input, Physic, Scene } from "../engine/structures";
 import { TGameOptions, TGameState } from ".";
-import Input from "../engine/structures/Input/Input";
-import Physic from "../engine/structures/Physic/Physic";
 
 class Game {
     private dTimeStamp: number;
