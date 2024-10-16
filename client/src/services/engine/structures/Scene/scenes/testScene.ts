@@ -3,8 +3,7 @@ import { CircleCollider } from "../../Physic";
 import Scene from "../Scene";
 import Obstacle from "../../../entity/Obstacle/Obstacle";
 
-const player: Player = new Player();
-const playerCollider = new CircleCollider(0.1, player.position);
+const player: Player = new Player(0.1);
 const randomCollider = new CircleCollider(1, { x: 0, y: 1.4 });
 
 const testScene: Scene = new Scene({
@@ -12,7 +11,7 @@ const testScene: Scene = new Scene({
         player
     ],
     dynamicColliders: [
-        playerCollider
+        player
     ],
     staticColliders: [
         randomCollider

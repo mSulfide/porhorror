@@ -1,14 +1,17 @@
 import { ICollider } from "..";
-import { TPoint } from "../../..";
+import { IGameObject, TPoint, TUpdateParameters } from "../../..";
 import Vector from "../../Vector/Vector";
 
-class CircleCollider implements ICollider {
+class CircleCollider implements ICollider, IGameObject {
     position: TPoint;
     radius: number;
 
     constructor(radius: number = 1, position?: TPoint) {
         this.radius = Math.max(0, radius);
         this.position = position || { x: 0, y: 0 };
+    }
+    update(game: TUpdateParameters): void {
+        
     }
 
     collide(collider: CircleCollider): boolean {

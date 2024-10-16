@@ -1,16 +1,17 @@
-import { IGameObject, TPoint, TUpdateParameters } from "../..";
+import { TPoint, TUpdateParameters } from "../..";
+import { Vector } from "../../structures";
+import { CircleCollider } from "../../structures/Physic";
 
-class Player implements IGameObject {
-    position: TPoint;
-
-    constructor(position?: TPoint) {
-        const { x, y } = position || { x: 0, y: 0 };
-        this.position = { x, y };
+class Player extends CircleCollider {
+    constructor(radius: number = 1, position?: TPoint) {
+        super(radius, position);
     }
 
     update(game: TUpdateParameters): void {
-        this.position.x += game.input.getAxisX() * game.deltaTime;
-        this.position.y += game.input.getAxisY() * game.deltaTime;
+        game.physic.translate(this, new Vector(
+            game.input.getAxisX(),
+            game.input.getAxisY()
+        ).multiplyScalar(game.deltaTime));
     }
 }
 
