@@ -17,7 +17,6 @@ class Answer {
         '605' => 'invalid teamId',
         '700' => 'No skins',
         '701' => 'Skin is not found',
-        '704' => 'The circles do not intersect',
         '706' => 'text message is empty',
         '707' => 'could not send message', // e-mail;
         '708' => 'invalid code from E-mail',

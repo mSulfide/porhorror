@@ -82,7 +82,7 @@ class Application {
                 'y' => $intersectionPoint->y,
             ];
         } else {
-            return ['error' => 704]; 
+            return []; 
         }
     }
     
