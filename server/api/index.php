@@ -20,6 +20,9 @@ function result($params) {
             // chat
             case 'sendMessage': return $app->sendMessage($params);
             case 'getMessages': return $app->getMessages($params);
+            // math
+            case 'derivative': return $app->derivative($params);
+            case 'spline': return $app->spline($params);
             // physic
             case 'getCirclesIntersection': return $app->getCirclesIntersection($params);
             default: return ['error' => 102];
