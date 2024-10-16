@@ -9,7 +9,8 @@ class Player implements IGameObject {
     }
 
     update(game: TUpdateParameters): void {
-        
+        this.position.x += game.input.getAxisX() * game.deltaTime;
+        this.position.y += game.input.getAxisY() * game.deltaTime;
     }
 }
 
