@@ -2,6 +2,7 @@
 require_once ('db/DB.php');
 require_once ('user/User.php');
 require_once ('chat/Chat.php');
+require_once ('physic/Physic.php');
 
 class Application {
     function __construct() {
@@ -56,4 +57,33 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function getCirclesIntersection($params) {
+        if (!isset($params['circle1']) || !isset($params['circle2'])) {
+            return ['error' => 242];
+        }
+    
+        $circle1Data = $params['circle1'];
+        $circle2Data = $params['circle2'];
+    
+        if (!isset($circle1Data['x'], $circle1Data['y'], $circle1Data['radius']) ||
+            !isset($circle2Data['x'], $circle2Data['y'], $circle2Data['radius'])) {
+            return ['error' => 243];
+        }
+    
+        $circle1 = new Circle(new TPoint($circle1Data['x'], $circle1Data['y']), $circle1Data['radius']);
+        $circle2 = new Circle(new TPoint($circle2Data['x'], $circle2Data['y']), $circle2Data['radius']);
+    
+        $intersectionPoint = Physic::getIntersectionPoint($circle1, $circle2);
+    
+        if ($intersectionPoint) {
+            return [
+                'x' => $intersectionPoint->x,
+                'y' => $intersectionPoint->y,
+            ];
+        } else {
+            return ['error' => 704]; 
+        }
+    }
+    
 }

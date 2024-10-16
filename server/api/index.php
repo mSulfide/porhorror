@@ -20,6 +20,8 @@ function result($params) {
             // chat
             case 'sendMessage': return $app->sendMessage($params);
             case 'getMessages': return $app->getMessages($params);
+            // physic
+            case 'getCirclesIntersection': return $app->getCirclesIntersection($params);
             default: return ['error' => 102];
         }
     }

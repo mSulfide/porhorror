@@ -32,7 +32,7 @@ class Physic {
     // функция для определения точки пересечения кругов
     public static function getIntersectionPoint(Circle $circle1, Circle $circle2): ?TPoint {
         if (!self::doCirclesIntersect($circle1, $circle2)) {
-            return null; // Круги не пересекаются
+            return null; 
         }
 
         // расчет координат центра линии, соединяющей центры кругов
@@ -52,5 +52,3 @@ class Physic {
         return new TPoint($x, $y);
     }
 }
-
-

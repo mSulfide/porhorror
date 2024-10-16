@@ -5,6 +5,7 @@ class Answer {
         '101' => 'Param method not setted',
         '102' => 'Method not found',
         '242' => 'Params not set fully',
+        '243' => 'Incorrect data about circles',
         '303' => 'Incorrect number of points'
         '705' => 'User is not found',
         '1001' => 'Is it unique login?',
@@ -16,6 +17,7 @@ class Answer {
         '605' => 'invalid teamId',
         '700' => 'No skins',
         '701' => 'Skin is not found',
+        '704' => 'The circles do not intersect',
         '706' => 'text message is empty',
         '707' => 'could not send message', // e-mail;
         '708' => 'invalid code from E-mail',
