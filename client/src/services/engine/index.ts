@@ -1,3 +1,4 @@
+import { Physic } from "./structures";
 import Input from "./structures/Input/Input";
 
 export type TPoint = {
@@ -7,7 +8,8 @@ export type TPoint = {
 
 export type TUpdateParameters = {
     deltaTime: number,
-    input: Input
+    input: Input,
+    physic: Physic
 }
 
 export interface IGameObject {

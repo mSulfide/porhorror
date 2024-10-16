@@ -20,8 +20,12 @@ class Physic {
             this.scene.forEachDynamic(colliderB => {
                 if (colliderA.collide(colliderB)) {
                     const collision = this.transpositions.find((transposition: TTransposition) => transposition.collider == colliderB);
-                    //обработчик столкновения со статикой
-                    console.log("Static collision", colliderA, colliderB);
+                    if (collision) {
+                        collision.collider.position.x -= collision.offset.x;
+                        collision.collider.position.y -= collision.offset.y;
+                        collision.offset.x = 0;
+                        collision.offset.y = 0;
+                    }
                 }
             });
         });
@@ -29,8 +33,12 @@ class Physic {
             this.scene.forEachDynamic(colliderB => {
                 if (colliderA != colliderB && colliderA.collide(colliderB)) {
                     const collision = this.transpositions.find((transposition: TTransposition) => transposition.collider == colliderB);
-                    //обработчик столкновения с динамикой
-                    console.log("Dynamic collision", colliderA, colliderB);
+                    if (collision) {
+                        collision.collider.position.x -= collision.offset.x;
+                        collision.collider.position.y -= collision.offset.y;
+                        collision.offset.x = 0;
+                        collision.offset.y = 0;
+                    }
                 }
             });
         });
@@ -38,6 +46,8 @@ class Physic {
     }
 
     translate(collider: CircleCollider, offset: Vector) {
+        collider.position.x += offset.x;
+        collider.position.y += offset.y;
         this.transpositions.push({ collider, offset });
     }
 }

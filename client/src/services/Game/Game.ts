@@ -19,12 +19,13 @@ class Game {
         this.dTimeStamp = Date.now();
 
         const input: Input = this.input;
+        const physic: Physic = this.physic;
 
         this.scene.forEachUpdated((gameObject) => {
-            gameObject.update({ deltaTime, input });
+            gameObject.update({ deltaTime, input, physic });
         });
 
-        this.physic.update();
+        physic.update();
         input.update();
     }
 
