@@ -9,7 +9,7 @@ class Game {
 
     constructor(options: TGameOptions) {
         this.dTimeStamp = Date.now();
-        this.scene = options.scene || new Scene([]);
+        this.scene = options.scene || new Scene();
         this.input = options.input || new Input();
     }
 
@@ -19,7 +19,7 @@ class Game {
 
         const input: Input = this.input;
 
-        this.scene.forEach((gameObject) => {
+        this.scene.forEachUpdated((gameObject) => {
             gameObject.update({ deltaTime, input });
         });
 

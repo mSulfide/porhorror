@@ -1,8 +1,12 @@
 import { Player } from "../../../entity";
 import Scene from "../Scene";
 
-const testScene: Scene = new Scene([
-    new Player
-]);
+const player: Player = new Player();
+
+const testScene: Scene = new Scene({
+    updatable: [
+        player
+    ]
+});
 
 export default testScene;
