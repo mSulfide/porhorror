@@ -2,16 +2,15 @@ import { IGameObject } from "../..";
 import { TPoint } from "../..";
 
 class Obstacle implements IGameObject {
-    private readonly func: (x: number) => number;
-    public readonly position: TPoint; // Позиция препятствия
+    private func: (x: number) => number; // Функция для вычислений
+    public position: TPoint; // Позиция препятствия
 
     constructor(func: (x: number) => number, position: TPoint) {
-        this.func = func; // Записываем функцию в контекст
-        this.position = position; // Указываем позицию
+        this.func = func; 
+        this.position = position; 
     }
 
     public update(): void {
-      
     }
 
     // Метод для получения значения функции с учетом позиции
