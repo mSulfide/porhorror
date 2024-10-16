@@ -37,7 +37,7 @@ const UserPoints: React.FC<UserPointsProps> = ({ onPointsSubmit }) => {
                             margin: '10px',
                             padding: '0 10px 5px 10px',
                             width: '100px',
-                            backgroundColor: 'aquamarine',
+                            backgroundColor: '#FFE4C4',
                         }}
                     />
                     <input
@@ -49,7 +49,7 @@ const UserPoints: React.FC<UserPointsProps> = ({ onPointsSubmit }) => {
                             margin: '10px',
                             padding: '0 10px 5px 10px',
                             width: '100px',
-                            backgroundColor: 'aquamarine',
+                            backgroundColor: '#FFE4C4',
                         }}
                     />
                 </div>
