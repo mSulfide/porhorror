@@ -1,6 +1,7 @@
 import { Scene } from "../../engine/structures";
 import { IDrawer } from "../IDrawer";
-import sprite from "../../../assets/img/tas.png"
+import sprite from "../../../assets/img/tas.png";
+import Obstacle from "../../engine/entity/Obstacle/Obstacle"
 
 export default class MainScreen {
     private drawer: IDrawer;
@@ -22,12 +23,14 @@ export default class MainScreen {
             const { x, y } = object.position;
             if (this.isReady)
                 this.drawer.draw({ image: this.image, x, y });
+
+            if (object instanceof Obstacle) {
+                this.drawer.drawFunction(
+                  (x) => object.getValueAt(x), // Используем getValueAt для получения значения функции
+                  'red', 
+                  3 
+                );
+              }
         });
-        //пример использования метода drawFunction
-        this.drawer.drawFunction(
-            (x)=>x,
-            'red',
-            3
-        )
     }
 }

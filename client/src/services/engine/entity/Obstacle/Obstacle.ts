@@ -5,9 +5,9 @@ class Obstacle implements IGameObject {
     private func: (x: number) => number; // Функция для вычислений
     public position: TPoint; // Позиция препятствия
 
-    constructor(func: (x: number) => number, position: TPoint) {
+    constructor(func: (x: number) => number, position?: TPoint) {
         this.func = func; 
-        this.position = position; 
+        this.position = position || { x: 0, y: 0 };; 
     }
 
     public update(): void {
