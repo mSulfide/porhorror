@@ -3,15 +3,12 @@
 header('Content-Type: application/json; charset=utf-8');
 
 //производная
-function der($func, $x, $eps) {
+function derivative($func, $x, $eps) {
     $fx = $func($x);
     $f_plus_eps = $func($x + $eps);
     return (($f_plus_eps - $fx) / $eps);
 }
 
-function derivative($func, $x, $eps) {
-    return der($func, $x, $eps)
-}
 //сплайны
 function spline(array $points) {
     $n = count($points);
