@@ -2,6 +2,8 @@
 require_once ('db/DB.php');
 require_once ('user/User.php');
 require_once ('chat/Chat.php');
+require_once ('Math/Math.php');
+
 
 class Application {
     function __construct() {
@@ -53,6 +55,20 @@ class Application {
                 return $this->chat->getMessages($params['hash']);
             }
             return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function derivative($params){
+        if ($params['func'] && $params['x'] && $params['eps']) {
+            return $this->math->derivative($params['func'], $params['x'], $params['eps']);
+        }
+        return ['error' => 242];
+    }
+
+    public function spline(array $params){
+        if ($params['points'] && is_array($params['points'])){
+            return $this->math->spline($params['points']);
         }
         return ['error' => 242];
     }
