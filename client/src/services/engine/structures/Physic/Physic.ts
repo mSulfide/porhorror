@@ -1,10 +1,11 @@
-import { CircleCollider } from ".";
+import { CircleCollider, THitInfo } from ".";
 import { Vector } from "..";
 import Scene from "../Scene/Scene";
 
 type TTransposition = {
     collider: CircleCollider,
-    offset: Vector
+    offset: Vector,
+    cb?: (hit: THitInfo) => void
 }
 
 class Physic {

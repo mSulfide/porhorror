@@ -1,17 +1,18 @@
 import { TPoint, TUpdateParameters } from "../..";
+import PhysicalBehaviour from "../../physic/PhysicalBehavouor";
 import { Vector } from "../../structures";
-import { CircleCollider } from "../../structures/Physic";
 
-class Player extends CircleCollider {
-    constructor(radius: number = 1, position?: TPoint) {
-        super(radius, position);
+class Player extends PhysicalBehaviour {
+    speed: number = 2;
+
+    constructor(radius?: number, position?: TPoint, weigth?: number) {
+        super(radius, position, weigth);
     }
 
     update(game: TUpdateParameters): void {
-        game.physic.translate(this, new Vector(
-            game.input.getAxisX(),
-            game.input.getAxisY()
-        ).multiplyScalar(game.deltaTime));
+        const axis: TPoint = { x: game.input.getAxisX(), y: game.input.getAxisY() };
+        this.setVelocity(axis);
+        super.update(game);
     }
 }
 
