@@ -21,14 +21,14 @@ class PhysicalBehaviour extends CircleCollider {
     }
 
     update(game: TUpdateParameters): void {
-        /*const frictionAcceleration = this.friction * this.weight * game.deltaTime;
+        const frictionAcceleration = this.friction * this.weight * game.deltaTime;
         if (modl(this.velocity) < frictionAcceleration) {
             this.velocity = zero();
         } 
-        else {*/
+        else {
             game.physic.translate(this, mlt(this.velocity, game.deltaTime));
-            //this.velocity = sub(this.velocity, mlt(norm(this.velocity), -frictionAcceleration));
-        //}
+            this.velocity = sub(this.velocity, mlt(norm(this.velocity), -frictionAcceleration));
+        }
         super.update(game);
     }
 }

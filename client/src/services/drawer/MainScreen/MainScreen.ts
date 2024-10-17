@@ -21,16 +21,15 @@ export default class MainScreen {
         this.drawer.clear();
         this.scene.forEachUpdated(object => {
             const { x, y } = object.position;
-            if (this.isReady)
-                this.drawer.draw({ image: this.image, x, y });
-
             if (object instanceof Obstacle) {
                 this.drawer.drawFunction(
-                  (x) => object.getValueAt(x), // Используем getValueAt для получения значения функции
-                  'red', 
-                  3 
+                    (x) => object.getValueAt(x), // Используем getValueAt для получения значения функции
+                    'red',
+                    3
                 );
-              }
+            }
+            else if (this.isReady)
+                this.drawer.draw({ image: this.image, x, y });
         });
     }
 }
