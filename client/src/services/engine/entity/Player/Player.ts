@@ -1,6 +1,5 @@
 import { TPoint, TUpdateParameters } from "../..";
 import PhysicalBehaviour from "../../physic/PhysicalBehavouor";
-import { Vector } from "../../structures";
 
 class Player extends PhysicalBehaviour {
     speed: number = 2;

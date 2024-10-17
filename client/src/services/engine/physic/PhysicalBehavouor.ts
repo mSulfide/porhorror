@@ -1,10 +1,10 @@
 import { TPoint, TUpdateParameters } from "..";
-import { Vector } from "../structures";
+import { add, mlt, modl, norm, sub, zero } from "../math";
 import { CircleCollider } from "../structures/Physic";
 
 class PhysicalBehaviour extends CircleCollider {
     weight: number;
-    velocity: Vector = new Vector();
+    velocity: TPoint = zero();
     friction: number = 1;
 
     constructor(radius?: number, position?: TPoint, weight?: number) {
@@ -13,22 +13,22 @@ class PhysicalBehaviour extends CircleCollider {
     }
 
     setVelocity(velocity: TPoint) {
-        this.velocity = new Vector(velocity.x, velocity.y);
+        this.velocity = velocity;
     }
 
     addVelocity(velocity: TPoint) {
-        const { x, y } = velocity;
-        this.velocity = this.velocity.add(new Vector(x, y));
+        this.velocity = add(this.velocity, velocity);
     }
 
     update(game: TUpdateParameters): void {
-        const frictionAcceleration = this.friction * this.weight * game.deltaTime;
-        if (this.velocity.length() < frictionAcceleration) {
-            this.velocity = new Vector();
-        } else {
-            game.physic.translate(this, this.velocity.multiplyScalar(game.deltaTime));
-            this.velocity = this.velocity.subtract(this.velocity.normalize().multiplyScalar(-frictionAcceleration));
-        }
+        /*const frictionAcceleration = this.friction * this.weight * game.deltaTime;
+        if (modl(this.velocity) < frictionAcceleration) {
+            this.velocity = zero();
+        } 
+        else {*/
+            game.physic.translate(this, mlt(this.velocity, game.deltaTime));
+            //this.velocity = sub(this.velocity, mlt(norm(this.velocity), -frictionAcceleration));
+        //}
         super.update(game);
     }
 }

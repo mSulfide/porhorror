@@ -11,8 +11,8 @@ class CircleCollider implements ICollider, IGameObject {
         this.position = position || { x: 0, y: 0 };
     }
 
-    collide(collider: CircleCollider): THitInfo | null {
-        const ab = sub(collider.position, this.position);
+    collide(collider: CircleCollider, offset: TPoint): THitInfo | null {
+        const ab = sub(collider.position, add(this.position, offset));
         if (smod(ab) > (this.radius + collider.radius) ** 2)
             return null;
         const normal = norm(ab);
