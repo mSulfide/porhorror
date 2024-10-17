@@ -1,7 +1,6 @@
 import { CircleCollider, THitInfo } from ".";
-import { Vector } from "..";
 import { TPoint } from "../..";
-import { add } from "../../math";
+import { add, dot, mlt, sub, zero } from "../../math";
 import Scene from "../Scene/Scene";
 
 type TTransposition = {
@@ -22,12 +21,11 @@ class Physic {
         this.movements.forEach(move => {
             const hit = this.findCollision(move.collider, move.offset);
             if (hit) {
-                if (move.cb)
-                    move.cb(hit);
+                const scal = dot(hit.normal, move.offset);
+                if (scal < 0)
+                    move.offset = sub(move.offset, mlt(hit.normal, scal));
             }
-            else {
-                move.collider.position = add(move.collider.position, move.offset);
-            }
+            move.collider.position = add(move.collider.position, move.offset);
         });
 
         this.movements.splice(0, this.movements.length);
@@ -38,13 +36,11 @@ class Physic {
     }
 
     private findCollision(colliderA: CircleCollider, offset: TPoint): THitInfo | null {
-        const scene = this.scene;
-        scene.forEachStatic(colliderB => {
-            const hit = colliderB.collide(colliderA, offset);
-            if (hit)
-                return hit;
-        })
-        return null;
+        let hit: THitInfo | null = null;
+        this.scene.forEachStatic(colliderB => {
+            hit ??= colliderB.collide(colliderA, offset);
+        });
+        return hit;
     }
 }
 
