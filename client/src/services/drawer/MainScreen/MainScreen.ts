@@ -19,7 +19,7 @@ export default class MainScreen {
 
     public render() {
         this.drawer.clear();
-        this.scene.forEach(object => {
+        this.scene.forEachUpdated(object => {
             const { x, y } = object.position;
             if (this.isReady)
                 this.drawer.draw({ image: this.image, x, y });

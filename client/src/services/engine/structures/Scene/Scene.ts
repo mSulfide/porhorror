@@ -1,20 +1,50 @@
+import { TScene } from ".";
 import { IGameObject } from "../..";
+import { CircleCollider, ICollider } from "../Physic";
 
 class Scene {
     private objects: IGameObject[] = [];
+    private staticColliders: ICollider[] = [];
+    private dynamicColliders: CircleCollider[] = [];
 
-    constructor(objects: IGameObject[] = []) {
-        objects?.forEach((gameObject: IGameObject) => {
-            this.objects.push(gameObject);
-        });
+    constructor(scene?: TScene) {
+        if (scene) {
+            const { updatable, staticColliders, dynamicColliders } = scene;
+            updatable?.forEach((value: IGameObject) => {
+                this.objects.push(value);
+            });
+            staticColliders?.forEach((value: ICollider) => {
+                this.staticColliders.push(value);
+            });
+            dynamicColliders?.forEach((value: CircleCollider) => {
+                this.dynamicColliders.push(value);
+            });
+        }
     }
 
-    public forEach(action: (gameObject: IGameObject) => void) {
+    public forEachUpdated(action: (gameObject: IGameObject) => void) {
         this.objects.forEach(action);
     }
 
-    public addObject(object: IGameObject): void {
-        this.objects.push(object);
+    public forEachStatic(action: (collider: ICollider) => void) {
+        this.staticColliders.forEach(action);
+    }
+
+    public forEachDynamic(action: (collider: CircleCollider) => void) {
+        this.dynamicColliders.forEach(action);
+    }
+
+    public updateScene(scene: TScene) {
+        this.update(this.objects, scene.updatable);
+        this.update(this.staticColliders, scene.staticColliders);
+        this.update(this.dynamicColliders, scene.dynamicColliders);
+    }
+
+    private update<T>(array: T[], values?: T[]): void {
+        array.splice(0, array.length);
+        values?.forEach((value: T) => {
+            array.push(value);
+        });
     }
 }
 

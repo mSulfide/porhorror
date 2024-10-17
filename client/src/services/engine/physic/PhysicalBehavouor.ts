@@ -1,42 +1,35 @@
-import { IGameObject, TPoint } from "..";
+import { TPoint, TUpdateParameters } from "..";
+import { add, mlt, modl, norm, sub, zero } from "../math";
+import { CircleCollider } from "../structures/Physic";
 
-class PhysicalBehaviour implements IGameObject {
-
-    position: TPoint;
+class PhysicalBehaviour extends CircleCollider {
     weight: number;
-    velocity: number = 0;
-    velocityDirection: TPoint = { x: 0, y: 0 }
-    friction: number = 0;
+    velocity: TPoint = zero();
+    friction: number = 1;
 
-    constructor(position: TPoint, weight: number = 1) {
-        this.position = position
-        this.weight = weight;
+    constructor(radius?: number, position?: TPoint, weight?: number) {
+        super(radius, position);
+        this.weight = weight || 1;
     }
 
-    setVelocityDirection(direction: TPoint) {
-        this.velocityDirection.x = direction.x;
-        this.velocityDirection.y = direction.y;
-    }
-
-    setVelocity(velocity: number) {
+    setVelocity(velocity: TPoint) {
         this.velocity = velocity;
     }
 
-    addVelocity(velocity: number) {
-        this.velocity += velocity;
+    addVelocity(velocity: TPoint) {
+        this.velocity = add(this.velocity, velocity);
     }
 
-    update(deltaTime: number): void {
-        if (this.velocity) {
-            let frictionAcceleration = this.friction * this.weight * deltaTime;
-            if (this.velocity < frictionAcceleration) {
-                this.velocity = 0;
-            } else {
-                this.position.x += this.velocityDirection.x * this.velocity * deltaTime;
-                this.position.y += this.velocityDirection.y * this.velocity * deltaTime;
-                this.velocity -= frictionAcceleration * this.velocity
-            }
-        }
+    update(game: TUpdateParameters): void {
+        /*const frictionAcceleration = this.friction * this.weight * game.deltaTime;
+        if (modl(this.velocity) < frictionAcceleration) {
+            this.velocity = zero();
+        } 
+        else {*/
+            game.physic.translate(this, mlt(this.velocity, game.deltaTime));
+            //this.velocity = sub(this.velocity, mlt(norm(this.velocity), -frictionAcceleration));
+        //}
+        super.update(game);
     }
 }
 

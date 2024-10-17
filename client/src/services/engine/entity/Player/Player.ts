@@ -1,17 +1,17 @@
-import { IGameObject, TPoint } from "../..";
-import Input from "../../structures/Input/Input";
+import { TPoint, TUpdateParameters } from "../..";
+import PhysicalBehaviour from "../../physic/PhysicalBehavouor";
 
-class Player implements IGameObject {
-    position: TPoint;
+class Player extends PhysicalBehaviour {
+    speed: number = 2;
 
-    constructor(position?: TPoint) {
-        const { x, y } = position || { x: 0, y: 0 };
-        this.position = { x, y };
+    constructor(radius?: number, position?: TPoint, weigth?: number) {
+        super(radius, position, weigth);
     }
 
-    update(deltaTime: number, input: Input): void {
-        this.position.x += input.getAxisX() * deltaTime;
-        this.position.y += input.getAxisY() * deltaTime;
+    update(game: TUpdateParameters): void {
+        const axis: TPoint = { x: game.input.getAxisX(), y: game.input.getAxisY() };
+        this.setVelocity(axis);
+        super.update(game);
     }
 }
 
