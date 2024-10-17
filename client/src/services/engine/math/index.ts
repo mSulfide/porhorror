@@ -16,4 +16,6 @@ const norm = (a: TPoint): TPoint => mlt(a, 1 / modl(a));
 
 const zero = (): TPoint => ({ x: 0, y: 0 });
 
-export { add, sub, mlt, dot, smod, modl, norm, zero }
+const derivative = (f: (x: number) => number, x: number, eps: number = 0.0001): number => (f(x + eps) - f(x)) / eps;
+
+export { add, sub, mlt, dot, smod, modl, norm, zero, derivative }
