@@ -25,3 +25,13 @@ export type TMessagesResponse = {
     messages: TMessages;
     hash: string;
 }
+
+export type TItem = {
+    id: number;
+    name: string;
+};
+
+export type TInventory = {
+    inventory: TItem[];
+    equipment: TItem[];
+}

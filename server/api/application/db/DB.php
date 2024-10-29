@@ -22,7 +22,7 @@ class DB {
         $pass = '---';
         $db = 'nopainnogame';
         $connect = "pgsql:host=$host;port=$port;dbname=$db;";
-        $this->pdo = new PDO($connect, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        //$this->pdo = new PDO($connect, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     }
 
     public function __destruct() {
@@ -50,11 +50,21 @@ class DB {
     }
 
     public function getUserByLogin($login) {
-        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
+        $user = new stdClass();
+        $user->id = 1001;
+        $user->name = 'misa';
+        return $user;
+
+        //return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
 
     public function getUserByToken($token) {
-        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
+
+        $user = new stdClass();
+        $user->id = 1001;
+        return $user;
+
+        //return $this->query("SELECT * FROM users WHERE token=?", [$token]);
     }
 
     public function updateToken($userId, $token) {
@@ -83,5 +93,25 @@ class DB {
                                 LEFT JOIN users as u on u.id = m.user_id 
                                 ORDER BY m.created DESC"
         );
+    }
+
+    public function getInventory($userId) {
+        $item1 = new stdClass();
+        $item1->id = 11;
+        $item1->name = 'Шмотка 1';
+        $item2 = new stdClass();
+        $item2->id = 222;
+        $item2->name = 'Шмотка 2';
+        return [$item1, $item2];
+    }
+
+    public function getEquipment($userId) {
+        $item1 = new stdClass();
+        $item1->id = 333;
+        $item1->name = 'Шмотка 3';
+        $item2 = new stdClass();
+        $item2->id = 4444;
+        $item2->name = 'Шмотка 4';
+        return [$item1, $item2];
     }
 }

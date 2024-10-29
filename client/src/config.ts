@@ -18,7 +18,10 @@ export type TWINDOW = {
 }
 
 const CONFIG = {
+    //dev
     HOST: 'https://porhorror.local/api',
+    // UdSU
+    //HOST: 'http://porhorror:81/api',
 
     CHAT_TIMESTAMP: 200, //ms
 

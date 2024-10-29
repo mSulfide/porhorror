@@ -19,12 +19,32 @@ function result($params) {
             case 'registration': return $app->registration($params);
             // chat
             case 'sendMessage': return $app->sendMessage($params);
-            case 'getMessages': return $app->getMessages($params);
+            case 'getMessages': return $app->getMessages($params); // loop
             // math
             case 'derivative': return $app->derivative($params);
             case 'spline': return $app->spline($params);
             // physic
             case 'getCirclesIntersection': return $app->getCirclesIntersection($params);
+
+            // инвентарь
+            case 'getInventory': return $app->getInventory($params);
+            case 'changeInventory': return $app->changeInventory($params);
+            // лобби
+            case 'updateGroups': return $app->updateGroups($params); // loop
+            case 'createGroup': return $app->createGroup($params);
+            case 'deleteGroup': return $app->deleteGroup($params);
+            case 'joinToGroup': return $app->joinToGroup($params);
+            case 'leaveGroup': return $app->leaveGroup($params);
+            case 'dropFromGroup': return $app->dropFromGroup($params); // (?)
+            case 'startGame': return $app->startGame($params);
+            // игра
+            case 'updateScene': return $app->updateScene($params); // loop
+            case 'getRoom': return $app->getRoom($params);
+            case 'getTasks': return $app->getTasks($params);
+            case 'move': return $app->move($params);
+            case 'drop': return $app->drop($params);
+            case 'pickup': return $app->pickup($params);
+
             default: return ['error' => 102];
         }
     }

@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory } from "./types";
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -23,6 +23,7 @@ class Server {
             if (token) {
                 params.token = token;
             }
+            console.log(`${this.HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
             const response = await fetch(`${this.HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
             const answer: TAnswer<T> = await response.json();
             if (answer.result === 'ok' && answer.data) {
@@ -103,6 +104,14 @@ class Server {
             this.chatInterval = null;
             this.store.clearMessages();
         }
+    }
+
+    async getInventory(): Promise<boolean> {
+        const result = await this.request<TInventory>('getInventory');
+        if (result) {
+            this.store.setInventory(result);
+        }
+        return !!result;
     }
 }
 

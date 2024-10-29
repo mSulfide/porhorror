@@ -1,4 +1,4 @@
-import { TMessages, TUser } from "../server/types";
+import { TInventory, TItem, TMessages, TUser } from "../server/types";
 
 const TOKEN = 'token';
 
@@ -6,6 +6,8 @@ class Store {
     user: TUser | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
+    inventory: TItem[] = [];
+    equipment: TItem[] = [];
 
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
@@ -22,7 +24,8 @@ class Store {
     }
 
     getUser(): TUser | null {
-        return this.user;
+        return null;
+        //return this.user;
     }
 
     clearUser(): void {
@@ -53,6 +56,18 @@ class Store {
 
     setChatHash(hash: string): void {
         this.chatHash = hash;
+    }
+
+    setInventory({ inventory, equipment }: TInventory): void {
+        this.inventory = inventory;
+        this.equipment = equipment;
+    }
+
+    getInventory(): TItem[] {
+        return this.inventory;
+    }
+    getEquipment(): TItem[] {
+        return this.equipment;
     }
 }
 

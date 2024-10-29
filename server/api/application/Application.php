@@ -1,15 +1,22 @@
 <?php
+
 require_once ('db/DB.php');
 require_once ('user/User.php');
 require_once ('chat/Chat.php');
 require_once ('Math/Math.php');
 require_once ('physic/Physic.php');
+require_once ('inventory/Inventory.php');
+require_once ('lobby/Lobby.php');
+require_once ('game/Game.php');
 
 class Application {
     function __construct() {
         $db = new DB();
         $this->user = new User($db);
         $this->chat = new Chat($db);
+        $this->inventory = new Inventory($db);
+        $this->lobby = new Lobby($db);
+        $this->game = new Game($db);
     }
 
     public function login($params) {
@@ -100,5 +107,36 @@ class Application {
             return []; 
         }
     }
+
+    // инвентарь
+    public function getInventory($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->inventory->getInventory($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    /*
+    case 'changeInventory': return $app->changeInventory($params);
+    // лобби
+    case 'updateGroups': return $app->updateGroups($params); // loop
+    case 'createGroup': return $app->createGroup($params);
+    case 'deleteGroup': return $app->deleteGroup($params);
+    case 'joinToGroup': return $app->joinToGroup($params);
+    case 'leaveGroup': return $app->leaveGroup($params);
+    case 'dropFromGroup': return $app->dropFromGroup($params); // (?)
+    case 'startGame': return $app->startGame($params);
+    // игра
+    case 'updateScene': return $app->updateScene($params); // loop
+    case 'getRoom': return $app->getRoom($params);
+    case 'getTasks': return $app->getTasks($params);
+    case 'move': return $app->move($params);
+    case 'drop': return $app->drop($params);
+    case 'pickup': return $app->pickup($params);
+    */
     
 }

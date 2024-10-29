@@ -1,6 +1,5 @@
 <?php
 
-header('Content-Type: application/json; charset=utf-8');
 
 //производная
 function derivative($func, $x, $eps) {
