@@ -4,7 +4,7 @@ require_once 'Circle.php';
 require_once 'Point.php';
 
 class Math {
-    public static function doCirclesIntersect(Circle $circle1, Circle $circle2): bool {
+    public static function getCirclesIntersect(Circle $circle1, Circle $circle2): bool {
         $dx = $circle1->position->x - $circle2->position->x;
         $dy = $circle1->position->y - $circle2->position->y;
         $distanceSquared = $dx * $dx + $dy * $dy;
@@ -14,7 +14,7 @@ class Math {
 
     // функция для определения точки пересечения кругов
     public static function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
-        if (!self::doCirclesIntersect($circle1, $circle2)) {
+        if (!self::getCirclesIntersect($circle1, $circle2)) {
             return null; 
         }
 

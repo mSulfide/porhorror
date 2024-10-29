@@ -23,8 +23,8 @@ function result($params) {
             // math
             case 'derivative': return $app->derivative($params);
             case 'spline': return $app->spline($params);
-            // physic
-            case 'getCirclesIntersection': return $app->getCirclesIntersection($params);
+            case 'getCirclesIntersect': return $app->getCirclesIntersects($params);
+            case 'getIntersectionPoint': return $app->getIntersectionPoint($params);
 
             // инвентарь
             case 'getInventory': return $app->getInventory($params);
