@@ -1,7 +1,7 @@
 import { Scene } from "../../engine/structures";
 import { IDrawer } from "../IDrawer";
 import sprite from "../../../assets/img/tas.png";
-import { Obstacle } from "../../engine/entity";
+import { FuncCollider } from "../../engine/entity";
 
 export default class MainScreen {
     private drawer: IDrawer;
@@ -21,7 +21,7 @@ export default class MainScreen {
         this.drawer.clear();
         this.scene.forEachUpdated(object => {
             const { x, y } = object.position;
-            if (object instanceof Obstacle) {
+            if (object instanceof FuncCollider) {
                 this.drawer.drawFunction(
                     (x) => object.getValueAt(x), // Используем getValueAt для получения значения функции
                     'red',

@@ -3,7 +3,7 @@ import { TPoint } from "../..";
 import { add, derivative, norm, sub } from "../../math";
 import { CircleCollider, ICollider, THitInfo } from "../../structures/Physic";
 
-class Obstacle implements IGameObject, ICollider {
+class FuncCollider implements IGameObject, ICollider {
     private func: (x: number) => number; // Функция для вычислений
     public position: TPoint; // Позиция препятствия
 
@@ -59,4 +59,4 @@ class Obstacle implements IGameObject, ICollider {
     }
 }
 
-export default Obstacle;
+export default FuncCollider;

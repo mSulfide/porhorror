@@ -1,4 +1,4 @@
-import Obstacle from "./Obstacle/Obstacle";
+import FuncCollider from "./FuncCollider/FuncCollider";
 import Player from "./Player/Player";
 
-export { Obstacle, Player }
+export { FuncCollider, Player }
