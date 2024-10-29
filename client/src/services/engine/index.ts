@@ -1,5 +1,4 @@
-import { Physic } from "./structures";
-import Input from "./structures/Input/Input";
+import { Input, Physic } from "./structures";
 
 export type TPoint = {
     x: number,

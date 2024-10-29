@@ -3,10 +3,9 @@ import Game from "../../services/Game/Game";
 import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { testScene } from "../../services/engine/structures/Scene/scenes";
 import { IBasePage, PAGES } from "../PageManager";
-import Button from "../../components/Button/Button";
 import useKeyboard from "./hooks/useKeyboard";
-import Input from "../../services/engine/structures/Input/Input";
-import UserPoints from "../../components/UserPoints/UserPoints";
+import { Input } from "../../services/engine/structures";
+import { Button, UserPoints } from "../../components";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = () => props.setPage(PAGES.CHAT);

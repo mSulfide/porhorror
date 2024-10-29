@@ -1,7 +1,5 @@
-import { Player } from "../../../entity";
-import { CircleCollider } from "../../Physic";
+import { Obstacle, Player } from "../../../entity";
 import Scene from "../Scene";
-import Obstacle from "../../../entity/Obstacle/Obstacle";
 
 const player: Player = new Player(0.025);
 const randomCollider = new Obstacle((x: number) => x * x * x, { x: 0, y: 0.9 });

@@ -1,7 +1,7 @@
 import { Scene } from "../../engine/structures";
 import { IDrawer } from "../IDrawer";
 import sprite from "../../../assets/img/tas.png";
-import Obstacle from "../../engine/entity/Obstacle/Obstacle"
+import { Obstacle } from "../../engine/entity";
 
 export default class MainScreen {
     private drawer: IDrawer;
