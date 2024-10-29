@@ -1,26 +1,9 @@
 <?php
 
-class TPoint {
-    public $x;
-    public $y;
+require_once 'Circle.php';
+require_once 'Point.php';
 
-    public function __construct($x, $y) {
-        $this->x = $x;
-        $this->y = $y;
-    }
-}
-
-class Circle {
-    public $position;
-    public $radius;
-
-    public function __construct(TPoint $position, $radius) {
-        $this->position = $position;
-        $this->radius = $radius;
-    }
-}
-
-class Physic {
+class Math {
     public static function doCirclesIntersect(Circle $circle1, Circle $circle2): bool {
         $dx = $circle1->position->x - $circle2->position->x;
         $dy = $circle1->position->y - $circle2->position->y;
@@ -30,7 +13,7 @@ class Physic {
     }
 
     // функция для определения точки пересечения кругов
-    public static function getIntersectionPoint(Circle $circle1, Circle $circle2): ?TPoint {
+    public static function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
         if (!self::doCirclesIntersect($circle1, $circle2)) {
             return null; 
         }
@@ -49,7 +32,7 @@ class Physic {
         $x = $circle1->position->x + (($circle2->position->x - $circle1->position->x) / $distance) * $length1;
         $y = $circle1->position->y + (($circle2->position->y - $circle1->position->y) / $distance) * $length1;
 
-        return new TPoint($x, $y);
+        return new Point($x, $y);
     }
 
     // производная
