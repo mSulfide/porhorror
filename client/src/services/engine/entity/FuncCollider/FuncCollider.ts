@@ -1,19 +1,21 @@
 import { IGameObject } from "../..";
 import { TPoint } from "../..";
-import { add, derivative, norm, sub } from "../../math";
+import { add, derivative, mlt, norm } from "../../math";
 import { CircleCollider, ICollider, THitInfo } from "../../structures/Physic";
 
 class FuncCollider implements IGameObject, ICollider {
     private func: (x: number) => number; // Функция для вычислений
+    private width: number;
     public position: TPoint; // Позиция препятствия
 
-    constructor(func: (x: number) => number, position?: TPoint) {
-        this.func = func; 
+    constructor(func: (x: number) => number, position?: TPoint, width: number = 0) {
+        this.func = func;
+        this.width = Math.max(0, width)
         this.position = position || { x: 0, y: 0 };
     }
 
     public update(): void {
-        
+
     }
 
     // Метод для получения значения функции с учетом позиции
@@ -24,8 +26,8 @@ class FuncCollider implements IGameObject, ICollider {
     collide(collider: CircleCollider, offset: TPoint): THitInfo | null {
         const pos: TPoint = add(collider.position, offset);
 
-        const step = 0.05; // Шаг для перебора по оси X
-        const range = 1; // Диапазон для проверки (можно настроить в зависимости от ожидаемого размера графика)
+        const range = collider.radius;
+        const step = range / 500;
 
         let closestPoint: TPoint | null = null;
         let minDistance = Infinity;
@@ -34,28 +36,31 @@ class FuncCollider implements IGameObject, ICollider {
         for (let x = pos.x - range; x <= pos.x + range; x += step) {
             const closestY = this.getValueAt(x);
 
-            // Вычисляем расстояние между текущей точкой на графике и центром круга
-            const distance = Math.sqrt(Math.pow(x - pos.x, 2) + Math.pow(closestY - pos.y, 2));
+            // Вычисляем квадрат расстояния между текущей точкой на графике и центром круга
+            const sqrDistance = Math.pow(x - pos.x, 2) + Math.pow(closestY - pos.y, 2);
 
             // Проверяем, меньше ли расстояние радиуса круга
-            if (distance < collider.radius) {
+            if (sqrDistance < (collider.radius + this.width) ** 2) {
                 // Если нашли новую ближайшую точку, обновляем
-                if (distance < minDistance) {
-                    minDistance = distance;
+                if (sqrDistance < minDistance) {
+                    minDistance = sqrDistance;
                     closestPoint = { x: x, y: closestY };
                 }
             }
         }
 
         if (closestPoint)
-            return { point: closestPoint, normal: this.getNormal(closestPoint.x) };
+            return {
+                point: closestPoint,
+                normal: mlt(this.getNormal(closestPoint.x), (this.getValueAt(closestPoint.x) > pos.y) ? 1 : -1)
+            };
         else
             return null;
     }
 
     private getNormal(x0: number): TPoint {
-        const f = (x: number) => this.getValueAt(x0) - 1 / derivative((x: number) => this.getValueAt(x), x0) * (x - x0);
-        return norm(sub({ x: x0, y: f(x0) }, { x: x0 - 1, y: f(x0 - 1) }));
+        const f = (x: number) => this.getValueAt(x0) - (x - x0) / derivative((x: number) => this.getValueAt(x), x0);
+        return norm({ x: 1, y: f(x0) - f(x0 - 1) });
     }
 }
 

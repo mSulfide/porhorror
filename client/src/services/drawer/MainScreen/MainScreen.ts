@@ -25,13 +25,15 @@ export default class MainScreen {
             const y = object.position.y * 2 / this.camera.height;
             if (object instanceof FuncCollider) {
                 this.drawer.drawFunction(
-                    (x) => object.getValueAt(x), // Используем getValueAt для получения значения функции
+                    (x) => object.getValueAt((x + this.camera.position.x) * this.camera.width / 2) * 2 / this.camera.height + this.camera.position.y, // Используем getValueAt для получения значения функции
                     'red',
                     3
                 );
             }
-            else if (this.isReady)
-                this.drawer.draw({ image: this.image, x: (x + 1) / 2, y: (y + 1) / 2 });
+            else {
+                if (this.isReady)
+                    this.drawer.draw({ image: this.image, x: (x + 1) / 2, y: (y + 1) / 2 });
+            }
         });
     }
 }
