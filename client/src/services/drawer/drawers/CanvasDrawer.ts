@@ -20,7 +20,9 @@ class CanvasDrawer implements IDrawer {
         this.ctx.drawImage(
             option.image,
             option.x * width,
-            (1 - option.y) * height
+            (1 - option.y) * height,
+            option.sx,
+            option.sy
         );
         this.ctx.fill();
     }

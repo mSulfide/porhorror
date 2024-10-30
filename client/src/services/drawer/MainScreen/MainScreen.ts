@@ -32,7 +32,7 @@ export default class MainScreen {
             }
             else {
                 if (this.isReady)
-                    this.drawer.draw({ image: this.image, x: (x + 1) / 2, y: (y + 1) / 2 });
+                    this.drawer.draw({ image: this.image, x: (x + 1) / 2, y: (y + 1) / 2, sx: 20, sy: 20 });
             }
         });
     }

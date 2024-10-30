@@ -3,7 +3,9 @@ export type TDrawOption = {
     /** x ∈ [0, 1], where 0 - left 1 - right*/
     x: number,
     /** y ∈ [0, 1], where 0 - down, 1 - up */
-    y: number
+    y: number,
+    sx: number,
+    sy: number
 }
 
 export interface IDrawer {
