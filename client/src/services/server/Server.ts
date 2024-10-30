@@ -113,6 +113,12 @@ class Server {
         }
         return !!result;
     }
+
+    async changeInventory(itemId: number, fromEquipment: boolean): Promise<boolean> {
+        const action = fromEquipment ? 'removeFromEquipment' : 'addToEquipment';
+        const result = await this.request<boolean>(action, { itemId: itemId.toString() });
+        return !!result;
+    }
 }
 
 export default Server;

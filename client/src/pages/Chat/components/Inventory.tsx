@@ -14,15 +14,25 @@ const Inventory: React.FC = () => {
         })();
     });
 
-    const inventoryClick = (itemId: number) => {
-        console.log(itemId);
-        //setIsLoading(true);
-    }
+    const inventoryClick = async (itemId: number) => {
+        setIsLoading(true);
+        // Убираем из инвентаря и добавляем в экипировку
+        const result = await server.changeInventory(itemId, false); 
+        if (result) {
+            await server.getInventory();
+        }
+        setIsLoading(false);
+    };
 
-    const equipmentClick = (itemId: number) => {
-        console.log(itemId);
-        //setIsLoading(true);
-    }
+    const equipmentClick = async (itemId: number) => {
+        setIsLoading(true);
+        // Убираем из экипировки и добавляем в инвентарь
+        const result = await server.changeInventory(itemId, true); 
+        if (result) {
+            await server.getInventory(); 
+        }
+        setIsLoading(false);
+    };
 
     if (isLoading) {
         return (<>...Загрузка</>);
