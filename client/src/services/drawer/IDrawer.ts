@@ -1,8 +1,8 @@
 export type TDrawOption = {
     image: HTMLImageElement,
-    /** x ∈ [-1, 1] */
+    /** x ∈ [0, 1], where 0 - left 1 - right*/
     x: number,
-    /** y ∈ [-1, 1] */
+    /** y ∈ [0, 1], where 0 - down, 1 - up */
     y: number
 }
 

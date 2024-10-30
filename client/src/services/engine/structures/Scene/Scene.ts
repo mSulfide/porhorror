@@ -1,9 +1,11 @@
 import { TScene } from ".";
 import { IGameObject } from "../..";
+import { Camera } from "../../entity";
 import { CircleCollider, ICollider } from "../Physic";
 
 class Scene {
-    private objects: IGameObject[] = [];
+    camera: Camera = new Camera(4, 3, this);
+    private objects: IGameObject[] = [this.camera];
     private staticColliders: ICollider[] = [];
     private dynamicColliders: CircleCollider[] = [];
 
