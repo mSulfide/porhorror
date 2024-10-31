@@ -1,5 +1,4 @@
 import { TPoint } from "../..";
-import Vector from "../Vector/Vector";
 import CircleCollider from "./Collider/CircleCollider";
 
 export interface ICollider {

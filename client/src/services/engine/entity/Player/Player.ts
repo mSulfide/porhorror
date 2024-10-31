@@ -1,8 +1,10 @@
-import { TPoint, TUpdateParameters } from "../..";
+import { IRenderer, TPoint, TUpdateParameters } from "../..";
 import PhysicalBehaviour from "../../physic/PhysicalBehavouor";
 
-class Player extends PhysicalBehaviour {
+class Player extends PhysicalBehaviour implements IRenderer {
     speed: number = 2;
+    sprite: boolean = true;
+    viewRadius: number = this.radius;
 
     constructor(radius?: number, position?: TPoint, weigth?: number) {
         super(radius, position, weigth);
