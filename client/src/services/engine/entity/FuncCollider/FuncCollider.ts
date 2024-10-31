@@ -54,7 +54,7 @@ class FuncCollider implements IUpdatable, ICollider, IRenderer {
         if (closestPoint)
             return {
                 point: closestPoint,
-                normal: mlt(this.getNormal(closestPoint.x), (this.getValueAt(closestPoint.x) > pos.y) ? 1 : -1)
+                normal: mlt(this.getNormal(closestPoint.x), (this.getValueAt(closestPoint.x) < pos.y) ? 1 : -1)
             };
         else
             return null;
@@ -62,7 +62,9 @@ class FuncCollider implements IUpdatable, ICollider, IRenderer {
 
     private getNormal(x0: number): TPoint {
         const f = (x: number) => this.getValueAt(x0) - (x - x0) / derivative((x: number) => this.getValueAt(x), x0);
-        return norm({ x: 1, y: f(x0) - f(x0 - 1) });
+        const f1 = f(x0);
+        const f2 = f(x0 - 1);
+        return norm((f1 > f2 ? { x: 1, y: f1 - f2 } : { x: -1, y: f2 - f1}) || { x: 0, y: 1 });
     }
 }
 
