@@ -1,17 +1,18 @@
 import { TScene } from ".";
-import { IGameObject } from "../..";
+import { IGameObject, IRenderer } from "../..";
 import { Camera } from "../../entity";
 import { CircleCollider, ICollider } from "../Physic";
 
 class Scene {
-    camera: Camera = new Camera(4, 3, this);
+    camera: Camera = new Camera(8.32, 6.24, this);
     private objects: IGameObject[] = [this.camera];
     private staticColliders: ICollider[] = [];
     private dynamicColliders: CircleCollider[] = [];
+    private renderers: IRenderer[] = [];
 
     constructor(scene?: TScene) {
         if (scene) {
-            const { updatable, staticColliders, dynamicColliders } = scene;
+            const { updatable, staticColliders, dynamicColliders, renderers } = scene;
             updatable?.forEach((value: IGameObject) => {
                 this.objects.push(value);
             });
@@ -20,6 +21,9 @@ class Scene {
             });
             dynamicColliders?.forEach((value: CircleCollider) => {
                 this.dynamicColliders.push(value);
+            });
+            renderers?.forEach((value: IRenderer) => {
+                this.renderers.push(value);
             });
         }
     }
@@ -36,10 +40,15 @@ class Scene {
         this.dynamicColliders.forEach(action);
     }
 
+    public forEachRenederers(action: (renderer: IRenderer) => void) {
+        this.renderers.forEach(action);
+    }
+
     public updateScene(scene: TScene) {
         this.update(this.objects, scene.updatable);
         this.update(this.staticColliders, scene.staticColliders);
         this.update(this.dynamicColliders, scene.dynamicColliders);
+        this.update(this.renderers, scene.renderers);
     }
 
     private update<T>(array: T[], values?: T[]): void {

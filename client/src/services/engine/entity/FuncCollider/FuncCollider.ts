@@ -1,12 +1,14 @@
-import { IGameObject } from "../..";
+import { IGameObject, IRenderer } from "../..";
 import { TPoint } from "../..";
 import { add, derivative, mlt, norm } from "../../math";
 import { CircleCollider, ICollider, THitInfo } from "../../structures/Physic";
 
-class FuncCollider implements IGameObject, ICollider {
+class FuncCollider implements IGameObject, ICollider, IRenderer {
     private func: (x: number) => number; // Функция для вычислений
     private width: number;
     public position: TPoint; // Позиция препятствия
+    size?: TPoint | undefined;
+    viewRadius: number = Infinity;
 
     constructor(func: (x: number) => number, position?: TPoint, width: number = 0) {
         this.func = func;

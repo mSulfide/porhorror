@@ -1,8 +1,9 @@
-import { IGameObject } from "../.."
+import { IGameObject, IRenderer } from "../.."
 import { CircleCollider, ICollider } from "../Physic"
 
 export type TScene = {
     updatable?: IGameObject[],
     staticColliders?: ICollider[],
-    dynamicColliders?: CircleCollider[]
+    dynamicColliders?: CircleCollider[],
+    renderers?: IRenderer[]
 }

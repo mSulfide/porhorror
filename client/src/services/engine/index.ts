@@ -16,3 +16,10 @@ export interface IGameObject {
 
     update(game: TUpdateParameters): void;
 }
+
+export interface IRenderer {
+    position: TPoint;
+    sprite?: boolean;
+    size?: TPoint;
+    viewRadius: number;
+}

@@ -13,10 +13,19 @@ export interface IDrawer {
 
     draw(option: TDrawOption): void;
 
-    drawFunction(
+    drawLine?(
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        color?: string,
+        lineWidth?: number
+    ): void;
+
+    drawFunction?(
         func: (x: number) => number,
-        color: string,
-        lineWidth: number,
+        color?: string,
+        lineWidth?: number,
 
     ): void
 }
