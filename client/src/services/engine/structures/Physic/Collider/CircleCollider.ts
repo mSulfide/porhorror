@@ -1,8 +1,8 @@
 import { ICollider, THitInfo } from "..";
-import { IGameObject, TPoint, TUpdateParameters } from "../../..";
+import { IUpdatable, TPoint, TUpdateParameters } from "../../..";
 import { add, mlt, norm, smod, sub } from "../../../math";
 
-class CircleCollider implements ICollider, IGameObject {
+class CircleCollider implements ICollider, IUpdatable {
     position: TPoint;
     radius: number;
 

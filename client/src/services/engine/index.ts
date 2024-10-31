@@ -11,9 +11,7 @@ export type TUpdateParameters = {
     physic: Physic
 }
 
-export interface IGameObject {
-    position: TPoint;
-
+export interface IUpdatable {
     update(game: TUpdateParameters): void;
 }
 

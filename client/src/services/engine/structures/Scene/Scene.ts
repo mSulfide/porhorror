@@ -1,11 +1,11 @@
 import { TScene } from ".";
-import { IGameObject, IRenderer } from "../..";
+import { IUpdatable, IRenderer } from "../..";
 import { Camera } from "../../entity";
 import { CircleCollider, ICollider } from "../Physic";
 
 class Scene {
     camera: Camera = new Camera(8.32, 6.24, this);
-    private objects: IGameObject[] = [this.camera];
+    private objects: IUpdatable[] = [this.camera];
     private staticColliders: ICollider[] = [];
     private dynamicColliders: CircleCollider[] = [];
     private renderers: IRenderer[] = [];
@@ -13,7 +13,7 @@ class Scene {
     constructor(scene?: TScene) {
         if (scene) {
             const { updatable, staticColliders, dynamicColliders, renderers } = scene;
-            updatable?.forEach((value: IGameObject) => {
+            updatable?.forEach((value: IUpdatable) => {
                 this.objects.push(value);
             });
             staticColliders?.forEach((value: ICollider) => {
@@ -28,7 +28,7 @@ class Scene {
         }
     }
 
-    public forEachUpdated(action: (gameObject: IGameObject) => void) {
+    public forEachUpdated(action: (gameObject: IUpdatable) => void) {
         this.objects.forEach(action);
     }
 

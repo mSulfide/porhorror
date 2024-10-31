@@ -1,8 +1,8 @@
-import { IGameObject, IRenderer, TPoint, TUpdateParameters } from "../..";
+import { IUpdatable, IRenderer, TPoint, TUpdateParameters } from "../..";
 import { add, mlt, one, zero } from "../../math";
 import { Scene } from "../../structures";
 
-class Camera implements IGameObject {
+class Camera implements IUpdatable {
     position: TPoint;
     scene: Scene;
     width: number;
