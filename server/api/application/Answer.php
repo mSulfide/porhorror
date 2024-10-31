@@ -15,6 +15,7 @@ class Answer {
         '1005' => 'User is no exists',
         '404' => 'not found',
         '605' => 'invalid teamId',
+        '666' => 'incorrect params',
         '700' => 'No skins',
         '701' => 'Skin is not found',
         '706' => 'text message is empty',
