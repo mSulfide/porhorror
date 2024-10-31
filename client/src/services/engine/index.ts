@@ -1,5 +1,4 @@
-import { Physic } from "./structures";
-import Input from "./structures/Input/Input";
+import { Input, Physic } from "./structures";
 
 export type TPoint = {
     x: number,
@@ -12,8 +11,13 @@ export type TUpdateParameters = {
     physic: Physic
 }
 
-export interface IGameObject {
-    position: TPoint;
-
+export interface IUpdatable {
     update(game: TUpdateParameters): void;
+}
+
+export interface IRenderer {
+    position: TPoint;
+    sprite?: boolean;
+    size?: TPoint;
+    viewRadius: number;
 }

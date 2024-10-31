@@ -1,7 +1,7 @@
 import { CircleCollider, THitInfo } from ".";
+import { Scene } from "..";
 import { TPoint } from "../..";
-import { add, dot, mlt, sub, zero } from "../../math";
-import Scene from "../Scene/Scene";
+import { add, dot, mlt, sub } from "../../math";
 
 type TTransposition = {
     collider: CircleCollider,

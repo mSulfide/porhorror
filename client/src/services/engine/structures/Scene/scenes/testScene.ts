@@ -1,10 +1,8 @@
-import { Player } from "../../../entity";
-import { CircleCollider } from "../../Physic";
+import { FuncCollider, Player } from "../../../entity";
 import Scene from "../Scene";
-import Obstacle from "../../../entity/Obstacle/Obstacle";
 
-const player: Player = new Player(0.025);
-const randomCollider = new Obstacle((x: number) => x * x * x, { x: 0, y: 0.9 });
+const player: Player = new Player(0.25);
+const randomCollider = new FuncCollider((x: number) => x / 2 + Math.sin(x), { x: 0, y: 0 });
 
 const testScene: Scene = new Scene({
     updatable: [
@@ -15,6 +13,10 @@ const testScene: Scene = new Scene({
         player
     ],
     staticColliders: [
+        randomCollider
+    ],
+    renderers: [
+        player,
         randomCollider
     ]
 });

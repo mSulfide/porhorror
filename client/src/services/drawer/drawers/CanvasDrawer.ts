@@ -19,16 +19,34 @@ class CanvasDrawer implements IDrawer {
         this.ctx.beginPath();
         this.ctx.drawImage(
             option.image,
-            (option.x / 2 + 0.5) * width,
-            (0.5 - option.y / 2) * height
+            (option.x - option.sx / 2) * width,
+            (1 - option.y - option.sy / 2) * height,
+            option.sx * width,
+            option.sy * height
         );
         this.ctx.fill();
     }
 
+    drawLine(
+        x1: number, y1: number,
+        x2: number, y2: number,
+        color: string = "red",
+        lineWidth: number = 2
+    ): void {
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = lineWidth;
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+        this.ctx.moveTo(x1 * width, y1 * height);
+        this.ctx.lineTo(x2 * width, y2 * height);
+        this.ctx.stroke();
+    }
+
     drawFunction(
         func: (x: number) => number,
-        color: string = 'black',
-        lineWidth: number = 2,
+        color: string = "red",
+        lineWidth: number = 2
 
     ): void {
         const width = this.canvas.width;
