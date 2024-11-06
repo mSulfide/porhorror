@@ -3,9 +3,9 @@ import { ServerContext, StoreContext } from '../../App';
 import { TMessages } from '../../services/server/types';
 import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../PageManager';
+import Inventory from './components/Inventory';
 
 import './Chat.scss';
-import Inventory from './components/Inventory';
 
 const Chat: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
@@ -72,6 +72,7 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
         {input}
         <div className='chat-buttons'>
             <Button onClick={sendClickHandler} text='Отправить' />
+            <Button onClick={toPHGame} text='PorHorror' />
             <Button onClick={toGameClickHandler} text='В игру!' />
             <Button onClick={backClickHandler} text='Назад' />
         </div>
