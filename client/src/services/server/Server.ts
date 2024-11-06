@@ -9,7 +9,7 @@ class Server {
     HOST = HOST;
     store: Store;
     chatInterval: NodeJS.Timer | null = null;
-    showErrorCb: (error: TError) => void = () => {};
+    showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
         this.store = store;
@@ -67,9 +67,14 @@ class Server {
         }
     }
 
-    registration(login: string, password: string, name: string): Promise<boolean | null> {
+    async registration(login: string, password: string, name: string): Promise<boolean | null> {
         const hash = md5(`${login}${password}`);
-        return this.request<boolean>('registration', { login, hash, name });
+        const user = await this.request<TUser>('registration', { login, hash, name });
+        if (user) {
+            this.store.setUser(user);
+            return true;
+        }
+        return false;
     }
 
     sendMessage(message: string): void {

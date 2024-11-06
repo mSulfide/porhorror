@@ -24,8 +24,7 @@ class Store {
     }
 
     getUser(): TUser | null {
-        return null;
-        //return this.user;
+        return this.user;
     }
 
     clearUser(): void {

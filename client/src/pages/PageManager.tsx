@@ -6,14 +6,17 @@ import Chat from './Chat/Chat';
 import GamePage from './Game/Game';
 import NotFound from './NotFound/NotFound';
 import PHGame from './PorHorror/PHGame';
+import Registration from './Registaration/Registration';
+
 
 export enum PAGES {
     PRELOADER,
     LOGIN,
+    REGISTRATION,
     CHAT,
     GAME,
     PORHORROR,
-    NOT_FOUND,
+    NOT_FOUND
 }
 
 export interface IBasePage {
@@ -27,6 +30,7 @@ const PageManager: React.FC = () => {
         <>
             {page === PAGES.PRELOADER && <Preloader setPage={setPage} />}
             {page === PAGES.LOGIN && <Login setPage={setPage} />}
+            {page === PAGES.REGISTRATION && <Registration setPage={setPage} />}
             {page === PAGES.CHAT && <Chat setPage={setPage} />}
             {page === PAGES.GAME && <GamePage setPage={setPage} />}
             {page === PAGES.PORHORROR && <PHGame setPage={setPage} />}
