@@ -8,7 +8,7 @@ class Lobby {
     public function startGame($userId) {
         $lobby = $this->db->getLobbyByCreatorId($userId);
         if ($lobby) {
-            $lobby->is_started = true;
+            $this->db->startGame($lobby->id);
             return true;
         }
         return ['error' => 1105];
