@@ -50,6 +50,11 @@ class DB {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // получение ID последней вставленной записи
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
+    }
+
     public function getUserByLogin($login) {
         return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
@@ -113,15 +118,13 @@ class DB {
     }
 
     // Методы для работы с группами
-    public function getGroupByName($name) {
-        return $this->query("SELECT * FROM lobby WHERE name=?", [$name]);
-    }
-
     public function insertGroup($name, $status, $creatorId) {
         $this->execute(
             "INSERT INTO lobby (name, status, creatorId) VALUES (?, ?, ?)",
             [$name, $status, $creatorId]
         );
+
+        return $this->lastInsertId();
     }
 
     public function getGroupById($groupId) {
