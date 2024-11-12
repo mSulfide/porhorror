@@ -105,6 +105,17 @@ class Application {
         return ['error' => 242];
     }
 
+    public function startGame($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->startGame($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби
@@ -114,7 +125,6 @@ class Application {
     case 'joinToGroup': return $app->joinToGroup($params);
     case 'leaveGroup': return $app->leaveGroup($params);
     case 'dropFromGroup': return $app->dropFromGroup($params); // (?)
-    case 'startGame': return $app->startGame($params);
     // игра
     case 'updateScene': return $app->updateScene($params); // loop
     case 'getRoom': return $app->getRoom($params);
@@ -123,5 +133,5 @@ class Application {
     case 'drop': return $app->drop($params);
     case 'pickup': return $app->pickup($params);
     */
-    
+
 }

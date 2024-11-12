@@ -1,5 +1,6 @@
 import Button from "./Button/Button";
 import Popup from "./Popup/Popup";
+import StartGameButton from "./StartGameButton/StartGameButton";
 import UserPoints from "./UserPoints/UserPoints";
 
-export { Button, Popup, UserPoints };
+export { Button, Popup, StartGameButton, UserPoints };
