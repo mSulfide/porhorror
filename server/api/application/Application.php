@@ -105,6 +105,28 @@ class Application {
         return ['error' => 242];
     }
 
+    public function getGroupById($params) {
+        if (isset($params['lobbyId'])) {
+            return $this->db->getGroupById($params['lobbyId']);
+        }
+        return ['error' => 229]; 
+    }
+    
+    public function getUser LobbyEntry($params) {
+        if (isset($params['userId']) && isset($params['lobbyId'])) {
+            return $this->db->getUser LobbyEntry($params['userId'], $params['lobbyId']);
+        }
+        return ['error' => 230]; 
+    }
+    
+    public function addUser ToLobby($params) {
+        if (isset($params['userId']) && isset($params['lobbyId'])) {
+            $this->db->addUser ToLobby($params['userId'], $params['lobbyId']);
+            return [true];
+        }
+        return ['error' => 242]; 
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби

@@ -111,4 +111,16 @@ class DB {
         $item2->name = 'Шмотка 4';
         return [$item1, $item2];
     }
+
+    public function getGroupById($lobbyId) {
+        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+    }
+
+    public function getUser LobbyEntry($userId, $lobbyId) {
+        return $this->query("SELECT * FROM users_lobbies WHERE user_id=? AND lobby_id=?", [$userId, $lobbyId]);
+    }
+
+    public function addUser ToLobby($userId, $lobbyId) {
+        $this->execute("INSERT INTO users_lobbies (lobby_id, user_id) VALUES (?, ?)", [$lobbyId, $userId]);
+    }
 }
