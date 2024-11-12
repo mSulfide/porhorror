@@ -111,4 +111,12 @@ class DB {
         $item2->name = 'Шмотка 4';
         return [$item1, $item2];
     }
+
+    public function getLobbyByCreatorId($userId) {
+        return $this->query('SELECT * FROM lobby WHERE creator_id=1');
+    }
+
+    public function startGame($lobbyId) {
+        $this->execute('UPDATE lobby SET is_started=? WHERE id=?', [true, $lobbyId]);
+    }
 }

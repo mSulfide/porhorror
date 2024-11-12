@@ -6,6 +6,7 @@ import { IBasePage, PAGES } from '../PageManager';
 import Inventory from './components/Inventory';
 
 import './Chat.scss';
+import { StartGameButton } from '../../components';
 
 const Chat: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
@@ -76,6 +77,7 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
             <Button onClick={toGameClickHandler} text='В игру!' />
             <Button onClick={backClickHandler} text='Назад' />
         </div>
+        <StartGameButton />
         <Inventory />
     </div>)
 }
