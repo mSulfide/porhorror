@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 06 2024 г., 14:48
+-- Время создания: Ноя 12 2024 г., 14:31
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -37,7 +37,20 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`) VALUES
-(1, '965cad4883471d9ed7a8f0ffc20cbd25');
+(1, '4219c40e4beadc675e4dd1020d7fcd4f');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `lobby`
+--
+
+CREATE TABLE `lobby` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `creatorId` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -61,7 +74,10 @@ INSERT INTO `messages` (`id`, `user_id`, `message`, `created`) VALUES
 (2, 1, 'Ой, а как удалить то?', '2024-11-06 07:23:07'),
 (3, 1, 'Ну капец пипец. Как жить то теперь?', '2024-11-06 07:23:49'),
 (4, 1, 'Ещё и на Enter не отправляются сообщения, вообще кринжик нереальный', '2024-11-06 07:24:17'),
-(5, 1, 'Минус вайб', '2024-11-06 07:24:25');
+(5, 1, 'Минус вайб', '2024-11-06 07:24:25'),
+(7, 4, 'всем тевирп в этом чатике', '2024-11-11 16:19:23'),
+(8, 4, 'абалдеть оно работает', '2024-11-11 16:19:33'),
+(9, 4, 'ыыы', '2024-11-11 17:12:24');
 
 -- --------------------------------------------------------
 
@@ -82,9 +98,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
-(1, 'sulfide', '6f1f3d80cbb51102cf626135afbae1aa', 'Миша', '4cb359b0f1c1bbcf9956697d34bba8ec'),
+(1, 'sulfide', '6f1f3d80cbb51102cf626135afbae1aa', 'Миша', 'c5f056e541a16cb0a1cdfd4ac8c0501f'),
 (2, 'vasya', 'fcb03559c0317682f5d65a88aca50012', 'Вася', '6c1a35c84af6b2594544fdc5c2f52f0f'),
-(3, 'petya', 'd7ba312b012b3374ef53eb2e3f9830a5', 'Петя', 'cc79d5f20b41d4728ae7eb7157cde2a0');
+(3, 'petya', 'd7ba312b012b3374ef53eb2e3f9830a5', 'Петя', 'cc79d5f20b41d4728ae7eb7157cde2a0'),
+(4, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', '2e90c9d635e177ff8dfcf564bfdfa466');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users_lobbies`
+--
+
+CREATE TABLE `users_lobbies` (
+  `id` int NOT NULL,
+  `lobby_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Индексы сохранённых таблиц
@@ -94,6 +123,12 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 -- Индексы таблицы `hashes`
 --
 ALTER TABLE `hashes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `lobby`
+--
+ALTER TABLE `lobby`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -109,6 +144,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `users_lobbies`
+--
+ALTER TABLE `users_lobbies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -119,16 +160,28 @@ ALTER TABLE `hashes`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT для таблицы `lobby`
+--
+ALTER TABLE `lobby`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `users_lobbies`
+--
+ALTER TABLE `users_lobbies`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

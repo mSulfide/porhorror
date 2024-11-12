@@ -111,4 +111,28 @@ class DB {
         $item2->name = 'Шмотка 4';
         return [$item1, $item2];
     }
+
+    // Методы для работы с группами
+    public function getGroupByName($name) {
+        return $this->query("SELECT * FROM lobby WHERE name=?", [$name]);
+    }
+
+    public function insertGroup($name, $status, $creatorId) {
+        $this->execute(
+            "INSERT INTO lobby (name, status, creatorId) VALUES (?, ?, ?)",
+            [$name, $status, $creatorId]
+        );
+    }
+
+    public function getGroupById($groupId) {
+        return $this->query("SELECT * FROM lobby WHERE id=?", [$groupId]);
+    }
+
+    public function deleteGroup($groupId) {
+        $this->execute("DELETE FROM lobby WHERE id=?", [$groupId]);
+    }
+
+    public function deleteUsersFromGroup($groupId) {
+        $this->execute("DELETE FROM users_lobbies WHERE lobby_id=?", [$groupId]);
+    }
 }

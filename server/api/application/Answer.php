@@ -4,6 +4,8 @@ class Answer {
     static $CODES = array(
         '101' => 'Param method not setted',
         '102' => 'Method not found',
+        '228' => 'Group with this name already exists',
+        '229' => 'Group not found',
         '242' => 'Params not set fully',
         '243' => 'Incorrect data about circles',
         '303' => 'Incorrect number of points',
