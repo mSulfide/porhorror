@@ -79,28 +79,6 @@ class Application {
         return ['error' => 242];
     }
 
-    public function insertGroup($name, $status, $creatorId) {
-        if (empty($name) || empty($status) || empty($creatorId)) {
-            return ['error' => 242]; 
-        }
-
-        return $this->insertGroup($name, $status, $creatorId);
-    }
-
-    public function getGroupById($params) {
-        if ($params['groupId']) {
-            return $this->lobby->getGroupById($params['groupId']);
-        }
-        return ['error' => 242];
-    }
-
-    public function deleteUsersFromGroup($params) {
-        if ($params['groupId']) {
-            return $this->lobby->deleteUsersFromGroup($params['groupId']);
-        }
-        return ['error' => 242];
-    }
-
     public function derivative($params){
         if ($params['func'] && $params['x'] && $params['eps']) {
             return $this->math->derivative($params['func'], $params['x'], $params['eps']);
