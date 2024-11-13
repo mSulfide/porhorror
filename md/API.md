@@ -85,8 +85,9 @@ TPoint: {
 ### 2.5. Лобби
 ```
 Lobby: {
+    id: number;
     name: string;
-    creatorId: number;
+    creator: string;
 }
 ```
 
