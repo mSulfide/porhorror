@@ -115,11 +115,21 @@ class Application {
         }
         return ['error' => 242];
     }
+    
+    public function updateGroups($params) {
+        if ($params['token'] && $params['hash']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->updateGroups($params['hash']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби
-    case 'updateGroups': return $app->updateGroups($params); // loop
     case 'createGroup': return $app->createGroup($params);
     case 'deleteGroup': return $app->deleteGroup($params);
     case 'joinToGroup': return $app->joinToGroup($params);

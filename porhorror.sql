@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 13 2024 г., 02:08
+-- Время создания: Ноя 14 2024 г., 01:51
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -29,15 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `hashes` (
   `id` int NOT NULL,
-  `chat_hash` varchar(32) NOT NULL
+  `chat_hash` varchar(32) NOT NULL,
+  `lobby_hash` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `hashes`
 --
 
-INSERT INTO `hashes` (`id`, `chat_hash`) VALUES
-(1, '965cad4883471d9ed7a8f0ffc20cbd25');
+INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
+(1, 'bf567b4a88412ad38e356dc3312ea3c7', '1145');
 
 -- --------------------------------------------------------
 
@@ -57,7 +58,9 @@ CREATE TABLE `lobby` (
 --
 
 INSERT INTO `lobby` (`id`, `name`, `is_started`, `creator_id`) VALUES
-(1, 'МегаЛобби-1', 1, 1);
+(1, 'МегаЛобби-1', 0, 1),
+(2, 'Душнилка', 0, 1),
+(3, 'МегаДушнилка-228', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +84,8 @@ INSERT INTO `messages` (`id`, `user_id`, `message`, `created`) VALUES
 (2, 1, 'Ой, а как удалить то?', '2024-11-06 07:23:07'),
 (3, 1, 'Ну капец пипец. Как жить то теперь?', '2024-11-06 07:23:49'),
 (4, 1, 'Ещё и на Enter не отправляются сообщения, вообще кринжик нереальный', '2024-11-06 07:24:17'),
-(5, 1, 'Минус вайб', '2024-11-06 07:24:25');
+(5, 1, 'Минус вайб', '2024-11-06 07:24:25'),
+(7, 1, '123', '2024-11-12 23:42:05');
 
 -- --------------------------------------------------------
 
@@ -102,7 +106,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
-(1, 'sulfide', '6f1f3d80cbb51102cf626135afbae1aa', 'Миша', '4a4be00d0a1317f13e0e95f81b469f4a'),
+(1, 'sulfide', '6f1f3d80cbb51102cf626135afbae1aa', 'Миша', 'f1722e870fb6417f877060aeb197c88a'),
 (2, 'vasya', 'fcb03559c0317682f5d65a88aca50012', 'Вася', '6c1a35c84af6b2594544fdc5c2f52f0f'),
 (3, 'petya', 'd7ba312b012b3374ef53eb2e3f9830a5', 'Петя', 'cc79d5f20b41d4728ae7eb7157cde2a0'),
 (4, 'brandon', 'b015f4f164ef51727ff751635f7d0eaf', 'Барсук', 'a2fa8c76f744110ef9182ff97b1255c1');
@@ -143,19 +147,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `hashes`
 --
 ALTER TABLE `hashes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

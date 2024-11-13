@@ -35,3 +35,15 @@ export type TInventory = {
     inventory: TItem[];
     equipment: TItem[];
 }
+
+export type TLobby = {
+    id: number;
+    name: string;
+    creator: string;
+}
+
+export type TLobbies = TLobby[];
+export type TLobbiesResponse = {
+    lobbies: TLobbies;
+    hash: string;
+}

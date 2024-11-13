@@ -13,4 +13,18 @@ class Lobby {
         }
         return ['error' => 1105];
     }
+
+    public function updateGroups($hash) {
+        $currentHash = $this->db->getLobbyHash();
+        if ($hash === $currentHash->lobby_hash) {
+            return [
+                'hash' => $hash
+            ];
+        }
+        $lobbies = $this->db->getLobbies();
+        return [
+            'lobbies' => $lobbies,
+            'hash' => $currentHash->lobby_hash
+        ];
+    }
 }
