@@ -113,7 +113,7 @@ class DB {
     }
 
     public function getLobbyByCreatorId($userId) {
-        return $this->query('SELECT * FROM lobby WHERE creator_id=1');
+        return $this->query('SELECT * FROM lobby WHERE creator_id=?', [$userId]);
     }
 
     public function startGame($lobbyId) {
@@ -128,7 +128,8 @@ class DB {
         return $this->queryAll('SELECT
                 l.id AS id,
                 u.name AS creator,
-                l.name AS name FROM lobby AS l
+                l.name AS name
+            FROM lobby AS l
             LEFT JOIN users AS u ON u.id = l.creator_id'
         );
     }
