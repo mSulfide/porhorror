@@ -6,8 +6,6 @@ class Lobby {
     }
 
     public function createGroup($name, $status, $creatorId) {
-        //$this->db->insertGroup($name, $status, $creatorId);
-        //$newGroup = $this->db->getGroupById($this->db->lastInsertId());
         $newGroup = $this->db->insertGroup($name, $status, $creatorId);
 
         return [
