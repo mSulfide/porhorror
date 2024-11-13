@@ -67,7 +67,7 @@ class Application {
 
     public function createGroup($params) {
         if ($params['name'] && $params['status'] && $params['creatorId']) {
-            return $this->lobby->insertGroup($params['name'], $params['status'], $params['creatorId']);
+            return $this->insertGroup($params['name'], $params['status'], $params['creatorId']);
         }
         return ['error' => 242];
     }
@@ -84,7 +84,7 @@ class Application {
             return ['error' => 242]; 
         }
 
-        return $this->lobby->insertGroup($name, $status, $creatorId);
+        return $this->insertGroup($name, $status, $creatorId);
     }
 
     public function getGroupById($params) {
