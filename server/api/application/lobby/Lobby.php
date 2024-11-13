@@ -19,7 +19,7 @@ class Lobby {
     public function deleteGroup($groupId) {
         $group = $this->db->getGroupById($groupId); 
         if (!$group) {
-            return ['error' => 229];
+            return ['error' => 1105];
         }
 
         $this->db->deleteGroup($groupId); 
