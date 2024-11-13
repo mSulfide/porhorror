@@ -105,6 +105,24 @@ class Application {
         return ['error' => 242];
     }
 
+    public function joinToGroup($params) {
+        if ($params['userId'] && $params['lobbyId']) {
+            $lobby = $this->db->getGroupById($params['lobbyId']);
+            if (!$lobby) {
+                return ['error' => 242]; 
+            }
+            
+            $existingEntry = $this->db->getUserLobbyEntry($params['userId'], $params['lobbyId']);
+            if ($existingEntry) {
+                return ['error' => 242]; 
+            }
+    
+            $this->db->addUserToLobby($params['userId'], $params['lobbyId']);
+            return true;
+        }
+        return ['error' => 242]; 
+    }
+
     public function getGroupById($params) {
         if (isset($params['lobbyId'])) {
             return $this->db->getGroupById($params['lobbyId']);
