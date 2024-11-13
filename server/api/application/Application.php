@@ -120,6 +120,13 @@ class Application {
         return ['error' => 242];
     }
 
+    public function leaveGroup($params) {
+        $userId = $params['userId'];
+        $groupId = $params['groupId'];
+        $db = new DB();
+        return $db->leaveGroup($groupId, $userId);
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби

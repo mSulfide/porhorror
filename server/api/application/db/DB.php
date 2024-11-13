@@ -114,4 +114,9 @@ class DB {
         $item2->name = 'Шмотка 4';
         return [$item1, $item2];
     }
+
+    public function leaveGroup($groupId, $userId) {
+        
+        $this->execute("DELETE FROM group_members WHERE group_id=? AND user_id=?", [$groupId, $userId]); 
+    }
 }
