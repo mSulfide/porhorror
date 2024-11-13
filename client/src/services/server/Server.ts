@@ -24,7 +24,6 @@ class Server {
             if (token) {
                 params.token = token;
             }
-            console.log(`${this.HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
             const response = await fetch(`${this.HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
             const answer: TAnswer<T> = await response.json();
             if (answer.result === 'ok' && answer.data) {
