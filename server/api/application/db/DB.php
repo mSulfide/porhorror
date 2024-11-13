@@ -50,11 +50,6 @@ class DB {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // получение ID последней вставленной записи
-    public function lastInsertId() {
-        return $this->pdo->lastInsertId();
-    }
-
     public function getUserByLogin($login) {
         return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
@@ -124,7 +119,7 @@ class DB {
             [$name, $status, $creatorId]
         );
 
-        return $this->lastInsertId();
+        return $this->getGroupByCreatorId($creatorId);
     }
 
     public function getGroupById($groupId) {
@@ -137,5 +132,9 @@ class DB {
 
     public function deleteUsersFromGroup($groupId) {
         $this->execute("DELETE FROM users_lobbies WHERE lobby_id=?", [$groupId]);
+    }
+
+    public function getGroupByCreatorId($creatorId) {
+        return $this->query("SELECT * FROM lobby WHERE creatorId=?", [$creatorId]);
     }
 }
