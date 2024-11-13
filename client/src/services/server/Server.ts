@@ -3,12 +3,13 @@ import CONFIG from "../../config";
 import Store from "../store/Store";
 import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse } from "./types";
 
-const { CHAT_TIMESTAMP, HOST } = CONFIG;
+const { LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
 
 class Server {
     HOST = HOST;
     store: Store;
     chatInterval: NodeJS.Timer | null = null;
+    lobbyInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
@@ -131,6 +132,26 @@ class Server {
             return result;
         }
         return null;
+    }
+
+    startLobbyList(cb: (hash: string) => void): void {
+        this.lobbyInterval = setInterval(async () => {
+            const result = await this.updateGroups();
+            if (result) {
+                const { lobbies, hash } = result;
+                this.store.addLobbies(lobbies);
+                cb(hash);
+            }
+        }, LOBBY_LIST_TIMESTAMP);
+
+    }
+
+    stopLobbyList(): void {
+        if (this.lobbyInterval) {
+            clearInterval(this.lobbyInterval);
+            this.lobbyInterval = null;
+            this.store.clearLobbies();
+        }
     }
 }
 
