@@ -109,20 +109,20 @@ class Application {
         if (isset($params['lobbyId'])) {
             return $this->db->getGroupById($params['lobbyId']);
         }
-        return ['error' => 229]; 
+        return ['error' => 242]; 
     }
     
-    public function getUser LobbyEntry($params) {
-        if (isset($params['userId']) && isset($params['lobbyId'])) {
-            return $this->db->getUser LobbyEntry($params['userId'], $params['lobbyId']);
+    public function getUserLobbyEntry($params) {
+        if ($params['userId'] && $params['lobbyId']) {
+            return $this->db->getUserLobbyEntry($params['userId'], $params['lobbyId']);
         }
-        return ['error' => 230]; 
+        return ['error' => 242]; 
     }
     
-    public function addUser ToLobby($params) {
-        if (isset($params['userId']) && isset($params['lobbyId'])) {
-            $this->db->addUser ToLobby($params['userId'], $params['lobbyId']);
-            return [true];
+    public function addUserToLobby($params) {
+        if ($params['userId'] && $params['lobbyId']) {
+            $this->db->addUserToLobby($params['userId'], $params['lobbyId']);
+            return true;
         }
         return ['error' => 242]; 
     }

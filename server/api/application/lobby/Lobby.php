@@ -9,15 +9,15 @@ class Lobby {
         
         $lobby = $this->db->getGroupById($lobbyId);
         if (!$lobby) {
-            return ['error' => 229]; 
+            return ['error' => 242]; 
         }
         
-        $existingEntry = $this->db->getUser LobbyEntry($userId, $lobbyId);
+        $existingEntry = $this->db->getUserLobbyEntry($userId, $lobbyId);
         if ($existingEntry) {
-            return ['error' => 230]; 
+            return ['error' => 242]; 
         }
 
-        $this->db->addUser ToLobby($userId, $lobbyId);
-        return [true];
+        $this->db->addUserToLobby($userId, $lobbyId);
+        return true;
     }
 }

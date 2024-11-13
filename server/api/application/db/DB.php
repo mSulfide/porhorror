@@ -116,11 +116,11 @@ class DB {
         return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
     }
 
-    public function getUser LobbyEntry($userId, $lobbyId) {
+    public function getUserLobbyEntry($userId, $lobbyId) {
         return $this->query("SELECT * FROM users_lobbies WHERE user_id=? AND lobby_id=?", [$userId, $lobbyId]);
     }
 
-    public function addUser ToLobby($userId, $lobbyId) {
+    public function addUserToLobby($userId, $lobbyId) {
         $this->execute("INSERT INTO users_lobbies (lobby_id, user_id) VALUES (?, ?)", [$lobbyId, $userId]);
     }
 }
