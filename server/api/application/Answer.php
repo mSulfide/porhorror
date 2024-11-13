@@ -15,6 +15,7 @@ class Answer {
         '1003' => 'Error to logout user',
         '1004' => 'Error to register user',
         '1005' => 'User is no exists',
+        '1105' => 'Lobby is no exists',
         '404' => 'not found',
         '605' => 'invalid teamId',
         '666' => 'incorrect params',

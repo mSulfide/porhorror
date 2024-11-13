@@ -137,4 +137,12 @@ class DB {
     public function getGroupByCreatorId($creatorId) {
         return $this->query("SELECT * FROM lobby WHERE creatorId=?", [$creatorId]);
     }
+
+    public function getLobbyByCreatorId($userId) {
+        return $this->query('SELECT * FROM lobby WHERE creator_id=1');
+    }
+
+    public function startGame($lobbyId) {
+        $this->execute('UPDATE lobby SET is_started=? WHERE id=?', [true, $lobbyId]);
+    }
 }

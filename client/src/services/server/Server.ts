@@ -118,6 +118,10 @@ class Server {
         }
         return !!result;
     }
+
+    startGame(): void {
+        this.request('startGame');
+    }
 }
 
 export default Server;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 12 2024 г., 14:31
+-- Время создания: Ноя 13 2024 г., 02:08
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -37,7 +37,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`) VALUES
-(1, '4219c40e4beadc675e4dd1020d7fcd4f');
+(1, '965cad4883471d9ed7a8f0ffc20cbd25');
 
 -- --------------------------------------------------------
 
@@ -47,10 +47,17 @@ INSERT INTO `hashes` (`id`, `chat_hash`) VALUES
 
 CREATE TABLE `lobby` (
   `id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `creatorId` int NOT NULL
+  `name` varchar(32) NOT NULL,
+  `is_started` tinyint(1) NOT NULL DEFAULT '0',
+  `creator_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `lobby`
+--
+
+INSERT INTO `lobby` (`id`, `name`, `is_started`, `creator_id`) VALUES
+(1, 'МегаЛобби-1', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -132,6 +139,12 @@ ALTER TABLE `lobby`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `lobby`
+--
+ALTER TABLE `lobby`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `messages`
 --
 ALTER TABLE `messages`
@@ -164,6 +177,12 @@ ALTER TABLE `hashes`
 --
 ALTER TABLE `lobby`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `lobby`
+--
+ALTER TABLE `lobby`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
