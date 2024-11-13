@@ -66,8 +66,8 @@ class Application {
     }
 
     public function createGroup($params) {
-        if ($params['name'] && $params['status'] && $params['creatorId']) {
-            return $this->insertGroup($params['name'], $params['status'], $params['creatorId']);
+        if ($params['name'] /*&& $params['status'] && $params['creatorId']*/) {
+            return $this->db->insertGroup($params['name']/*, $params['status'], $params['creatorId']*/);
         }
         return ['error' => 242];
     }

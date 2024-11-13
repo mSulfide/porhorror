@@ -5,14 +5,14 @@ class Lobby {
         $this->db = $db;
     }
 
-    public function createGroup($name, $status, $creatorId) {
-        $newGroup = $this->db->insertGroup($name, $status, $creatorId);
+    public function createGroup($name/*, $status, $creatorId*/) {
+        $newGroup = $this->db->insertGroup($name/*, $status, $creatorId*/);
 
         return [
-            'id' => $newGroup->id,
+            //'id' => $newGroup->id,
             'name' => $newGroup->name,
-            'status' => $newGroup->status,
-            'creatorId' => $newGroup->creatorId
+            /*'status' => $newGroup->status,
+            'creatorId' => $newGroup->creatorId*/
         ];
     }
 

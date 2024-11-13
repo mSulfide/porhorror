@@ -113,10 +113,12 @@ class DB {
     }
 
     // Методы для работы с группами
-    public function insertGroup($name, $status, $creatorId) {
+    public function insertGroup($name/*, $status, $creatorId*/) {
         $this->execute(
-            "INSERT INTO lobby (name, status, creatorId) VALUES (?, ?, ?)",
-            [$name, $status, $creatorId]
+            "INSERT INTO lobby (name) VALUES (?)",
+            [$name]
+            /*"INSERT INTO lobby (name, status, creatorId) VALUES (?, ?, ?)",
+            [$name, $status, $creatorId]*/
         );
 
         return $this->getGroupByCreatorId($creatorId);
