@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse } from "./types";
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -121,6 +121,16 @@ class Server {
 
     startGame(): void {
         this.request('startGame');
+    }
+
+    async updateGroups(): Promise<TLobbiesResponse | null> {
+        const hash = this.store.getLobbyHash();
+        const result = await this.request<TLobbiesResponse>('updateGroups', { hash });
+        if (result) {
+            this.store.setLobbyHash(result.hash);
+            return result;
+        }
+        return null;
     }
 }
 

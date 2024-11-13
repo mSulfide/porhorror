@@ -6,6 +6,7 @@ class Store {
     user: TUser | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
+    lobbyHash: string = 'empty lobby hash';
     inventory: TItem[] = [];
     equipment: TItem[] = [];
 
@@ -55,6 +56,14 @@ class Store {
 
     setChatHash(hash: string): void {
         this.chatHash = hash;
+    }
+
+    getLobbyHash(): string {
+        return this.lobbyHash;
+    }
+
+    setLobbyHash(hash: string): void {
+        this.lobbyHash = hash;
     }
 
     setInventory({ inventory, equipment }: TInventory): void {
