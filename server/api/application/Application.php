@@ -120,6 +120,24 @@ class Application {
         return ['error' => 242];
     }
 
+    public function dropFromGroup($params) {
+        if ($params['token'] && $params['group_id']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                // Вызываем метод dropFromGroup в классе Lobby
+                $result = $this->lobby->dropFromGroup($user->id, $params['group_id']);
+                if ($result) {
+                    return ['success' => true]; // Успешное удаление
+                } else {
+                    return ['error' => 706]; // Ошибка удаления
+                }
+            }
+            return ['error' => 705]; // Неверный токен
+        }
+        return ['error' => 242]; // Недостаточно параметров
+    }
+
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби

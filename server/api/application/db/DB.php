@@ -114,4 +114,12 @@ class DB {
         $item2->name = 'Шмотка 4';
         return [$item1, $item2];
     }
+
+    // Удаление пользователя из группы
+    public function dropFromGroup($userId, $groupId) {
+        $sql = "DELETE FROM group_members WHERE user_id=? AND group_id=?";
+        $this->execute($sql, [$userId, $groupId]);
+        return true;
+    }
+
 }
