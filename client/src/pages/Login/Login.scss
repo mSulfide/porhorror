@@ -1,20 +1,78 @@
-.login {
+@font-face {
+  font-family: 'NTSomic';
+  src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
+}
 
+
+
+
+
+body {
+  font-family: 'NTSomic';
+  margin: 0;
+  padding: 0;
+  background-image: url('../../assets/img/background/registration.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+
+.login {
+  display: flex; 
+  flex-direction: column; // Элементы расположены вертикально
+  align-items: center; // Горизонтальное центрирование
+  margin-bottom: auto;
+  
     &-inputs {
         display: flex;
+        margin-top: 30px;
         flex-direction: column;
+        gap: 25px;
+
+
 
         input {
-            margin: 10px;
-            padding: 0 10px 5px 10px;
-            background-color: #FFE4C4; // внутренность инпутов при авторизации 
-            width: 300px;
+          //margin: 20px 10px; 
+          //padding: 6px 170px  ;
+          //background-color: #FFE4C4;
+          border: 4px solid #ccc; 
+          border-radius: 18px;  
+          font-size: 0.9em;
+          padding-left: 15px; 
+          box-sizing: border-box;
+          width: 800px; 
+          height: 65px;
+          font-size: 0.9em;
         }
     }
 
     &-buttons {
-        display: flex;
-        justify-content: space-between;
-        max-width: 500px;
+      display: flex;
+      margin-top: 160px;
+      justify-content: space-between; 
+      
+    }
+  
+    .registration-link-container {
+      display: flex;
+      align-items: last baseline; 
+      gap: 10px;
+      font-size: 0.7em;
+      
+    }
+
+    .underline-button {
+      text-decoration: underline;
+    }
+
+    .login-heading {
+      font-size: 2em;
     }
 }
+}
+
+
+

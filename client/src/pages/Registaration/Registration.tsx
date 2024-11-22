@@ -3,6 +3,8 @@ import { ServerContext } from '../../App';
 import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../PageManager';
 
+import './Registration.scss';
+
 const Registration: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
@@ -25,17 +27,18 @@ const Registration: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = () => setPage(PAGES.LOGIN);
 
     return (<div className='registration'>
-        <div>Регистрация</div>
+        <div className="registration-heading">Регистрация</div>
         <div className='registration-wrapper'>
             <div className='registration-inputs'>
-                <input ref={nameRef} placeholder='имя' />
-                <input ref={loginRef} placeholder='логин' />
-                <input ref={passwordRef} placeholder='пароль' type='password' />
-                <input ref={passwordSecondRef} placeholder='повторите пароль' type='password' />
+                <input ref={nameRef} placeholder='Имя пользователя' />
+                <input ref={loginRef} placeholder='Логин' />
+                <input ref={passwordRef} placeholder='Пароль' type='password' />
+                <input ref={passwordSecondRef} placeholder='Подтвердить пароль' type='password' />
             </div>
             <div className='registration-buttons'>
-                <Button onClick={registrationClickHandler} text='Зарегистрироваться' />
-                <Button onClick={backClickHandler} text='Назад' />
+                <a href="#" onClick={backClickHandler} className="back-link"> &#8592; Вернуться назад </a>
+                <Button onClick={registrationClickHandler} text='Далее' />
+                
             </div>
         </div>
     </div>)
