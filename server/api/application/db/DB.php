@@ -137,4 +137,11 @@ class DB {
     public function updateLobbyHash($hash) {
         $this->execute("UPDATE hashes SET lobby_hash=? WHERE id=1", [$hash]);
     }
+
+    public function createGroup($name, $userId) {
+        $this->execute(
+            "INSERT INTO lobby (name, userId) VALUES (?, ?)",
+            [$name, $user->id]
+        );
+    }
 }
