@@ -27,4 +27,13 @@ class Lobby {
             'hash' => $currentHash->lobby_hash
         ];
     }
+
+    public function createGroup($name, $userId) { 
+        $group = $this->db->createGroup($name, $userId);
+        if ($group) {
+            $this->db->addMemberToLobby($group, $userId, true);
+            return true;
+        }
+        return ['error' => 705];
+    }
 }

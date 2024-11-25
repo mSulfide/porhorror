@@ -127,6 +127,16 @@ class Application {
         return ['error' => 242];
     }
 
+    public function createGroup($params) {
+        if ($params['name'] && $params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->createGroup($params['name'], $user->id);
+            }
+        }
+        return ['error' => 242];
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби
