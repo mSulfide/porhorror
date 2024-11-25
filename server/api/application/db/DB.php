@@ -138,10 +138,20 @@ class DB {
         $this->execute("UPDATE hashes SET lobby_hash=? WHERE id=1", [$hash]);
     }
 
-    public function createGroup($name, $userId) {
+    public function createGroup($name) {
         $this->execute(
-            "INSERT INTO lobby (name, userId) VALUES (?, ?)",
-            [$name, $user->id]
+            "INSERT INTO lobby (name, status) VALUES (?, 'open')",
+            [$name]
+        );
+        return $this->pdo->lastInsertId();
+    }
+
+    public function addMemberToLobby($lobbyId, $userId, $isCreator) {
+        $this->execute(
+            "INSERT INTO lobby_members (lobby_id, user_id, is_creator) VALUES (?, ?, ?)",
+            [$lobbyId, $userId, $isCreator]
         );
     }
+
+    //public function getGroupById()
 }

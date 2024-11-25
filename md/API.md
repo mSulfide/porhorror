@@ -25,6 +25,9 @@
     * 4.7. spline
     * 4.8. getCirclesIntersection
     * 4.9. changeInventory
+    * 4.10. startGame
+    * 4.11. updateGroups
+    * 4.12. createGroup
 
 
 ## 1. Общее
@@ -87,7 +90,7 @@ TPoint: {
 Lobby: {
     id: number;
     name: string;
-    creator: string;
+    status: string;
 }
 ```
 
@@ -116,6 +119,7 @@ Spline: {
 | spline | Получить коэффициент для получения сплайнов |
 | startGame | Запускает сессию созданной группы |
 | updateGroups | Получить список групп |
+| createGroup | Создать новую группу |
 
 ### 3.1. Общие ошибки
 * `101` - если не передан параметр `method`
@@ -366,6 +370,23 @@ Spline: {
     Answer<
         hash: string; - новый хеш групп
     >
+```
+**Ошибки**
+* `705` - невалидный токен. Пользователь не авторизован
+
+### 4.12. createGroup
+Создать новую группу
+
+**Параметры**
+```
+{
+    token: string; - токен
+    name: string; - название группы
+}
+```
+**Успешный ответ**
+```
+    Answer<true>
 ```
 **Ошибки**
 * `705` - невалидный токен. Пользователь не авторизован

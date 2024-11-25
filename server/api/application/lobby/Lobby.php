@@ -28,10 +28,10 @@ class Lobby {
         ];
     }
 
-    public function createGroup($name, $token) { 
-        $user = $this->db->getUserByToken($token);
-        if ($user) {
-            $newGroup = $this->db->createGroup($name, $user->id);
+    public function createGroup($name, $userId) { 
+        $group = $this->db->createGroup($name, $userId);
+        if ($group) {
+            $this->db->addMemberToLobby($group, $userId, true);
             return true;
         }
         return ['error' => 705];
