@@ -188,7 +188,6 @@ class Application {
             $creator = $this->user->getUser($params['token']);
             if ($creator) {
                 return $this->lobby->dropFromGroup($creator->id, $params['userId']);
-
             }
             return ['error' => 705];
         }
