@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Inventory } from "../../components";
+import { Button, Inventory, Lobby } from "../../components";
 import { IBasePage, PAGES } from "../PageManager";
 import { ServerContext } from "../../App";
 import LobbyList from "../../components/LobbyList/LobbyList";
@@ -17,6 +17,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     
     return <div>
         <Inventory />
+        <Lobby />
         <LobbyList />
         <Button onClick={backClickHandler} text="Выход" />
     </div>;

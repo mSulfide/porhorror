@@ -10,9 +10,11 @@ export type TAnswer<T> = {
 }
 
 export type TUser = {
+    id: number;
     token: string;
     name: string;
 }
+export type TUsers = TUser[];
 
 export type TMessage = {
     message: string;
@@ -42,8 +44,21 @@ export type TLobby = {
     creator: string;
 }
 
+export type TLobbyResponse = {
+    users: TUsers;
+    hash: string;
+}
+
 export type TLobbies = TLobby[];
 export type TLobbiesResponse = {
     lobbies: TLobbies;
     hash: string;
+}
+
+export type TGroup = TLobby & {users: TUsers};
+export type TGroupParams = {
+    id?: number;
+    name?: string;
+    creator?: string;
+    users?: TUsers;
 }

@@ -158,6 +158,10 @@ class Server {
     joinToLobby(lobbyId: number): void {
         this.request<boolean>('joinToGroup', { lobby_id: `${lobbyId}` });
     }
+    
+    createLobby(name: string): void {
+        this.request<boolean>('createGroup', { name: name})
+    }
 }
 
 export default Server;

@@ -3,3 +3,5 @@ const Lobby: React.FC = () => {
 
     </div>;
 }
+
+export default Lobby;

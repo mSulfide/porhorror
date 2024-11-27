@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ServerContext, StoreContext } from "../../App";
 import { TLobbies, TLobby } from "../../services/server/types";
 import Button from "../Button/Button";
@@ -9,6 +9,7 @@ const LobbyList: React.FC = () => {
     const [lobbies, setLobbies] = useState<TLobbies>([]);
     const [_, setHash] = useState<string>('');
     const user = store.getUser();
+    const lobbyName = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const newLobbies = (hash: string) => {
@@ -32,13 +33,21 @@ const LobbyList: React.FC = () => {
         server.joinToLobby(id);
     }
 
+    const createLobby = () => {
+        server.createLobby(lobbyName.current?.value || 'Новая группа');
+    }
+
     return <>
-        <h1>Лобби</h1>
+        <h1>Список Лобби</h1>
         {lobbies.map((lobby: TLobby, index: number) => (<div key={index}>
             <span>{lobby.name} </span>
             <span>{lobby.creator} </span>
             <Button onClick={() => connectToLobby(lobby.id)} text="Присоединиться" />
         </div>))}
+        <div>
+            <input ref={lobbyName} placeholder="имя группы" />
+            <Button onClick={createLobby} text="+" />
+        </div>
     </>;
 }
 
