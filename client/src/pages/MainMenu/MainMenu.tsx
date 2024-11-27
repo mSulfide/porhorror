@@ -12,10 +12,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const lobby = store.getLobby();
 
     const backClickHandler = () => {
-        (async () => {
-            if (await server.logout())
-                setPage(PAGES.LOGIN);
-        })();
+        (async () => await server.logout() && setPage(PAGES.LOGIN))();
     }
 
     return <div>
