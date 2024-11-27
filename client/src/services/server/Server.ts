@@ -154,6 +154,10 @@ class Server {
             this.store.clearLobbies();
         }
     }
+
+    joinToLobby(lobbyId: number): void {
+        this.request<boolean>('joinToGroup', { lobby_id: `${lobbyId}` });
+    }
 }
 
 export default Server;

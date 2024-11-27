@@ -29,7 +29,7 @@ const LobbyList: React.FC = () => {
     });
 
     const connectToLobby = (id: number): void => {
-        console.log(`Подклчение к лобби ${id}`);
+        server.joinToLobby(id);
     }
 
     return <>
