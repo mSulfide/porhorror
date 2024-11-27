@@ -66,8 +66,38 @@ class Lobby {
     }
 
     public function leaveGroup($userId, $lobbyId) {
-        $this->db->removeMemberFromLobby($lobbyId, $userId);
+        if ($this->isCreator($userId, $lobbyId)) {
+            $this->deleteGroup($lobbyId, $userId);
+        } else {
+            $this->db->removeMemberFromLobby($lobbyId, $userId);
+        }
         $this->db->updateLobbyHash(md5(rand()));
         return true;
+    }
+
+    public function dropFromGroup($creatorId, $userId) {
+        $lobby = $this->getLobbyByUserId($creatorId);
+        if ($lobby) {
+            if ($this->isCreator($creatorId, $lobby->id)) {
+                $this->db->removeMemberFromLobby($lobby->id, $userId);
+                $this->db->updateLobbyHash(md5(rand()));
+                return true;
+            }
+            return ['error' => 711];
+        }
+        return ['error' => 1105];
+    }
+
+    public function updateGroup($hash, $lobby) {
+        if ($hash === $lobby->hash) {
+            return [
+                'hash' => $hash
+            ];
+        }
+        $users = $this->db->getUsersFromLobby($lobby->id);
+        return [
+            'users' => $users,
+            'hash' => $lobby->hash
+        ];
     }
 }
