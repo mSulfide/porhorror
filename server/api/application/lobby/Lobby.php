@@ -35,6 +35,7 @@ class Lobby {
         $group = $this->db->createGroup($name, $userId);
         if ($group) {
             $this->db->addMemberToLobby($group, $userId, true);
+            $this->db->updateChatHash(md5(rand()));
             return true;
         }
         return ['error' => 1105];
@@ -48,6 +49,7 @@ class Lobby {
         if ($this->isCreator($userId, $lobbyId)) {
             $this->db->removeMembersFromLobby($lobbyId);
             $this->db->removeLobby($lobbyId);
+            $this->db->updateChatHash(md5(rand()));
             return true; 
         }
         return false; 

@@ -156,8 +156,6 @@ class Application {
         }
         return ['error' => 242];
     }
-
-
     
     /*
     case 'changeInventory': return $app->changeInventory($params);
