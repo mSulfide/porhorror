@@ -183,6 +183,25 @@ class Application {
         return ['error' => 242];
     }
     
+    public function dropFromGroup($params) {
+        if ($params['creator_id'] && $params['user_id'] && $params['lobby_id']) {
+            $creator = $this->user->getUser($params['creator_id']);
+            if ($creator) {
+                $user = $this->user->getUser($params['user_id']);
+                if ($user) {
+                    $lobby = $this->lobby->getLobbyById($params['lobby_id']);
+                    if ($lobby) {
+                        return $this->lobby->dropFromGroup($creator->id, $user->id, $lobby->id);
+                    }
+                    return ['error' => 1105];
+                }
+                return ['error' => 705];
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби

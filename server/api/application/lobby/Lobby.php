@@ -70,4 +70,13 @@ class Lobby {
         $this->db->updateLobbyHash(md5(rand()));
         return true;
     }
+
+    public function dropFromGroup($creatorId, $userId, $lobbyId) {
+        if ($this->isCreator($creatorId, $lobbyId)) {
+            $this->db->removeMemberFromLobby($lobbyId, $userId);
+            $this->db->updateLobbyHash(md5(rand()));
+            return true;
+        }
+        return ['error' => 711];
+    }
 }
