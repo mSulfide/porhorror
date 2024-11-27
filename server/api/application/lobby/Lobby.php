@@ -71,12 +71,16 @@ class Lobby {
         return true;
     }
 
-    public function dropFromGroup($creatorId, $userId, $lobbyId) {
-        if ($this->isCreator($creatorId, $lobbyId)) {
-            $this->db->removeMemberFromLobby($lobbyId, $userId);
-            $this->db->updateLobbyHash(md5(rand()));
-            return true;
+    public function dropFromGroup($creatorId, $userId) {
+        $lobby = $this->getLobbyByUserId($creatorId);
+        if ($lobby) {
+            if ($this->isCreator($creatorId, $lobby->id)) {
+                $this->db->removeMemberFromLobby($lobby->id, $userId);
+                $this->db->updateLobbyHash(md5(rand()));
+                return true;
+            }
+            return ['error' => 711];
         }
-        return ['error' => 711];
+        return ['error' => 1105];
     }
 }

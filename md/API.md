@@ -400,8 +400,6 @@ Spline: {
 **Параметры**
 ```
 {
-    lobby_id: number; - идентификатор лобби
-    user_id: number; - идентификатор пользователя
     token: string; - токен
 }
 ```
@@ -418,8 +416,7 @@ Spline: {
 **Параметры**
 ```
 {
-    lobby_id: number; - идентификатор лобби
-    user_id: number; - идентификатор пользователя
+    lobbyId: number; - идентификатор лобби
     token: string; - токен
 }
 ```
@@ -436,8 +433,6 @@ Spline: {
 **Параметры**
 ```
 {
-    lobby_id: number; - идентификатор лобби
-    user_id: number; - идентификатор пользователя
     token: string; - токен
 }
 ```
