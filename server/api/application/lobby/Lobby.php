@@ -64,4 +64,10 @@ class Lobby {
         }
         return ['error' => 710];
     }
+
+    public function leaveGroup($userId, $lobbyId) {
+        $this->db->removeMemberFromLobby($lobbyId, $userId);
+        $this->db->updateLobbyHash(md5(rand()));
+        return true;
+    }
 }

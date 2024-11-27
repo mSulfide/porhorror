@@ -158,6 +158,10 @@ class DB {
     public function removeMembersFromLobby($lobbyId) {
         $this->execute("DELETE FROM lobby_members WHERE lobby_id=?", [$lobbyId]);
     }
+
+    public function removeMemberFromLobby($lobbyId, $userId) {
+        $this->execute("DELETE FROM lobby_members WHERE lobby_id=? AND user_id=?", [$lobbyId, $userId]);
+    }
     
     public function removeLobby($lobbyId) {
         $this->execute("DELETE FROM lobby WHERE id=?", [$lobbyId]);
