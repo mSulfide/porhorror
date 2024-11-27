@@ -23,7 +23,8 @@ class Answer {
         '707' => 'could not send message', // e-mail;
         '708' => 'invalid code from E-mail',
         '709' => ' session did not start or you need use previous method',
-        '710' => 'user is not the creator of the group or the group does not exist',
+        '710' => 'the user is already in the lobby',
+        '711' => 'the user is not the lobby creator',
         '800' => 'not found object',
         '801' => 'unknown state',
         '1001' => 'params login or password not set',

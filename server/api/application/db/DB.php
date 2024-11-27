@@ -131,7 +131,8 @@ class DB {
                 u.name AS creator,
                 l.name AS name
             FROM lobby AS l
-            LEFT JOIN users AS u ON u.id = l.creator_id'
+            LEFT JOIN lobby_members AS m ON m.lobby_id = l.id
+            LEFT JOIN users AS u ON u.id = m.user_id AND m.is_creator = 1'
         );
     }
 
@@ -170,5 +171,5 @@ class DB {
         $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
         [$lobbyId, $userId]);
         return $result->is_creator === "1";
-    }    
+    }  
 }

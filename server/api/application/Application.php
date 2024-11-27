@@ -110,9 +110,8 @@ class Application {
             $user = $this->user->getUser($params['token']);
             if ($user) {
                 $lobby = $this->lobby->getLobbyByUserId($user->id);
-                return $lobby;
                 if ($lobby) {
-                    return $this->lobby->startGame($lobby->id);
+                    return $this->lobby->startGame($lobby->id, $user->id);
                 }
                 return ['error' => 1105];
             }
@@ -157,8 +156,17 @@ class Application {
         }
         return ['error' => 242];
     }
-
-
+    
+    public function joinToGroup($params) {
+        if ($params['lobby_id'] && $params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->joinToGroup($params['lobby_id'], $user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
     
     /*
     case 'changeInventory': return $app->changeInventory($params);

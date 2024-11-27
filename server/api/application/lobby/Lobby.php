@@ -9,9 +9,12 @@ class Lobby {
         return $this->db->getLobbyByUserId($userId);
     }
 
-    public function startGame($lobbyId) {
-        $this->db->startGame($lobbyId);
-        return true;
+    public function startGame($lobbyId, $userId) {
+        if($this->db->isCreator($userId, $lobbyId)) {
+            $this->db->startGame($lobbyId);
+            return true;
+        }
+        return false;
     }
 
     public function updateGroups($hash) {
@@ -32,6 +35,7 @@ class Lobby {
         $group = $this->db->createGroup($name, $userId);
         if ($group) {
             $this->db->addMemberToLobby($group, $userId, true);
+            $this->db->updateLobbyHash(md5(rand()));
             return true;
         }
         return ['error' => 1105];
@@ -45,8 +49,19 @@ class Lobby {
         if ($this->isCreator($userId, $lobbyId)) {
             $this->db->removeMembersFromLobby($lobbyId);
             $this->db->removeLobby($lobbyId);
+            $this->db->updateLobbyHash(md5(rand()));
             return true; 
         }
-        return false; 
+        return ['error' => 711]; 
+    }
+
+    public function joinToGroup($lobbyId, $userId) {
+        $lobby = $this->getLobbyByUserId($userId);
+        if (!$lobby->id) {
+            $this->db->addMemberToLobby($lobbyId, $userId, 0);
+            $this->db->updateLobbyHash(md5(rand()));
+            return true;
+        }
+        return ['error' => 710];
     }
 }
