@@ -52,6 +52,14 @@ class Lobby {
             $this->db->updateChatHash(md5(rand()));
             return true; 
         }
-        return false; 
+        return ['error' => 711]; 
+    }
+
+    public function joinToGroup($lobbyId, $userId) {
+        if ($this->db->userNotInLobby($userId)) {
+            $this->db->addMemberToLobby($lobbyId, $userId, 0);
+            return true;
+        }
+        return ['error' => 710];
     }
 }

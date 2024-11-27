@@ -171,5 +171,11 @@ class DB {
         $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
         [$lobbyId, $userId]);
         return $result->is_creator === "1";
-    }    
+    }  
+    
+    public function userNotInLobby($userId) {
+        $result = $this->query("SELECT COUNT(*) AS count FROM lobby_members WHERE user_id=?", 
+        [$userId]);
+        return $result->count === 0;
+    }
 }
