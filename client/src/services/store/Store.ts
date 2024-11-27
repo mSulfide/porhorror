@@ -1,11 +1,13 @@
-import { TInventory, TItem, TLobbies, TMessages, TUser } from "../server/types";
+import { TInventory, TItem, TLobbies, TLobby, TMessages, TUser, TUsers } from "../server/types";
 
 const TOKEN = 'token';
 
 class Store {
     user: TUser | null = null;
+    lobby: TLobby | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
+    members: TUsers = [];
     lobbies: TLobbies = [];
     lobbyHash: string = 'empty lobby hash';
     inventory: TItem[] = [];
@@ -32,6 +34,10 @@ class Store {
     clearUser(): void {
         this.user = null;
         this.setToken('');
+    }
+
+    getLobby(): TLobby | null {
+        return this.lobby;
     }
 
     addMessages(messages: TMessages): void {

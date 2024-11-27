@@ -1,12 +1,15 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Button, Inventory, Lobby } from "../../components";
 import { IBasePage, PAGES } from "../PageManager";
-import { ServerContext } from "../../App";
+import { ServerContext, StoreContext } from "../../App";
 import LobbyList from "../../components/LobbyList/LobbyList";
+import { TLobby } from "../../services/server/types";
 
 const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
+    const store = useContext(StoreContext);
+    const lobby = store.getLobby();
 
     const backClickHandler = () => {
         (async () => {
@@ -15,10 +18,11 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
         })();
     }
     
+    server.updateGroup();
+
     return <div>
         <Inventory />
-        <Lobby />
-        <LobbyList />
+        {lobby ? <Lobby lobby={lobby}/> : <LobbyList />}
         <Button onClick={backClickHandler} text="Выход" />
     </div>;
 }

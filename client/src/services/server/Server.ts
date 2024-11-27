@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TLobbyResponse } from "./types";
 
 const { LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -160,7 +160,17 @@ class Server {
     }
     
     createLobby(name: string): void {
-        this.request<boolean>('createGroup', { name: name})
+        this.request<boolean>('createGroup', { name: name});
+    }
+
+    async updateGroup(): Promise<TLobbyResponse | null> {
+        const hash = this.store.getLobbyHash();
+        const result = await this.request<TLobbyResponse>('updateGroup', { hash });
+        if (result) {
+            this.store.setLobbyHash(result.hash);
+            return result;
+        }
+        return null;
     }
 }
 

@@ -42,6 +42,7 @@ export type TLobby = {
     id: number;
     name: string;
     creator: string;
+    users?: TUsers;
 }
 
 export type TLobbyResponse = {
@@ -53,12 +54,4 @@ export type TLobbies = TLobby[];
 export type TLobbiesResponse = {
     lobbies: TLobbies;
     hash: string;
-}
-
-export type TGroup = TLobby & {users: TUsers};
-export type TGroupParams = {
-    id?: number;
-    name?: string;
-    creator?: string;
-    users?: TUsers;
 }
