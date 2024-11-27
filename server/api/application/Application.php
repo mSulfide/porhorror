@@ -158,10 +158,10 @@ class Application {
     }
     
     public function joinToGroup($params) {
-        if ($params['lobby_id'] && $params['token']) {
+        if ($params['lobbyId'] && $params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->lobby->joinToGroup($params['lobby_id'], $user->id);
+                return $this->lobby->joinToGroup($params['lobbyId'], $user->id);
             }
             return ['error' => 705];
         }
@@ -183,6 +183,18 @@ class Application {
         return ['error' => 242];
     }
     
+    public function dropFromGroup($params) {
+        if ($params['userId'] && $params['token']) {
+            $creator = $this->user->getUser($params['token']);
+            if ($creator) {
+                return $this->lobby->dropFromGroup($creator->id, $params['userId']);
+
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби
