@@ -60,11 +60,13 @@ class Server {
         return false;
     }
 
-    async logout() {
+    async logout(): Promise<boolean> {
         const result = await this.request<boolean>('logout');
         if (result) {
             this.store.clearUser();
+            return true;
         }
+        return false;
     }
 
     async registration(login: string, password: string, name: string): Promise<boolean | null> {
