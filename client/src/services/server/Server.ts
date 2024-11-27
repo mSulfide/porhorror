@@ -173,6 +173,10 @@ class Server {
     createLobby(name: string): void {
         this.request<boolean>('createGroup', { name: name});
     }
+
+    leaveGroup(): void {
+        this.request<boolean>('leaveGroup');
+    }
 }
 
 export default Server;

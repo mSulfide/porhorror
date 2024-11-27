@@ -17,7 +17,7 @@ const LobbyWin: React.FC = () => {
     });
 
     if (lobby) {
-        return <Lobby lobby={lobby}/>
+        return <Lobby lobby={lobby} leaveGroup={server.leaveGroup}/>
     }
 
     return <div>
