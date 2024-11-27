@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TLobbyResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TLobbyResponse, TLobbies } from "./types";
 
 const { LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -125,33 +125,44 @@ class Server {
         this.request('startGame');
     }
 
-    async updateGroups(): Promise<TLobbiesResponse | null> {
+    async updateGroups(): Promise<string | null> {
         const hash = this.store.getLobbyHash();
         const result = await this.request<TLobbiesResponse>('updateGroups', { hash });
         if (result) {
             this.store.setLobbyHash(result.hash);
-            return result;
+            this.store.addLobbies(result.lobbies);
+            return result.hash;
         }
         return null;
     }
 
-    startLobbyList(cb: (hash: string) => void): void {
+    async updateLobby(): Promise<string | null> {
+        const hash = this.store.getLobbyHash();
+        const result = await this.request<TLobbyResponse>('updateGroup', { hash });
+        if (result) {
+            this.store.setLobbyHash(result.hash);
+            this.store.setLobby(result);
+            return result.hash;
+        }
+        return null;
+    }
+
+    startLobby(callback: (hash: string) => void): void {
         this.lobbyInterval = setInterval(async () => {
-            const result = await this.updateGroups();
+            const result = await this.updateLobby() || await this.updateGroups();
             if (result) {
-                const { lobbies, hash } = result;
-                this.store.addLobbies(lobbies);
-                cb(hash);
+                callback(result);
             }
         }, LOBBY_LIST_TIMESTAMP);
 
     }
 
-    stopLobbyList(): void {
+    stopLobby(): void {
         if (this.lobbyInterval) {
             clearInterval(this.lobbyInterval);
             this.lobbyInterval = null;
             this.store.clearLobbies();
+            this.store.setLobby(null);
         }
     }
 
@@ -161,16 +172,6 @@ class Server {
     
     createLobby(name: string): void {
         this.request<boolean>('createGroup', { name: name});
-    }
-
-    async updateGroup(): Promise<TLobbyResponse | null> {
-        const hash = this.store.getLobbyHash();
-        const result = await this.request<TLobbyResponse>('updateGroup', { hash });
-        if (result) {
-            this.store.setLobbyHash(result.hash);
-            return result;
-        }
-        return null;
     }
 }
 

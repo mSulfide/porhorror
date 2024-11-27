@@ -36,6 +36,10 @@ class Store {
         this.setToken('');
     }
 
+    setLobby(lobby: TLobby | null): void {
+        this.lobby = lobby;
+    }
+
     getLobby(): TLobby | null {
         return this.lobby;
     }
