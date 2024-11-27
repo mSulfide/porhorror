@@ -136,6 +136,16 @@ class DB {
         );
     }
 
+    public function getUsersFromLobby($lobbyId) {
+        return $this->queryAll('SELECT
+                u.id AS id,
+                u.name AS name
+            FROM users AS u
+            LEFT JOIN lobby_members AS m ON m.lobby_id = ?
+            WHERE u.id = m.user_id
+        ', [$lobbyId]);
+    }
+
     public function updateLobbyHash($hash) {
         $this->execute("UPDATE hashes SET lobby_hash=? WHERE id=1", [$hash]);
     }
