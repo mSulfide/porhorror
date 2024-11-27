@@ -43,7 +43,7 @@ class Lobby {
 
     public function deleteGroup($lobbyId, $userId) {
         $lobby = $this->db->getLobbyById($lobbyId);
-        if ($lobby && $lobby->creator_id == $userId) {
+        if ($lobby && isCreator($userId, $lobbyId)) {
             $this->db->removeMembersFromLobby($lobbyId);
             $this->db->removeLobby($lobbyId);
             return true; 

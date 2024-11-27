@@ -167,7 +167,13 @@ class DB {
     }
 
     public function isCreator($userId, $lobbyId) {
-        return $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
+        $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
         [$lobbyId, $userId]);
+        
+        if ($result[0]['is_creator']) {
+            return true; 
+        } else {
+            return false; 
+        }
     }
 }
