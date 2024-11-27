@@ -37,6 +37,10 @@ class Lobby {
         return ['error' => 1105];
     }
 
+    public function isCreator($userId, $lobbyId) {
+        return $this->db->isCreator($userId, $lobbyId);
+    }
+
     public function deleteGroup($lobbyId, $userId) {
         $lobby = $this->db->getLobbyById($lobbyId);
         if ($lobby && $lobby->creator_id == $userId) {

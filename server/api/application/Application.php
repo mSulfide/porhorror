@@ -146,14 +146,20 @@ class Application {
     public function deleteGroup($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
-            $lobby = $this->lobby->getLobbyByUserId($user->id);
-            if ($lobby) {
-                return $this->lobby->deleteGroup($lobby->id, $user->id);
+            if ($user) {
+                $lobby = $this->lobby->getLobbyByUserId($user->id);
+                if ($lobby) {
+                    return $this->lobby->deleteGroup($lobby->id, $user->id);
+                }
+                return ['error' => 1105];
             }
-            return ['error' => 1105]; 
+            return ['error' => 705];
         }
-        return ['error' => 242]; 
+        return ['error' => 242];
     }
+
+
+    
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби

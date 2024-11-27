@@ -165,4 +165,9 @@ class DB {
     public function getLobbyById($lobbyId) {
         return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
     }
+
+    public function isCreator($userId, $lobbyId) {
+        return $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
+        [$lobbyId, $userId]);
+    }
 }
