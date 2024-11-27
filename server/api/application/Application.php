@@ -144,12 +144,13 @@ class Application {
     }
 
     public function deleteGroup($params) {
-        if ($params['lobby_id'] && $params['token']) {
+        if ($params['token']) {
             $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->deleteGroup($params['lobby_id'], $user->id);
+            $lobby = $this->lobby->getLobbyByUserId($user->id);
+            if ($lobby) {
+                return $this->lobby->deleteGroup($lobby->id, $user->id);
             }
-            return ['error' => 705]; 
+            return ['error' => 1105]; 
         }
         return ['error' => 242]; 
     }
