@@ -111,7 +111,7 @@ class Application {
             if ($user) {
                 $lobby = $this->lobby->getLobbyByUserId($user->id);
                 if ($lobby) {
-                    return $this->lobby->startGame($lobby->id);
+                    return $this->lobby->startGame($lobby->id, $user->id);
                 }
                 return ['error' => 1105];
             }

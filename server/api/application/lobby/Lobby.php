@@ -9,8 +9,8 @@ class Lobby {
         return $this->db->getLobbyByUserId($userId);
     }
 
-    public function startGame($lobbyId) {
-        if(true/*$this->isCreator*/) {
+    public function startGame($lobbyId, $userId) {
+        if($this->db->isCreator($userId, $lobbyId)) {
             $this->db->startGame($lobbyId);
             return true;
         }
