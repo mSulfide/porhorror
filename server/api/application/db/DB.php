@@ -112,12 +112,13 @@ class DB {
         return [$item1, $item2];
     }
 
-    public function getLobbyByCreatorId($userId) {
-        return $this->query('SELECT * FROM lobby WHERE creator_id=?', [$userId]);
+    public function getLobbyByUserId($userId) {
+        $lobby = $this->query('SELECT lobby_id AS id FROM lobby_members WHERE user_id=?', [$userId]);
+        return $this->query('SELECT * FROM lobby WHERE id=?', [$lobby->id]);
     }
 
     public function startGame($lobbyId) {
-        $this->execute('UPDATE lobby SET is_started=? WHERE id=?', [true, $lobbyId]);
+        $this->execute('UPDATE lobby SET status=? WHERE id=?', ['start game', $lobbyId]);
     }
 
     public function getLobbyHash() {
