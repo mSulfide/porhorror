@@ -176,6 +176,7 @@ class Application {
                 if ($group) {
                     return $this->lobby->leaveGroup($user->id, $group->id);
                 }
+                return ['error' => 1105];
             }
             return ['error' => 705];
         }
