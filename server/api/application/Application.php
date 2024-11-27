@@ -187,11 +187,8 @@ class Application {
         if ($params['userId'] && $params['token']) {
             $creator = $this->user->getUser($params['token']);
             if ($creator) {
-                $user = $this->user->getUser($params['userId']);
-                if ($user) {
-                        return $this->lobby->dropFromGroup($creator->id, $user->id);
-                }
-                return ['error' => 705];
+                return $this->lobby->dropFromGroup($creator->id, $params['userId']);
+
             }
             return ['error' => 705];
         }
