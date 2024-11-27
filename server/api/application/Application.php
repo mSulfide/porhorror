@@ -172,8 +172,10 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                $group = $this->db->getLobbyByUserId($user->id);
-                return $this->lobby->leaveGroup($user->id, $group->id);
+                $group = $this->lobby->getLobbyByUserId($user->id);
+                if ($group) {
+                    return $this->lobby->leaveGroup($user->id, $group->id);
+                }
             }
             return ['error' => 705];
         }
