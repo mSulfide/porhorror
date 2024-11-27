@@ -64,4 +64,14 @@ class Lobby {
         }
         return ['error' => 710];
     }
+
+    public function leaveGroup($userId, $lobbyId) {
+        $lobby = $this->getLobbyByUserId($userId);
+        if ($lobby && $lobby->id == $lobbyId) {
+            $this->db->removeMemberFromLobby($lobbyId, $userId);
+            $this->db->updateLobbyHash(md5(rand()));
+            return true;
+        }
+        return ['error' => 712];
+    }
 }
