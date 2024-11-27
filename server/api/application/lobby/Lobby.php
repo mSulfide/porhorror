@@ -96,6 +96,8 @@ class Lobby {
         }
         $users = $this->db->getUsersFromLobby($lobby->id);
         return [
+            'id' => $lobby->id,
+            'name' => $lobby->name,
             'users' => $users,
             'hash' => $lobby->hash
         ];

@@ -41,14 +41,11 @@ export type TInventory = {
 export type TLobby = {
     id: number;
     name: string;
-    creator: string;
+    creator?: string;
     users?: TUsers;
 }
 
-export type TLobbyResponse = {
-    users: TUsers;
-    hash: string;
-}
+export type TLobbyResponse = TLobby & { hash: string; }
 
 export type TLobbies = TLobby[];
 export type TLobbiesResponse = {

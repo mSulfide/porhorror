@@ -17,8 +17,6 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
                 setPage(PAGES.LOGIN);
         })();
     }
-    
-    server.updateGroup();
 
     return <div>
         <Inventory />
