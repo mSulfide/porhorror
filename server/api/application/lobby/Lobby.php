@@ -66,7 +66,11 @@ class Lobby {
     }
 
     public function leaveGroup($userId, $lobbyId) {
-        $this->db->removeMemberFromLobby($lobbyId, $userId);
+        if ($this->isCreator($userId, $lobbyId)) {
+            $this->deleteGroup($lobbyId, $userId);
+        } else {
+            $this->db->removeMemberFromLobby($lobbyId, $userId);
+        }
         $this->db->updateLobbyHash(md5(rand()));
         return true;
     }

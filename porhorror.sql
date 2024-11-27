@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 25 2024 г., 15:48
+-- Время создания: Ноя 27 2024 г., 19:22
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -38,7 +38,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
-(1, '27c8f554b6b9237637ad0f9dad7ff4d1', '1145');
+(1, 'ebc0cdb6a311cd574359af7151e5e3bf', 'f5bf765ac7528a71bacab9bc79c61b0d');
 
 -- --------------------------------------------------------
 
@@ -52,13 +52,6 @@ CREATE TABLE `lobby` (
   `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'open'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Дамп данных таблицы `lobby`
---
-
-INSERT INTO `lobby` (`id`, `name`, `status`) VALUES
-(1, 'bebr', 'open');
-
 -- --------------------------------------------------------
 
 --
@@ -71,13 +64,6 @@ CREATE TABLE `lobby_members` (
   `user_id` int NOT NULL,
   `is_creator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Дамп данных таблицы `lobby_members`
---
-
-INSERT INTO `lobby_members` (`id`, `lobby_id`, `user_id`, `is_creator`) VALUES
-(1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -103,7 +89,8 @@ INSERT INTO `messages` (`id`, `user_id`, `message`, `created`) VALUES
 (4, 1, 'Ещё и на Enter не отправляются сообщения, вообще кринжик нереальный', '2024-11-06 07:24:17'),
 (5, 1, 'Минус вайб', '2024-11-06 07:24:25'),
 (7, 1, '123', '2024-11-12 23:42:05'),
-(8, 5, 'всем тевирп!', '2024-11-23 14:43:19');
+(8, 5, 'всем тевирп!', '2024-11-23 14:43:19'),
+(10, 5, 'проверка', '2024-11-27 08:40:16');
 
 -- --------------------------------------------------------
 
@@ -128,7 +115,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (2, 'vasya', 'fcb03559c0317682f5d65a88aca50012', 'Вася', '6c1a35c84af6b2594544fdc5c2f52f0f'),
 (3, 'petya', 'd7ba312b012b3374ef53eb2e3f9830a5', 'Петя', 'cc79d5f20b41d4728ae7eb7157cde2a0'),
 (4, 'brandon', 'b015f4f164ef51727ff751635f7d0eaf', 'Барсук', 'a2fa8c76f744110ef9182ff97b1255c1'),
-(5, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', '4627722d496dff63a06c1dc456467fdb');
+(5, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', '8f8cc0fb723dc8a91de001539c722c9c');
 
 --
 -- Индексы сохранённых таблиц
@@ -178,19 +165,19 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
