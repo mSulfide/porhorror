@@ -42,12 +42,11 @@ class Lobby {
     }
 
     public function deleteGroup($lobbyId, $userId) {
-        $lobby = $this->db->getLobbyById($lobbyId);
-        if ($lobby && isCreator($userId, $lobbyId)) {
+        if ($this->isCreator($userId, $lobbyId)) {
             $this->db->removeMembersFromLobby($lobbyId);
             $this->db->removeLobby($lobbyId);
             return true; 
         }
-        return ['error' => 710]; 
+        return false; 
     }
 }
