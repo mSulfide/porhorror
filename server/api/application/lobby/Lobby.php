@@ -36,4 +36,14 @@ class Lobby {
         }
         return ['error' => 705];
     }
+
+    public function deleteGroup($lobbyId, $userId) {
+        $lobby = $this->db->getLobbyById($lobbyId);
+        if ($lobby && $lobby->creator_id == $userId) {
+            $this->db->removeMembersFromLobby($lobbyId);
+            $this->db->removeLobby($lobbyId);
+            return true; 
+        }
+        return ['error' => 710]; 
+    }
 }

@@ -137,6 +137,16 @@ class Application {
         return ['error' => 242];
     }
 
+    public function deleteGroup($params) {
+        if ($params['lobby_id'] && $params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->deleteGroup($params['lobby_id'], $user->id);
+            }
+            return ['error' => 705]; 
+        }
+        return ['error' => 242]; 
+    }
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби
