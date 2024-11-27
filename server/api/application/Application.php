@@ -109,7 +109,12 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->lobby->startGame($user->id);
+                $lobby = $this->lobby->getLobbyByUserId($user->id);
+                return $lobby;
+                if ($lobby) {
+                    return $this->lobby->startGame($lobby->id);
+                }
+                return ['error' => 1105];
             }
             return ['error' => 705];
         }
@@ -133,10 +138,28 @@ class Application {
             if ($user) {
                 return $this->lobby->createGroup($params['name'], $user->id);
             }
+            return ['error' => 705];
         }
         return ['error' => 242];
     }
 
+    public function deleteGroup($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                $lobby = $this->lobby->getLobbyByUserId($user->id);
+                if ($lobby) {
+                    return $this->lobby->deleteGroup($lobby->id, $user->id);
+                }
+                return ['error' => 1105];
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+
+    
     /*
     case 'changeInventory': return $app->changeInventory($params);
     // лобби

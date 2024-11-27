@@ -112,12 +112,13 @@ class DB {
         return [$item1, $item2];
     }
 
-    public function getLobbyByCreatorId($userId) {
-        return $this->query('SELECT * FROM lobby WHERE creator_id=?', [$userId]);
+    public function getLobbyByUserId($userId) {
+        $lobby = $this->query('SELECT lobby_id AS id FROM lobby_members WHERE user_id=?', [$userId]);
+        return $this->query('SELECT * FROM lobby WHERE id=?', [$lobby->id]);
     }
 
     public function startGame($lobbyId) {
-        $this->execute('UPDATE lobby SET is_started=? WHERE id=?', [true, $lobbyId]);
+        $this->execute('UPDATE lobby SET status=? WHERE id=?', ['start game', $lobbyId]);
     }
 
     public function getLobbyHash() {
@@ -153,5 +154,21 @@ class DB {
         );
     }
 
-    //public function getGroupById()
+    public function removeMembersFromLobby($lobbyId) {
+        $this->execute("DELETE FROM lobby_members WHERE lobby_id=?", [$lobbyId]);
+    }
+    
+    public function removeLobby($lobbyId) {
+        $this->execute("DELETE FROM lobby WHERE id=?", [$lobbyId]);
+    }
+
+    public function getLobbyById($lobbyId) {
+        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+    }
+
+    public function isCreator($userId, $lobbyId) {
+        $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
+        [$lobbyId, $userId]);
+        return $result->is_creator === "1";
+    }    
 }
