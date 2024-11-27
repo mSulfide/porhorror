@@ -109,7 +109,12 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->lobby->startGame($user->id);
+                $lobby = $this->lobby->getLobbyByUserId($user->id);
+                return $lobby;
+                if ($lobby) {
+                    return $this->lobby->startGame($lobby->id);
+                }
+                return ['error' => 1105];
             }
             return ['error' => 705];
         }
@@ -133,6 +138,7 @@ class Application {
             if ($user) {
                 return $this->lobby->createGroup($params['name'], $user->id);
             }
+            return ['error' => 705];
         }
         return ['error' => 242];
     }
