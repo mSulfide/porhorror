@@ -154,5 +154,21 @@ class DB {
         );
     }
 
-    //public function getGroupById()
+    public function removeMembersFromLobby($lobbyId) {
+        $this->execute("DELETE FROM lobby_members WHERE lobby_id=?", [$lobbyId]);
+    }
+    
+    public function removeLobby($lobbyId) {
+        $this->execute("DELETE FROM lobby WHERE id=?", [$lobbyId]);
+    }
+
+    public function getLobbyById($lobbyId) {
+        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+    }
+
+    public function isCreator($userId, $lobbyId) {
+        $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
+        [$lobbyId, $userId]);
+        return $result->is_creator === "1";
+    }    
 }
