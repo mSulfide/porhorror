@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import { TLobby, TUser } from "../../services/server/types";
-import { ServerContext, StoreContext } from "../../App";
+import { TLobby, TUser } from "../../../services/server/types";
+import { ServerContext, StoreContext } from "../../../App";
 
 export type TLobbyProps = {
     lobby: TLobby;
