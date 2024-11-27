@@ -12,6 +12,7 @@ class Lobby {
     public function startGame($lobbyId, $userId) {
         if($this->db->isCreator($userId, $lobbyId)) {
             $this->db->startGame($lobbyId);
+            $this->updateHash($lobbyId);
             return true;
         }
         return false;
@@ -31,11 +32,17 @@ class Lobby {
         ];
     }
 
+    public function updateHash($lobbyId) {
+        $rand = md5(rand());
+        $this->db->updateLobbyHash($rand);
+        $this->db->updateGroupHash($lobbyId, $rand);
+    }
+
     public function createGroup($name, $userId) { 
         $group = $this->db->createGroup($name, $userId);
         if ($group) {
             $this->db->addMemberToLobby($group, $userId, true);
-            $this->db->updateLobbyHash(md5(rand()));
+            $this->updateHash($group->id);
             return true;
         }
         return ['error' => 1105];
@@ -49,7 +56,7 @@ class Lobby {
         if ($this->isCreator($userId, $lobbyId)) {
             $this->db->removeMembersFromLobby($lobbyId);
             $this->db->removeLobby($lobbyId);
-            $this->db->updateLobbyHash(md5(rand()));
+            $this->updateHash($lobbyId);
             return true; 
         }
         return ['error' => 711]; 
@@ -59,7 +66,7 @@ class Lobby {
         $lobby = $this->getLobbyByUserId($userId);
         if (!$lobby->id) {
             $this->db->addMemberToLobby($lobbyId, $userId, 0);
-            $this->db->updateLobbyHash(md5(rand()));
+            $this->updateHash($lobbyId);
             return true;
         }
         return ['error' => 710];
@@ -71,7 +78,7 @@ class Lobby {
         } else {
             $this->db->removeMemberFromLobby($lobbyId, $userId);
         }
-        $this->db->updateLobbyHash(md5(rand()));
+        $this->updateHash($lobbyId);
         return true;
     }
 
@@ -80,7 +87,7 @@ class Lobby {
         if ($lobby) {
             if ($this->isCreator($creatorId, $lobby->id)) {
                 $this->db->removeMemberFromLobby($lobby->id, $userId);
-                $this->db->updateLobbyHash(md5(rand()));
+                $this->updateHash($lobby->id);
                 return true;
             }
             return ['error' => 711];

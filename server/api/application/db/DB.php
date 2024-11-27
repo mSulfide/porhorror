@@ -150,6 +150,10 @@ class DB {
         $this->execute("UPDATE hashes SET lobby_hash=? WHERE id=1", [$hash]);
     }
 
+    public function updateGroupHash($lobbyId, $hash) {
+        $this->execute("UPDATE lobby SET hash=? WHERE id=?", [$hash, $lobbyId]);
+    }
+
     public function createGroup($name) {
         $this->execute(
             "INSERT INTO lobby (name, status) VALUES (?, 'open')",
