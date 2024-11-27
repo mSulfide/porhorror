@@ -83,4 +83,17 @@ class Lobby {
         }
         return ['error' => 1105];
     }
+
+    public function updateGroup($hash, $lobby) {
+        if ($hash === $lobby->hash) {
+            return [
+                'hash' => $hash
+            ];
+        }
+        $users = $this->db->getUsersFromLobby($lobby->id);
+        return [
+            'users' => $users,
+            'hash' => $lobby->hash
+        ];
+    }
 }
