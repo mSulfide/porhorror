@@ -10,8 +10,11 @@ class Lobby {
     }
 
     public function startGame($lobbyId) {
-        $this->db->startGame($lobbyId);
-        return true;
+        if(true/*$this->isCreator*/) {
+            $this->db->startGame($lobbyId);
+            return true;
+        }
+        return false;
     }
 
     public function updateGroups($hash) {

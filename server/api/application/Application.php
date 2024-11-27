@@ -110,7 +110,6 @@ class Application {
             $user = $this->user->getUser($params['token']);
             if ($user) {
                 $lobby = $this->lobby->getLobbyByUserId($user->id);
-                return $lobby;
                 if ($lobby) {
                     return $this->lobby->startGame($lobby->id);
                 }
