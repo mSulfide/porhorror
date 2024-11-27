@@ -167,6 +167,21 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function leaveGroup($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                $group = $this->lobby->getLobbyByUserId($user->id);
+                if ($group) {
+                    return $this->lobby->leaveGroup($user->id, $group->id);
+                }
+                return ['error' => 1105];
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
     
     /*
     case 'changeInventory': return $app->changeInventory($params);

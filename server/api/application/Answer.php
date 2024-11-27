@@ -25,6 +25,7 @@ class Answer {
         '709' => ' session did not start or you need use previous method',
         '710' => 'the user is already in the lobby',
         '711' => 'the user is not the lobby creator',
+        '712' => 'the user is not a lobby member',
         '800' => 'not found object',
         '801' => 'unknown state',
         '1001' => 'params login or password not set',
