@@ -35,7 +35,7 @@ class Lobby {
         $group = $this->db->createGroup($name, $userId);
         if ($group) {
             $this->db->addMemberToLobby($group, $userId, true);
-            $this->db->updateChatHash(md5(rand()));
+            $this->db->updateLobbyHash(md5(rand()));
             return true;
         }
         return ['error' => 1105];
@@ -49,9 +49,19 @@ class Lobby {
         if ($this->isCreator($userId, $lobbyId)) {
             $this->db->removeMembersFromLobby($lobbyId);
             $this->db->removeLobby($lobbyId);
-            $this->db->updateChatHash(md5(rand()));
+            $this->db->updateLobbyHash(md5(rand()));
             return true; 
         }
-        return false; 
+        return ['error' => 711]; 
+    }
+
+    public function joinToGroup($lobbyId, $userId) {
+        $lobby = $this->getLobbyByUserId($userId);
+        if (!$lobby->id) {
+            $this->db->addMemberToLobby($lobbyId, $userId, 0);
+            $this->db->updateLobbyHash(md5(rand()));
+            return true;
+        }
+        return ['error' => 710];
     }
 }

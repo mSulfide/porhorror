@@ -171,5 +171,5 @@ class DB {
         $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
         [$lobbyId, $userId]);
         return $result->is_creator === "1";
-    }    
+    }  
 }
