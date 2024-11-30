@@ -123,6 +123,18 @@ class Server {
         this.request('startGame');
     }
 
+    createGroup(name: string): void {
+        this.request('createGroup', { name });
+    }
+
+    deleteGroup(): void {
+        this.request('deleteGroup');
+    }
+
+    joinToGroup(lobbyId: number): void {
+        this.request('joinToGroup', { lobbyId: `${lobbyId}` });
+    }
+
     async updateGroups(): Promise<TLobbiesResponse | null> {
         const hash = this.store.getLobbyHash();
         const result = await this.request<TLobbiesResponse>('updateGroups', { hash });
@@ -133,23 +145,19 @@ class Server {
         return null;
     }
 
-    startLobbyList(cb: (hash: string) => void): void {
+    startLobbyList(cb: (result: TLobbiesResponse) => void): void {
         this.lobbyInterval = setInterval(async () => {
             const result = await this.updateGroups();
-            if (result) {
-                const { lobbies, hash } = result;
-                this.store.addLobbies(lobbies);
-                cb(hash);
+            if (result?.lobbies) {
+                cb(result);
             }
         }, LOBBY_LIST_TIMESTAMP);
-
     }
 
     stopLobbyList(): void {
         if (this.lobbyInterval) {
             clearInterval(this.lobbyInterval);
             this.lobbyInterval = null;
-            this.store.clearLobbies();
         }
     }
 }

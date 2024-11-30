@@ -1,4 +1,4 @@
-import { TInventory, TItem, TLobbies, TMessages, TUser } from "../server/types";
+import { TInventory, TItem, TMessages, TUser } from "../server/types";
 
 const TOKEN = 'token';
 
@@ -6,7 +6,6 @@ class Store {
     user: TUser | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
-    lobbies: TLobbies = [];
     lobbyHash: string = 'empty lobby hash';
     inventory: TItem[] = [];
     equipment: TItem[] = [];
@@ -57,23 +56,6 @@ class Store {
 
     setChatHash(hash: string): void {
         this.chatHash = hash;
-    }
-
-    addLobbies(lobbies: TLobbies): void {
-        // TODO сделать, чтобы работало вот так
-        //this.lobbies.concat(lobbies);
-        // а вот это - плохой код!
-        if (lobbies?.length) {
-            this.lobbies = lobbies;
-        }
-    }
-
-    getLobbies(): TLobbies {
-        return this.lobbies;
-    }
-
-    clearLobbies(): void {
-        this.lobbies = [];
     }
 
     getLobbyHash(): string {

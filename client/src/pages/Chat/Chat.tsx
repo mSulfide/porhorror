@@ -7,7 +7,6 @@ import Inventory from './components/Inventory';
 
 import './Chat.scss';
 import { StartGameButton } from '../../components';
-import LobbyList from '../../components/LobbyList/LobbyList';
 
 const Chat: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
@@ -80,7 +79,6 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
         </div>
         <StartGameButton />
         <Inventory />
-        <LobbyList />
     </div>)
 }
 

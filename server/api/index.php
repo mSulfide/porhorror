@@ -31,6 +31,7 @@ function result($params) {
             case 'changeInventory': return $app->changeInventory($params);
             // лобби
             case 'updateGroups': return $app->updateGroups($params); // loop
+            case 'updateGroup': return $app->updateGroup($params); // loop
             case 'createGroup': return $app->createGroup($params);
             case 'deleteGroup': return $app->deleteGroup($params);
             case 'joinToGroup': return $app->joinToGroup($params);

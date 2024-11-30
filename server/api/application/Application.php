@@ -109,7 +109,11 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->lobby->startGame($user->id);
+                $lobby = $this->lobby->getLobbyByUserId($user->id);
+                if ($lobby) {
+                    return $this->lobby->startGame($lobby->id, $user->id);
+                }
+                return ['error' => 1105];
             }
             return ['error' => 705];
         }
@@ -127,14 +131,82 @@ class Application {
         return ['error' => 242];
     }
 
+    public function createGroup($params) {
+        if ($params['name'] && $params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->createGroup($params['name'], $user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function deleteGroup($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->deleteGroup($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+    
+    public function joinToGroup($params) {
+        if ($params['lobbyId'] && $params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->joinToGroup($params['lobbyId'], $user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function leaveGroup($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                $group = $this->lobby->getLobbyByUserId($user->id);
+                if ($group) {
+                    return $this->lobby->leaveGroup($user->id, $group->id);
+                }
+                return ['error' => 1105];
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+    
+    public function dropFromGroup($params) {
+        if ($params['userId'] && $params['token']) {
+            $creator = $this->user->getUser($params['token']);
+            if ($creator) {
+                return $this->lobby->dropFromGroup($creator->id, $params['userId']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function updateGroup($params) {
+        if ($params['token'] && $params['hash']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                $lobby = $this->lobby->getLobbyByUserId($user->id);
+                if ($lobby) {
+                    return $this->lobby->updateGroup($params['hash'], $lobby);
+                }
+                return ['error' => 1105];
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
     /*
     case 'changeInventory': return $app->changeInventory($params);
-    // лобби
-    case 'createGroup': return $app->createGroup($params);
-    case 'deleteGroup': return $app->deleteGroup($params);
-    case 'joinToGroup': return $app->joinToGroup($params);
-    case 'leaveGroup': return $app->leaveGroup($params);
-    case 'dropFromGroup': return $app->dropFromGroup($params); // (?)
     // игра
     case 'updateScene': return $app->updateScene($params); // loop
     case 'getRoom': return $app->getRoom($params);
