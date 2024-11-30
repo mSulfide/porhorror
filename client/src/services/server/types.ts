@@ -10,6 +10,7 @@ export type TAnswer<T> = {
 }
 
 export type TUser = {
+    id: number;
     token: string;
     name: string;
 }
@@ -36,10 +37,14 @@ export type TInventory = {
     equipment: TItem[];
 }
 
+type TMember = Omit<TUser, 'token'> & {
+    creator: number;
+}
+
 export type TLobby = {
     id: number;
     name: string;
-    creator: string;
+    members: TMember[];
 }
 
 export type TLobbies = TLobby[];

@@ -146,11 +146,7 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                $lobby = $this->lobby->getLobbyByUserId($user->id);
-                if ($lobby) {
-                    return $this->lobby->deleteGroup($lobby->id, $user->id);
-                }
-                return ['error' => 1105];
+                return $this->lobby->deleteGroup($user->id);
             }
             return ['error' => 705];
         }

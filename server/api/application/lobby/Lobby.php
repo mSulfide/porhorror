@@ -45,14 +45,18 @@ class Lobby {
         return $this->db->isCreator($userId, $lobbyId);
     }
 
-    public function deleteGroup($lobbyId, $userId) {
-        if ($this->isCreator($userId, $lobbyId)) {
-            $this->db->removeMembersFromLobby($lobbyId);
-            $this->db->removeLobby($lobbyId);
-            $this->db->updateLobbyHash(md5(rand()));
-            return true; 
+    public function deleteGroup($userId) {
+        $lobby = $this->getLobbyByUserId($userId);
+        if ($lobby) {
+            if ($this->isCreator($userId, $lobby->id)) {
+                $this->db->removeMembersFromLobby($lobby->id);
+                $this->db->removeLobby($lobby->id);
+                $this->db->updateLobbyHash(md5(rand()));
+                return true; 
+            }
+            return ['error' => 711]; 
         }
-        return ['error' => 711]; 
+        return ['error' => 1105];
     }
 
     public function joinToGroup($lobbyId, $userId) {

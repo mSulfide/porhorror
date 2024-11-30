@@ -1,0 +1,52 @@
+import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
+import { ServerContext, StoreContext } from '../../App';
+import { StartGameButton, Button } from '../../components';
+import { IBasePage, PAGES } from '../PageManager';
+import { TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types";
+import LobbyItem from './components/LobbyItem';
+
+
+const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
+    const server = useContext(ServerContext);
+    const store = useContext(StoreContext);
+    const [lobbies, setLobbies] = useState<TLobbies>([]);
+    const [_, setHash] = useState<string>('');
+
+    const nameGroupRef = useRef<HTMLInputElement>(null!);
+
+    const user = store.getUser();
+
+    useEffect(() => {
+        const updateLobbyListHandler = ({ hash, lobbies }: TLobbiesResponse) => {
+            setLobbies(lobbies);
+            setHash(hash);
+        }
+
+        if (user) {
+            server.startLobbyList(updateLobbyListHandler);
+        }
+
+        return () => {
+            server.stopLobbyList();
+        }
+    });
+
+    const createLobbyHandler = () => {
+        if (nameGroupRef.current && user) {
+            server.createGroup(nameGroupRef.current.value);
+        }
+    }
+
+    if (!user) return <></>;
+
+    return <>
+        <h1>Лобби</h1>
+        <div>
+            <input ref={nameGroupRef} placeholder='Название группы' />
+            <Button onClick={createLobbyHandler} text='Создать группу' />
+        </div>
+        {lobbies.map((lobby: TLobby, index: number) => <LobbyItem key={index} user={user} lobby={lobby} />)}
+    </>;
+}
+
+export default Lobby;

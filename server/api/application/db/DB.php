@@ -47,7 +47,7 @@ class DB {
     private function queryAll($sql, $params = []) {
         $sth = $this->pdo->prepare($sql);
         $sth->execute($params);
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $sth->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function getUserByLogin($login) {
@@ -126,23 +126,21 @@ class DB {
     }
 
     public function getLobbies() {
-        return $this->queryAll('SELECT
-                l.id AS id,
-                u.name AS creator,
-                l.name AS name
-            FROM lobby AS l
-            LEFT JOIN lobby_members AS m ON m.lobby_id = l.id
-            LEFT JOIN users AS u ON u.id = m.user_id AND m.is_creator = 1'
-        );
+        $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open"');
+        foreach ($lobbies as $value) {
+            $value->members = $this->getUsersFromLobby($value->id);
+        }
+        return $lobbies;
     }
 
     public function getUsersFromLobby($lobbyId) {
         return $this->queryAll('SELECT
-                u.id AS id,
-                u.name AS name
-            FROM users AS u
-            LEFT JOIN lobby_members AS m ON m.lobby_id = ?
-            WHERE u.id = m.user_id
+                    u.id AS id,
+                    u.name AS name,
+                    lm.is_creator AS creator
+                FROM users AS u
+                INNER JOIN lobby_members AS lm ON lm.lobby_id=?
+                WHERE u.id = lm.user_id
         ', [$lobbyId]);
     }
 
@@ -182,8 +180,10 @@ class DB {
     }
 
     public function isCreator($userId, $lobbyId) {
-        $result = $this->query("SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
-        [$lobbyId, $userId]);
-        return $result->is_creator === "1";
+        $result = $this->query(
+            "SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
+            [$lobbyId, $userId]
+        );
+        return $result->is_creator === 1;
     }  
 }
