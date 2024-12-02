@@ -14,7 +14,7 @@ class Lobby {
             $this->db->startGame($lobbyId);
             return true;
         }
-        return false;
+        return ['error' => 500];
     }
 
     public function updateGroups($hash) {

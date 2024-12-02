@@ -8,6 +8,7 @@ class Answer {
         '243' => 'Incorrect data about circles',
         '303' => 'Incorrect number of points',
         '404' => 'not found',
+        '500' => "You don't have enough rights",
         '1001' => 'Is it unique login?',
         '1002' => 'Wrong login or password',
         '1003' => 'Error to logout user',

@@ -184,6 +184,6 @@ class DB {
             "SELECT is_creator FROM lobby_members WHERE lobby_id=? AND user_id=?", 
             [$lobbyId, $userId]
         );
-        return $result->is_creator === 1;
+        return $result->is_creator === '1';
     }  
 }
