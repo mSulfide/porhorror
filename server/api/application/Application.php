@@ -109,11 +109,7 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                $lobby = $this->lobby->getLobbyByUserId($user->id);
-                if ($lobby) {
-                    return $this->lobby->startGame($lobby->id, $user->id);
-                }
-                return ['error' => 1105];
+                return $this->lobby->startGame($user->id);
             }
             return ['error' => 705];
         }
@@ -168,11 +164,7 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                $group = $this->lobby->getLobbyByUserId($user->id);
-                if ($group) {
-                    return $this->lobby->leaveGroup($user->id, $group->id);
-                }
-                return ['error' => 1105];
+                return $this->lobby->leaveGroup($user->id);
             }
             return ['error' => 705];
         }
@@ -184,21 +176,6 @@ class Application {
             $creator = $this->user->getUser($params['token']);
             if ($creator) {
                 return $this->lobby->dropFromGroup($creator->id, $params['userId']);
-            }
-            return ['error' => 705];
-        }
-        return ['error' => 242];
-    }
-
-    public function updateGroup($params) {
-        if ($params['token'] && $params['hash']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                $lobby = $this->lobby->getLobbyByUserId($user->id);
-                if ($lobby) {
-                    return $this->lobby->updateGroup($params['hash'], $lobby);
-                }
-                return ['error' => 1105];
             }
             return ['error' => 705];
         }

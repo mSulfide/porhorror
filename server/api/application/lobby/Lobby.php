@@ -5,16 +5,16 @@ class Lobby {
         $this->db = $db;
     }
 
-    public function getLobbyByUserId($userId) {
-        return $this->db->getLobbyByUserId($userId);
-    }
-
-    public function startGame($lobbyId, $userId) {
-        if($this->db->isCreator($userId, $lobbyId)) {
-            $this->db->startGame($lobbyId);
-            return true;
+    public function startGame($userId) {
+        $lobby = $this->db->getLobbyByUserId($userId);
+        if ($lobby) {
+            if($this->db->isCreator($userId, $lobby->id)) {
+                $this->db->startGame($lobby->id);
+                return true;
+            }
+            return ['error' => 500];
         }
-        return false;
+        return ['error' => 1105];
     }
 
     public function updateGroups($hash) {
@@ -41,12 +41,8 @@ class Lobby {
         return ['error' => 1105];
     }
 
-    public function isCreator($userId, $lobbyId) {
-        return $this->db->isCreator($userId, $lobbyId);
-    }
-
     public function deleteGroup($userId) {
-        $lobby = $this->getLobbyByUserId($userId);
+        $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
             if ($this->isCreator($userId, $lobby->id)) {
                 $this->db->removeMembersFromLobby($lobby->id);
@@ -60,7 +56,7 @@ class Lobby {
     }
 
     public function joinToGroup($lobbyId, $userId) {
-        $lobby = $this->getLobbyByUserId($userId);
+        $lobby = $this->db->getLobbyByUserId($userId);
         if (!$lobby->id) {
             $this->db->addMemberToLobby($lobbyId, $userId, 0);
             $this->db->updateLobbyHash(md5(rand()));
@@ -69,18 +65,22 @@ class Lobby {
         return ['error' => 710];
     }
 
-    public function leaveGroup($userId, $lobbyId) {
-        if ($this->isCreator($userId, $lobbyId)) {
-            $this->deleteGroup($lobbyId, $userId);
-        } else {
-            $this->db->removeMemberFromLobby($lobbyId, $userId);
+    public function leaveGroup($userId) {
+        $lobby = $this->db->getLobbyByUserId($userId);
+        if ($lobby) {
+            if ($this->isCreator($userId, $lobby->id)) {
+                $this->deleteGroup($userId);
+            } else {
+                $this->db->removeMemberFromLobby($lobby->id, $userId);
+            }
+            $this->db->updateLobbyHash(md5(rand()));
+            return true;
         }
-        $this->db->updateLobbyHash(md5(rand()));
-        return true;
+        return ['error' => 1105];
     }
 
     public function dropFromGroup($creatorId, $userId) {
-        $lobby = $this->getLobbyByUserId($creatorId);
+        $lobby = $this->db->getLobbyByUserId($creatorId);
         if ($lobby) {
             if ($this->isCreator($creatorId, $lobby->id)) {
                 $this->db->removeMemberFromLobby($lobby->id, $userId);
@@ -103,5 +103,15 @@ class Lobby {
             'users' => $users,
             'hash' => $lobby->hash
         ];
+    }
+
+    private function isCreator($userId, $lobbyId) {
+        $users = $this->db->getUsersFromLobby($lobbyId);
+        foreach ($users as $user) {
+            if ($user->id === $userId && $user->creator == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 }
