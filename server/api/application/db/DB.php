@@ -143,7 +143,7 @@ class DB {
     }
 
     public function getUsersFromLobby($lobbyId) {
-        return $this->queryAll('SELECT
+        $users = $this->queryAll('SELECT
                     u.id AS id,
                     u.name AS name,
                     lm.is_creator AS creator
@@ -151,6 +151,11 @@ class DB {
                 INNER JOIN lobby_members AS lm ON lm.lobby_id=?
                 WHERE u.id = lm.user_id
         ', [$lobbyId]);
+        foreach ($users as $user) {
+            settype($user->id, "int");
+            settype($user->creator, "bool");
+        }
+        return $users;
     }
 
     public function updateLobbyHash($hash) {
