@@ -13,7 +13,6 @@ const LobbyItem: React.FC<ILobbyItem> = ({ lobby, user }: ILobbyItem) => {
     const isCreator = lobby.members.findIndex(
         member => member.id === user.id && member.creator == 1
     ) > -1;
-    console.log(typeof(lobby.id));
 
     const deleteLobbyHandler = () => server.deleteGroup();
     const joinToLobbyHandler = () => server.joinToGroup(lobby.id);

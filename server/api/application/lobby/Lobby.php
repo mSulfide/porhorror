@@ -19,7 +19,7 @@ class Lobby {
 
     public function updateGroups($hash) {
         $currentHash = $this->db->getLobbyHash();
-        if ($hash === $currentHash->lobby_hash) {
+        if ($hash === $currentHash) {
             return [
                 'hash' => $hash
             ];
@@ -27,7 +27,7 @@ class Lobby {
         $lobbies = $this->db->getLobbies();
         return [
             'lobbies' => $lobbies,
-            'hash' => $currentHash->lobby_hash
+            'hash' => $currentHash
         ];
     }
 

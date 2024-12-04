@@ -51,11 +51,19 @@ class DB {
     }
 
     public function getUserByLogin($login) {
-        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
+        $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
+        if ($answer) {
+            settype($answer->id, "int");
+        }
+        return $answer;
     }
 
     public function getUserByToken($token) {
-        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
+        $answer = $this->query("SELECT * FROM users WHERE token=?", [$token]);
+        if ($answer) {
+            settype($answer->id, "int");
+        }
+        return $answer;
     }
 
     public function updateToken($userId, $token) {
@@ -70,7 +78,7 @@ class DB {
     }
 
     public function getChatHash() {
-        return $this->query("SELECT chat_hash FROM hashes WHERE id=1");
+        return $this->query("SELECT chat_hash AS answer FROM hashes WHERE id=1")->answer;
     }
 
     public function updateChatHash($hash) {
@@ -113,8 +121,8 @@ class DB {
     }
 
     public function getLobbyByUserId($userId) {
-        $lobby = $this->query('SELECT lobby_id AS id FROM lobby_members WHERE user_id=?', [$userId]);
-        return $this->query('SELECT * FROM lobby WHERE id=?', [$lobby->id]);
+        $lobbyId = $this->query('SELECT lobby_id FROM lobby_members WHERE user_id=?', [$userId])->lobby_id;
+        return $this->getLobbyById($lobbyId);
     }
 
     public function startGame($lobbyId) {
@@ -122,19 +130,20 @@ class DB {
     }
 
     public function getLobbyHash() {
-        return $this->query("SELECT lobby_hash FROM hashes WHERE id=1");
+        return $this->query("SELECT lobby_hash AS answer FROM hashes WHERE id=1")->answer;
     }
 
     public function getLobbies() {
         $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open"');
-        foreach ($lobbies as $value) {
-            $value->members = $this->getUsersFromLobby($value->id);
+        foreach ($lobbies as $lobby) {
+            settype($lobby->id, "int");
+            $lobby->members = $this->getUsersFromLobby($lobby->id);
         }
         return $lobbies;
     }
 
     public function getUsersFromLobby($lobbyId) {
-        return $this->queryAll('SELECT
+        $users = $this->queryAll('SELECT
                     u.id AS id,
                     u.name AS name,
                     lm.is_creator AS creator
@@ -142,6 +151,11 @@ class DB {
                 INNER JOIN lobby_members AS lm ON lm.lobby_id=?
                 WHERE u.id = lm.user_id
         ', [$lobbyId]);
+        foreach ($users as $user) {
+            settype($user->id, "int");
+            settype($user->creator, "bool");
+        }
+        return $users;
     }
 
     public function updateLobbyHash($hash) {
@@ -176,6 +190,10 @@ class DB {
     }
 
     public function getLobbyById($lobbyId) {
-        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+        $answer = $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+        if ($answer) {
+            settype($answer->id, "int");
+        }
+        return $answer;
     }
 }
