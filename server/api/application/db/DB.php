@@ -52,17 +52,17 @@ class DB {
 
     public function getUserByLogin($login) {
         $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
-
-        settype($answer->id, "int");
-
+        if ($answer) {
+            settype($answer->id, "int");
+        }
         return $answer;
     }
 
     public function getUserByToken($token) {
         $answer = $this->query("SELECT * FROM users WHERE token=?", [$token]);
-
-        settype($answer->id, "int");
-
+        if ($answer) {
+            settype($answer->id, "int");
+        }
         return $answer;
     }
 
@@ -78,7 +78,7 @@ class DB {
     }
 
     public function getChatHash() {
-        return $this->query("SELECT chat_hash FROM hashes WHERE id=1");
+        return $this->query("SELECT chat_hash AS answer FROM hashes WHERE id=1")->answer;
     }
 
     public function updateChatHash($hash) {
@@ -130,7 +130,7 @@ class DB {
     }
 
     public function getLobbyHash() {
-        return $this->query("SELECT lobby_hash FROM hashes WHERE id=1");
+        return $this->query("SELECT lobby_hash AS answer FROM hashes WHERE id=1")->answer;
     }
 
     public function getLobbies() {

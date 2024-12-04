@@ -20,7 +20,6 @@ class Store {
 
     setUser(user: TUser): void {
         const { token } = user;
-        console.log(user);
         this.setToken(token);
         this.user = user;
     }
