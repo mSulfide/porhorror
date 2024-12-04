@@ -51,11 +51,19 @@ class DB {
     }
 
     public function getUserByLogin($login) {
-        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
+        $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
+
+        settype($answer->id, "int");
+
+        return $answer;
     }
 
     public function getUserByToken($token) {
-        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
+        $answer = $this->query("SELECT * FROM users WHERE token=?", [$token]);
+
+        settype($answer->id, "int");
+
+        return $answer;
     }
 
     public function updateToken($userId, $token) {
