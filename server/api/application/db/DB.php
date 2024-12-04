@@ -121,8 +121,8 @@ class DB {
     }
 
     public function getLobbyByUserId($userId) {
-        $lobby = $this->query('SELECT lobby_id AS id FROM lobby_members WHERE user_id=?', [$userId]);
-        return $this->query('SELECT * FROM lobby WHERE id=?', [$lobby->id]);
+        $lobbyId = $this->query('SELECT lobby_id FROM lobby_members WHERE user_id=?', [$userId])->lobby_id;
+        return $this->getLobbyById($lobbyId);
     }
 
     public function startGame($lobbyId) {
@@ -135,8 +135,9 @@ class DB {
 
     public function getLobbies() {
         $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open"');
-        foreach ($lobbies as $value) {
-            $value->members = $this->getUsersFromLobby($value->id);
+        foreach ($lobbies as $lobby) {
+            settype($lobby->id, "int");
+            $lobby->members = $this->getUsersFromLobby($lobby->id);
         }
         return $lobbies;
     }
@@ -184,6 +185,10 @@ class DB {
     }
 
     public function getLobbyById($lobbyId) {
-        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+        $answer = $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
+        if ($answer) {
+            settype($answer->id, "int");
+        }
+        return $answer;
     }
 }
