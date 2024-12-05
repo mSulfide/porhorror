@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
 import { ServerContext, StoreContext } from '../../../App';
-import { StartGameButton, Button } from '../../../components';
+import { StartGameButton, Button } from '../..';
 import { TLobbies, TLobby, TUser } from "../../../services/server/types";
 
 interface ILobbyItem {
@@ -11,7 +11,7 @@ interface ILobbyItem {
 const LobbyItem: React.FC<ILobbyItem> = ({ lobby, user }: ILobbyItem) => {
     const server = useContext(ServerContext);
     const isCreator = lobby.members.findIndex(
-        member => member.id === user.id && member.creator == 1
+        member => member.id === user.id && member.creator
     ) > -1;
 
     const deleteLobbyHandler = () => server.deleteGroup();

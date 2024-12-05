@@ -38,7 +38,7 @@ export type TInventory = {
 }
 
 type TMember = Omit<TUser, 'token'> & {
-    creator: number;
+    creator: boolean;
 }
 
 export type TLobby = {

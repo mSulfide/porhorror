@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
 import { ServerContext, StoreContext } from '../../App';
-import { StartGameButton, Button } from '../../components';
-import { IBasePage, PAGES } from '../PageManager';
+import { Button } from '..';
 import { TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types";
 import LobbyItem from './components/LobbyItem';
 
 
-const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
+const Lobby: React.FC = () => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const [lobbies, setLobbies] = useState<TLobbies>([]);
@@ -33,7 +32,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
 
     const createLobbyHandler = () => {
         if (nameGroupRef.current && user) {
-            server.createGroup(nameGroupRef.current.value);
+            server.createGroup(nameGroupRef.current.value || "Новая группа");
         }
     }
 
