@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { ServerContext } from '../../App';
+import { ServerContext, StoreContext } from '../../App';
 import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../PageManager';
 
@@ -10,6 +10,8 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
     const loginRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+    
+    (async () => await server.autoLogin() && setPage(PAGES.MAIN_MENU))();
 
     const loginClickHandler = async () => {
         if (loginRef.current && passwordRef.current) {

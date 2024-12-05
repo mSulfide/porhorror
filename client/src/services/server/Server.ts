@@ -49,6 +49,17 @@ class Server {
         this.showErrorCb = cb;
     }
 
+    async autoLogin(): Promise<boolean> {
+        if (this.store.getToken()) {
+            const user = await this.request<TUser>('autoLogin');
+            if (user) {
+                this.store.setUser(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
     async login(login: string, password: string): Promise<boolean> {
         const rnd = Math.round(Math.random() * 100000);
         const hash = md5(`${md5(`${login}${password}`)}${rnd}`);
