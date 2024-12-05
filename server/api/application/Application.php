@@ -18,6 +18,10 @@ class Application {
         $this->game = new Game($db);
     }
 
+    public function autoLogin($params) {
+        return ['error' => 103];
+    }
+
     public function login($params) {
         if ($params['login'] && $params['hash'] && $params['rnd']) {
             return $this->user->login($params['login'], $params['hash'], $params['rnd']);
@@ -105,6 +109,11 @@ class Application {
         return ['error' => 242];
     }
 
+    public function changeInventory($params) {
+        return ['error' => 103];
+    }
+
+    //лобби
     public function startGame($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);

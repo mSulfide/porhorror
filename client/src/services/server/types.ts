@@ -30,12 +30,10 @@ export type TMessagesResponse = {
 export type TItem = {
     id: number;
     name: string;
+    status: 'pocket' | 'inventory';
 };
 
-export type TInventory = {
-    inventory: TItem[];
-    equipment: TItem[];
-}
+export type TInventory = TItem[];
 
 export type TMember = Omit<TUser, 'token'> & {
     creator: boolean;

@@ -8,7 +8,7 @@ import { Input } from "../../services/engine/structures";
 import { Button, UserPoints } from "../../components";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
-    const backClickHandler = () => props.setPage(PAGES.CHAT);
+    const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const input = new Input();

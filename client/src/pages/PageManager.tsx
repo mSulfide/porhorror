@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import Preloader from './Preloader/Preloader';
 import Login from './Login/Login';
-import Chat from './Chat/Chat';
 import GamePage from './Game/Game';
 import NotFound from './NotFound/NotFound';
 import PHGame from './PorHorror/PHGame';
@@ -14,7 +13,6 @@ export enum PAGES {
     PRELOADER,
     LOGIN,
     REGISTRATION,
-    CHAT,
     GAME,
     PORHORROR,
     MAIN_MENU,
@@ -33,7 +31,6 @@ const PageManager: React.FC = () => {
             {page === PAGES.PRELOADER && <Preloader setPage={setPage} />}
             {page === PAGES.LOGIN && <Login setPage={setPage} />}
             {page === PAGES.REGISTRATION && <Registration setPage={setPage} />}
-            {page === PAGES.CHAT && <Chat setPage={setPage} />}
             {page === PAGES.GAME && <GamePage setPage={setPage} />}
             {page === PAGES.PORHORROR && <PHGame setPage={setPage} />}
             {page === PAGES.MAIN_MENU && <MainMenu setPage={setPage} />}
