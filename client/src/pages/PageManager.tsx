@@ -8,6 +8,7 @@ import NotFound from './NotFound/NotFound';
 import PHGame from './PorHorror/PHGame';
 import Registration from './Registaration/Registration';
 import Lobby from './Lobby/Lobby';
+import MainMenu from './MainMenu/MainMenu';
 
 
 export enum PAGES {
@@ -18,6 +19,7 @@ export enum PAGES {
     GAME,
     PORHORROR,
     LOBBY,
+    MAIN_MENU,
     NOT_FOUND
 }
 
@@ -37,6 +39,7 @@ const PageManager: React.FC = () => {
             {page === PAGES.GAME && <GamePage setPage={setPage} />}
             {page === PAGES.PORHORROR && <PHGame setPage={setPage} />}
             {page === PAGES.LOBBY && <Lobby setPage={setPage} />}
+            {page === PAGES.MAIN_MENU && <MainMenu setPage={setPage} />}
             {page === PAGES.NOT_FOUND && <NotFound setPage={setPage} />}
         </>
     );
