@@ -15,8 +15,7 @@ const Lobby: React.FC = () => {
     const nameGroupRef = useRef<HTMLInputElement>(null!);
 
     const user = store.getUser();
-    const lobby = store.getLobby();
-
+    
     useEffect(() => {
         const updateLobbyListHandler = ({ hash, lobbies }: TLobbiesResponse) => {
             setLobbies(lobbies);
@@ -40,8 +39,9 @@ const Lobby: React.FC = () => {
 
     if (!user) return <></>;
 
+    const lobby = lobbies.find(lobby => lobby.members.findIndex(member => member.id === user.id) > -1);
+
     return <>
-        <h1>Лобби</h1>
         {lobby && <LobbyInfo lobby={lobby} />}
         <div>
             <input ref={nameGroupRef} placeholder='Название группы' />

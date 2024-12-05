@@ -7,7 +7,7 @@ interface ILobbyInfo {
 
 const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby }: ILobbyInfo) => {
     return <>
-        <span>{lobby.name}</span>
+        <span>{`Лобби ${lobby.name}`}</span>
         {lobby.members.map((member, index) => <LobbyMember key={index} member={member} />)}
     </>;
 }

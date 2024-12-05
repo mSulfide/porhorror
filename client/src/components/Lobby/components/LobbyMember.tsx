@@ -6,7 +6,7 @@ interface ILobbyMember {
 
 const LobbyMember: React.FC<ILobbyMember> = ({ member }: ILobbyMember) => {
     return <div>
-        {member.creator && <span>Создатель</span>}
+        {member.creator && <span>Создатель </span>}
         <span>{member.name}</span>
     </div>
 }
