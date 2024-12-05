@@ -18,7 +18,7 @@ const Registration: React.FC<IBasePage> = (props: IBasePage) => {
             const passwordSecond = passwordSecondRef.current.value;
             const name = nameRef.current.value;
             if (name && login && password && password === passwordSecond && await server.registration(login, password, name)) {
-                setPage(PAGES.CHAT);
+                setPage(PAGES.MAIN_MENU);
             }
         }
     }

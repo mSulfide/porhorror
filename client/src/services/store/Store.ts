@@ -1,4 +1,4 @@
-import { TInventory, TItem, TMessages, TUser } from "../server/types";
+import { TInventory, TItem, TLobby, TMessages, TUser } from "../server/types";
 
 const TOKEN = 'token';
 

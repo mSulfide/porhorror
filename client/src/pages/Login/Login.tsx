@@ -16,7 +16,7 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
             const login = loginRef.current.value;
             const password = passwordRef.current.value;
             if (login && password && await server.login(login, password)) {
-                setPage(PAGES.LOBBY);
+                setPage(PAGES.MAIN_MENU);
             }
         }
     }
