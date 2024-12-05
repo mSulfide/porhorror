@@ -60,11 +60,13 @@ class Server {
         return false;
     }
 
-    async logout() {
+    async logout(): Promise<boolean> {
         const result = await this.request<boolean>('logout');
         if (result) {
             this.store.clearUser();
+            return true;
         }
+        return false;
     }
 
     async registration(login: string, password: string, name: string): Promise<boolean | null> {
@@ -127,12 +129,20 @@ class Server {
         this.request('createGroup', { name });
     }
 
-    deleteGroup(): void {
-        this.request('deleteGroup');
+    async deleteGroup(): Promise<boolean | null> {
+        return this.request<boolean>('deleteGroup');
+    }
+
+    async leaveGroup(): Promise<boolean | null> {
+        return this.request<boolean>('leaveGroup');
     }
 
     joinToGroup(lobbyId: number): void {
         this.request('joinToGroup', { lobbyId: `${lobbyId}` });
+    }
+
+    dropFromGroup(userId: number): void {
+        this.request('dropFromGroup', { userId: `${userId}` });
     }
 
     async updateGroups(): Promise<TLobbiesResponse | null> {

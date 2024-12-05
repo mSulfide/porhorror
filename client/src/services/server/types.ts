@@ -37,8 +37,8 @@ export type TInventory = {
     equipment: TItem[];
 }
 
-type TMember = Omit<TUser, 'token'> & {
-    creator: number;
+export type TMember = Omit<TUser, 'token'> & {
+    creator: boolean;
 }
 
 export type TLobby = {
