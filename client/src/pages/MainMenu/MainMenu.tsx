@@ -1,11 +1,15 @@
 import { useContext } from "react";
 import { Button, Inventory, Lobby } from "../../components";
 import { IBasePage, PAGES } from "../PageManager";
-import { ServerContext } from "../../App";
+import { ServerContext, StoreContext } from "../../App";
 
 const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
+    const store = useContext(StoreContext);
+
+    store.setChatHash('empty');
+    store.setLobbyHash('empty');
 
     const settingsClickHandler = () => {
 
