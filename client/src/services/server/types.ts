@@ -37,7 +37,7 @@ export type TInventory = {
     equipment: TItem[];
 }
 
-type TMember = Omit<TUser, 'token'> & {
+export type TMember = Omit<TUser, 'token'> & {
     creator: boolean;
 }
 

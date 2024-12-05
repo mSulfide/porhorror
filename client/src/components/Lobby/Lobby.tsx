@@ -3,6 +3,7 @@ import { ServerContext, StoreContext } from '../../App';
 import { Button } from '..';
 import { TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types";
 import LobbyItem from './components/LobbyItem';
+import LobbyInfo from './components/LobbyInfo';
 
 
 const Lobby: React.FC = () => {
@@ -14,6 +15,7 @@ const Lobby: React.FC = () => {
     const nameGroupRef = useRef<HTMLInputElement>(null!);
 
     const user = store.getUser();
+    const lobby = store.getLobby();
 
     useEffect(() => {
         const updateLobbyListHandler = ({ hash, lobbies }: TLobbiesResponse) => {
@@ -40,6 +42,7 @@ const Lobby: React.FC = () => {
 
     return <>
         <h1>Лобби</h1>
+        {lobby && <LobbyInfo lobby={lobby} />}
         <div>
             <input ref={nameGroupRef} placeholder='Название группы' />
             <Button onClick={createLobbyHandler} text='Создать группу' />
