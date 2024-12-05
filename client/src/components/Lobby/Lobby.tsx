@@ -54,10 +54,10 @@ const Lobby: React.FC = () => {
     return <div>
         {currentLobby && <LobbyInfo lobby={currentLobby} status={status} />}
         {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
-        {!currentLobby && <div>
+        {!currentLobby && (<div>
             <input ref={nameGroupRef} placeholder='Название группы' />
             <Button onClick={createLobbyHandler} text='Создать группу' />
-        </div>}
+        </div>)}
     </div>;
 }
 
