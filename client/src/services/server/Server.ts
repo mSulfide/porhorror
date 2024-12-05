@@ -132,6 +132,10 @@ class Server {
         return !!result;
     }
 
+    changeInventory(itemId: number): void {
+        this.request('changeInventory', { itemId: `${itemId}` });
+    }
+
     startGame(): void {
         this.request('startGame');
     }

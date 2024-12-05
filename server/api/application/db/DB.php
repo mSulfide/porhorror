@@ -110,16 +110,6 @@ class DB {
         return [$item1, $item2];
     }
 
-    public function getEquipment($userId) {
-        $item1 = new stdClass();
-        $item1->id = 333;
-        $item1->name = 'Шмотка 3';
-        $item2 = new stdClass();
-        $item2->id = 4444;
-        $item2->name = 'Шмотка 4';
-        return [$item1, $item2];
-    }
-
     public function getLobbyByUserId($userId) {
         $lobbyId = $this->query('SELECT lobby_id FROM lobby_members WHERE user_id=?', [$userId])->lobby_id;
         return $this->getLobbyById($lobbyId);
