@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ServerContext } from "../../../App";
-import { TLobby, TUser } from "../../../services/server/types";
+import { TLobby } from "../../../services/server/types";
 import Button from "../../Button/Button";
 import LobbyMember from "./LobbyMember";
 import { EStatus } from "../Lobby";
@@ -16,7 +16,7 @@ const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
     const leaveLobbyHandler = () => server.leaveGroup();
     return <>
         <span>{`Лобби ${lobby.name}`}</span>
-        {lobby.members.map((member, index) => <LobbyMember key={index} member={member} />)}
+        {lobby.members.map((member, index) => <LobbyMember key={index} member={member} status={status} />)}
         {status === EStatus.creator ?
             <Button onClick={deleteLobbyHandler} text="Удалить группу" /> :
             <Button onClick={leaveLobbyHandler} text="Покинуть группу" />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import { Button } from '..';
 import { TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types";
@@ -53,11 +53,11 @@ const Lobby: React.FC = () => {
 
     return <div>
         {currentLobby && <LobbyInfo lobby={currentLobby} status={status} />}
+        {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
         {!currentLobby && <div>
             <input ref={nameGroupRef} placeholder='Название группы' />
             <Button onClick={createLobbyHandler} text='Создать группу' />
         </div>}
-        {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
     </div>;
 }
 

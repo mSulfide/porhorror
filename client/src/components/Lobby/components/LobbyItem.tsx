@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
-import { ServerContext, StoreContext } from '../../../App';
-import { StartGameButton, Button } from '../..';
-import { TLobbies, TLobby, TUser } from "../../../services/server/types";
+import React, { useContext } from 'react';
+import { ServerContext } from '../../../App';
+import { Button } from '../..';
+import { TLobby } from "../../../services/server/types";
 import { EStatus } from '../Lobby';
 
 interface ILobbyItem {
@@ -26,6 +26,7 @@ const LobbyItem: React.FC<ILobbyItem> = ({ lobby, status }: ILobbyItem) => {
 
     return <div>
         <span>{lobby.name} </span>
+        <span>{`Количество человек: ${lobby.members.length}`}</span>
         <Button onClick={joinToLobbyHandler} text="Присоединиться" />
     </div>;
 }

@@ -141,6 +141,10 @@ class Server {
         this.request('joinToGroup', { lobbyId: `${lobbyId}` });
     }
 
+    dropFromGroup(userId: number): void {
+        this.request('dropFromGroup', { userId: `${userId}` });
+    }
+
     async updateGroups(): Promise<TLobbiesResponse | null> {
         const hash = this.store.getLobbyHash();
         const result = await this.request<TLobbiesResponse>('updateGroups', { hash });
