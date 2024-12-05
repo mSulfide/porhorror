@@ -1,14 +1,26 @@
-import { TLobby } from "../../../services/server/types";
+import { useContext } from "react";
+import { ServerContext } from "../../../App";
+import { TLobby, TUser } from "../../../services/server/types";
+import Button from "../../Button/Button";
 import LobbyMember from "./LobbyMember";
+import { EStatus } from "../Lobby";
 
 interface ILobbyInfo {
     lobby: TLobby;
+    status: EStatus;
 }
 
-const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby }: ILobbyInfo) => {
+const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
+    const server = useContext(ServerContext);
+    const deleteLobbyHandler = () => server.deleteGroup();
+    const leaveLobbyHandler = () => server.leaveGroup();
     return <>
         <span>{`Лобби ${lobby.name}`}</span>
         {lobby.members.map((member, index) => <LobbyMember key={index} member={member} />)}
+        {status === EStatus.creator ?
+            <Button onClick={deleteLobbyHandler} text="Удалить группу" /> :
+            <Button onClick={leaveLobbyHandler} text="Покинуть группу" />
+        }
     </>;
 }
 

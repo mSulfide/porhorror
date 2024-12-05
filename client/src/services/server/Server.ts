@@ -129,8 +129,12 @@ class Server {
         this.request('createGroup', { name });
     }
 
-    deleteGroup(): void {
-        this.request('deleteGroup');
+    async deleteGroup(): Promise<boolean | null> {
+        return this.request<boolean>('deleteGroup');
+    }
+
+    async leaveGroup(): Promise<boolean | null> {
+        return this.request<boolean>('leaveGroup');
     }
 
     joinToGroup(lobbyId: number): void {

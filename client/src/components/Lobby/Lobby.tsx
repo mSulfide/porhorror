@@ -5,6 +5,11 @@ import { TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types"
 import LobbyItem from './components/LobbyItem';
 import LobbyInfo from './components/LobbyInfo';
 
+export enum EStatus {
+    none,
+    member,
+    creator
+}
 
 const Lobby: React.FC = () => {
     const server = useContext(ServerContext);
@@ -15,7 +20,7 @@ const Lobby: React.FC = () => {
     const nameGroupRef = useRef<HTMLInputElement>(null!);
 
     const user = store.getUser();
-    
+
     useEffect(() => {
         const updateLobbyListHandler = ({ hash, lobbies }: TLobbiesResponse) => {
             setLobbies(lobbies);
@@ -39,16 +44,21 @@ const Lobby: React.FC = () => {
 
     if (!user) return <></>;
 
-    const lobby = lobbies.find(lobby => lobby.members.findIndex(member => member.id === user.id) > -1);
+    const currentLobby = lobbies.find(lobby => lobby.members.findIndex(member => member.id === user.id) > -1);
+    const status: EStatus = !currentLobby ?
+        EStatus.none :
+        currentLobby.members.find(member => member.id === user.id)?.creator ?
+            EStatus.creator :
+            EStatus.member;
 
-    return <>
-        {lobby && <LobbyInfo lobby={lobby} />}
-        <div>
+    return <div>
+        {currentLobby && <LobbyInfo lobby={currentLobby} status={status} />}
+        {!currentLobby && <div>
             <input ref={nameGroupRef} placeholder='Название группы' />
             <Button onClick={createLobbyHandler} text='Создать группу' />
-        </div>
-        {lobbies.map((lobby: TLobby, index: number) => <LobbyItem key={index} user={user} lobby={lobby} />)}
-    </>;
+        </div>}
+        {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
+    </div>;
 }
 
 export default Lobby;
