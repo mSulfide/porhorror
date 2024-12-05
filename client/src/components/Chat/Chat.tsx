@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import { TMessages } from '../../services/server/types';
-import Button from '../../components/Button/Button';
-import { IBasePage, PAGES } from '../PageManager';
+import Button from '../Button/Button';
+import { IBasePage, PAGES } from '../../pages/PageManager';
 
 import './Chat.scss';
 
-const Chat: React.FC<IBasePage> = (props: IBasePage) => {
-    const { setPage } = props;
+const Chat: React.FC = () => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const [messages, setMessages] = useState<TMessages>([]);
@@ -44,17 +43,11 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
             }
         }
     }
-    const toPHGame = () => setPage(PAGES.PORHORROR);
-    const toGameClickHandler = () => setPage(PAGES.GAME);
-    const backClickHandler = () => setPage(PAGES.LOGIN);
 
     if (!user) {
         return (<div className='chat'>
             <h1>Чат</h1>
             <h1>Что-то пошло не так =(</h1>
-            <Button onClick={toPHGame} text='PorHorror' />
-            <Button onClick={toGameClickHandler} text='В игру!' />
-            <Button onClick={backClickHandler} text='Назад' />
         </div>)
     }
 
@@ -70,9 +63,6 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
         {input}
         <div className='chat-buttons'>
             <Button onClick={sendClickHandler} text='Отправить' />
-            <Button onClick={toPHGame} text='PorHorror' />
-            <Button onClick={toGameClickHandler} text='В игру!' />
-            <Button onClick={backClickHandler} text='Назад' />
         </div>
     </div>)
 }
