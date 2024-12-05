@@ -8,7 +8,6 @@ class Store {
     chatHash: string = 'empty chat hash';
     lobbyHash: string = 'empty lobby hash';
     inventory: TItem[] = [];
-    equipment: TItem[] = [];
 
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
@@ -66,16 +65,12 @@ class Store {
         this.lobbyHash = hash;
     }
 
-    setInventory({ inventory, equipment }: TInventory): void {
+    setInventory(inventory: TInventory): void {
         this.inventory = inventory;
-        this.equipment = equipment;
     }
 
     getInventory(): TItem[] {
         return this.inventory;
-    }
-    getEquipment(): TItem[] {
-        return this.equipment;
     }
 }
 

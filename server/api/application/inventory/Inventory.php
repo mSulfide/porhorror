@@ -6,10 +6,7 @@ class Inventory {
     }
 
     public function getInventory($userId) {
-        return array(
-            'inventory' => $this->db->getInventory($userId),
-            'equipment' => $this->db->getEquipment($userId)
-        );
+        return $this->db->getInventory($userId);
     }
 
 }

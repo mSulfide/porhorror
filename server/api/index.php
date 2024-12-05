@@ -14,6 +14,7 @@ function result($params) {
         $app = new Application();
         switch ($method) {
             // user
+            case 'autoLogin': return $app->autoLogin($params);
             case 'login': return $app->login($params);
             case 'logout': return $app->logout($params);
             case 'registration': return $app->registration($params);
@@ -23,7 +24,7 @@ function result($params) {
             // math
             case 'derivative': return $app->derivative($params);
             case 'spline': return $app->spline($params);
-            case 'getCirclesIntersect': return $app->getCirclesIntersects($params);
+            case 'getCirclesIntersect': return $app->getCirclesIntersect($params);
             case 'getIntersectionPoint': return $app->getIntersectionPoint($params);
 
             // инвентарь
@@ -35,7 +36,7 @@ function result($params) {
             case 'deleteGroup': return $app->deleteGroup($params);
             case 'joinToGroup': return $app->joinToGroup($params);
             case 'leaveGroup': return $app->leaveGroup($params);
-            case 'dropFromGroup': return $app->dropFromGroup($params); // (?)
+            case 'dropFromGroup': return $app->dropFromGroup($params);
             case 'startGame': return $app->startGame($params);
             // игра
             case 'updateScene': return $app->updateScene($params); // loop

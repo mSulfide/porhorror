@@ -2,6 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import Button from '../Button/Button';
 
+enum EStatus {
+    pocket = 'pocket',
+    inventory = 'inventory'
+}
+
 const Inventory: React.FC = () => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
@@ -15,13 +20,8 @@ const Inventory: React.FC = () => {
     });
 
     const inventoryClick = (itemId: number) => {
-        console.log(itemId);
-        //setIsLoading(true);
-    }
-
-    const equipmentClick = (itemId: number) => {
-        console.log(itemId);
-        //setIsLoading(true);
+        server.changeInventory(itemId);
+        setIsLoading(true);
     }
 
     if (isLoading) {
@@ -29,7 +29,6 @@ const Inventory: React.FC = () => {
     }
 
     const inventory = store.getInventory();
-    const equipment = store.getEquipment();
 
     return (<div>
         <h1>Inventory</h1>
@@ -38,16 +37,7 @@ const Inventory: React.FC = () => {
             <div>
                 {inventory.map((item, index) => (<div key={index}>
                     {item.name}
-                    <Button text='Надеть' onClick={() => inventoryClick(item.id)} />
-                </div>))}
-            </div>
-        </div>
-        <div>
-            <span>карманы:</span>
-            <div>
-                {equipment.map((item, index) => (<div key={index}>
-                    {item.name}
-                    <Button text='Снять' onClick={() => equipmentClick(item.id)} />
+                    <Button text={item.status === EStatus.pocket ? 'Снять' : 'Надеть'} onClick={() => inventoryClick(item.id)} />
                 </div>))}
             </div>
         </div>
