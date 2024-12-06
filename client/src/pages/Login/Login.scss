@@ -3,10 +3,6 @@
   src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
 }
 
-
-
-
-
 body {
   font-family: 'NTSomic';
   margin: 0;
@@ -18,61 +14,82 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
 
 
 .login {
-  display: flex; 
-  flex-direction: column; // Элементы расположены вертикально
-  align-items: center; // Горизонтальное центрирование
-  margin-bottom: auto;
-  
-    &-inputs {
-        display: flex;
-        margin-top: 30px;
-        flex-direction: column;
-        gap: 25px;
+  width: 100%; /* Занимает всю ширину контейнера .app */
+  box-sizing: border-box; /* Включает padding и border в ширину */
 
+  &-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    width: 100%; /* Занимает всю ширину .login */
 
-
-        input {
-          //margin: 20px 10px; 
-          //padding: 6px 170px  ;
-          //background-color: #ccc;
-          border: 4px solid #000000; 
-          border-radius: 18px;  
-          font-size: 0.9em;
-          padding-left: 15px; 
-          box-sizing: border-box;
-          width: 800px; 
-          height: 65px;
-          font-size: 0.9em;
-        }
-    }
-
-    &-buttons {
-      display: flex;
-      margin-top: 160px;
-      justify-content: space-between; 
-      
-    }
-  
-    .registration-link-container {
-      display: flex;
-      align-items: last baseline; 
-      gap: 10px;
+    input {
+      width: 100%; /* Занимает всю ширину .login-inputs */
+      height: 50px; 
+      padding: 10px; 
+      border: 2px solid #000; 
+      border-radius: 10px; 
       font-size: 0.7em;
-      
+      box-sizing: border-box;
     }
+  }
 
-    .underline-button {
-      text-decoration: underline;
-    }
+  &-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Разрешает перенос кнопок на новую строку */
+    gap: 10px;
+    width: 100%;
+    justify-content: right;
+  }
 
-    .login-heading {
-      font-size: 2em;
-    }
+  .login-link-container {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 5px;           
+    font-size: 0.6em;
+    margin-top: 10px;
+  }
+  
+  .underline-button {
+    text-decoration: underline;
+  }
+
+  .login-heading {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
 }
+
+/* Медиа-запросы для адаптации под разные размеры экрана */
+@media (max-width: 768px) { /* Таблетки и меньше */
+  .login-heading {
+    font-size: 1.2em;
+  }
+  .login input {
+    font-size: 0.9em;
+  }
 }
 
+@media (max-width: 480px) { /* Мобильные телефоны */
+  .login-heading {
+    font-size: 1em;
+  }
+  .login input {
+    font-size: 0.8em;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .app {
+      padding: 10px;
+      border-radius: 15px;
+  }
+}
 
 

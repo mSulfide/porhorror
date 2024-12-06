@@ -9,20 +9,15 @@
 .app {
   position: relative;
   display: flex;
-  flex-direction: column; // Элементы расположены вертикально
-  justify-content: center; // Вертикальное центрирование
-  align-items: center; // Горизонтальное центрирование
-  background-color: darken(rgba(255, 255, 255, 0.901), 10%);
-  padding: 20px; // Уменьшен padding для лучшего центрирования
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
   border-radius: 20px;
-  width: 900px;
-  height: 580px;
-  min-width: 300px; // Добавлено min-width для адаптивности
-  min-height: 300px; // Добавлено min-height для адаптивности
+  width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+  max-width: 900px;       /* Максимальная ширина на больших экранах */
+  min-width: 300px;
+  min-height: 300px;
 }
 
-.absolute {
-  position: absolute;
-  top: 0;
-  right: 7rem;
-}
