@@ -8,13 +8,13 @@ import { EStatus } from "../Lobby";
 interface ILobbyInfo {
     lobby: TLobby;
     status: EStatus;
+    startGameHandler: () => void;
 }
 
-const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
+const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status, startGameHandler }: ILobbyInfo) => {
     const server = useContext(ServerContext);
     const deleteLobbyHandler = () => server.deleteGroup();
     const leaveLobbyHandler = () => server.leaveGroup();
-    const startGameHandler = () => server.startGame();
     return <>
         <span>{`Лобби ${lobby.name}`}</span>
         {lobby.members.map((member, index) => <LobbyMember key={index} member={member} status={status} />)}
