@@ -186,4 +186,20 @@ class DB {
         }
         return $answer;
     }
+
+    //game
+    public function createGame() {
+        $this->execute("INSERT INTO game () VALUES ()");
+        return $this->pdo->lastInsertId();
+    }
+
+    public function addGamer($objectId, $userId) {
+        $this->execute("INSERT INTO gamers (object_id, user_id) VALUES (?, ?)", [$objectId, $userId]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function createObject($gameId) {
+        $this->execute("INSERT INTO game_objects (game_id) VALUES (?)", [$gameId]);
+        return $this->pdo->lastInsertId();
+    }
 }
