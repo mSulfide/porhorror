@@ -94,7 +94,6 @@
 | object_id | integer | |
 | user_id | integer | |
 | hp | integer | |
-| angle | float | угол поворота игрока на сцене |
 | quest_count | integer | количество выполненных квестов |
 | status | string | 'gaming', 'dead', etc. |
 
@@ -134,6 +133,7 @@
 | game_id | integer | |
 | x | float | |
 | y | float | |
-| angle | float | угол поворота скорости |
-| speed | float | скорость перемещения |
+| velocity_x | float | |
+| velocity_y | float | |
 | radius | float | радиус коллайдера |
+| angle | float | угол поворота на сцене |
