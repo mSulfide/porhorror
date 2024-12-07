@@ -1,24 +1,23 @@
 @use './scss/variables.scss' as *;
 
-@font-face {
-    font-family: 'Play';
-    src: url('./assets/fonts/Play-Regular.ttf');
-}
+//@font-face {
+    //font-family: 'NTSomic';
+    //src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
+//}
+
 
 .app {
-    position: relative;
-    display: flex;
-    text-align: center;
-    background-color: $main-theme;
-
-    padding: 20px;
-    margin: 10px;
-    border: solid $button-border-color 3px;
-    border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  border-radius: 20px;
+  width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+  max-width: 900px;       /* Максимальная ширина на больших экранах */
+  min-width: 300px;
+  min-height: 300px;
 }
 
-.absolute {
-    position: absolute;
-    top: 0;
-    right: 1rem;
-}

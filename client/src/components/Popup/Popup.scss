@@ -30,7 +30,7 @@ $height-wrapper: 200px;
         margin-top: 10px;
         font-size: 60px;
         color: $text-color;
-        background-color: $button-hover-color;
+        //background-color: $button-hover-color;
         -webkit-background-clip: text;
         -webkit-text-stroke: 8px transparent;
     }
@@ -38,7 +38,7 @@ $height-wrapper: 200px;
     &--info-text {
         font-size: 40px;
         color: $text-color;
-        background-color: $button-hover-color;
+        //background-color: $button-hover-color;
         -webkit-background-clip: text;
         -webkit-text-stroke: 4px transparent;
     }
