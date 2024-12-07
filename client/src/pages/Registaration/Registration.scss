@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'NTSomic';
+    src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
+   }
+
+   
+  body {
+    font-family: 'NTSomic';
+    margin: 0;
+    padding: 0;
+    background-image: url('../../assets/img/background/registration.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  
+  .registration {
+    width: 100%;
+    box-sizing: border-box;
+  
+    &-heading {
+      font-size: 1.2em; 
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    &-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+  
+      input {
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        font-size: 0.7em;
+        box-sizing: border-box;
+        font-family: 'NTSomic';
+      }
+    }
+  
+    &-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+  
+    .back-link {
+       
+      color: #000;
+      display: flex;
+      gap: 5px;
+      font-size: 0.6em;
+      font-family: 'NTSomic';
+      justify-content: flex-start; 
+      margin-top: 10px;
+    }
+  
+  }
+  
+  
+  @media (max-width: 768px) {
+    .registration-heading {
+      font-size: 1.2em;
+    }
+    .registration input {
+      font-size: 0.9em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .registration-heading {
+      font-size: 1em;
+    }
+    .registration input {
+      font-size: 0.8em;
+      height: 40px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .app {
+      padding: 10px;
+      border-radius: 15px;
+    }
+  }
+  

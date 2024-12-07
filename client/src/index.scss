@@ -1,11 +1,12 @@
 @charset 'utf-8';
 
-$font-size: 30px; // 1920x1080
+$font-size: 40px; // 1920x1080
 
 @import './scss/variables';
 
 body {
-    background-color: $main-theme;
+    //background-color: $main-theme;
+    //background-image: ('../../assets/img/background/registration.png');
     color: $text-color;
     margin: 0;
     padding: 0;

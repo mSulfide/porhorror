@@ -1,20 +1,95 @@
-.login {
-
-    &-inputs {
-        display: flex;
-        flex-direction: column;
-
-        input {
-            margin: 10px;
-            padding: 0 10px 5px 10px;
-            background-color: #FFE4C4; // внутренность инпутов при авторизации 
-            width: 300px;
-        }
-    }
-
-    &-buttons {
-        display: flex;
-        justify-content: space-between;
-        max-width: 500px;
-    }
+@font-face {
+  font-family: 'NTSomic';
+  src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
 }
+
+body {
+  font-family: 'NTSomic';
+  margin: 0;
+  padding: 0;
+  background-image: url('../../assets/img/background/registration.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+.login {
+  width: 100%; /* Занимает всю ширину контейнера .app */
+  box-sizing: border-box; /* Включает padding и border в ширину */
+
+  &-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    width: 100%; /* Занимает всю ширину .login */
+
+    input {
+      width: 100%; /* Занимает всю ширину .login-inputs */
+      height: 50px; 
+      padding: 10px; 
+      border: 2px solid #000; 
+      border-radius: 10px; 
+      font-size: 0.7em;
+      box-sizing: border-box;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Разрешает перенос кнопок на новую строку */
+    gap: 10px;
+    width: 100%;
+    justify-content: right;
+  }
+
+  .login-link-container {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 5px;           
+    font-size: 0.6em;
+    margin-top: 10px;
+  }
+  
+  .underline-button {
+    text-decoration: underline;
+  }
+
+  .login-heading {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+}
+
+/* Медиа-запросы для адаптации под разные размеры экрана */
+@media (max-width: 768px) { /* Таблетки и меньше */
+  .login-heading {
+    font-size: 1.2em;
+  }
+  .login input {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) { /* Мобильные телефоны */
+  .login-heading {
+    font-size: 1em;
+  }
+  .login input {
+    font-size: 0.8em;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .app {
+      padding: 10px;
+      border-radius: 15px;
+  }
+}
+
+
