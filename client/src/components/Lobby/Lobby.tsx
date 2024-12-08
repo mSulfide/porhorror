@@ -26,7 +26,11 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
     const user = store.getUser();
 
     useEffect(() => {
-        const updateLobbyListHandler = ({ hash, lobbies }: TLobbiesResponse) => {
+        const updateLobbyListHandler = ({ hash, lobbies, gameId }: TLobbiesResponse) => {
+            if (gameId) {
+                console.log(`connect to ${gameId}`);
+                setGamePage();
+            }
             setLobbies(lobbies);
             setHash(hash);
         }
@@ -56,7 +60,7 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
             EStatus.member;
 
     return <div>
-        {currentLobby && <LobbyInfo lobby={currentLobby} status={status} setGamePage={setGamePage} />}
+        {currentLobby && <LobbyInfo lobby={currentLobby} status={status} />}
         {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
         {!currentLobby && (<div>
             <input ref={nameGroupRef} placeholder='Название группы' />
