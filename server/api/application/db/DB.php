@@ -187,9 +187,18 @@ class DB {
         return $answer;
     }
 
+    public function getConnectId($userId) {
+        return (int)$this->query("SELECT
+                l.game_id AS id 
+            FROM lobby AS l 
+            INNER JOIN lobby_members AS lm ON lm.user_id=?
+            WHERE l.status='start game' AND l.id=lm.lobby_id;
+        ", [$userId])->id;
+    }
+
     //game
-    public function createGame() {
-        $this->execute("INSERT INTO game () VALUES ()");
+    public function createGame($hash) {
+        $this->execute("INSERT INTO game (hash) VALUES (?)", [$hash]);
         return $this->pdo->lastInsertId();
     }
 

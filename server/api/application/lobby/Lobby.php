@@ -9,7 +9,7 @@ class Lobby {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
             if($this->isCreator($userId, $lobby->id)) {
-                $gameId = $this->db->createGame();
+                $gameId = $this->db->createGame(md5(rand()));
                 $this->db->startGame($lobby->id, $gameId);
                 return true;
             }
@@ -18,7 +18,7 @@ class Lobby {
         return ['error' => 1105];
     }
 
-    public function updateGroups($hash) {
+    public function updateGroups($userId, $hash) {
         $currentHash = $this->db->getLobbyHash();
         if ($hash === $currentHash) {
             return [
@@ -26,7 +26,9 @@ class Lobby {
             ];
         }
         $lobbies = $this->db->getLobbies();
+        $gameId = $this->db->getConnectId($userId);
         return [
+            'gameId' => $gameId,
             'lobbies' => $lobbies,
             'hash' => $currentHash
         ];
