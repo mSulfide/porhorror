@@ -39,6 +39,7 @@ function result($params) {
             case 'dropFromGroup': return $app->dropFromGroup($params);
             case 'startGame': return $app->startGame($params);
             // игра
+            case 'connect': return $app->connect($params);
             case 'updateScene': return $app->updateScene($params); // loop
             case 'getRoom': return $app->getRoom($params);
             case 'getTasks': return $app->getTasks($params);

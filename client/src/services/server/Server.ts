@@ -185,6 +185,10 @@ class Server {
             this.lobbyInterval = null;
         }
     }
+
+    connect(gameId: number): void {
+        this.request('connect', { gameId: `${gameId}` })
+    }
 }
 
 export default Server;

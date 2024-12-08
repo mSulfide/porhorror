@@ -191,15 +191,39 @@ class Application {
         return ['error' => 242];
     }
 
-    /*
-    case 'changeInventory': return $app->changeInventory($params);
     // игра
-    case 'updateScene': return $app->updateScene($params); // loop
-    case 'getRoom': return $app->getRoom($params);
-    case 'getTasks': return $app->getTasks($params);
-    case 'move': return $app->move($params);
-    case 'drop': return $app->drop($params);
-    case 'pickup': return $app->pickup($params);
-    */
+    public function connect($params) {
+        if ($params['gameId'] && $params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->game->connect($params['gameId'], $user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 
+    public function updateScene($params) {
+        return ['error' => 103];
+    }
+
+    public function getRoom($params) {
+        return ['error' => 103];
+    }
+
+    public function getTasks($params) {
+        return ['error' => 103];
+    }
+
+    public function move($params) {
+        return ['error' => 103];
+    }
+
+    public function drop($params) {
+        return ['error' => 103];
+    }
+
+    public function pickup($params) {
+        return ['error' => 103];
+    }
 }

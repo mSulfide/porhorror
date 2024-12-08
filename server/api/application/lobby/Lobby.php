@@ -11,6 +11,7 @@ class Lobby {
             if($this->isCreator($userId, $lobby->id)) {
                 $gameId = $this->db->createGame(md5(rand()));
                 $this->db->startGame($lobby->id, $gameId);
+                $this->db->updateLobbyHash(md5(rand()));
                 return true;
             }
             return ['error' => 500];
