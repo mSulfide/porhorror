@@ -47,6 +47,7 @@ export type TLobby = {
 
 export type TLobbies = TLobby[];
 export type TLobbiesResponse = {
+    gameId?: number;
     lobbies: TLobbies;
     hash: string;
 }

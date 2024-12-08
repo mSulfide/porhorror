@@ -32,6 +32,7 @@ class Answer {
         '714' => 'the creator of the group cannot leave it',
         '800' => 'not found object',
         '801' => 'unknown state',
+        '905' => 'gamer is already connected to game',
         '1001' => 'params login or password not set',
         '1005' => 'Other user is playing wright now. If you doesn`t, please change the password',
         '1006' => 'user with this email is already registered',

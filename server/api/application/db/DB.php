@@ -115,8 +115,8 @@ class DB {
         return $this->getLobbyById($lobbyId);
     }
 
-    public function startGame($lobbyId) {
-        $this->execute('UPDATE lobby SET status=? WHERE id=?', ['start game', $lobbyId]);
+    public function startGame($lobbyId, $gameId) {
+        $this->execute('UPDATE lobby SET status="start game", game_id=? WHERE id=?', [$gameId, $lobbyId]);
     }
 
     public function getLobbyHash() {
@@ -185,5 +185,48 @@ class DB {
             settype($answer->id, "int");
         }
         return $answer;
+    }
+
+    public function getConnectId($userId) {
+        return (int)$this->query("SELECT
+                l.game_id AS id 
+            FROM lobby AS l 
+            INNER JOIN lobby_members AS lm ON lm.user_id=?
+            WHERE l.status='start game' AND l.id=lm.lobby_id;
+        ", [$userId])->id;
+    }
+
+    //game
+    public function getGamerByUserId($userId) {
+        $gamer = $this->query("SELECT
+                g.id AS id,
+                g.status AS status,
+                u.name AS name,
+                go.game_id AS game_id
+            FROM gamers AS g
+            INNER JOIN users AS u ON u.id = g.user_id
+            INNER JOIN game_objects AS go ON go.id = g.object_id
+            WHERE u.id = ?;
+        ", [$userId]);
+        if ($gamer) {
+            settype( $gamer->id, "int");
+            settype($gamer->game_id, "int");
+        }
+        return $gamer;
+    }
+
+    public function createGame($hash) {
+        $this->execute("INSERT INTO game (hash) VALUES (?)", [$hash]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function addGamer($objectId, $userId) {
+        $this->execute("INSERT INTO gamers (object_id, user_id) VALUES (?, ?)", [$objectId, $userId]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function createObject($gameId) {
+        $this->execute("INSERT INTO game_objects (game_id) VALUES (?)", [$gameId]);
+        return $this->pdo->lastInsertId();
     }
 }

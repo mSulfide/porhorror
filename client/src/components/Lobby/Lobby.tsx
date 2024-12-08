@@ -11,7 +11,11 @@ export enum EStatus {
     creator
 }
 
-const Lobby: React.FC = () => {
+export interface ILobby {
+    setGamePage: () => void;
+}
+
+const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const [lobbies, setLobbies] = useState<TLobbies>([]);
@@ -22,7 +26,11 @@ const Lobby: React.FC = () => {
     const user = store.getUser();
 
     useEffect(() => {
-        const updateLobbyListHandler = ({ hash, lobbies }: TLobbiesResponse) => {
+        const updateLobbyListHandler = ({ hash, lobbies, gameId }: TLobbiesResponse) => {
+            if (gameId) {
+                server.connect(gameId);
+                setGamePage();
+            }
             setLobbies(lobbies);
             setHash(hash);
         }
@@ -54,10 +62,10 @@ const Lobby: React.FC = () => {
     return <div>
         {currentLobby && <LobbyInfo lobby={currentLobby} status={status} />}
         {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
-        {!currentLobby && <div>
+        {!currentLobby && (<div>
             <input ref={nameGroupRef} placeholder='Название группы' />
             <Button onClick={createLobbyHandler} text='Создать группу' />
-        </div>}
+        </div>)}
     </div>;
 }
 

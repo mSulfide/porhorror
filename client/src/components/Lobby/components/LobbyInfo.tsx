@@ -14,6 +14,7 @@ const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
     const server = useContext(ServerContext);
     const deleteLobbyHandler = () => server.deleteGroup();
     const leaveLobbyHandler = () => server.leaveGroup();
+    const startGameHandler = () => server.startGame();
     return <>
         <span>{`Лобби ${lobby.name}`}</span>
         {lobby.members.map((member, index) => <LobbyMember key={index} member={member} status={status} />)}
@@ -21,6 +22,7 @@ const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
             <Button onClick={deleteLobbyHandler} text="Удалить группу" /> :
             <Button onClick={leaveLobbyHandler} text="Покинуть группу" />
         }
+        {status === EStatus.creator && <Button onClick={startGameHandler} text="Запустить игру" />}
     </>;
 }
 

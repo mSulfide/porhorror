@@ -64,6 +64,7 @@
 | id | integer | PK |
 | name | string | |
 | status | string | 'open', 'cancel', 'start game', etc. |
+| game_id | integer | |
 
 
 **Таблица lobby_members**
@@ -91,13 +92,9 @@
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| game_id | integer | |
+| object_id | integer | |
 | user_id | integer | |
 | hp | integer | |
-| x | float | |
-| y | float | |
-| angle | float | угол поворота игрока на сцене |
-| speed | float | скорость перемещения |
 | quest_count | integer | количество выполненных квестов |
 | status | string | 'gaming', 'dead', etc. |
 
@@ -125,10 +122,19 @@
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| game_id | integer | |
+| object_id | integer | |
 | item_id | integer | |
 | hp | integer | |
+
+
+**Таблица game_objects**
+| Название | Тип | Комментарий |
+| - | - | - |
+| id | integer | PK |
+| game_id | integer | |
 | x | float | |
 | y | float | |
-| angle | float | угол поворота игрока на сцене |
-| speed | float | скорость перемещения |
+| velocity_x | float | |
+| velocity_y | float | |
+| radius | float | радиус коллайдера |
+| angle | float | угол поворота на сцене |
