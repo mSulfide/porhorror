@@ -28,6 +28,7 @@ class Answer {
         '710' => 'the user is already in the lobby',
         '711' => 'the user is not the lobby creator',
         '712' => 'the user is not a lobby member',
+        '713' => 'the user is already the lobby creator',
         '800' => 'not found object',
         '801' => 'unknown state',
         '1001' => 'params login or password not set',

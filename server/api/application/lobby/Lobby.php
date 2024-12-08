@@ -30,15 +30,19 @@ class Lobby {
             'hash' => $currentHash
         ];
     }
-
+    
     public function createGroup($name, $userId) { 
-        $group = $this->db->createGroup($name, $userId);
-        if ($group) {
-            $this->db->addMemberToLobby($group, $userId, true);
-            $this->db->updateLobbyHash(md5(rand()));
-            return true;
+        $lobby = $this->db->getLobbyByUserId($userId);
+        if (!($this->isCreator($userId, $lobby->id))) {
+            $group = $this->db->createGroup($name, $userId);
+            if ($group) {
+                $this->db->addMemberToLobby($group, $userId, true);
+                $this->db->updateLobbyHash(md5(rand()));
+                return true;
+            }
+            return ['error' => 1105];
         }
-        return ['error' => 1105];
+        return ['error' => 713];
     }
 
     public function deleteGroup($userId) {
