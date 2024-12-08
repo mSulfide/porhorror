@@ -17,14 +17,13 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = async () => {
         await server.logout() && setPage(PAGES.LOGIN);
     }
-    const startGameHandler = () => {
-        server.startGame();
+    const setGamePage = () => {
         setPage(PAGES.PORHORROR);
     }
 
     return <div>
         <Inventory />
-        <Lobby startGameHandler={startGameHandler} />
+        <Lobby setGamePage={setGamePage} />
         <Chat />
         <Button onClick={settingsClickHandler} text="Настройки" />
         <Button onClick={backClickHandler} text="Выход" />

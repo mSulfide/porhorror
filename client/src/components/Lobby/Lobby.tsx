@@ -12,10 +12,10 @@ export enum EStatus {
 }
 
 export interface ILobby {
-    startGameHandler: () => void;
+    setGamePage: () => void;
 }
 
-const Lobby: React.FC<ILobby> = ({ startGameHandler }: ILobby) => {
+const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const [lobbies, setLobbies] = useState<TLobbies>([]);
@@ -56,7 +56,7 @@ const Lobby: React.FC<ILobby> = ({ startGameHandler }: ILobby) => {
             EStatus.member;
 
     return <div>
-        {currentLobby && <LobbyInfo lobby={currentLobby} status={status} startGameHandler={startGameHandler} />}
+        {currentLobby && <LobbyInfo lobby={currentLobby} status={status} setGamePage={setGamePage} />}
         {lobbies.map((lobby: TLobby, index: number) => lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={status} />)}
         {!currentLobby && (<div>
             <input ref={nameGroupRef} placeholder='Название группы' />
