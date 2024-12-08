@@ -11,12 +11,16 @@ class Game {
     }
 
     public function connect($gameId, $userId) {
-        $lobby = $this->db->getLobbyByUserId($userId);
-        if ($lobby->game_id === $gameId) {
-            $this->db->removeMemberFromLobby($lobby->id, $userId);
-            $this->addUser($gameId, $userId);
-            return true;
+        $gamer = $this->db->getGamerByUserId($userId);
+        if (!$gamer) {
+            $lobby = $this->db->getLobbyByUserId($userId);
+            if ($lobby->game_id === $gameId) {
+                $this->db->removeMemberFromLobby($lobby->id, $userId);
+                $this->addUser($gameId, $userId);
+                return true;
+            }
+            return ['error' => 500];
         }
-        return ['error' => 1105];
+        return ['error'=> 905];
     }
 }

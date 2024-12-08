@@ -197,6 +197,24 @@ class DB {
     }
 
     //game
+    public function getGamerByUserId($userId) {
+        $gamer = $this->query("SELECT
+                g.id AS id,
+                g.status AS status,
+                u.name AS name,
+                go.game_id AS game_id
+            FROM gamers AS g
+            INNER JOIN users AS u ON u.id = g.user_id
+            INNER JOIN game_objects AS go ON go.id = g.object_id
+            WHERE u.id = ?;
+        ", [$userId]);
+        if ($gamer) {
+            settype( $gamer->id, "int");
+            settype($gamer->game_id, "int");
+        }
+        return $gamer;
+    }
+
     public function createGame($hash) {
         $this->execute("INSERT INTO game (hash) VALUES (?)", [$hash]);
         return $this->pdo->lastInsertId();
