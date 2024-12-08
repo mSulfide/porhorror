@@ -64,6 +64,7 @@
 | id | integer | PK |
 | name | string | |
 | status | string | 'open', 'cancel', 'start game', etc. |
+| game_id | integer | |
 
 
 **Таблица lobby_members**
