@@ -9,7 +9,8 @@ class Lobby {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
             if($this->isCreator($userId, $lobby->id)) {
-                $this->db->startGame($lobby->id);
+                $gameId = $this->db->createGame();
+                $this->db->startGame($lobby->id, $gameId);
                 return true;
             }
             return ['error' => 500];

@@ -115,8 +115,8 @@ class DB {
         return $this->getLobbyById($lobbyId);
     }
 
-    public function startGame($lobbyId) {
-        $this->execute('UPDATE lobby SET status="start game" WHERE id=?', [$lobbyId]);
+    public function startGame($lobbyId, $gameId) {
+        $this->execute('UPDATE lobby SET status="start game", game_id=? WHERE id=?', [$gameId, $lobbyId]);
     }
 
     public function getLobbyHash() {
