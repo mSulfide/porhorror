@@ -69,7 +69,7 @@ class Lobby {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
             if ($this->isCreator($userId, $lobby->id)) {
-                $this->deleteGroup($userId);
+                return ['error' => 714];
             } else {
                 $this->db->removeMemberFromLobby($lobby->id, $userId);
             }
