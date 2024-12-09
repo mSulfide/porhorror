@@ -19,7 +19,10 @@ class Application {
     }
 
     public function autoLogin($params) {
-        return ['error' => 103];
+        if ($params['token']) {
+            return $this->user->autoLogin($params['token']);
+        }
+        return ['error' => 242];
     }
 
     public function login($params) {
