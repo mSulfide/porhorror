@@ -52,13 +52,16 @@ class Lobby {
     public function deleteGroup($userId) {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
-            if ($this->isCreator($userId, $lobby->id)) {
-                $this->db->removeMembersFromLobby($lobby->id);
-                $this->db->removeLobby($lobby->id);
-                $this->db->updateLobbyHash(md5(rand()));
-                return true; 
+            if ($lobby->status === 'open') {
+                if ($this->isCreator($userId, $lobby->id)) {
+                    $this->db->removeMembersFromLobby($lobby->id);
+                    $this->db->removeLobby($lobby->id);
+                    $this->db->updateLobbyHash(md5(rand()));
+                    return true; 
+                }
+                return ['error' => 711];
             }
-            return ['error' => 711]; 
+            return ['error' => 715]; 
         }
         return ['error' => 1105];
     }
