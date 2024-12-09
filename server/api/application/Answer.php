@@ -30,6 +30,7 @@ class Answer {
         '712' => 'the user is not a lobby member',
         '713' => 'the user is already the lobby creator',
         '714' => 'the creator of the group cannot leave it',
+        '715' => 'the lobby is not open',
         '800' => 'not found object',
         '801' => 'unknown state',
         '905' => 'gamer is already connected to game',
