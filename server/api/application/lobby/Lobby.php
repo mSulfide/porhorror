@@ -64,13 +64,21 @@ class Lobby {
     }
 
     public function joinToGroup($lobbyId, $userId) {
-        $lobby = $this->db->getLobbyByUserId($userId);
-        if (!$lobby->id) {
-            $this->db->addMemberToLobby($lobbyId, $userId, 0);
-            $this->db->updateLobbyHash(md5(rand()));
-            return true;
+        $lobby = $this->db->getLobbyById($lobbyId);
+        if ($lobby) {
+            if ($lobby->status === 'open') {
+                $existingLobby = $this->db->getLobbyByUserId($userId);
+                if (!$existingLobby) {
+                    $this->db->addMemberToLobby($lobbyId, $userId, 0);
+                    $this->db->updateLobbyHash(md5(rand()));
+                    return true;
+                }
+                return ['error' => 710];
+            } else {
+                return ['error' => 715];
+            }
         }
-        return ['error' => 710];
+        return ['error' => 1105];
     }
 
     public function leaveGroup($userId) {
