@@ -229,4 +229,25 @@ class DB {
         $this->execute("INSERT INTO game_objects (game_id) VALUES (?)", [$gameId]);
         return $this->pdo->lastInsertId();
     }
+
+    //Проверить, существует ли предмет
+    public function itemExists($itemId) {
+        return $this->query("SELECT COUNT(*) as count FROM items WHERE id=?", [$itemId])->count > 0;
+    }
+
+    //Добавить предмет в инвентарь
+    public function addItemToInventory($userId, $itemId) {
+        return $this->execute("INSERT INTO inventory (user_id, item_id) VALUES (?, ?)", [$userId, $itemId]);
+    }
+
+    //Проверить, есть ли предмет в инвентаре
+    public function hasItemInInventory($userId, $itemId) {
+        return $this->query("SELECT COUNT(*) as count FROM inventory WHERE user_id=? AND item_id=?", [$userId, $itemId])->count > 0;
+    }
+
+    //Удалить предмет из инвентаря
+    public function removeItemFromInventory($userId, $itemId) {
+        return $this->execute("DELETE FROM inventory WHERE user_id=? AND item_id=?", [$userId, $itemId]);
+    }
+
 }

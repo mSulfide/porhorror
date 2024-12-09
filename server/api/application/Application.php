@@ -113,7 +113,34 @@ class Application {
     }
 
     public function changeInventory($params) {
-        return ['error' => 103];
+        if (!isset($params['token'])) {
+            return ['error' => 242]; 
+        }
+        $user = $this->user->getUser($params['token']);
+        if (!$user) {
+            return ['error' => 705]; 
+        }
+    
+        if (!isset($params['itemId']) || !isset($params['fromInventory'])) {
+            return ['error' => 666]; 
+        }
+
+        $itemId = $params['itemId'];
+        $fromInventory = $params['fromInventory'];
+    
+        if ($fromInventory) {
+            $success = $this->inventory->removeFromInventory($user->id, $itemId);
+            if ($success) {
+                return ['changeInventory' => true]; 
+            }
+        } else {
+            $success = $this->inventory->addToInventory($user->id, $itemId);
+            if ($success) {
+                return ['changeInventory' => true];
+            }
+        }
+    
+        return ['changeInventory' => false]; 
     }
 
     //лобби
