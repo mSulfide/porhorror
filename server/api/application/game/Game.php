@@ -35,7 +35,7 @@ class Game {
             }
             $objects = $this->db->getGameObjects($game->id);
             return [
-                'objects' => $objects,
+                'scene' => $objects,
                 'hash' => $game->hash
             ];
         }
