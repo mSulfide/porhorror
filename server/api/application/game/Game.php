@@ -37,7 +37,7 @@ class Game {
             return [
                 'objects' => $objects,
                 'hash' => $game->hash
-            ]
+            ];
         }
         return ['error' => 805];
     }
