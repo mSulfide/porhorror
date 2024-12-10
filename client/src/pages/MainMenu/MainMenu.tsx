@@ -21,6 +21,12 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
         setPage(PAGES.PORHORROR);
     }
 
+    (async () => {
+        if ((await server.updateScene())?.scene) {
+            setGamePage();
+        }
+    })();
+
     return <div>
         <Inventory />
         <Lobby setGamePage={setGamePage} />
