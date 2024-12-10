@@ -57,7 +57,7 @@ export type TLobbiesResponse = {
 export type TGameObject = {
     position: TPoint,
     velocity: TPoint,
-    randius: number,
+    radius: number,
     angle: number
 }
 

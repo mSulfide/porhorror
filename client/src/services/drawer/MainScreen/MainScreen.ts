@@ -27,7 +27,7 @@ export default class MainScreen {
         const cam = this.camera;
         cam.vision.forEach(renderer => {
             if (this.isReady) {
-                const size = renderer.size || mlt(one(), renderer.viewRadius);
+                const size = renderer.size || mlt(one(), renderer.radius);
                 this.drawer.draw({
                     image: this.image,
                     x: this.sx(renderer.position.x),

@@ -24,7 +24,9 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
 
         (async () => {
-            console.log(await server.updateScene());
+            const scene = (await server.updateScene())?.scene;
+            console.log(scene);
+            screen.render(scene || []);
         })();
     });
 
