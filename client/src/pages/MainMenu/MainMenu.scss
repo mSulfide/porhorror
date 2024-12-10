@@ -1,0 +1,80 @@
+@font-face {
+  font-family: 'Iceland';
+  src: url('../../assets/fonts/Iceland-Regular.ttf');
+}
+
+$dark-grey: #444;
+$light-grey: #666;
+$background-color: #222;
+$text-color: white;
+$accent-color: #ffffff;
+$yellow-fill: #000000;
+
+.mainMenuContainer {
+  background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+  background-size: cover;
+  font-family: 'Iceland', sans-serif;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Адаптивная сетка
+  grid-gap: 20px;
+  padding: 20px;
+  color: $text-color;
+  min-height: 100vh;
+  justify-content: center;
+
+
+  .main-menu-title {
+    grid-column: 1 / -1;
+    text-align: left;
+    font-size: clamp(5em, 7vw, 5em);
+    margin-bottom: 30px;
+    color: $accent-color;
+  }
+
+  .section-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+    display: flex;
+    flex-wrap: wrap; //обёртывание
+    
+
+  }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        flex: 1; // занимает одинаковое пространство
+    }
+
+  .section {
+    background-color: $yellow-fill;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    flex: 1; // одинаковая высота для всех сечений
+  }
+
+  .section-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .two-column-section {
+      grid-column: span 2; // занимает 2 колонки
+  }
+}
+
+
+
+@media (max-width: 800px) {
+  .mainMenuContainer {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+  }
+  .mainMenuContainer .main-menu-title {
+    font-size: clamp(2em, 6vw, 4em);
+  }
+}
+

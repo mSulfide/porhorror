@@ -3,24 +3,22 @@
     src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
    }
 
-   
-  body {
-    font-family: 'NTSomic';
-    margin: 0;
-    padding: 0;
-    background-image: url('../../assets/img/background/registration.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-
   
+
   .registration {
-    width: 100%;
-    box-sizing: border-box;
+    flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  position: relative;
+  display: flex;
+  border-radius: 20px;
+  width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+  max-width: 900px;       /* Максимальная ширина на больших экранах */
+  min-width: 300px;
+  min-height: 300px;
   
     &-heading {
       font-size: 1.2em; 

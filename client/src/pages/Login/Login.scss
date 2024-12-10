@@ -9,7 +9,7 @@ body {
   padding: 0;
   background-image: url('../../assets/img/background/registration.png');
   background-size: cover;
-  background-repeat: no-repeat;
+  //background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,6 +20,19 @@ body {
 .login {
   width: 100%; /* Занимает всю ширину контейнера .app */
   box-sizing: border-box; /* Включает padding и border в ширину */
+  flex-direction: column;
+  justify-content: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  border-radius: 20px;
+  width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+  max-width: 900px;       /* Максимальная ширина на больших экранах */
+  min-width: 300px;
+  min-height: 300px;
 
   &-inputs {
     display: flex;
