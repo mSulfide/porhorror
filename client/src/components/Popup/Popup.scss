@@ -14,7 +14,7 @@ $height-wrapper: 200px;
         text-align: center;
         min-width: $width-wrapper;
         min-height: $height-wrapper;
-        background-color: black;
+        background-color: $main-theme;
         border: 6px solid $button-border-color;
         border-radius: 10px;
         padding: 0 20px 0 20px;
