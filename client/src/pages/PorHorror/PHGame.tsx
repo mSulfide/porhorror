@@ -17,13 +17,14 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     useEffect(() => {
         const game = new Game({ scene: testScene, input: input });
-        const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), game.getState().scene);
+        const camera = { width: 8.32, height: 6.24 };
+        const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
 
         let idLoop: number;
         const loop = () => {
             game.update();
 
-            screen.render();
+            screen.render([]);
 
             idLoop = window.requestAnimationFrame(loop);
         }

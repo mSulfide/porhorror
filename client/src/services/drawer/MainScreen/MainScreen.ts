@@ -1,49 +1,40 @@
 import { IDrawer } from "../IDrawer";
 import sprite from "../../../assets/img/tas.png";
-import { FuncCollider } from "../../engine/entity";
-import Camera from "../../engine/entity/Camera/Camera";
-import { Scene } from "../../engine/structures";
 import { mlt, one } from "../../engine/math";
+import Camera from "./Camera/Camera";
+import { IRenderer } from "./IRenderer";
+import { TCameraParams } from "./types";
 
 export default class MainScreen {
     private drawer: IDrawer;
-    private camera: Camera;
     private image: HTMLImageElement;
     private isReady: boolean = false;
+    private camera: Camera;
 
-    constructor(drawer: IDrawer, scene: Scene) {
+    constructor(drawer: IDrawer, cameraParams: TCameraParams) {
         this.drawer = drawer;
-        this.camera = scene.camera;
+        this.camera = new Camera(cameraParams);
         this.image = new Image();
         this.image.src = sprite;
         this.image.onload = () => this.isReady = true;
     }
 
-    public render() {
+    public render(scene: IRenderer[]) {
         this.drawer.clear();
         this.drawCells(0.25, 1);
         this.drawCells();
+        this.camera.update(scene);
         const cam = this.camera;
         cam.vision.forEach(renderer => {
-            const y = (renderer.position.y - cam.position.y) * 2 / cam.height;
-            if (this.drawer.drawFunction && renderer instanceof FuncCollider) {
-                this.drawer.drawFunction(
-                    (x) => renderer.getValueAt((x + cam.position.x) * cam.width / 2) * 2 / cam.height + cam.position.y, // Используем getValueAt для получения значения функции
-                    'red',
-                    3
-                );
-            }
-            else {
-                if (this.isReady) {
-                    const size = renderer.size || mlt(one(), renderer.viewRadius);
-                    this.drawer.draw({
-                        image: this.image,
-                        x: this.sx(renderer.position.x),
-                        y: this.sy(renderer.position.y),
-                        sx: size.x * 2 / cam.width,
-                        sy: size.y * 2 / cam.height
-                    });
-                }
+            if (this.isReady) {
+                const size = renderer.size || mlt(one(), renderer.viewRadius);
+                this.drawer.draw({
+                    image: this.image,
+                    x: this.sx(renderer.position.x),
+                    y: this.sy(renderer.position.y),
+                    sx: size.x * 2 / cam.width,
+                    sy: size.y * 2 / cam.height
+                });
             }
         });
     }
