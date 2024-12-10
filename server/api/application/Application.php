@@ -207,7 +207,14 @@ class Application {
     }
 
     public function updateScene($params) {
-        return ['error' => 103];
+        if ($params['token'] && $params['hash']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->game->updateScene($params['hash']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
     }
 
     public function getRoom($params) {

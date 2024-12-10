@@ -229,4 +229,38 @@ class DB {
         $this->execute("INSERT INTO game_objects (game_id) VALUES (?)", [$gameId]);
         return $this->pdo->lastInsertId();
     }
+
+    public function updateGameHash($hash, $gameId) {
+        $this->execute("UPDATE game SET hash=? WHERE id=?", [$hash, $gameId]);
+    }
+
+    public function getGameHash($gameId) {
+        return $this->query("SELECT hash AS answer FROM game WHERE id=?", [$gameId])->answer;
+    }
+
+    public function getGameObjects($gameId) {
+        $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
+        foreach ($objects as $object) {
+            settype($object->id, "int");
+            settype($object->game_id, "int");
+            settype($object->x, "float");
+            settype($object->y, "float");
+            settype($object->velocity_x, "float");
+            settype($object->velocity_y, "float");
+            settype($object->radius, "float");
+            settype($object->angle, "float");
+        }
+        return $objects;
+    }
+
+    public function getGameById($gameId) {
+        $answer = $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
+        if ($answer) {
+            settype($answer->id, "int");
+            settype($answer->timestamp, "int");
+            settype($answer->quest_count, "int");
+            settype($answer->start_time, "int");
+        }
+        return $answer;
+    }
 }
