@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse } from "./types";
 
 const { LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -184,6 +184,15 @@ class Server {
             clearInterval(this.lobbyInterval);
             this.lobbyInterval = null;
         }
+    }
+
+    async updateScene(): Promise<TUpdateSceneResponse | null> {
+        const hash = this.store.getLobbyHash();
+        const result = await this.request<TUpdateSceneResponse>('updateScene', { hash });
+        if (result) {
+            return result;
+        }
+        return null;
     }
 
     connect(gameId: number): void {

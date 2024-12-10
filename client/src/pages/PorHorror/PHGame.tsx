@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Game from "../../services/Game/Game";
 import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { testScene } from "../../services/engine/structures/Scene/scenes";
@@ -6,8 +6,11 @@ import { IBasePage, PAGES } from "../PageManager";
 import useKeyboard from "./hooks/useKeyboard";
 import { Input } from "../../services/engine/structures";
 import { Button, UserPoints } from "../../components";
+import { ServerContext } from "../../App";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
+    const server = useContext(ServerContext);
+
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -20,19 +23,9 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         const camera = { width: 8.32, height: 6.24 };
         const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
 
-        let idLoop: number;
-        const loop = () => {
-            game.update();
-
-            screen.render([]);
-
-            idLoop = window.requestAnimationFrame(loop);
-        }
-        loop();
-
-        return () => {
-            window.cancelAnimationFrame(idLoop);
-        };
+        (async () => {
+            console.log(await server.updateScene());
+        })();
     });
 
     const handlePointsSubmit = (points: { x: number; y: number }[]) => {
