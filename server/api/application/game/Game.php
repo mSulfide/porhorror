@@ -23,4 +23,22 @@ class Game {
         }
         return ['error'=> 905];
     }
+
+    public function updateScene($userId, $hash) {
+        $gameId = $this->db->getGamerByUserId($userId)->game_id;
+        $game = $this->db->getGameById($gameId);
+        if ($game) {
+            if ($hash === $game->hash) {
+                return [
+                    'hash' => $hash
+                ];
+            }
+            $objects = $this->db->getGameObjects($game->id);
+            return [
+                'objects' => $objects,
+                'hash' => $game->hash
+            ];
+        }
+        return ['error' => 805];
+    }
 }
