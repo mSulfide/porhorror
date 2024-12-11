@@ -1,13 +1,17 @@
-import { useEffect, useRef } from "react";
-import Game from "../../services/Game/Game";
+import { useContext, useEffect, useRef } from "react";
 import { CanvasDrawer, MainScreen } from "../../services/drawer";
-import { testScene } from "../../services/engine/structures/Scene/scenes";
 import { IBasePage, PAGES } from "../PageManager";
 import useKeyboard from "./hooks/useKeyboard";
 import { Input } from "../../services/engine/structures";
-import { Button, UserPoints } from "../../components";
+import { Button } from "../../components";
+import { ServerContext, StoreContext } from "../../App";
+import { TUpdateSceneResponse } from "../../services/server/types";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
+    const server = useContext(ServerContext);
+    const store = useContext(StoreContext);
+    const user = store.getUser();
+
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -16,33 +20,23 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     useKeyboard(input);
 
     useEffect(() => {
-        const game = new Game({ scene: testScene, input: input });
-        const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), game.getState().scene);
+        const camera = { width: 8.32, height: 6.24 };
+        const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
 
-        let idLoop: number;
-        const loop = () => {
-            game.update();
-
-            screen.render();
-
-            idLoop = window.requestAnimationFrame(loop);
+        const updateScene = ({ scene }: TUpdateSceneResponse) => {
+            screen.render(scene);
         }
-        loop();
 
-        return () => {
-            window.cancelAnimationFrame(idLoop);
-        };
+        if (user) {
+            server.startSceneUpdate(updateScene);
+        }
+
+        return () => server.stopSceneUpdate();
     });
-
-    const handlePointsSubmit = (points: { x: number; y: number }[]) => {
-        console.log('Введенные точки:', points);
-    };
 
     return (
         <div>
             <canvas ref={canvasRef} width={600} height={450} />
-            <h6>Введите координаты точки: (x,y)</h6>
-            <UserPoints onPointsSubmit={handlePointsSubmit} />
             <Button onClick={backClickHandler} text='Назад' />
         </div>
     );

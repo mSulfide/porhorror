@@ -7,6 +7,7 @@ class Store {
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
     lobbyHash: string = 'empty lobby hash';
+    gameHash: string = 'empty game hash';
     inventory: TItem[] = [];
 
     setToken(token: string): void {
@@ -63,6 +64,14 @@ class Store {
 
     setLobbyHash(hash: string): void {
         this.lobbyHash = hash;
+    }
+
+    getGameHash(): string {
+        return this.gameHash;
+    }
+
+    setGameHash(hash: string): void {
+        this.gameHash = hash;
     }
 
     setInventory(inventory: TInventory): void {

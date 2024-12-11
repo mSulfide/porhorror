@@ -28,8 +28,7 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
     useEffect(() => {
         const updateLobbyListHandler = ({ hash, lobbies, gameId }: TLobbiesResponse) => {
             if (gameId) {
-                server.connect(gameId);
-                setGamePage();
+                (async () => await server.connect(gameId) && setGamePage())();
             }
             setLobbies(lobbies);
             setHash(hash);

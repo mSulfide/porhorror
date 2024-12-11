@@ -1,15 +1,16 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse } from "./types";
 
-const { LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
+const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
 
 class Server {
     HOST = HOST;
     store: Store;
     chatInterval: NodeJS.Timer | null = null;
     lobbyInterval: NodeJS.Timer | null = null;
+    gameInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
@@ -186,8 +187,37 @@ class Server {
         }
     }
 
-    connect(gameId: number): void {
-        this.request('connect', { gameId: `${gameId}` })
+    async updateScene(): Promise<TUpdateSceneResponse | null> {
+        const hash = this.store.getGameHash();
+        const result = await this.request<TUpdateSceneResponse>('updateScene', { hash });
+        if (result) {
+            return result;
+        }
+        return null;
+    }
+
+    startSceneUpdate(cb: (result: TUpdateSceneResponse) => void): void {
+        this.gameInterval = setInterval(async () => {
+            const result = await this.updateScene();
+            if (result?.scene) {
+                this.store.setGameHash(result.hash);
+                cb(result);
+            }
+        }, GAME_TIMESTAMP);
+    }
+
+    stopSceneUpdate(): void {
+        if (this.gameInterval) {
+            clearInterval(this.gameInterval);
+            this.gameInterval = null;
+        }
+    }
+
+    async connect(gameId: number): Promise<boolean> {
+        if (await this.request<boolean>('connect', { gameId: `${gameId}` })) {
+            return true;
+        }
+        return false;
     }
 }
 
