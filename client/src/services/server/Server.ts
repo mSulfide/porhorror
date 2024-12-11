@@ -195,8 +195,12 @@ class Server {
         return null;
     }
 
-    connect(gameId: number): void {
-        this.request('connect', { gameId: `${gameId}` })
+    async connect(gameId: number): Promise<boolean> {
+        if (await this.request<boolean>('connect', { gameId: `${gameId}` })) {
+            this.store.setGame(gameId);
+            return true;
+        }
+        return false;
     }
 }
 

@@ -22,8 +22,11 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     }
 
     (async () => {
-        if ((await server.updateScene())?.scene) {
+        const gameId = store.getGameId();
+        if  (gameId && await server.connect(gameId)) {
             setGamePage();
+        } else {
+            store.setGame(null);
         }
     })();
 
