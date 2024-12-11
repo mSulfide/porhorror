@@ -6,10 +6,13 @@ import { IBasePage, PAGES } from "../PageManager";
 import useKeyboard from "./hooks/useKeyboard";
 import { Input } from "../../services/engine/structures";
 import { Button, UserPoints } from "../../components";
-import { ServerContext } from "../../App";
+import { ServerContext, StoreContext } from "../../App";
+import { TUpdateSceneResponse } from "../../services/server/types";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
+    const store = useContext(StoreContext);
+    const user = store.getUser();
 
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
@@ -23,11 +26,15 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         const camera = { width: 8.32, height: 6.24 };
         const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
 
-        (async () => {
-            const scene = (await server.updateScene())?.scene;
-            console.log(scene);
-            screen.render(scene || []);
-        })();
+        const updateScene = ({ scene }: TUpdateSceneResponse) => {
+            screen.render(scene);
+        }
+
+        if (user) {
+            server.startSceneUpdate(updateScene);
+        }
+
+        return () => server.stopSceneUpdate();
     });
 
     const handlePointsSubmit = (points: { x: number; y: number }[]) => {
