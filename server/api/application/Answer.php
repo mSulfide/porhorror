@@ -35,6 +35,7 @@ class Answer {
         '800' => 'not found object',
         '801' => 'unknown state',
         '805' => 'game is no exists',
+        '810' => 'gamer is no exists',
         '905' => 'gamer is already connected to game',
         '1001' => 'params login or password not set',
         '1005' => 'Other user is playing wright now. If you doesn`t, please change the password',

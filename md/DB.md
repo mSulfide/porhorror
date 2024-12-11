@@ -97,6 +97,7 @@
 | hp | integer | |
 | quest_count | integer | количество выполненных квестов |
 | status | string | 'gaming', 'dead', etc. |
+| is_action | boolean | |
 
 
 **Таблица items**
