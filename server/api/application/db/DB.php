@@ -110,6 +110,15 @@ class DB {
         return [$item1, $item2];
     }
 
+    public function checkItemState($itemId, $userId, $state) {
+        $result = $this->query('SELECT COUNT(*) as count FROM inventory WHERE user_id = ? AND item_id = ? AND state = ?', [$userId, $itemId, $state]);
+        return $result->count > 0;
+    }
+
+    public function updateItemState($itemId, $userId, $newState) {
+        return $this->execute('UPDATE inventory SET state = ? WHERE user_id = ? AND item_id = ?', [$newState, $userId, $itemId]);
+    }
+
     public function getLobbyByUserId($userId) {
         $lobbyId = $this->query('SELECT lobby_id FROM lobby_members WHERE user_id=?', [$userId])->lobby_id;
         return $this->getLobbyById($lobbyId);
@@ -230,24 +239,5 @@ class DB {
         return $this->pdo->lastInsertId();
     }
 
-    //Проверить, существует ли предмет
-    public function itemExists($itemId) {
-        return $this->query("SELECT COUNT(*) as count FROM items WHERE id=?", [$itemId])->count > 0;
-    }
-
-    //Добавить предмет в инвентарь
-    public function addItemToInventory($userId, $itemId) {
-        return $this->execute("INSERT INTO inventory (user_id, item_id) VALUES (?, ?)", [$userId, $itemId]);
-    }
-
-    //Проверить, есть ли предмет в инвентаре
-    public function hasItemInInventory($userId, $itemId) {
-        return $this->query("SELECT COUNT(*) as count FROM inventory WHERE user_id=? AND item_id=?", [$userId, $itemId])->count > 0;
-    }
-
-    //Удалить предмет из инвентаря
-    public function removeItemFromInventory($userId, $itemId) {
-        return $this->execute("DELETE FROM inventory WHERE user_id=? AND item_id=?", [$userId, $itemId]);
-    }
 
 }
