@@ -236,4 +236,14 @@ class Application {
     public function pickup($params) {
         return ['error' => 103];
     }
+    public function action($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->game->action($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 }

@@ -286,4 +286,8 @@ class DB {
         }
         return $answer;
     }
+
+    public function action($userId) {
+        $this->execute("UPDATE gamers SET is_action=1 WHERE user_id=?", [$userId]);
+    }
 }
