@@ -50,4 +50,29 @@ class Game {
         }
         return ['error'=> 810];
     }
+
+    public function move($userId, $axisX, $axisY) {
+        $gamer = $this->db->getGamerByUserId($userId);
+        if ($gamer) {
+
+            $magnitude = sqrt($axisX * $axisX + $axisY * $axisY);
+            if ($magnitude > 1) {
+                $axisX /= $magnitude;
+                $axisY /= $magnitude;
+            }
+
+            $angle = atan2($axisY, $axisX); //угол 
+
+            $x_ellipse = $axisX * cos($angle);
+            $y_ellipse = $axisY * sin($angle); 
+        
+            $this->db->updateGamerDirection($gamer->id, $x_ellipse, $y_ellipse);
+        
+            return true;
+
+        }
+        
+        return ['error' => 705];
+
+    }
 }
