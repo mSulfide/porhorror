@@ -215,7 +215,6 @@ class Server {
 
     async connect(gameId: number): Promise<boolean> {
         if (await this.request<boolean>('connect', { gameId: `${gameId}` })) {
-            this.store.setGame(gameId);
             return true;
         }
         return false;

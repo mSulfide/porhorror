@@ -21,15 +21,6 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
         setPage(PAGES.PORHORROR);
     }
 
-    (async () => {
-        const gameId = store.getGameId();
-        if  (gameId && await server.connect(gameId)) {
-            setGamePage();
-        } else {
-            store.setGame(null);
-        }
-    })();
-
     return <div>
         <Inventory />
         <Lobby setGamePage={setGamePage} />

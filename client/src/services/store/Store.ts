@@ -9,7 +9,6 @@ class Store {
     lobbyHash: string = 'empty lobby hash';
     gameHash: string = 'empty game hash';
     inventory: TItem[] = [];
-    gameId: number | null = null;
 
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
@@ -81,14 +80,6 @@ class Store {
 
     getInventory(): TItem[] {
         return this.inventory;
-    }
-
-    setGame(id: number | null) {
-        this.gameId = id;
-    }
-
-    getGameId() {
-        return this.gameId;
     }
 }
 
