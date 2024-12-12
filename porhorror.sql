@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 10 2024 г., 21:05
+-- Время создания: Дек 11 2024 г., 21:30
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -33,7 +33,7 @@ CREATE TABLE `game` (
   `hash` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'rwt3412',
   `timestamp` int NOT NULL DEFAULT '0',
   `quest_count` int NOT NULL DEFAULT '0',
-  `start_time` int NOT NULL DEFAULT '0'
+  `start_time` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -107,6 +107,13 @@ CREATE TABLE `global_settings` (
   `game_update_timestamp` int NOT NULL,
   `inventory_max_count` int NOT NULL DEFAULT '3'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `global_settings`
+--
+
+INSERT INTO `global_settings` (`id`, `lobby_max_count`, `quest_max_count`, `game_timestamp`, `game_update_timestamp`, `inventory_max_count`) VALUES
+(1, 4, 4, 300, 100, 3);
 
 -- --------------------------------------------------------
 
@@ -349,7 +356,7 @@ ALTER TABLE `game_objects`
 -- AUTO_INCREMENT для таблицы `global_settings`
 --
 ALTER TABLE `global_settings`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `hashes`
