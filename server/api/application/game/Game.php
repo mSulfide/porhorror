@@ -41,4 +41,13 @@ class Game {
         }
         return ['error' => 805];
     }
+
+    public function action($userId) {
+        $gamer = $this->db->getGamerByUserId($userId);
+        if ($gamer) {
+            $this->db->action($userId);
+            return true;
+        }
+        return ['error'=> 810];
+    }
 }

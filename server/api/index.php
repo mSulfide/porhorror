@@ -46,6 +46,7 @@ function result($params) {
             case 'move': return $app->move($params);
             case 'drop': return $app->drop($params);
             case 'pickup': return $app->pickup($params);
+            case 'action': return $app->action($params);
 
             default: return ['error' => 102];
         }
