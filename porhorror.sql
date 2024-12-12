@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 11 2024 г., 21:54
+-- Время создания: Дек 11 2024 г., 14:56
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -49,9 +49,7 @@ CREATE TABLE `gamers` (
   `status` varchar(32) NOT NULL DEFAULT 'gaming',
   `hp` int DEFAULT NULL,
   `quest_count` int NOT NULL DEFAULT '0',
-  `is_action` tinyint(1) NOT NULL DEFAULT '0',
-  `axis_x` float NOT NULL DEFAULT '0',
-  `axis_y` float NOT NULL DEFAULT '0'
+  `is_action` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------

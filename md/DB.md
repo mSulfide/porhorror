@@ -98,8 +98,6 @@
 | quest_count | integer | количество выполненных квестов |
 | status | string | 'gaming', 'dead', etc. |
 | is_action | boolean | |
-| axis_x | float | |
-| axis_y | float | |
 
 
 **Таблица items**

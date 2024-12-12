@@ -246,14 +246,4 @@ class Application {
         }
         return ['error' => 242];
     }
-
-    public function move($params) {
-        if ($params['token'] && isset($params['axisX']) && isset($params['axisY'])) { //axisX
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->game->move($user->id, $params['axisX'], $params['axisY']);
-            }
-        }
-        return ['error' => 242];
-    }
 }
