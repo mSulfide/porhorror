@@ -50,6 +50,19 @@ class DB {
         return $sth->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getSettings() {
+        $answer = $this->query("SELECT * FROM global_settings");
+        if ($answer) {
+            settype($answer->id, "int");
+            settype($answer->lobby_max_count, "int");
+            settype($answer->quest_max_count, "int");
+            settype($answer->game_timestamp, "int");
+            settype($answer->game_update_timestamp, "int");
+            settype($answer->inventory_max_count, "int");
+        }
+        return $answer;
+    }
+
     public function getUserByLogin($login) {
         $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
         if ($answer) {
@@ -216,7 +229,7 @@ class DB {
     }
 
     public function createGame($hash) {
-        $this->execute("INSERT INTO game (hash) VALUES (?)", [$hash]);
+        $this->execute("INSERT INTO game (hash, start_time) VALUES (?, ?)", [$hash, time()]);
         return $this->pdo->lastInsertId();
     }
 

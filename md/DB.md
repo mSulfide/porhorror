@@ -26,8 +26,8 @@
 | version | integer | |
 | lobby_max_count | integer | 4 by default |
 | quest_max_count | integer | 4 by default |
-| game_timestamp | integer | длительность игры |
-| game_update_timestamp | integer | минимальный промежуток для обновления игры |
+| game_timestamp | integer | длительность игры в секундах |
+| game_update_timestamp | integer | минимальный промежуток для обновления игры в милисекундах |
 | inventory_max_count | integer | 3 by default |
 
 
