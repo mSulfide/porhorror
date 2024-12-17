@@ -137,7 +137,7 @@ class DB {
     }
 
     public function getLobbies() {
-        $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open"');
+        $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open" OR status="start game"');
         foreach ($lobbies as $lobby) {
             settype($lobby->id, "int");
             $lobby->members = $this->getUsersFromLobby($lobby->id);
@@ -198,15 +198,6 @@ class DB {
             settype($answer->id, "int");
         }
         return $answer;
-    }
-
-    public function getConnectId($userId) {
-        return (int)$this->query("SELECT
-                l.game_id AS id 
-            FROM lobby AS l 
-            INNER JOIN lobby_members AS lm ON lm.user_id=?
-            WHERE l.status='start game' AND l.id=lm.lobby_id;
-        ", [$userId])->id;
     }
 
     //game
