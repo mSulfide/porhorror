@@ -11,6 +11,11 @@ class Lobby {
             if($this->isCreator($userId, $lobby->id)) {
                 $gameId = $this->db->createGame(md5(rand()));
                 $this->db->startGame($lobby->id, $gameId);
+                $users = $this->db->getUsersFromLobby($lobby->id);
+                foreach($users as $user) {
+                    $objectId = $this->db->createObject($gameId);
+                    $this->db->addGamer($objectId, $user->id);
+                }
                 $this->db->updateLobbyHash(md5(rand()));
                 return true;
             }
