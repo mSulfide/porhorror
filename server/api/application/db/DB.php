@@ -249,26 +249,10 @@ class DB {
     }
 
     public function getGameObjects($gameId) {
-        $objects = $this->queryAll("SELECT
-                x AS posX,
-                y AS posY,
-                velocity_x AS velX,
-                velocity_y AS velY,
-                radius,
-                angle,
-                game_id AS gameId
-            FROM game_objects WHERE game_id=?", [$gameId]);
+        $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
         $answer = [];
         foreach ($objects as $object) {
-            settype($object->game_id, "int");
-            settype($object->posX, "float");
-            settype($object->posY, "float");
-            settype($object->velX, "float");
-            settype($object->velY, "float");
-            settype($object->radius, "float");
-            settype($object->angle, "float");
-
-            $answer[] = new GameObject($object);
+            $answer[] = new GameObject($this, $object);
         }
         return $answer;
     }

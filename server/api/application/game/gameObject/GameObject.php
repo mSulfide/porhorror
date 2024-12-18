@@ -1,11 +1,24 @@
 <?php
 
 class GameObject {
-    function __construct($params) {
-        $this->position = new Point($params->posX, $params->posY);
-        $this->velocity = new Point($params->velX, $params->velY);
-        $this->game_id = $params->game_id;
+    private $db;
+    private int $id;
+
+    public Point $position, $velocity;
+    public int $gameId;
+    public float $radius, $angle;
+
+    function __construct($db, $params) {
+        $this->db = $db;
+        $this->id = $params->id;
+        $this->position = new Point($params->x, $params->y);
+        $this->velocity = new Point($params->velocity_x, $params->velocity_y);
+        $this->gameId = $params->game_id;
         $this->radius = $params->radius;
         $this->angle = $params->angle;
+    }
+    
+    public function move() {
+
     }
 }
