@@ -34,6 +34,7 @@ class Answer {
         '715' => 'the lobby is not open',
         '800' => 'not found object',
         '801' => 'unknown state',
+        '802' => 'game is already exists',
         '805' => 'game is no exists',
         '810' => 'gamer is no exists',
         '905' => 'gamer is already connected to game',
