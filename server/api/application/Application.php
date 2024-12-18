@@ -132,7 +132,7 @@ class Application {
         if ($params['token'] && $params['hash']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->lobby->updateGroups($user->id, $params['hash']);
+                return $this->lobby->updateGroups($params['hash']);
             }
             return ['error' => 705];
         }

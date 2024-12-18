@@ -137,9 +137,15 @@ class DB {
     }
 
     public function getLobbies() {
-        $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open" OR status="start game"');
+        $lobbies = $this->queryAll('SELECT
+                id,
+                name,
+                status,
+                game_id AS gameId
+            FROM lobby WHERE status="open" OR status="start game"');
         foreach ($lobbies as $lobby) {
             settype($lobby->id, "int");
+            settype($lobby->gameId, "int");
             $lobby->members = $this->getUsersFromLobby($lobby->id);
         }
         return $lobbies;

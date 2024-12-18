@@ -40,15 +40,16 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
         }
     });
 
-    const createLobbyHandler = () => {
-        if (nameGroupRef.current && user) {
-            server.createGroup(nameGroupRef.current.value || "Новая группа");
-        }
-    }
+    const createLobbyHandler = () => nameGroupRef.current && user && server.createGroup(nameGroupRef.current.value || "Новая группа");
 
     if (!user) return <></>;
 
     const currentLobby = lobbies.find(lobby => lobby.members.findIndex(member => member.id === user.id) > -1);
+
+    if (currentLobby?.status === ELobbyStatus.startGame) {
+        setGamePage();
+    }
+
     const userStatus: EStatus = !currentLobby ?
         EStatus.none :
         currentLobby.members.find(member => member.id === user.id)?.creator ?
