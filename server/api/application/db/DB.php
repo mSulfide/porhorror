@@ -300,4 +300,8 @@ class DB {
     public function action($userId) {
         $this->execute("UPDATE gamers SET is_action=1 WHERE user_id=?", [$userId]);
     }
+
+    public function updateTimestamp($gameId, $time) {
+        $this->execute("UPDATE game SET timestamp=? WHERE id=?", [$time, $gameId]);
+    }
 }

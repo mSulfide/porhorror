@@ -5,10 +5,23 @@ class Game {
         $this->db = $db;
     }
 
+    private function getTime($startTime) {
+        return floor((microtime(true) - $startTime) * 1000);
+    }
+
+    private function update($deltaTime) {
+        
+    }
+
     public function updateScene($userId, $hash) {
         $gameId = $this->db->getGamerByUserId($userId)->game_id;
         $game = $this->db->getGameById($gameId);
         if ($game) {
+            $deltaTime = $this->getTime($game->start_time) - $game->timestamp;
+            if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
+                $this->update($deltaTime / 1000);
+                $this->db->updateTimestamp($game->id, $this->getTime($game->start_time));
+            }
             if ($hash === $game->hash) {
                 return [
                     'hash' => $hash
