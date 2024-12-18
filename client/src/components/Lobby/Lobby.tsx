@@ -31,6 +31,10 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
             setHash(hash);
         }
 
+        if (currentLobby?.status === ELobbyStatus.startGame) {
+            setGamePage();
+        }
+        
         if (user) {
             server.startLobbyList(updateLobbyListHandler);
         }
@@ -45,10 +49,6 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
     if (!user) return <></>;
 
     const currentLobby = lobbies.find(lobby => lobby.members.findIndex(member => member.id === user.id) > -1);
-
-    if (currentLobby?.status === ELobbyStatus.startGame) {
-        setGamePage();
-    }
 
     const userStatus: EStatus = !currentLobby ?
         EStatus.none :
