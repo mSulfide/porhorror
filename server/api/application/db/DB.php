@@ -255,7 +255,8 @@ class DB {
                 velocity_x AS velX,
                 velocity_y AS velY,
                 radius,
-                angle
+                angle,
+                game_id AS gameId
             FROM game_objects WHERE game_id=?", [$gameId]);
         $answer = [];
         foreach ($objects as $object) {
@@ -267,21 +268,7 @@ class DB {
             settype($object->radius, "float");
             settype($object->angle, "float");
 
-            $position = new stdClass();
-            $position->x = $object->posX;
-            $position->y = $object->posY;
-            $velocity = new stdClass();
-            $velocity->x = $object->velX;
-            $velocity->y = $object->velY;
-
-            $gameObject = new stdClass();
-            $gameObject->position = $position;
-            $gameObject->velocity = $velocity;
-            $gameObject->game_id = $object->game_id;
-            $gameObject->radius = $object->radius;
-            $gameObject->angle = $object->angle;
-
-            $answer[] = $gameObject;
+            $answer[] = new GameObject($object);
         }
         return $answer;
     }

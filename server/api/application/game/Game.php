@@ -1,5 +1,7 @@
 <?php
 
+require_once ('gameObject\GameObject.php');
+
 class Game {
     function __construct($db) {
         $this->db = $db;
