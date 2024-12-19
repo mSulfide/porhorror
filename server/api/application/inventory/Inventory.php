@@ -18,4 +18,12 @@ class Inventory {
         return ['error' => 'Item not found in pocket or inventory.'];
     }
 
+    private function isItemInPocket($itemId, $userId) {
+        return $this->db->checkItemState($itemId, $userId, 'pocket');
+    }
+
+    private function isItemInInventory($itemId, $userId) {
+        return $this->db->checkItemState($itemId, $userId, 'inventory');
+    }
+
 }
