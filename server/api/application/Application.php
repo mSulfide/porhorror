@@ -113,8 +113,15 @@ class Application {
     }
 
     public function changeInventory($params) {
-        return ['error' => 103];
-    }
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->inventory->changeInventory($params['item_id'], $user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }    
 
     //лобби
     public function startGame($params) {
