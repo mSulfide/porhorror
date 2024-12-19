@@ -123,6 +123,14 @@ class DB {
         return [$item1, $item2];
     }
 
+    public function checkItemState($itemId, $userId, $state) {
+        $result = $this->query('SELECT COUNT(*) as count FROM inventory WHERE user_id = ? AND item_id = ? AND status = ?', [$userId, $itemId, $state]);
+        return $result->count > 0;
+    }
+    public function updateItemState($itemId, $userId, $newState) {
+        return $this->execute('UPDATE inventory SET status = ? WHERE user_id = ? AND item_id = ?', [$newState, $userId, $itemId]);
+    }
+
     public function getLobbyByUserId($userId) {
         $lobbyId = $this->query('SELECT lobby_id FROM lobby_members WHERE user_id=?', [$userId])->lobby_id;
         return $this->getLobbyById($lobbyId);
