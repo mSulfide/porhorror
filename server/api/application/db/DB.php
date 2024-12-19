@@ -275,4 +275,8 @@ class DB {
     public function updateTimestamp($gameId, $time) {
         $this->execute("UPDATE game SET timestamp=? WHERE id=?", [$time, $gameId]);
     }
+
+    public function setPosition($objectId, $position) {
+        $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
+    }
 }

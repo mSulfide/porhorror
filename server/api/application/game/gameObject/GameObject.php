@@ -17,8 +17,17 @@ class GameObject {
         $this->radius = $params->radius;
         $this->angle = $params->angle;
     }
-    
-    public function move() {
 
+    function __destruct() {
+        $this->update();
+    }
+    
+    public function update() {
+        $this->db->setPosition($this->id, $this->position);
+    }
+
+    public function move($offset) {
+        $this->position->x += $offset->x;
+        $this->position->y += $offset->y;
     }
 }
