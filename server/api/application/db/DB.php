@@ -249,39 +249,10 @@ class DB {
     }
 
     public function getGameObjects($gameId) {
-        $objects = $this->queryAll("SELECT
-                x AS posX,
-                y AS posY,
-                velocity_x AS velX,
-                velocity_y AS velY,
-                radius,
-                angle
-            FROM game_objects WHERE game_id=?", [$gameId]);
+        $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
         $answer = [];
         foreach ($objects as $object) {
-            settype($object->game_id, "int");
-            settype($object->posX, "float");
-            settype($object->posY, "float");
-            settype($object->velX, "float");
-            settype($object->velY, "float");
-            settype($object->radius, "float");
-            settype($object->angle, "float");
-
-            $position = new stdClass();
-            $position->x = $object->posX;
-            $position->y = $object->posY;
-            $velocity = new stdClass();
-            $velocity->x = $object->velX;
-            $velocity->y = $object->velY;
-
-            $gameObject = new stdClass();
-            $gameObject->position = $position;
-            $gameObject->velocity = $velocity;
-            $gameObject->game_id = $object->game_id;
-            $gameObject->radius = $object->radius;
-            $gameObject->angle = $object->angle;
-
-            $answer[] = $gameObject;
+            $answer[] = new GameObject($this, $object);
         }
         return $answer;
     }
@@ -299,5 +270,13 @@ class DB {
 
     public function action($userId) {
         $this->execute("UPDATE gamers SET is_action=1 WHERE user_id=?", [$userId]);
+    }
+
+    public function updateTimestamp($gameId, $time) {
+        $this->execute("UPDATE game SET timestamp=? WHERE id=?", [$time, $gameId]);
+    }
+
+    public function setPosition($objectId, $position) {
+        $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
 }
