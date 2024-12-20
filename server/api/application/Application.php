@@ -7,8 +7,11 @@ require_once ('Math/Math.php');
 require_once ('inventory/Inventory.php');
 require_once ('lobby/Lobby.php');
 require_once ('game/Game.php');
+require_once ('exchanger/Exchanger.php');
 
 class Application {
+    private $user, $chat, $inventory, $lobby, $game, $exchanger;
+
     function __construct() {
         $db = new DB();
         $this->user = new User($db);
@@ -16,6 +19,7 @@ class Application {
         $this->inventory = new Inventory($db);
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);
+        $this->exchanger = new Exchanger($db);
     }
 
     public function autoLogin($params) {
@@ -234,5 +238,38 @@ class Application {
             return ['error' => 705];
         }
         return ['error' => 242];
+    }
+
+    //обменник
+    public function createLot($params) {
+        return ['error' => 103];
+    }
+
+    public function deleteLot($params) {
+        return ['error' => 103];
+    }
+
+    public function addLotItem($params) {
+        return ['error' => 103];
+    }
+
+    public function removeLotItem($params) {
+        return ['error' => 103];
+    }
+
+    public function provideConsent($params) {
+        return ['error' => 103];
+    }
+
+    public function removeConsent($params) {
+        return ['error' => 103];
+    }
+
+    public function addLotComment($params) {
+        return ['error' => 103];
+    }
+
+    public function updateLots($params) {
+        return ['error' => 103];
     }
 }
