@@ -15,6 +15,6 @@ class Inventory {
             return $this->db->removeConsent($userId);
             return true;
         }
-        return ['error'=> 242];
+        return ['error'=> '809'];
     }
 }
