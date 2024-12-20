@@ -63,10 +63,10 @@ class Game {
 
             $angle = atan2($axisY, $axisX); //угол 
 
-            $x_ellipse = $axisX * cos($angle);
-            $y_ellipse = $axisY * sin($angle); 
+            $xEllipse = $axisX * cos($angle);
+            $yEllipse = $axisY * sin($angle); 
         
-            $this->db->updateGamerDirection($gamer->id, $x_ellipse, $y_ellipse);
+            $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
         
             return true;
 
