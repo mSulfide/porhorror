@@ -14,10 +14,11 @@ class Game {
 
     private function update($time) {
         foreach ($this->objects as $object) {
-            $object->x += $object->velocity_x * $time; 
-            $object->y += $object->velocity_y * $time; 
+            $object->move(new Point($object->velocity->x * $time, $object->velocity->y * $time));
+            $object->update();
         }
     }
+    
 
     public function updateScene($userId, $hash) {
         $gameId = $this->db->getGamerByUserId($userId)->game_id;
