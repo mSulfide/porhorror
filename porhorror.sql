@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 11 2024 г., 21:54
+-- Время создания: Дек 20 2024 г., 03:03
 -- Версия сервера: 8.0.30
--- Версия PHP: 7.2.34
+-- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `game` (
   `hash` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'rwt3412',
   `timestamp` int NOT NULL DEFAULT '0',
   `quest_count` int NOT NULL DEFAULT '0',
-  `start_time` int NOT NULL DEFAULT '0'
+  `start_time` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -49,9 +49,7 @@ CREATE TABLE `gamers` (
   `status` varchar(32) NOT NULL DEFAULT 'gaming',
   `hp` int DEFAULT NULL,
   `quest_count` int NOT NULL DEFAULT '0',
-  `is_action` tinyint(1) NOT NULL DEFAULT '0',
-  `axis_x` float NOT NULL DEFAULT '0',
-  `axis_y` float NOT NULL DEFAULT '0'
+  `is_action` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -92,17 +90,9 @@ CREATE TABLE `game_objects` (
   `y` float NOT NULL DEFAULT '0',
   `velocity_x` float NOT NULL DEFAULT '0',
   `velocity_y` float NOT NULL DEFAULT '0',
-  `radius` float NOT NULL DEFAULT '0',
+  `radius` float NOT NULL DEFAULT '0.5',
   `angle` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Дамп данных таблицы `game_objects`
---
-
-INSERT INTO `game_objects` (`id`, `game_id`, `x`, `y`, `velocity_x`, `velocity_y`, `radius`, `angle`) VALUES
-(2, 3, 0, 0, 0, 0, 0.5, 0),
-(3, 4, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -118,6 +108,13 @@ CREATE TABLE `global_settings` (
   `game_update_timestamp` int NOT NULL,
   `inventory_max_count` int NOT NULL DEFAULT '3'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `global_settings`
+--
+
+INSERT INTO `global_settings` (`id`, `lobby_max_count`, `quest_max_count`, `game_timestamp`, `game_update_timestamp`, `inventory_max_count`) VALUES
+(1, 4, 4, 300, 50, 3);
 
 -- --------------------------------------------------------
 
@@ -331,13 +328,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `game`
 --
 ALTER TABLE `game`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
@@ -355,13 +352,13 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
 --
 ALTER TABLE `global_settings`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `hashes`
@@ -385,13 +382,13 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`

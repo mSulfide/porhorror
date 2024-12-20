@@ -132,7 +132,7 @@ class Application {
         if ($params['token'] && $params['hash']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->lobby->updateGroups($user->id, $params['hash']);
+                return $this->lobby->updateGroups($params['hash']);
             }
             return ['error' => 705];
         }
@@ -195,17 +195,6 @@ class Application {
     }
 
     // игра
-    public function connect($params) {
-        if ($params['gameId'] && $params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->game->connect($params['gameId'], $user->id);
-            }
-            return ['error' => 705];
-        }
-        return ['error' => 242];
-    }
-
     public function updateScene($params) {
         if ($params['token'] && $params['hash']) {
             $user = $this->user->getUser($params['token']);
@@ -243,16 +232,6 @@ class Application {
                 return $this->game->action($user->id);
             }
             return ['error' => 705];
-        }
-        return ['error' => 242];
-    }
-
-    public function move($params) {
-        if ($params['token'] && isset($params['axisX']) && isset($params['axisY'])) { //axisX
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->game->move($user->id, $params['axisX'], $params['axisY']);
-            }
         }
         return ['error' => 242];
     }

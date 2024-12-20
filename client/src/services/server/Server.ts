@@ -212,13 +212,6 @@ class Server {
             this.gameInterval = null;
         }
     }
-
-    async connect(gameId: number): Promise<boolean> {
-        if (await this.request<boolean>('connect', { gameId: `${gameId}` })) {
-            return true;
-        }
-        return false;
-    }
 }
 
 export default Server;
