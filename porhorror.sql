@@ -151,6 +151,18 @@ CREATE TABLE `inventory` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `exchange`
+--
+
+CREATE TABLE `exchange` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `items`
 --
 
@@ -291,6 +303,12 @@ ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `exchange`
+--
+ALTER TABLE `exchange`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `items`
 --
 ALTER TABLE `items`
@@ -370,6 +388,12 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `exchange` 
+--
+ALTER TABLE `exchange`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --

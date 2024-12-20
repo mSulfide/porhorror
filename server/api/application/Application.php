@@ -235,4 +235,15 @@ class Application {
         }
         return ['error' => 242];
     }
+    
+    public function removeConsent($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->inventory->removeConsent($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 }

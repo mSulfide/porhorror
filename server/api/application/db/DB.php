@@ -286,4 +286,13 @@ class DB {
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
+
+    public function removeConsent($userId){
+        $this->execute("UPDATE exchange SET status='not ready' WHERE id=?", [$userId]);
+    }
+
+    public function getStatusExchange($userId) {
+        return $this->query("SELECT status AS answer FROM exchange WHERE id=?", [$userId])->answer;
+    }
+
 }
