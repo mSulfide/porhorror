@@ -286,4 +286,11 @@ class DB {
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
+    
+    public function updateGamerDirection($gamerId, $axisX, $axisY) {
+        $this->execute(
+            "UPDATE gamers SET axis_x = ?, axis_y = ? WHERE id = ?",
+            [$axisX, $axisY, $gamerId]
+        );
+    }
 }
