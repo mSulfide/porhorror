@@ -126,7 +126,6 @@ class DB {
         ", [$userId]);
         if ($inventory) {
             settype($inventory->id, "int");
-            settype($inventory->quest_id, "int");
         }
         return $inventory;
     }
