@@ -13,7 +13,10 @@ class Game {
     }
 
     private function update($time) {
-        $this->objects[0]->position = new Point(sin($time), cos($time));
+        foreach ($this->objects as $object) {
+            $object->x += $object->velocity_x * $time; 
+            $object->y += $object->velocity_y * $time; 
+        }
     }
 
     public function updateScene($userId, $hash) {
