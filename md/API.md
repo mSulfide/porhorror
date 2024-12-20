@@ -39,7 +39,6 @@
     * 4.19. updateScene
     * 4.20. action
     * 4.21. getInventory
-    * 4.22. move
 
 
 
@@ -623,5 +622,6 @@ Item: {
 ```
     Answer<true>
 ```
+
 **Ошибки**
 * `810` - игрока не существует
