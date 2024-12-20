@@ -114,13 +114,20 @@ class DB {
     }
 
     public function getInventory($userId) {
-        $item1 = new stdClass();
-        $item1->id = 11;
-        $item1->name = 'Шмотка 1';
-        $item2 = new stdClass();
-        $item2->id = 222;
-        $item2->name = 'Шмотка 2';
-        return [$item1, $item2];
+        $inventory = $this->queryAll("SELECT
+                inv.id AS id,
+                inv.status AS status,
+                i.name AS name,
+                i.image AS image,
+                i.boost_type AS boostType
+            FROM inventory AS inv
+            INNER JOIN items AS i ON i.id = inv.item_id
+            WHERE inv.user_id = ?;
+        ", [$userId]);
+        if ($inventory) {
+            settype($inventory->id, "int");
+        }
+        return $inventory;
     }
 
     public function getLobbyByUserId($userId) {

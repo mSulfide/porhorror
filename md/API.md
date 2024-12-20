@@ -14,6 +14,7 @@
     * 2.5. Окружность
     * 2.6. Сплайны
     * 2.7. Игровой объект
+    * 2.8. Шмотка
 3. Список запросов
     * 3.1. Общие ошибки
 4. Подробно
@@ -37,6 +38,7 @@
     * 4.18. autoLogin
     * 4.19. updateScene
     * 4.20. action
+    * 4.21. getInventory
 
 
 
@@ -125,6 +127,17 @@ GameObject: {
     velocity: Point;
     radius: float;
     angle: float;
+}
+```
+
+### 2.8. Шмотка
+```
+Item: {
+    id: number;
+    status: string;
+    name: string;
+    image: string;
+    boostType: string;
 }
 ```
 
@@ -576,3 +589,17 @@ GameObject: {
 
 **Ошибки**
 * `810` - игрока не существует
+
+### 4.21. getInventory
+Получить инвентарь
+
+**Параметры**
+```
+{
+    token: number; - токен
+}
+```
+**Успешный ответ**
+```
+    Answer<Item[]>
+```
