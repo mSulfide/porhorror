@@ -114,14 +114,43 @@ class DB {
     }
 
     public function getInventory($userId) {
-        $item1 = new stdClass();
-        $item1->id = 11;
-        $item1->name = 'Шмотка 1';
-        $item2 = new stdClass();
-        $item2->id = 222;
-        $item2->name = 'Шмотка 2';
-        return [$item1, $item2];
+        $inventory = $this->queryAll("SELECT
+                inv.id AS id,
+                inv.status AS status,
+                i.name AS name,
+                i.image AS image,
+                i.quest_id AS quest_id,
+                i.boost_type AS boost_type
+            FROM inventory AS inv
+            INNER JOIN items AS i ON i.id = inv.item_id
+            WHERE inv.user_id = ?;
+        ", [$userId]);
+        if ($inventory) {
+            settype($inventory->id, "int");
+            settype($inventory->quest_id, "int");
+        }
+        return $inventory;
     }
+
+    /*
+        public function getGamerByUserId($userId) {
+        $gamer = $this->query("SELECT
+                g.id AS id,
+                g.status AS status,
+                u.name AS name,
+                go.game_id AS game_id
+            FROM gamers AS g
+            INNER JOIN users AS u ON u.id = g.user_id
+            INNER JOIN game_objects AS go ON go.id = g.object_id
+            WHERE u.id = ?;
+        ", [$userId]);
+        if ($gamer) {
+            settype( $gamer->id, "int");
+            settype($gamer->game_id, "int");
+        }
+        return $gamer;
+    }
+    */
 
     public function getLobbyByUserId($userId) {
         $lobbyId = $this->query('SELECT lobby_id FROM lobby_members WHERE user_id=?', [$userId])->lobby_id;
