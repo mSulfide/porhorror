@@ -615,8 +615,8 @@ Item: {
 ```
 {
     token: number; - токен
-    xEllipse: number; - новое значение по оси х
-    yEllipse: number; - новое значение по оси у
+    axisX: number; - новое значение по оси х
+    axisY: number; - новое значение по оси у
 }
 ```
 **Успешный ответ**
