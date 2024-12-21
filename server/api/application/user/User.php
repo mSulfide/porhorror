@@ -18,7 +18,7 @@ class User {
                 'token' => $token
             ];
         }
-        return ['error' => 1006]; 
+        return ['error' => 1007]; 
     }
 
     public function login($login, $hash, $rnd) {
