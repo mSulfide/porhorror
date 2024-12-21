@@ -8,9 +8,19 @@ class Lobby {
     public function startGame($userId) {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
-            if($this->db->isCreator($userId, $lobby->id)) {
-                $this->db->startGame($lobby->id);
-                return true;
+            if($this->isCreator($userId, $lobby->id)) {
+                if ($lobby->status === 'open') {
+                    $gameId = $this->db->createGame(md5(rand()));
+                    $this->db->startGame($lobby->id, $gameId);
+                    $users = $this->db->getUsersFromLobby($lobby->id);
+                    foreach($users as $user) {
+                        $objectId = $this->db->createObject($gameId);
+                        $this->db->addGamer($objectId, $user->id);
+                    }
+                    $this->db->updateLobbyHash(md5(rand()));
+                    return true;
+                }
+                return ['error' => 802];
             }
             return ['error' => 500];
         }
@@ -30,46 +40,61 @@ class Lobby {
             'hash' => $currentHash
         ];
     }
-
+    
     public function createGroup($name, $userId) { 
-        $group = $this->db->createGroup($name, $userId);
-        if ($group) {
-            $this->db->addMemberToLobby($group, $userId, true);
-            $this->db->updateLobbyHash(md5(rand()));
-            return true;
+        $lobby = $this->db->getLobbyByUserId($userId);
+        if (!($this->isCreator($userId, $lobby->id))) {
+            $group = $this->db->createGroup($name, $userId);
+            if ($group) {
+                $this->db->addMemberToLobby($group, $userId, true);
+                $this->db->updateLobbyHash(md5(rand()));
+                return true;
+            }
+            return ['error' => 1105];
         }
-        return ['error' => 1105];
+        return ['error' => 713];
     }
 
     public function deleteGroup($userId) {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
-            if ($this->isCreator($userId, $lobby->id)) {
-                $this->db->removeMembersFromLobby($lobby->id);
-                $this->db->removeLobby($lobby->id);
-                $this->db->updateLobbyHash(md5(rand()));
-                return true; 
+            if ($lobby->status === 'open') {
+                if ($this->isCreator($userId, $lobby->id)) {
+                    $this->db->removeMembersFromLobby($lobby->id);
+                    $this->db->removeLobby($lobby->id);
+                    $this->db->updateLobbyHash(md5(rand()));
+                    return true; 
+                }
+                return ['error' => 711];
             }
-            return ['error' => 711]; 
+            return ['error' => 715]; 
         }
         return ['error' => 1105];
     }
 
     public function joinToGroup($lobbyId, $userId) {
-        $lobby = $this->db->getLobbyByUserId($userId);
-        if (!$lobby->id) {
-            $this->db->addMemberToLobby($lobbyId, $userId, 0);
-            $this->db->updateLobbyHash(md5(rand()));
-            return true;
+        $lobby = $this->db->getLobbyById($lobbyId);
+        if ($lobby) {
+            if ($lobby->status === 'open') {
+                $existingLobby = $this->db->getLobbyByUserId($userId);
+                if (!$existingLobby) {
+                    $this->db->addMemberToLobby($lobbyId, $userId, 0);
+                    $this->db->updateLobbyHash(md5(rand()));
+                    return true;
+                }
+                return ['error' => 710];
+            } else {
+                return ['error' => 715];
+            }
         }
-        return ['error' => 710];
+        return ['error' => 1105];
     }
 
     public function leaveGroup($userId) {
         $lobby = $this->db->getLobbyByUserId($userId);
         if ($lobby) {
             if ($this->isCreator($userId, $lobby->id)) {
-                $this->deleteGroup($userId);
+                return ['error' => 714];
             } else {
                 $this->db->removeMemberFromLobby($lobby->id, $userId);
             }

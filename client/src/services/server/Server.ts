@@ -1,15 +1,16 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse } from "./types";
 
-const { LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
+const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
 
 class Server {
     HOST = HOST;
     store: Store;
     chatInterval: NodeJS.Timer | null = null;
     lobbyInterval: NodeJS.Timer | null = null;
+    gameInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
@@ -184,6 +185,65 @@ class Server {
             clearInterval(this.lobbyInterval);
             this.lobbyInterval = null;
         }
+    }
+
+    async updateScene(): Promise<TUpdateSceneResponse | null> {
+        const hash = this.store.getGameHash();
+        const result = await this.request<TUpdateSceneResponse>('updateScene', { hash });
+        if (result) {
+            return result;
+        }
+        return null;
+    }
+
+    startSceneUpdate(cb: (result: TUpdateSceneResponse) => void): void {
+        this.gameInterval = setInterval(async () => {
+            const result = await this.updateScene();
+            if (result?.scene) {
+                this.store.setGameHash(result.hash);
+                cb(result);
+            }
+        }, GAME_TIMESTAMP);
+    }
+
+    stopSceneUpdate(): void {
+        if (this.gameInterval) {
+            clearInterval(this.gameInterval);
+            this.gameInterval = null;
+        }
+    }
+
+    //обменник
+    createLot(): void {
+        this.request('createLot');
+    }
+    
+    deleteLot(): void {
+        this.request('deleteLot');
+    }
+    
+    addLotItem(): void {
+        this.request('addLotItem');
+    }
+    
+    removeLotItem(): void {
+        this.request('removeLotItem');
+    }
+    
+    provideConsent(): void {
+        this.request('provideConsent');
+    }
+    
+    removeConsent(): void {
+        this.request('removeConsent');
+    }
+    
+    addLotComment(): void {
+        this.request('addLotComment');
+    }
+    
+    updateLots(): void {
+        this.request('updateLots');
     }
 }
 

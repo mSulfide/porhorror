@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Chat, Inventory, Lobby } from "../../components";
+import { Button, Inventory, Lobby } from "../../components";
 import { IBasePage, PAGES } from "../PageManager";
 import { ServerContext, StoreContext } from "../../App";
 
@@ -39,11 +39,9 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
                 </div>
                 <div className="section users">
                     <div className="section-title">Пользователи</div>
-                    <Chat />
                 </div>
                 <div className="section lobby">
                     <div className="section-title">Лобби</div>
-                    <Lobby />
                     <button className="create-lobby-button button">Создать лобби</button>
                 </div>
                 

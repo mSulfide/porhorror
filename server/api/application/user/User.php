@@ -9,6 +9,18 @@ class User {
         return $this->db->getUserByToken($token);
     }
 
+    public function autoLogin($token) {
+        $user = $this->db->getUserByToken($token);
+        if ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'token' => $token
+            ];
+        }
+        return ['error' => 1007]; 
+    }
+
     public function login($login, $hash, $rnd) {
         $user = $this->db->getUserByLogin($login);
         if ($user) {

@@ -50,6 +50,19 @@ class DB {
         return $sth->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getSettings() {
+        $answer = $this->query("SELECT * FROM global_settings");
+        if ($answer) {
+            settype($answer->id, "int");
+            settype($answer->lobby_max_count, "int");
+            settype($answer->quest_max_count, "int");
+            settype($answer->game_timestamp, "int");
+            settype($answer->game_update_timestamp, "int");
+            settype($answer->inventory_max_count, "int");
+        }
+        return $answer;
+    }
+
     public function getUserByLogin($login) {
         $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
         if ($answer) {
@@ -101,13 +114,16 @@ class DB {
     }
 
     public function getInventory($userId) {
-        $item1 = new stdClass();
-        $item1->id = 11;
-        $item1->name = 'Шмотка 1';
-        $item2 = new stdClass();
-        $item2->id = 222;
-        $item2->name = 'Шмотка 2';
-        return [$item1, $item2];
+        return $this->queryAll("SELECT
+                inv.id AS id,
+                inv.status AS status,
+                i.name AS name,
+                i.image AS image,
+                i.boost_type AS boostType
+            FROM inventory AS inv
+            INNER JOIN items AS i ON i.id = inv.item_id
+            WHERE inv.user_id = ?;
+        ", [$userId]);
     }
 
     public function getLobbyByUserId($userId) {
@@ -115,8 +131,8 @@ class DB {
         return $this->getLobbyById($lobbyId);
     }
 
-    public function startGame($lobbyId) {
-        $this->execute('UPDATE lobby SET status=? WHERE id=?', ['start game', $lobbyId]);
+    public function startGame($lobbyId, $gameId) {
+        $this->execute('UPDATE lobby SET status="start game", game_id=? WHERE id=?', [$gameId, $lobbyId]);
     }
 
     public function getLobbyHash() {
@@ -124,9 +140,15 @@ class DB {
     }
 
     public function getLobbies() {
-        $lobbies = $this->queryAll('SELECT id, name FROM lobby WHERE status="open"');
+        $lobbies = $this->queryAll('SELECT
+                id,
+                name,
+                status,
+                game_id AS gameId
+            FROM lobby WHERE status="open" OR status="start game"');
         foreach ($lobbies as $lobby) {
             settype($lobby->id, "int");
+            settype($lobby->gameId, "int");
             $lobby->members = $this->getUsersFromLobby($lobby->id);
         }
         return $lobbies;
@@ -185,5 +207,79 @@ class DB {
             settype($answer->id, "int");
         }
         return $answer;
+    }
+
+    //game
+    public function getGamerByUserId($userId) {
+        $gamer = $this->query("SELECT
+                g.id AS id,
+                g.status AS status,
+                u.name AS name,
+                go.game_id AS game_id
+            FROM gamers AS g
+            INNER JOIN users AS u ON u.id = g.user_id
+            INNER JOIN game_objects AS go ON go.id = g.object_id
+            WHERE u.id = ?;
+        ", [$userId]);
+        if ($gamer) {
+            settype( $gamer->id, "int");
+            settype($gamer->game_id, "int");
+        }
+        return $gamer;
+    }
+
+    public function createGame($hash) {
+        $this->execute("INSERT INTO game (hash, start_time) VALUES (?, ?)", [$hash, time()]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function addGamer($objectId, $userId) {
+        $this->execute("INSERT INTO gamers (object_id, user_id) VALUES (?, ?)", [$objectId, $userId]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function createObject($gameId) {
+        $this->execute("INSERT INTO game_objects (game_id) VALUES (?)", [$gameId]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function updateGameHash($hash, $gameId) {
+        $this->execute("UPDATE game SET hash=? WHERE id=?", [$hash, $gameId]);
+    }
+
+    public function getGameHash($gameId) {
+        return $this->query("SELECT hash AS answer FROM game WHERE id=?", [$gameId])->answer;
+    }
+
+    public function getGameObjects($gameId) {
+        $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
+        $answer = [];
+        foreach ($objects as $object) {
+            $answer[] = new GameObject($this, $object);
+        }
+        return $answer;
+    }
+
+    public function getGameById($gameId) {
+        $answer = $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
+        if ($answer) {
+            settype($answer->id, "int");
+            settype($answer->timestamp, "int");
+            settype($answer->quest_count, "int");
+            settype($answer->start_time, "int");
+        }
+        return $answer;
+    }
+
+    public function action($userId) {
+        $this->execute("UPDATE gamers SET is_action=1 WHERE user_id=?", [$userId]);
+    }
+
+    public function updateTimestamp($gameId, $time) {
+        $this->execute("UPDATE game SET timestamp=? WHERE id=?", [$time, $gameId]);
+    }
+
+    public function setPosition($objectId, $position) {
+        $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
 }

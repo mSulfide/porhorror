@@ -7,8 +7,11 @@ require_once ('Math/Math.php');
 require_once ('inventory/Inventory.php');
 require_once ('lobby/Lobby.php');
 require_once ('game/Game.php');
+require_once ('exchanger/Exchanger.php');
 
 class Application {
+    private $user, $chat, $inventory, $lobby, $game, $exchanger;
+
     function __construct() {
         $db = new DB();
         $this->user = new User($db);
@@ -16,10 +19,14 @@ class Application {
         $this->inventory = new Inventory($db);
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);
+        $this->exchanger = new Exchanger($db);
     }
 
     public function autoLogin($params) {
-        return ['error' => 103];
+        if ($params['token']) {
+            return $this->user->autoLogin($params['token']);
+        }
+        return ['error' => 242];
     }
 
     public function login($params) {
@@ -191,15 +198,78 @@ class Application {
         return ['error' => 242];
     }
 
-    /*
-    case 'changeInventory': return $app->changeInventory($params);
     // игра
-    case 'updateScene': return $app->updateScene($params); // loop
-    case 'getRoom': return $app->getRoom($params);
-    case 'getTasks': return $app->getTasks($params);
-    case 'move': return $app->move($params);
-    case 'drop': return $app->drop($params);
-    case 'pickup': return $app->pickup($params);
-    */
+    public function updateScene($params) {
+        if ($params['token'] && $params['hash']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->game->updateScene($user->id, $params['hash']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 
+    public function getRoom($params) {
+        return ['error' => 103];
+    }
+
+    public function getTasks($params) {
+        return ['error' => 103];
+    }
+
+    public function move($params) {
+        return ['error' => 103];
+    }
+
+    public function drop($params) {
+        return ['error' => 103];
+    }
+
+    public function pickup($params) {
+        return ['error' => 103];
+    }
+    public function action($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->game->action($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    //обменник
+    public function createLot($params) {
+        return ['error' => 103];
+    }
+
+    public function deleteLot($params) {
+        return ['error' => 103];
+    }
+
+    public function addLotItem($params) {
+        return ['error' => 103];
+    }
+
+    public function removeLotItem($params) {
+        return ['error' => 103];
+    }
+
+    public function provideConsent($params) {
+        return ['error' => 103];
+    }
+
+    public function removeConsent($params) {
+        return ['error' => 103];
+    }
+
+    public function addLotComment($params) {
+        return ['error' => 103];
+    }
+
+    public function updateLots($params) {
+        return ['error' => 103];
+    }
 }
