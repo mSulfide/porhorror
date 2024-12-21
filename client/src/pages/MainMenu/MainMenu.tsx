@@ -3,9 +3,6 @@ import { Button, Inventory, Lobby } from "../../components";
 import { IBasePage, PAGES } from "../PageManager";
 import { ServerContext, StoreContext } from "../../App";
 
-import './MainMenu.scss';
-
-
 const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
@@ -15,12 +12,15 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     store.setLobbyHash('empty');
 
     const settingsClickHandler = () => {
-        // Add your settings handling logic here
-    };
 
+    }
     const backClickHandler = async () => {
         await server.logout() && setPage(PAGES.LOGIN);
-    };
+    }
+    const chatClickHandler = () => setPage(PAGES.CHAT);
+    const setGamePage = () => {
+        setPage(PAGES.PORHORROR);
+    }
 
     return (<div className="wrapper-menu">
         <div className="mainMenuContainer">
