@@ -12,7 +12,7 @@ class Inventory {
     public function removeConsent($userId){
         $status = $this->db->getStatusExchange($userId);
         if($status === 'ready'){
-            return $this->db->removeConsent($userId);
+            $this->db->removeConsent($userId);
             return true;
         }
         return ['error'=> '809'];
