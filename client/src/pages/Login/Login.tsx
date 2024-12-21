@@ -33,7 +33,7 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
                 <input ref={passwordRef} placeholder='Пароль' type='password' />
             </div>
             <div className="login-link-container">
-                <span>Нет аккаунта?<a href="#" onClick={registrationClickHandler} className="underline-button">Зарегистрироваться</a></span>
+                <span>Нет аккаунта?         <a href="#" onClick={registrationClickHandler} className="underline-button">Зарегистрироваться</a></span>
                 </div>
             <div className='login-buttons'>
                 <Button onClick={loginClickHandler} text='Далее' />
