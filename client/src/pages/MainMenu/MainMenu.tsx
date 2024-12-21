@@ -5,6 +5,7 @@ import { ServerContext, StoreContext } from "../../App";
 
 import './MainMenu.scss';
 
+
 const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
@@ -21,7 +22,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
         await server.logout() && setPage(PAGES.LOGIN);
     };
 
-    return (
+    return (<div className="wrapper-menu">
         <div className="mainMenuContainer">
             <h1 className="main-menu-title">PorHorror</h1>
 
@@ -45,6 +46,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
                     <Lobby />
                     <button className="create-lobby-button button">Создать лобби</button>
                 </div>
+                
     
             </div> 
             <div className="settings">
@@ -54,6 +56,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
             <div className="exit">
                 <button className="button" onClick={backClickHandler}>Выход</button>
             </div>
+        </div>
         </div>
         </div>
     );

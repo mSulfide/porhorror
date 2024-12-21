@@ -2,8 +2,8 @@
   font-family: 'NTSomic';
   src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
 }
+.wrapper1{
 
-body {
   font-family: 'NTSomic';
   margin: 0;
   padding: 0;
@@ -14,25 +14,27 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}
-
+  
 
 .login {
+
   width: 100%; /* Занимает всю ширину контейнера .app */
   box-sizing: border-box; /* Включает padding и border в ширину */
   flex-direction: column;
   justify-content: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9); 
-  padding: 20px;
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-  border-radius: 20px;
-  width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
-  max-width: 900px;       /* Максимальная ширина на больших экранах */
-  min-width: 300px;
-  min-height: 300px;
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    border-radius: 20px;
+    width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+    max-width: 900px;       /* Максимальная ширина на больших экранах */
+    min-width: 300px;
+    min-height: 300px;
+    border-radius: 20px;
+ 
 
   &-inputs {
     display: flex;
@@ -54,7 +56,7 @@ body {
   &-buttons {
     display: flex;
     flex-wrap: wrap; /* Разрешает перенос кнопок на новую строку */
-    gap: 10px;
+    gap: 20px;
     width: 100%;
     justify-content: right;
   }
@@ -62,7 +64,7 @@ body {
   .login-link-container {
     display: inline-flex; 
     align-items: center; 
-    gap: 5px;           
+    gap: 20px;           
     font-size: 0.6em;
     margin-top: 10px;
   }
@@ -104,5 +106,5 @@ body {
       border-radius: 15px;
   }
 }
-
+}
 

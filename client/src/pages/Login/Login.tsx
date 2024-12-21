@@ -25,9 +25,9 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
     const registrationClickHandler = () => setPage(PAGES.REGISTRATION);
     const backClickHandler = () => setPage(PAGES.PRELOADER);
 
-    return (<div className='login'>
+    return (<div className='wrapper1'>
+    <div className='login'>
         <div className="login-heading">Вход</div>
-        <div className='login-wrapper'>
             <div className='login-inputs'>
                 <input ref={loginRef} placeholder='Имя пользователя' />
                 <input ref={passwordRef} placeholder='Пароль' type='password' />
@@ -39,7 +39,8 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
                 <Button onClick={loginClickHandler} text='Далее' />
                 </div>
             </div>
-        </div>)
+        </div>
+        )
 }
 
 export default Login;

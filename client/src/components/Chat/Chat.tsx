@@ -52,9 +52,9 @@ const Chat: React.FC = () => {
     }
 
     return (<div className='chat'>
-        <h1>Чат</h1>
+        <h1></h1>
         <div className='chat-user-info'>
-            <span>Привет!</span>
+            <span>Привет! </span>
             <span>{user.name}</span>
         </div>
         <div className='chat-messages'>

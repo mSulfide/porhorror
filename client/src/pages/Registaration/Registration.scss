@@ -3,23 +3,35 @@
     src: url('../../assets/fonts/01_NTSomic-Regular.ttf');
    }
 
-  
+  .wrapper-registration{
+    font-family: 'NTSomic';
+    margin: 0;
+    padding: 0;
+    background-image: url('../../assets/img/background/registration.png');
+    background-size: cover;
+    //background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
 
   .registration {
     flex-direction: column;
-  justify-content: center;
-  border-radius: 10px;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.9); 
-  padding: 20px;
-  position: relative;
-  display: flex;
-  border-radius: 20px;
-  width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
-  max-width: 900px;       /* Максимальная ширина на больших экранах */
-  min-width: 300px;
-  min-height: 300px;
-  
+    justify-content: center;
+    border-radius: 10px;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    border-radius: 20px;
+    width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+    max-width: 900px;       /* Максимальная ширина на больших экранах */
+    min-width: 300px;
+    min-height: 300px;
+
     &-heading {
       font-size: 1.2em; 
       margin-bottom: 20px;
@@ -47,19 +59,19 @@
     &-buttons {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      justify-content: right;
+      gap: 1px;
       width: 100%;
     }
   
     .back-link {
-       
+       width: 100%;
       color: #000;
       display: flex;
       gap: 5px;
       font-size: 0.6em;
       font-family: 'NTSomic';
-      justify-content: flex-start; 
+      justify-content: last baseline; 
       margin-top: 10px;
     }
   
@@ -90,4 +102,4 @@
       border-radius: 15px;
     }
   }
-  
+}

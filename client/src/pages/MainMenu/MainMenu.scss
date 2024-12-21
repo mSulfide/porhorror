@@ -3,15 +3,31 @@
   src: url('../../assets/fonts/Iceland-Regular.ttf');
 }
 
+.wrapper-menu{
 $dark-grey: #444;
 $light-grey: #666;
 $background-color: #222;
-$text-color: white;
+$text-color: rgb(0, 0, 0);
 $accent-color: #ffffff;
-$yellow-fill: #000000;
+$yellow-fill: #ffffff8f;
+
+
+  font-family: 'NTSomic';
+  margin: 0;
+  padding: 0;
+  //background-image: url('../../assets/img/background/registration.png');
+  background-size: cover;
+  //background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+  
+
 
 .mainMenuContainer {
-  background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+  width: 100%;
   background-size: cover;
   font-family: 'Iceland', sans-serif;
   display: grid;
@@ -78,3 +94,138 @@ $yellow-fill: #000000;
   }
 }
 
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*@font-face {
+  font-family: 'Iceland';
+  src: url('../../assets/fonts/Iceland-Regular.ttf');
+}
+
+
+
+
+$dark-grey: #444;
+$light-grey: #666;
+$background-color: #222;
+$text-color: white;
+$accent-color: #ffffff;
+$yellow-fill: #000000;
+
+
+.mainMenuContainer {
+  //background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+  font-family:'NTSomic';
+  //background-size: cover;
+  display: flex;
+  flex-direction: column; 
+  padding: 10px;
+  color: $text-color;
+  min-height: 100vh;
+  
+  &-buttons {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px;
+    width: 100%;
+    justify-content: right;
+  }
+
+  .main-menu-title { 
+    font-family: 'Iceland';
+    text-align: center; 
+    font-size: clamp(5em, 7vw, 5em);
+    margin-bottom: 30px;
+    color:  rgb(222, 0, 0);;
+  }
+
+  .section-container {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+  }
+
+  .section {
+    background-color: black;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    flex: 1; 
+    min-width: 300px; 
+    text-align: center;
+    &-button{
+      justify-content: right;
+      align-items: end;
+    }
+  }
+  .section-lobby{
+    justify-content: center;
+  }
+
+  .section-title {
+    margin-bottom: 10px;
+    font-weight: 0.6em;
+    text-align: center;
+  }
+
+  
+  .section-container > * {
+    flex-basis: 50%; 
+  }
+
+  .settings, .exit { 
+    margin-top: 20px;
+    display: inline;
+    text-align: center;
+  }
+}
+
+Responsive adjustments (removed grid-template-columns) 
+@media (max-width: 800px) {
+  .mainMenuContainer .section-container {
+    flex-direction: column; 
+  }
+  .mainMenuContainer .section-container > * {
+    flex-basis: 100%; 
+  }
+  .mainMenuContainer .main-menu-title {
+    font-size: clamp(2em, 6vw, 4em);
+  }
+}*/
