@@ -224,6 +224,7 @@ class Application {
             if ($user) {
                 return $this->game->move($user->id, $params['axisX'], $params['axisY']);
             }
+            return ['error' => 705];
         }
         return ['error' => 242];
     }
