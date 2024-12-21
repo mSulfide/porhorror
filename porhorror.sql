@@ -5,7 +5,7 @@
 -- Хост: 127.0.0.1:3306
 -- Время создания: Дек 20 2024 г., 03:03
 -- Версия сервера: 8.0.30
--- Версия PHP: 8.1.9
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,7 +49,9 @@ CREATE TABLE `gamers` (
   `status` varchar(32) NOT NULL DEFAULT 'gaming',
   `hp` int DEFAULT NULL,
   `quest_count` int NOT NULL DEFAULT '0',
-  `is_action` tinyint(1) NOT NULL DEFAULT '0'
+  `is_action` tinyint(1) NOT NULL DEFAULT '0',
+  `axis_x` float NOT NULL DEFAULT '0',
+  `axis_y` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -234,7 +236,7 @@ CREATE TABLE `users` (
   `login` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `name` varchar(32) NOT NULL,
-  `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT ''
+  `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --

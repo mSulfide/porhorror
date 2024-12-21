@@ -47,6 +47,15 @@ function result($params) {
             case 'drop': return $app->drop($params);
             case 'pickup': return $app->pickup($params);
             case 'action': return $app->action($params);
+            //обменник
+            case 'createLot': return $app->createLot($params);
+            case 'deleteLot': return $app->deleteLot($params);
+            case 'addLotItem': return $app->addLotItem($params);
+            case 'removeLotItem': return $app->removeLotItem($params);
+            case 'provideConsent': return $app->provideConsent($params);
+            case 'removeConsent': return $app->removeConsent($params);
+            case 'addLotComment': return $app->addLotComment($params);
+            case 'updateLots': return $app->updateLots($params);
 
             default: return ['error' => 102];
         }

@@ -114,7 +114,7 @@ class DB {
     }
 
     public function getInventory($userId) {
-        $inventory = $this->queryAll("SELECT
+        return $this->queryAll("SELECT
                 inv.id AS id,
                 inv.status AS status,
                 i.name AS name,
@@ -124,10 +124,6 @@ class DB {
             INNER JOIN items AS i ON i.id = inv.item_id
             WHERE inv.user_id = ?;
         ", [$userId]);
-        if ($inventory) {
-            settype($inventory->id, "int");
-        }
-        return $inventory;
     }
 
     public function getLobbyByUserId($userId) {
@@ -286,7 +282,14 @@ class DB {
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
-
+    
+    public function updateGamerDirection($gamerId, $axisX, $axisY) {
+        $this->execute(
+            "UPDATE gamers SET axis_x = ?, axis_y = ? WHERE id = ?",
+            [$axisX, $axisY, $gamerId]
+        );
+    }
+    
     public function removeConsent($userId){
         $this->execute("UPDATE exchange SET status='not ready' WHERE user_id=?", [$userId]);
     }
@@ -294,5 +297,4 @@ class DB {
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
-
 }

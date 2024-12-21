@@ -6,7 +6,8 @@ class Inventory {
     }
 
     public function getInventory($userId) {
-        return $this->db->getInventory($userId);
+        $inventory = $this->db->getInventory($userId);
+        return ['slots' => $inventory];
     }
 
     public function removeConsent($userId){

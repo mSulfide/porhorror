@@ -212,6 +212,39 @@ class Server {
             this.gameInterval = null;
         }
     }
+
+    //обменник
+    createLot(): void {
+        this.request('createLot');
+    }
+    
+    deleteLot(): void {
+        this.request('deleteLot');
+    }
+    
+    addLotItem(): void {
+        this.request('addLotItem');
+    }
+    
+    removeLotItem(): void {
+        this.request('removeLotItem');
+    }
+    
+    provideConsent(): void {
+        this.request('provideConsent');
+    }
+    
+    removeConsent(): void {
+        this.request('removeConsent');
+    }
+    
+    addLotComment(): void {
+        this.request('addLotComment');
+    }
+    
+    updateLots(): void {
+        this.request('updateLots');
+    }
 }
 
 export default Server;

@@ -75,7 +75,7 @@ class Store {
     }
 
     setInventory(inventory: TInventory): void {
-        this.inventory = inventory;
+        this.inventory = inventory.slots;
     }
 
     getInventory(): TItem[] {

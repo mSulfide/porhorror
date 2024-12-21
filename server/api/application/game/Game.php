@@ -49,4 +49,26 @@ class Game {
         }
         return ['error'=> 810];
     }
+
+    public function move($userId, $axisX, $axisY) {
+        $gamer = $this->db->getGamerByUserId($userId);
+        if ($gamer) {
+            $angle = atan2($axisY, $axisX); //угол 
+            // Вычисляем координаты на эллипсе
+            $xEllipse = $axisX *cos($angle);
+            $yEllipse = $axisY *sin($angle);
+
+            $magnitude = sqrt($xEllipse * $xEllipse + $yEllipse * $yEllipse);
+            if ($magnitude > 1) {
+                $xEllipse /= $magnitude; 
+                $yEllipse /= $magnitude; 
+            } 
+        
+            $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
+        
+            return true;
+        }
+        
+        return ['error' => 810];
+    }
 }
