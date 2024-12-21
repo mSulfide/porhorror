@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Chat, Inventory, Lobby } from "../../components";
+import { Button, Inventory, Lobby } from "../../components";
 import { IBasePage, PAGES } from "../PageManager";
 import { ServerContext, StoreContext } from "../../App";
 
@@ -17,6 +17,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = async () => {
         await server.logout() && setPage(PAGES.LOGIN);
     }
+    const chatClickHandler = () => setPage(PAGES.CHAT);
     const setGamePage = () => {
         setPage(PAGES.PORHORROR);
     }
@@ -24,7 +25,7 @@ const MainMenu: React.FC<IBasePage> = (props: IBasePage) => {
     return <div>
         <Inventory />
         <Lobby setGamePage={setGamePage} />
-        <Chat />
+        <Button onClick={chatClickHandler} text="Чат" />
         <Button onClick={settingsClickHandler} text="Настройки" />
         <Button onClick={backClickHandler} text="Выход" />
     </div>;

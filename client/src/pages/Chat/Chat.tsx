@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState, useMemo, useRef } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import { TMessages } from '../../services/server/types';
-import Button from '../Button/Button';
-import { IBasePage, PAGES } from '../../pages/PageManager';
+import Button from '../../components/Button/Button';
+import { IBasePage, PAGES } from '../PageManager';
 
 import './Chat.scss';
 
-const Chat: React.FC = () => {
+const Chat: React.FC<IBasePage> = ({ setPage }: IBasePage) => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const [messages, setMessages] = useState<TMessages>([]);
@@ -44,10 +44,13 @@ const Chat: React.FC = () => {
         }
     }
 
+    const backClickHandler = () => setPage(PAGES.MAIN_MENU);
+
     if (!user) {
         return (<div className='chat'>
             <h1>Чат</h1>
             <h1>Что-то пошло не так =(</h1>
+            <Button onClick={backClickHandler} text="Назад" />
         </div>)
     }
 
@@ -64,6 +67,7 @@ const Chat: React.FC = () => {
         <div className='chat-buttons'>
             <Button onClick={sendClickHandler} text='Отправить' />
         </div>
+        <Button onClick={backClickHandler} text="Назад" />
     </div>)
 }
 
