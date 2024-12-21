@@ -601,5 +601,7 @@ Item: {
 ```
 **Успешный ответ**
 ```
-    Answer<Item[]>
+    Answer<{
+        slots: Item[];
+    }>
 ```

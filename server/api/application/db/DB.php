@@ -114,7 +114,7 @@ class DB {
     }
 
     public function getInventory($userId) {
-        $inventory = $this->queryAll("SELECT
+        return $this->queryAll("SELECT
                 inv.id AS id,
                 inv.status AS status,
                 i.name AS name,
@@ -124,10 +124,6 @@ class DB {
             INNER JOIN items AS i ON i.id = inv.item_id
             WHERE inv.user_id = ?;
         ", [$userId]);
-        if ($inventory) {
-            settype($inventory->id, "int");
-        }
-        return $inventory;
     }
 
     public function getLobbyByUserId($userId) {
