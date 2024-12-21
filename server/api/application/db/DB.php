@@ -289,4 +289,12 @@ class DB {
             [$axisX, $axisY, $gamerId]
         );
     }
+    
+    public function removeConsent($userId){
+        $this->execute("UPDATE exchange SET status='not ready' WHERE user_id=?", [$userId]);
+    }
+
+    public function getStatusExchange($userId) {
+        return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
+    }
 }
