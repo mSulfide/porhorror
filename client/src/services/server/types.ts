@@ -35,7 +35,9 @@ export type TItem = {
     status: 'pocket' | 'inventory';
 };
 
-export type TInventory = TItem[];
+export type TInventory = {
+    slots: TItem[];
+}
 
 export type TMember = Omit<TUser, 'token'> & {
     creator: boolean;
