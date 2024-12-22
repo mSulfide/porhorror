@@ -290,6 +290,10 @@ class DB {
         );
     }
     
+    public function provideConsent($userId) {
+        $this->execute("UPDATE exchange SET status='ready' WHERE user_id=?", [$userId]);
+    }
+    
     public function removeConsent($userId){
         $this->execute("UPDATE exchange SET status='not ready' WHERE user_id=?", [$userId]);
     }
