@@ -10,15 +10,15 @@ class Inventory {
         return ['slots' => $inventory];
     }
 
-    public function equipItem($userId, $itemId) {
+    public function equipItem($userId, $slotId) {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
-            $maxItems = $this->db->getSettings()->max_equipped_items;
-            $equippedItems = $this->db->getEquippedItems($gamer->id);
-            if (count($equippedItems) < $maxItems) {
-                $item = $this->db->getItemById($itemId);
-                if ($item) {
-                    $this->db->updateItemState($itemId, 'pocket');
+            $maxSlots = $this->db->getSettings()->max_equipped_slots;
+            $equippedSlots = $this->db->equippedSlots($gamer->id);
+            if (count($equippedSlots) < $maxSlots) {
+                $slot = $this->db->getSlotById($slotId);
+                if ($slot) {
+                    $this->db->updateSlotState($slotId, 'pocket');
                     return true;
                 } else {
                     return ['error' => 820]; 

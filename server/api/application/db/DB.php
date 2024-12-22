@@ -303,15 +303,15 @@ class DB {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
 
-    public function getEquippedItems($gamerId) {
-        return $this->query("SELECT item_id FROM equipped_items WHERE gamer_id=?", [$gamerId]);
+    public function getEquippedSlots($gamerId) {
+        return $this->query("SELECT slot_id FROM equipped_slots WHERE gamer_id=?", [$gamerId]);
     }
     
-    public function getItemById($itemId) {
-        return $this->query("SELECT * FROM items WHERE id=?", [$itemId]);
+    public function getSlotById($slotId) {
+        return $this->query("SELECT * FROM slots WHERE id=?", [$slotId]);
     }
     
-    public function updateItemState($itemId, $state) {
-        $this->execute("UPDATE items SET state=? WHERE id=?", [$state, $itemId]);
+    public function updateSlotState($slotId, $state) {
+        $this->execute("UPDATE slots SET state=? WHERE id=?", [$state, $slotId]);
     }
 }

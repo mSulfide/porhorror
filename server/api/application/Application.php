@@ -247,10 +247,10 @@ class Application {
         return ['error' => 242];
     }
     public function equipItem($params) {
-        if ($params['token'] && ($params['itemId'])) { 
+        if ($params['token'] && ($params['slotId'])) { 
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->game->equipItem($user->id, $params['itemId']);
+                return $this->game->equipItem($user->id, $params['slotId']);
             }
             return ['error' => 705]; 
         }
