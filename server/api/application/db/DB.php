@@ -215,7 +215,10 @@ class DB {
                 g.id AS id,
                 g.status AS status,
                 u.name AS name,
-                go.game_id AS game_id
+                go.game_id AS game_id,
+                g.object_id AS objectId,
+                g.axis_x AS axis_x, 
+                g.axis_y AS axis_y   
             FROM gamers AS g
             INNER JOIN users AS u ON u.id = g.user_id
             INNER JOIN game_objects AS go ON go.id = g.object_id
@@ -224,6 +227,8 @@ class DB {
         if ($gamer) {
             settype( $gamer->id, "int");
             settype($gamer->game_id, "int");
+            settype($gamer->axis_x, "float");  
+            settype($gamer->axis_y, "float");
         }
         return $gamer;
     }

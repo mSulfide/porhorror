@@ -2,7 +2,7 @@
 
 class GameObject {
     private $db;
-    private int $id;
+    public int $id;
 
     public Point $position, $velocity;
     public int $gameId;
