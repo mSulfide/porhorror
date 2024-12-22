@@ -1,5 +1,4 @@
 import { IDrawer } from "../IDrawer";
-import sprite from "../../../assets/img/tas.png";
 import { mlt, one } from "../../engine/math";
 import Camera from "./Camera/Camera";
 import { IRenderer } from "./IRenderer";
@@ -7,16 +6,11 @@ import { TCameraParams } from "./types";
 
 export default class MainScreen {
     private drawer: IDrawer;
-    private image: HTMLImageElement;
-    private isReady: boolean = false;
     private camera: Camera;
 
     constructor(drawer: IDrawer, cameraParams: TCameraParams) {
         this.drawer = drawer;
         this.camera = new Camera(cameraParams);
-        this.image = new Image();
-        this.image.src = sprite;
-        this.image.onload = () => this.isReady = true;
     }
 
     public render(scene: IRenderer[]) {
@@ -25,17 +19,15 @@ export default class MainScreen {
         this.drawCells();
         this.camera.update(scene);
         const cam = this.camera;
-        cam.vision.forEach(renderer => {
-            if (this.isReady) {
-                const size = renderer.size || mlt(one(), renderer.radius);
-                this.drawer.draw({
-                    image: this.image,
-                    x: this.sx(renderer.position.x),
-                    y: this.sy(renderer.position.y),
-                    sx: size.x * 2 / cam.width,
-                    sy: size.y * 2 / cam.height
-                });
-            }
+        cam.vision.forEach(({ radius, size, position, sprite }) => {
+            const currectSize = size || mlt(one(), radius);
+            sprite && this.drawer.draw({
+                image: sprite,
+                x: this.sx(position.x),
+                y: this.sy(position.y),
+                sx: currectSize.x * 2 / cam.width,
+                sy: currectSize.y * 2 / cam.height
+            });
         });
     }
 

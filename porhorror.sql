@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 20 2024 г., 03:03
+-- Время создания: Дек 22 2024 г., 19:12
 -- Версия сервера: 8.0.30
--- Версия PHP: 7.2.34
+-- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- База данных: `porhorror`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `exchange`
+--
+
+CREATE TABLE `exchange` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -88,6 +100,7 @@ CREATE TABLE `game_mobs` (
 CREATE TABLE `game_objects` (
   `id` int NOT NULL,
   `game_id` int NOT NULL,
+  `image` varchar(32) NOT NULL DEFAULT 'tas',
   `x` float NOT NULL DEFAULT '0',
   `y` float NOT NULL DEFAULT '0',
   `velocity_x` float NOT NULL DEFAULT '0',
@@ -148,18 +161,6 @@ CREATE TABLE `inventory` (
   `user_id` int NOT NULL,
   `item_id` int NOT NULL,
   `status` varchar(32) NOT NULL DEFAULT 'inventory'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `exchange`
---
-
-CREATE TABLE `exchange` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -257,6 +258,12 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 --
 
 --
+-- Индексы таблицы `exchange`
+--
+ALTER TABLE `exchange`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `game`
 --
 ALTER TABLE `game`
@@ -305,12 +312,6 @@ ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `exchange`
---
-ALTER TABLE `exchange`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Индексы таблицы `items`
 --
 ALTER TABLE `items`
@@ -343,6 +344,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `exchange`
+--
+ALTER TABLE `exchange`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `game`
@@ -390,12 +397,6 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `exchange` 
---
-ALTER TABLE `exchange`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
