@@ -265,14 +265,21 @@ class Application {
     }
 
     public function provideConsent($params) {
-        return ['error' => 103];
+        if ($params['token']) {
+            $user = $this->user->getUser ($params['token']);
+            if ($user) {
+                return $this->exchanger->provideConsent($user->id);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
     }
 
     public function removeConsent($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->еxchanger->removeConsent($user->id);
+                return $this->exchanger->removeConsent($user->id);
             }
             return ['error' => 705];
         }

@@ -2,7 +2,7 @@
 
 class GameObject {
     private $db;
-    private int $id;
+    public int $id;
 
     public Point $position, $velocity;
     public int $gameId;
@@ -27,7 +27,7 @@ class GameObject {
     }
 
     public function move($offset) {
-        $this->position->x += $offset->x;
-        $this->position->y += $offset->y;
+        $math = new GMath()
+        $this->position = $math->add($this->position, $offset);
     }
 }
