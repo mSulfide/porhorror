@@ -213,6 +213,14 @@ class Server {
         }
     }
 
+    move(axisX: number, axisY: number): void {
+        this.request('move', { axisX:`${axisX}`, axisY:`${axisY}` });
+    }
+
+    action(): void {
+        this.request('action');
+    }
+
     //обменник
     createLot(): void {
         this.request('createLot');

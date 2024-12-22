@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Input from '../../../services/engine/structures/Input/Input';
+import Input from '../Input';
 
 export interface KeyboardBinding {
     key: string;

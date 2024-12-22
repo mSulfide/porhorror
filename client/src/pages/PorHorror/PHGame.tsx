@@ -1,11 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { IBasePage, PAGES } from "../PageManager";
-import useKeyboard from "./hooks/useKeyboard";
-import { Input } from "../../services/engine/structures";
 import { Button } from "../../components";
 import { ServerContext, StoreContext } from "../../App";
 import { TUpdateSceneResponse } from "../../services/server/types";
+import { Input, useKeyboard } from "../../services/input";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -14,8 +13,11 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    const input = new Input();
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const onAxisChange = (axisX: number, axisY: number) => server.move(axisX, axisY);
+    const onButtonChange = (state: boolean) => state && server.action();
+    const input = new Input({ onAxisChange, onButtonChange });
 
     useKeyboard(input);
 
