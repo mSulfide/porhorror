@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { IBasePage, PAGES } from "../PageManager";
+import { StoreContext } from "../../App";
 
 import './Preloader.scss';
 
 const Preloader: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
+    const store = useContext(StoreContext);
 
     useEffect(() => {
-        setTimeout(() => setPage(PAGES.LOGIN), 3000);
+        setTimeout(() => store.loadResources(() => setPage(PAGES.LOGIN)), 3000);
     });
 
     return (

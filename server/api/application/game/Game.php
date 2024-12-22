@@ -88,17 +88,16 @@ class Game {
     public function move($userId, $axisX, $axisY) {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
-            $angle = atan2($axisY, $axisX); //угол 
-            // Вычисляем координаты на эллипсе
-            $xEllipse = $axisX *cos($angle);
-            $yEllipse = $axisY *sin($angle);
-
-            $magnitude = sqrt($xEllipse * $xEllipse + $yEllipse * $yEllipse);
-            if ($magnitude > 1) {
-                $xEllipse /= $magnitude; 
-                $yEllipse /= $magnitude; 
-            } 
+            $magnitude = sqrt($axisX * $axisX + $axisY * $axisY);
         
+        if ($magnitude > 0) { 
+            $xEllipse = $axisX / $magnitude; 
+            $yEllipse = $axisY / $magnitude; 
+        } else {
+            $xEllipse = 0; 
+            $yEllipse = 0; 
+        }
+                   
             $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
         
             return true;

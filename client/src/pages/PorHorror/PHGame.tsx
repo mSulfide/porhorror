@@ -3,8 +3,9 @@ import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { IBasePage, PAGES } from "../PageManager";
 import { Button } from "../../components";
 import { ServerContext, StoreContext } from "../../App";
-import { TUpdateSceneResponse } from "../../services/server/types";
+import { TGameObject, TUpdateSceneResponse } from "../../services/server/types";
 import { Input, useKeyboard } from "../../services/input";
+import { IRenderer } from "../../services/drawer/MainScreen/IRenderer";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -26,7 +27,16 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
 
         const updateScene = ({ scene }: TUpdateSceneResponse) => {
-            screen.render(scene);
+            const renderers: IRenderer[] = [];
+            scene.forEach(({ position, radius, image }: TGameObject) => {
+                const sprite = store.resources.getImage(image);
+                if (sprite) {
+                    renderers.push({ position, radius, sprite });
+                } else {
+                    console.warn("can't upload the image");
+                }
+            });
+            screen.render(renderers);
         }
 
         if (user) {
