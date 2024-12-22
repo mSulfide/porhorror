@@ -12,6 +12,10 @@ class Store {
     inventory: TItem[] = [];
     resources: Resources = new Resources();
 
+    loadResources(onload: () => void) {
+        this.resources.load(onload);
+    }
+
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
     }
