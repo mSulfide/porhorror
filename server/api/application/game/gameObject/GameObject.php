@@ -8,8 +8,7 @@ class GameObject {
     public int $gameId;
     public float $radius, $angle;
 
-    function __construct($db, $params) {
-        $this->db = $db;
+    function __construct($params) {
         $this->id = $params->id;
         $this->position = new Point($params->x, $params->y);
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
@@ -19,12 +18,10 @@ class GameObject {
     }
 
     function __destruct() {
-        $this->update();
+        $this->updateDB();
     }
-    
-    public function update() {
-        $this->db->setPosition($this->id, $this->position);
-    }
+
+    public function update() {}
 
     public function move($offset) {
         $math = new GMath()
