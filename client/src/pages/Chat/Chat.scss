@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Iceland';
+    src: url('../../assets/fonts/Iceland-Regular.ttf');
+  
+    @font-face {
+      font-family: 'CormorantGaramond';
+      src: url('../../assets/fonts/CormorantGaramond-Regular.ttf');
+    }
+  }
+
+  .wrapper-chat {
+    flex-direction: column;
+    font-family: 'CormorantGaramond';
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+
+    .chat-title {
+        display: flex;
+        font-family: 'Iceland';
+        justify-content: center;
+        text-align: center;
+        font-size: clamp(2em, 10vw, 6em); 
+        color: white;
+      }
+    .chat{
+        background-color:#ffffff8f;
+        border: solid rgb(255, 255, 255) 3px;
+        margin-top: 30px;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        max-width: 600px; 
+        margin-bottom: 20px; 
+    }
+    .back-link2 {
+        width: fit-content; 
+        padding: 10px 20px;  
+        background-color:rgba(0, 0, 0, 0.3); 
+        color: rgb(222, 0, 0);
+        border: none;
+        border-radius: 5px;
+        border: solid rgb(255, 255, 255) 3px; 
+        cursor: pointer;
+        font-size: 0.6em; 
+        margin-top: 10px; 
+        text-decoration: none; 
+    }
+  }
+

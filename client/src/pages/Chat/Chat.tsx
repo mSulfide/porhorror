@@ -54,8 +54,12 @@ const Chat: React.FC<IBasePage> = ({ setPage }: IBasePage) => {
         </div>)
     }
 
-    return (<div className='chat'>
-        <h1></h1>
+    return ( 
+        <div className="wrapper-chat">
+             <h1 className="chat-title">Chat</h1>
+
+    <div className='chat'>
+    
         <div className='chat-user-info'>
             <span>Привет! </span>
             <span>{user.name}</span>
@@ -67,8 +71,11 @@ const Chat: React.FC<IBasePage> = ({ setPage }: IBasePage) => {
         <div className='chat-buttons'>
             <Button onClick={sendClickHandler} text='Отправить' />
         </div>
-        <Button onClick={backClickHandler} text="Назад" />
-    </div>)
+    </div>
+    <button className="back-link2" onClick={backClickHandler}> &#8592; Назад </button> {/* Moved outside the .chat div */}
+        </div>
+
+);
 }
 
 export default Chat;

@@ -46,6 +46,7 @@ $gray-fill: #ffffff8f;
     display: grid;
     justify-content: center;
         align-items: center;
+        row-gap: 20px;
 
     .equipment-section {
       display: grid;
@@ -80,16 +81,19 @@ $gray-fill: #ffffff8f;
     display: grid;
     grid-template-columns: 1fr; /* Single column inside */
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Example columns */
-  row-gap: 20px; /* Adds 20 pixels of vertical space between rows */
-  grid-gap: 20px; 
+    row-gap: 20px; 
+    grid-gap: 20px; 
+  }
   }
 
   .section {
     background-color: $gray-fill;
+    border: solid rgb(255, 255, 255) 3px;
+    margin-top: 30px;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-
+    
   }
 
   .underline-link {
@@ -97,9 +101,19 @@ $gray-fill: #ffffff8f;
     cursor: pointer; /* Add a cursor to indicate it's clickable */
     color: rgb(0, 0, 0); /* Or any color you prefer */
     font-size: 0.7em;
-    justify-content: right;
+  
+  }
+  .lobby-inputs {
+    margin-bottom: 10px; /* Add spacing below inputs */
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 5px; /* Add space between inputs */
   }
   
+  .lobby-inputs input {
+      width: 100%; /* Make inputs fill available width */
+      box-sizing: border-box; /* Include padding and border in width */
+  }
 
   .section-title {
     margin-bottom: 5px;
@@ -109,8 +123,9 @@ $gray-fill: #ffffff8f;
   .settings{
     text-align: right;
     gap: 10px;
+    
 }
-}
+
 
 @media (max-width: 800px) {
   .mainMenuContainer {

@@ -24,6 +24,7 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
     const setGamePage = () => {
         setPage(PAGES.PORHORROR);
     };
+    
 
     return (
         <div className="wrapper-menu">
@@ -49,6 +50,9 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
                 <div className="section users">
                     <div className="section-title">Пользователи</div> 
                     <a className="underline-link" onClick={setGamePage}>Запустить</a>
+                    <button className="button">Удалить группу</button>
+                    <button className="button">Выгнать</button>
+                    
                 </div>
                 <div className="exit">
                     <button className="button" onClick={backClickHandler}>Выход</button>
@@ -58,18 +62,20 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
             <div className="column-2">
             <div className="settings">
                     <button className="button" onClick={settingsClickHandler}>Настройки</button>
+                    <button className="button" onClick={chatClickHandler}>Чат</button>
                 </div>
                 <div className="section user">
                     <div className="section-title">Пользователь</div>
-                    {}
                 </div>
+                
                 <div className="section lobby">
                     <div className="section-title">Лобби</div>
-                    {}
+                    <div className="lobby-inputs"> {/* Added container for inputs */}
                     <button className="button">Создать лобби</button>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     );
 };
