@@ -51,32 +51,15 @@ class DB {
     }
 
     public function getSettings() {
-        $answer = $this->query("SELECT * FROM global_settings");
-        if ($answer) {
-            settype($answer->id, "int");
-            settype($answer->lobby_max_count, "int");
-            settype($answer->quest_max_count, "int");
-            settype($answer->game_timestamp, "int");
-            settype($answer->game_update_timestamp, "int");
-            settype($answer->inventory_max_count, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM global_settings");
     }
 
     public function getUserByLogin($login) {
-        $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
-        if ($answer) {
-            settype($answer->id, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
 
     public function getUserByToken($token) {
-        $answer = $this->query("SELECT * FROM users WHERE token=?", [$token]);
-        if ($answer) {
-            settype($answer->id, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
     }
 
     public function updateToken($userId, $token) {
@@ -147,8 +130,6 @@ class DB {
                 game_id AS gameId
             FROM lobby WHERE status="open" OR status="start game"');
         foreach ($lobbies as $lobby) {
-            settype($lobby->id, "int");
-            settype($lobby->gameId, "int");
             $lobby->members = $this->getUsersFromLobby($lobby->id);
         }
         return $lobbies;
@@ -163,10 +144,6 @@ class DB {
                 INNER JOIN lobby_members AS lm ON lm.lobby_id=?
                 WHERE u.id = lm.user_id
         ', [$lobbyId]);
-        foreach ($users as $user) {
-            settype($user->id, "int");
-            settype($user->creator, "bool");
-        }
         return $users;
     }
 
@@ -202,11 +179,7 @@ class DB {
     }
 
     public function getLobbyById($lobbyId) {
-        $answer = $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
-        if ($answer) {
-            settype($answer->id, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
     }
 
     //game
@@ -224,12 +197,6 @@ class DB {
             INNER JOIN game_objects AS go ON go.id = g.object_id
             WHERE u.id = ?;
         ", [$userId]);
-        if ($gamer) {
-            settype( $gamer->id, "int");
-            settype($gamer->game_id, "int");
-            settype($gamer->axis_x, "float");  
-            settype($gamer->axis_y, "float");
-        }
         return $gamer;
     }
 
@@ -266,14 +233,7 @@ class DB {
     }
 
     public function getGameById($gameId) {
-        $answer = $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
-        if ($answer) {
-            settype($answer->id, "int");
-            settype($answer->timestamp, "int");
-            settype($answer->quest_count, "int");
-            settype($answer->start_time, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
     }
 
     public function action($userId) {
