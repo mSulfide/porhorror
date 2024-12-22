@@ -24,20 +24,28 @@ class Input {
     }
 
     public setActiveButton(value: boolean): void {
-        this.buttonState = value;
-        this.onButtonChange();
+        if (this.buttonState !== value) {
+            this.buttonState = value;
+            this.onButtonChange();
+        }
     }
 
     public setAxisX(value: number): void {
-        // Ограничение значения в диапазоне [-1, 1]
-        this.axisX = Math.max(-1, Math.min(1, value));
-        this.onAxisChange();
+        const eps = 0.1;
+        if (Math.abs(this.axisX - value) > eps) {
+            // Ограничение значения в диапазоне [-1, 1]
+            this.axisX = Math.max(-1, Math.min(1, value));
+            this.onAxisChange();
+        }
     }
 
     public setAxisY(value: number): void {
-        // Ограничение значения в диапазоне [-1, 1]
-        this.axisY = Math.max(-1, Math.min(1, value));
-        this.onAxisChange();
+        const eps = 0.1;
+        if (Math.abs(this.axisY - value) > eps) {
+            // Ограничение значения в диапазоне [-1, 1]
+            this.axisY = Math.max(-1, Math.min(1, value));
+            this.onAxisChange();
+        }
     }
 }
 
