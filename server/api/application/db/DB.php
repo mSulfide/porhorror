@@ -302,4 +302,16 @@ class DB {
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
+
+    public function getEquippedItems($gamerId) {
+        return $this->query("SELECT item_id FROM equipped_items WHERE gamer_id=?", [$gamerId]);
+    }
+    
+    public function getItemById($itemId) {
+        return $this->query("SELECT * FROM items WHERE id=?", [$itemId]);
+    }
+    
+    public function updateItemState($itemId, $state) {
+        $this->execute("UPDATE items SET state=? WHERE id=?", [$state, $itemId]);
+    }
 }
