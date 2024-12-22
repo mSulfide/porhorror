@@ -26,17 +26,13 @@ class Game {
         }
     }
 
-    private function updateObjects($deltaTime) {
+    public function update($deltaTime) {
+        foreach ($this->gamers as $gamer) {
+            $gamer->update($deltaTime, $this->objects);
+        }
         foreach ($this->objects as $object) {
             $object->update($deltaTime); 
         }
-    }
-
-    public function update($deltaTime) {
-        foreach ($this->gamers as $gamer) {
-            $this->updateGamer($deltaTime, $gamer);
-        }
-        $this->updateObjects($deltaTime);
     }
 
     /*private function update($deltaTime, $gamer) {
