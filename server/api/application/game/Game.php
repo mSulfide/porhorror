@@ -12,8 +12,19 @@ class Game {
         return floor((microtime(true) - $startTime) * 1000);
     }
 
-    private function update($time) {
-        $this->objects[0]->position = new Point(sin($time), cos($time));
+    private function update($deltaTime) {
+        foreach ($this->objects as $object) {
+            $gamer = $this->db->getGamerByUserId($object->user_id); 
+            if ($gamer) {
+
+                $axisX = $gamer->axis_x * $deltaTime; 
+                $axisY = $gamer->axis_y * $deltaTime; 
+    
+                $offset = new Point($axisX, $axisY);
+                
+                $object->move($offset);
+            }
+        }
     }
 
     public function updateScene($userId, $hash) {
@@ -24,7 +35,7 @@ class Game {
             $time = $this->getTime($game->start_time);
             $deltaTime = $time - $game->timestamp;
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
-                $this->update($time / 1000);
+                $this->update($deltaTime / 1000);
                 $this->db->updateGameHash(md5(rand()), $game->id);
                 $this->db->updateTimestamp($game->id, $time);
             }
