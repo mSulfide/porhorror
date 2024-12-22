@@ -1,6 +1,7 @@
 <?php
 
 require_once ('gameObject\GameObject.php');
+require_once ('math\GMath.php');
 
 class Game {
     function __construct($db) {
