@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import Button from '../Button/Button';
 
+import './Inventory.scss';
+
 enum EStatus {
     pocket = 'pocket',
     inventory = 'inventory'
@@ -31,11 +33,9 @@ const Inventory: React.FC = () => {
     const inventory = store.getInventory();
 
     return (<div>
-        <h1>Inventory</h1>
         <div>
-            <span>сумка:</span>
             <div>
-                {inventory.map((item, index) => (<div key={index}>
+                {inventory?.map((item, index) => (<div key={index}>
                     {item.name}
                     <Button text={item.status === EStatus.pocket ? 'Снять' : 'Надеть'} onClick={() => inventoryClick(item.id)} />
                 </div>))}

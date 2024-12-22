@@ -1,0 +1,145 @@
+@font-face {
+  font-family: 'Iceland';
+  src: url('../../assets/fonts/Iceland-Regular.ttf');
+
+  @font-face {
+    font-family: 'CormorantGaramond';
+    src: url('../../assets/fonts/CormorantGaramond-Regular.ttf');
+  }
+}
+
+$dark-grey: #444;
+$light-grey: #666;
+$background-color: #222;
+$text-color: rgb(0, 0, 0);
+$accent-color: #ffffff;
+$gray-fill: #ffffff8f;
+
+
+.wrapper-menu {
+  font-family: 'CormorantGaramond';
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+  
+}
+
+.mainMenuContainer {
+  
+  width: 100%;
+  background-size: cover;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-gap: 30px;
+  
+  padding: 50px;
+  color: $text-color;
+  min-height: 100vh;
+
+
+  .combined-equipment-inventory {
+    display: grid;
+    justify-content: center;
+        align-items: center;
+        row-gap: 20px;
+
+    .equipment-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); 
+      grid-gap: 15px;
+      margin-bottom: 10px;
+  
+      
+      > div {
+        background-color: #777; 
+        height: 100px;
+        width: 100px;
+        border: solid rgb(224, 224, 224) 3px;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+   
+
+
+  .main-menu-title {
+    font-family: 'Iceland';
+    grid-column: 1 / -1; 
+    text-align: left;
+    font-size: clamp(2em, 10vw, 6em); /* Improved clamp() function */
+    margin-bottom: 40px;
+    color: white;
+  }
+
+  .section-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column inside */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Example columns */
+    row-gap: 20px; 
+    grid-gap: 20px; 
+  }
+  }
+
+  .section {
+    background-color: $gray-fill;
+    border: solid rgb(255, 255, 255) 3px;
+    margin-top: 30px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.711);
+    
+  }
+
+  .underline-link {
+    text-decoration: underline;
+    cursor: pointer; /* Add a cursor to indicate it's clickable */
+    color: rgb(0, 0, 0); /* Or any color you prefer */
+    font-size: 0.7em;
+  
+  }
+  .lobby-inputs {
+    margin-bottom: 10px; /* Add spacing below inputs */
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 5px; /* Add space between inputs */
+  }
+  
+  .lobby-inputs input {
+      width: 100%; /* Make inputs fill available width */
+      box-sizing: border-box; /* Include padding and border in width */
+  }
+
+  .section-title {
+
+      margin-bottom: 5px;
+      display: flex;
+      font-family: 'Iceland';
+      justify-content: center;
+      text-align: center;
+      font-size: clamp(1em, 3vw, 6em); 
+      color: rgb(0, 0, 0);
+
+  }
+  .settings{
+    text-align: right;
+    gap: 10px;
+    
+}
+
+
+@media (max-width: 800px) {
+  .mainMenuContainer {
+    grid-template-columns: 1fr; /* Single column on smaller screens */
+    grid-gap: 15px;
+  }
+  .mainMenuContainer .main-menu-title {
+    font-size: clamp(2em, 6vw, 4em);
+  }
+}
+

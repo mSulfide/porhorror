@@ -1,0 +1,62 @@
+
+  @font-face {
+    font-family: 'Iceland';
+    src: url('../../assets/fonts/Iceland-Regular.ttf');
+  }
+  
+  @font-face {
+    font-family: 'CormorantGaramond';
+    src: url('../../assets/fonts/CormorantGaramond-Regular.ttf');
+  }
+
+    
+  .wrapper-lobby {
+    flex-direction: column;
+    font-family: 'CormorantGaramond';
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; 
+  }
+  
+  
+  .lobby-title {
+      display: flex;
+      font-family: 'Iceland';
+      justify-content: center;
+      text-align: center;
+      font-size: clamp(1em, 3vw, 6em);
+      color: rgb(0, 0, 0);
+  }
+  
+  .lobby-input {
+      display: flex;
+      gap: 15px; 
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid rgb(255, 255, 255);
+      border-radius: 40px;
+      margin-bottom: 10px;
+      margin-top: 20px;
+      font-size: 0.7em;
+      color: rgb(222, 0, 0);
+      box-sizing: border-box;
+      background-color: #000000c7;
+      padding-left: 25px;
+    }
+  
+  
+  .lobby-messages {
+      font-family: 'NTSomic';
+      font-size: 0.8em;
+      padding: 8px;
+      font-weight: bold;
+      border-radius: 30px;
+      margin-bottom: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+  }
+  

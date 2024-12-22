@@ -26,9 +26,9 @@ const Registration: React.FC<IBasePage> = (props: IBasePage) => {
     }
     const backClickHandler = () => setPage(PAGES.LOGIN);
 
-    return (<div className='registration'>
+    return (<div className='wrapper-registration'>
+    <div className='registration'>
         <div className="registration-heading">Регистрация</div>
-        <div className='registration-wrapper'>
             <div className='registration-inputs'>
                 <input ref={nameRef} placeholder='Имя пользователя' />
                 <input ref={loginRef} placeholder='Логин' />

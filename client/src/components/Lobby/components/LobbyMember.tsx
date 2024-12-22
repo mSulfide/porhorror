@@ -15,7 +15,7 @@ const LobbyMember: React.FC<ILobbyMember> = ({ member, status }: ILobbyMember) =
     const dropFromLobbyHandler = () => server.dropFromGroup(member.id);
 
     return <div>
-        {member.creator && <span>Создатель </span>}
+        {member.creator && <span>Создатель: </span>}
         <span>{member.name}</span>
         {!member.creator && status === EStatus.creator && <Button onClick={dropFromLobbyHandler} text="Выгнать" />}
     </div>
