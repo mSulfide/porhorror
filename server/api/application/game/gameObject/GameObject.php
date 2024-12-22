@@ -11,6 +11,7 @@ class GameObject {
     function __construct($db, $params) {
         $this->db = $db;
         $this->id = $params->id;
+        $this->image = $params->image;
         $this->position = new Point($params->x, $params->y);
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
         $this->gameId = $params->game_id;
