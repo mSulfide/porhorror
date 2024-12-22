@@ -37,7 +37,7 @@ const Inventory: React.FC = () => {
         <div>
             
             <div>
-                {inventory.map((item, index) => (<div key={index}>
+                {inventory?.map((item, index) => (<div key={index}>
                     {item.name}
                     <Button text={item.status === EStatus.pocket ? 'Снять' : 'Надеть'} onClick={() => inventoryClick(item.id)} />
                 </div>))}

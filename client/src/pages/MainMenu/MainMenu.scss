@@ -1,92 +1,120 @@
 @font-face {
   font-family: 'Iceland';
   src: url('../../assets/fonts/Iceland-Regular.ttf');
+
+  @font-face {
+    font-family: 'CormorantGaramond';
+    src: url('../../assets/fonts/CormorantGaramond-Regular.ttf');
+  }
 }
 
-.wrapper-menu{
 $dark-grey: #444;
 $light-grey: #666;
 $background-color: #222;
 $text-color: rgb(0, 0, 0);
 $accent-color: #ffffff;
-$yellow-fill: #ffffff8f;
+$gray-fill: #ffffff8f;
 
 
-  font-family: 'NTSomic';
+.wrapper-menu {
+  font-family: 'CormorantGaramond';
   margin: 0;
   padding: 0;
-  //background-image: url('../../assets/img/background/registration.png');
   background-size: cover;
-  //background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-image: url('../../assets/img/background/resident_evil_village.jpeg');
   
-
+}
 
 .mainMenuContainer {
+  
   width: 100%;
   background-size: cover;
-  font-family: 'Iceland', sans-serif;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Адаптивная сетка
-  grid-gap: 20px;
-  padding: 20px;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-gap: 30px;
+  
+  padding: 50px;
   color: $text-color;
   min-height: 100vh;
-  justify-content: center;
+
+
+  .combined-equipment-inventory {
+    display: grid;
+    justify-content: center;
+        align-items: center;
+
+    .equipment-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); 
+      grid-gap: 15px;
+      margin-bottom: 10px;
+  
+      
+      > div {
+        background-color: #777; 
+        height: 100px;
+        width: 100px;
+        border: solid rgb(224, 224, 224) 3px;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+   
 
 
   .main-menu-title {
-    grid-column: 1 / -1;
+    font-family: 'Iceland';
+    grid-column: 1 / -1; 
     text-align: left;
-    font-size: clamp(5em, 7vw, 5em);
-    margin-bottom: 30px;
-    color: $accent-color;
+    font-size: clamp(2em, 10vw, 6em); /* Improved clamp() function */
+    margin-bottom: 40px;
+    color: white;
   }
 
   .section-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
-    display: flex;
-    flex-wrap: wrap; //обёртывание
-    
-
+    grid-template-columns: 1fr; /* Single column inside */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Example columns */
+  row-gap: 20px; /* Adds 20 pixels of vertical space between rows */
+  grid-gap: 20px; 
   }
 
-    .column {
-        display: flex;
-        flex-direction: column;
-        flex: 1; // занимает одинаковое пространство
-    }
-
   .section {
-    background-color: $yellow-fill;
+    background-color: $gray-fill;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    flex: 1; // одинаковая высота для всех сечений
+
   }
+
+  .underline-link {
+    text-decoration: underline;
+    cursor: pointer; /* Add a cursor to indicate it's clickable */
+    color: rgb(0, 0, 0); /* Or any color you prefer */
+    font-size: 0.7em;
+    justify-content: right;
+  }
+  
 
   .section-title {
-    margin-bottom: 10px;
-    font-weight: bold;
+    margin-bottom: 5px;
+    font-weight: normal;
     text-align: center;
   }
-
-  .two-column-section {
-      grid-column: span 2; // занимает 2 колонки
-  }
+  .settings{
+    text-align: right;
+    gap: 10px;
 }
-
-
+}
 
 @media (max-width: 800px) {
   .mainMenuContainer {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column on smaller screens */
     grid-gap: 15px;
   }
   .mainMenuContainer .main-menu-title {
@@ -94,138 +122,3 @@ $yellow-fill: #ffffff8f;
   }
 }
 
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*@font-face {
-  font-family: 'Iceland';
-  src: url('../../assets/fonts/Iceland-Regular.ttf');
-}
-
-
-
-
-$dark-grey: #444;
-$light-grey: #666;
-$background-color: #222;
-$text-color: white;
-$accent-color: #ffffff;
-$yellow-fill: #000000;
-
-
-.mainMenuContainer {
-  //background-image: url('../../assets/img/background/resident_evil_village.jpeg');
-  font-family:'NTSomic';
-  //background-size: cover;
-  display: flex;
-  flex-direction: column; 
-  padding: 10px;
-  color: $text-color;
-  min-height: 100vh;
-  
-  &-buttons {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 10px;
-    width: 100%;
-    justify-content: right;
-  }
-
-  .main-menu-title { 
-    font-family: 'Iceland';
-    text-align: center; 
-    font-size: clamp(5em, 7vw, 5em);
-    margin-bottom: 30px;
-    color:  rgb(222, 0, 0);;
-  }
-
-  .section-container {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px; 
-  }
-
-  .section {
-    background-color: black;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    flex: 1; 
-    min-width: 300px; 
-    text-align: center;
-    &-button{
-      justify-content: right;
-      align-items: end;
-    }
-  }
-  .section-lobby{
-    justify-content: center;
-  }
-
-  .section-title {
-    margin-bottom: 10px;
-    font-weight: 0.6em;
-    text-align: center;
-  }
-
-  
-  .section-container > * {
-    flex-basis: 50%; 
-  }
-
-  .settings, .exit { 
-    margin-top: 20px;
-    display: inline;
-    text-align: center;
-  }
-}
-
-Responsive adjustments (removed grid-template-columns) 
-@media (max-width: 800px) {
-  .mainMenuContainer .section-container {
-    flex-direction: column; 
-  }
-  .mainMenuContainer .section-container > * {
-    flex-basis: 100%; 
-  }
-  .mainMenuContainer .main-menu-title {
-    font-size: clamp(2em, 6vw, 4em);
-  }
-}*/
