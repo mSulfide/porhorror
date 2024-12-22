@@ -30,7 +30,6 @@ function result($params) {
             // инвентарь
             case 'getInventory': return $app->getInventory($params);
             case 'changeInventory': return $app->changeInventory($params);
-            case 'removeConsent': return $app->removeConsent($params);
             // лобби
             case 'updateGroups': return $app->updateGroups($params); // loop
             case 'createGroup': return $app->createGroup($params);
