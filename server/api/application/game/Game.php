@@ -14,7 +14,7 @@ class Game {
 
     private function update($deltaTime, $gamer) {
         foreach ($this->objects as $object) {
-            if ($object->id === $gamer->object_id) {
+            if ($object->id === $gamer->objectId) {
 
                 $axisX = $gamer->axis_x * $deltaTime; 
                 $axisY = $gamer->axis_y * $deltaTime; 

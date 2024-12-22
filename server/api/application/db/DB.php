@@ -216,6 +216,7 @@ class DB {
                 g.status AS status,
                 u.name AS name,
                 go.game_id AS game_id,
+                g.object_id AS objectId,
                 g.axis_x AS axis_x, 
                 g.axis_y AS axis_y   
             FROM gamers AS g
