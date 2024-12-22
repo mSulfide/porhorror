@@ -272,7 +272,7 @@ class Application {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->еxchanger->removeConsent($user->id);
+                return $this->exchanger->removeConsent($user->id);
             }
             return ['error' => 705];
         }
