@@ -1,25 +1,23 @@
 <?php
 
 class Gamer {
-    public $objectId; 
-    public $axis_x;
-    public $axis_y;
+    public GameObject $object;
+    public float $axisX, $axisY;
+    public bool $isAction;
 
-    function __construct($params) {
-        $this->objectId = $params->objectId;
-        $this->axis_x = $params->axis_x;
-        $this->axis_y = $params->axis_y;
-    }
-
-    public function update($deltaTime, $objects) {
+    function __construct($params, $objects) {
         foreach ($objects as $object) {
-            if ($object->id === $this->objectId) {
-                $axisX = $this->axis_x * $deltaTime; 
-                $axisY = $this->axis_y * $deltaTime; 
-
-                $object->move(new Point($axisX, $axisY));
+            if ($object->id === $params->objectId) {
+                $this->object = $object;
                 break;
             }
         }
+        $this->axisX = $params->axisX;
+        $this->axisY = $params->axisY;
+        $this->isAction = $params->isAction;
+    }
+
+    public function update($deltaTime) {
+        $this->object->velocity = new Point($this->axisX, $this->axisY);
     }
 }

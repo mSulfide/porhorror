@@ -1,7 +1,7 @@
 <?php
 
 class GameObject {
-    private $db;
+    private $db, $math;
     public int $id;
 
     public Point $position, $velocity;
@@ -17,21 +17,20 @@ class GameObject {
         $this->gameId = $params->game_id;
         $this->radius = $params->radius;
         $this->angle = $params->angle;
+
+        $this->math = new GMath();
     }
 
     function __destruct() {
         $this->db->saveVelocity($this->id, $this->velocity);
-        $this->update();
+        $this->db->setPosition($this->id, $this->position);
     }
     
-    public function update() {
-        $this->position->x += $this->velocity->x;
-        $this->position->y += $this->velocity->y;
-        $this->db->setPosition($this->id, $this->position);
+    public function update($deltaTime) {
+        $this->move($this->math->mlt($this->velocity, $deltaTime));
     }
 
     public function move($offset) {
-        $math = new GMath();
-        $this->position = $math->add($this->position, $offset);
+        $this->position = $this->math->add($this->position, $offset);
     }
 }
