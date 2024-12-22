@@ -2,7 +2,7 @@
 
 class GameObject {
     private $db;
-    private int $id;
+    public int $id;
 
     public Point $position, $velocity;
     public int $gameId;
@@ -11,6 +11,7 @@ class GameObject {
     function __construct($db, $params) {
         $this->db = $db;
         $this->id = $params->id;
+        $this->image = $params->image;
         $this->position = new Point($params->x, $params->y);
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
         $this->gameId = $params->game_id;
@@ -27,7 +28,7 @@ class GameObject {
     }
 
     public function move($offset) {
-        $this->position->x += $offset->x;
-        $this->position->y += $offset->y;
+        $math = new GMath();
+        $this->position = $math->add($this->position, $offset);
     }
 }

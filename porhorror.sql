@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 21 2024 г., 02:40
+-- Время создания: Дек 22 2024 г., 19:12
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- База данных: `porhorror`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `exchange`
+--
+
+CREATE TABLE `exchange` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -49,7 +61,9 @@ CREATE TABLE `gamers` (
   `status` varchar(32) NOT NULL DEFAULT 'gaming',
   `hp` int DEFAULT NULL,
   `quest_count` int NOT NULL DEFAULT '0',
-  `is_action` tinyint(1) NOT NULL DEFAULT '0'
+  `is_action` tinyint(1) NOT NULL DEFAULT '0',
+  `axis_x` float NOT NULL DEFAULT '0',
+  `axis_y` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -86,6 +100,7 @@ CREATE TABLE `game_mobs` (
 CREATE TABLE `game_objects` (
   `id` int NOT NULL,
   `game_id` int NOT NULL,
+  `image` varchar(32) NOT NULL DEFAULT 'tas',
   `x` float NOT NULL DEFAULT '0',
   `y` float NOT NULL DEFAULT '0',
   `velocity_x` float NOT NULL DEFAULT '0',
@@ -243,6 +258,12 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 --
 
 --
+-- Индексы таблицы `exchange`
+--
+ALTER TABLE `exchange`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `game`
 --
 ALTER TABLE `game`
@@ -323,6 +344,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `exchange`
+--
+ALTER TABLE `exchange`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `game`

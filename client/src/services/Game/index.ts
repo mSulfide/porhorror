@@ -1,5 +1,5 @@
 import { Scene } from "../engine/structures";
-import Input from "../engine/structures/Input/Input";
+import Input from "../input/Input";
 
 export type TGameOptions = {
     scene?: Scene;

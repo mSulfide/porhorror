@@ -36,6 +36,8 @@ class Answer {
         '801' => 'unknown state',
         '802' => 'game is already exists',
         '805' => 'game is no exists',
+        '808' => 'status is already ready',
+        '809' => 'status is not ready',
         '810' => 'gamer is no exists',
         '905' => 'gamer is already connected to game',
         '1001' => 'params login or password not set',

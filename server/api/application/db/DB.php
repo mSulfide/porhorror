@@ -51,32 +51,15 @@ class DB {
     }
 
     public function getSettings() {
-        $answer = $this->query("SELECT * FROM global_settings");
-        if ($answer) {
-            settype($answer->id, "int");
-            settype($answer->lobby_max_count, "int");
-            settype($answer->quest_max_count, "int");
-            settype($answer->game_timestamp, "int");
-            settype($answer->game_update_timestamp, "int");
-            settype($answer->inventory_max_count, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM global_settings");
     }
 
     public function getUserByLogin($login) {
-        $answer = $this->query("SELECT * FROM users WHERE login=?", [$login]);
-        if ($answer) {
-            settype($answer->id, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
 
     public function getUserByToken($token) {
-        $answer = $this->query("SELECT * FROM users WHERE token=?", [$token]);
-        if ($answer) {
-            settype($answer->id, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
     }
 
     public function updateToken($userId, $token) {
@@ -147,8 +130,6 @@ class DB {
                 game_id AS gameId
             FROM lobby WHERE status="open" OR status="start game"');
         foreach ($lobbies as $lobby) {
-            settype($lobby->id, "int");
-            settype($lobby->gameId, "int");
             $lobby->members = $this->getUsersFromLobby($lobby->id);
         }
         return $lobbies;
@@ -163,10 +144,6 @@ class DB {
                 INNER JOIN lobby_members AS lm ON lm.lobby_id=?
                 WHERE u.id = lm.user_id
         ', [$lobbyId]);
-        foreach ($users as $user) {
-            settype($user->id, "int");
-            settype($user->creator, "bool");
-        }
         return $users;
     }
 
@@ -202,11 +179,7 @@ class DB {
     }
 
     public function getLobbyById($lobbyId) {
-        $answer = $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
-        if ($answer) {
-            settype($answer->id, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM lobby WHERE id=?", [$lobbyId]);
     }
 
     //game
@@ -215,16 +188,15 @@ class DB {
                 g.id AS id,
                 g.status AS status,
                 u.name AS name,
-                go.game_id AS game_id
+                go.game_id AS game_id,
+                g.object_id AS objectId,
+                g.axis_x AS axis_x, 
+                g.axis_y AS axis_y   
             FROM gamers AS g
             INNER JOIN users AS u ON u.id = g.user_id
             INNER JOIN game_objects AS go ON go.id = g.object_id
             WHERE u.id = ?;
         ", [$userId]);
-        if ($gamer) {
-            settype( $gamer->id, "int");
-            settype($gamer->game_id, "int");
-        }
         return $gamer;
     }
 
@@ -261,14 +233,7 @@ class DB {
     }
 
     public function getGameById($gameId) {
-        $answer = $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
-        if ($answer) {
-            settype($answer->id, "int");
-            settype($answer->timestamp, "int");
-            settype($answer->quest_count, "int");
-            settype($answer->start_time, "int");
-        }
-        return $answer;
+        return $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
     }
 
     public function action($userId) {
@@ -281,5 +246,24 @@ class DB {
 
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
+    }
+    
+    public function updateGamerDirection($gamerId, $axisX, $axisY) {
+        $this->execute(
+            "UPDATE gamers SET axis_x = ?, axis_y = ? WHERE id = ?",
+            [$axisX, $axisY, $gamerId]
+        );
+    }
+    
+    public function provideConsent($userId) {
+        $this->execute("UPDATE exchange SET status='ready' WHERE user_id=?", [$userId]);
+    }
+    
+    public function removeConsent($userId){
+        $this->execute("UPDATE exchange SET status='not ready' WHERE user_id=?", [$userId]);
+    }
+
+    public function getStatusExchange($userId) {
+        return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
 }
