@@ -27,6 +27,7 @@ class GameObject {
     }
 
     public function move($offset) {
-        $this->position = GMath::add($this->position, $offset);
+        $math = new GMath()
+        $this->position = $math->add($this->position, $offset);
     }
 }
