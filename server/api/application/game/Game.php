@@ -7,13 +7,39 @@ class Game {
     function __construct($db) {
         $this->db = $db;
         $this->objects = [];
+        $this->gamers = [];
     }
 
     private function getTime($startTime) {
         return floor((microtime(true) - $startTime) * 1000);
     }
 
-    private function update($deltaTime, $gamer) {
+    private function updateGamer($deltaTime, $gamer) {
+        foreach ($this->objects as $object) {
+            if ($object->id === $gamer->objectId) {
+                $axisX = $gamer->axis_x * $deltaTime; 
+                $axisY = $gamer->axis_y * $deltaTime; 
+
+                $object->move(new Point($axisX, $axisY));
+                break;
+            }
+        }
+    }
+
+    private function updateObjects($deltaTime) {
+        foreach ($this->objects as $object) {
+            $object->update($deltaTime); 
+        }
+    }
+
+    public function update($deltaTime) {
+        foreach ($this->gamers as $gamer) {
+            $this->updateGamer($deltaTime, $gamer);
+        }
+        $this->updateObjects($deltaTime);
+    }
+
+    /*private function update($deltaTime, $gamer) {
         foreach ($this->objects as $object) {
             if ($object->id === $gamer->objectId) {
 
@@ -24,7 +50,7 @@ class Game {
                 break;
             }
         }
-    }
+    }*/
 
     public function updateScene($userId, $hash) {
         $gamer = $this->db->getGamerByUserId($userId);

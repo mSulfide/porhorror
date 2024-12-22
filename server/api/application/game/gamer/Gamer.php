@@ -1,12 +1,13 @@
 <?php
 
-class Gamer extends GameObject {
+class Gamer {
+    private $gamerObject; 
 
     function __construct($params) {
-        parent::__construct($params);
+        $this->gamerObject = $gamerObject;
     }
 
-    public function update($game) {
-        parent::update();
+    public function update() {
+        $gamerObject->velocity = $velocity;
     }
 }
