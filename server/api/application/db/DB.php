@@ -266,4 +266,11 @@ class DB {
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
+
+    public function saveVelocity($objectId, $velocity) {
+        $this->execute(
+            "UPDATE game_objects SET velocity_x=?, velocity_y=? WHERE id=?", 
+            [$velocity->x, $velocity->y, $objectId]
+        );
+    }
 }
