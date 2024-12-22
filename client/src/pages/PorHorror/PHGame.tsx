@@ -13,8 +13,11 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    const input = new Input();
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const onAxisChange = (axisX: number, axisY: number) => null;
+    const onButtonChange = (state: boolean) => null;
+    const input = new Input({ onAxisChange, onButtonChange });
 
     useKeyboard(input);
 
