@@ -232,6 +232,27 @@ class DB {
         return $answer;
     }
 
+    public function getGamers($gameId, $objects) {
+        $gamers = $this->queryAll("SELECT
+                g.id,
+                g.user_id AS userId,
+                g.object_id AS objectId,
+                g.status,
+                g.hp,
+                g.is_action AS isAction,
+                g.axis_x AS axisX,
+                g.axis_y AS axisY
+            FROM gamers AS g
+            INNER JOIN game_objects AS go ON g.object_id=go.id
+            WHERE go.game_id=?
+        ", [$gameId]);
+        $answer = [];
+        foreach ($gamers as $gamer) {
+            $answer[] = new Gamer($gamer, $objects);
+        }
+        return $answer;
+    }
+
     public function getGameById($gameId) {
         return $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
     }
@@ -265,5 +286,12 @@ class DB {
 
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
+    }
+
+    public function saveVelocity($objectId, $velocity) {
+        $this->execute(
+            "UPDATE game_objects SET velocity_x=?, velocity_y=? WHERE id=?", 
+            [$velocity->x, $velocity->y, $objectId]
+        );
     }
 }

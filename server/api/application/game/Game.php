@@ -1,55 +1,52 @@
 <?php
 
 require_once ('gameObject\GameObject.php');
+require_once ('gamer\Gamer.php');
 require_once ('math\GMath.php');
 
 class Game {
+    private $db;
+    private $objects = [], $gamers = [];
+    private float $deltaTime = 0;
+
     function __construct($db) {
         $this->db = $db;
-        $this->objects = [];
     }
 
     private function getTime($startTime) {
         return floor((microtime(true) - $startTime) * 1000);
     }
 
-    private function update($deltaTime, $gamer) {
+    public function update($deltaTime) {
+        foreach ($this->gamers as $gamer) {
+            $gamer->update($deltaTime, $this->objects);
+        }
         foreach ($this->objects as $object) {
-            if ($object->id === $gamer->objectId) {
-
-                $axisX = $gamer->axis_x * $deltaTime; 
-                $axisY = $gamer->axis_y * $deltaTime; 
-    
-                $object->move(new Point($axisX, $axisY));
-                break;
-            }
+            $object->update($deltaTime); 
         }
     }
 
     public function updateScene($userId, $hash) {
-        $gamer = $this->db->getGamerByUserId($userId);
-        if ($gamer) {
-            $gameId = $gamer->game_id;
-            $game = $this->db->getGameById($gameId);
-            if ($game) {
-                $this->objects = $this->db->getGameObjects($game->id);
-                $time = $this->getTime($game->start_time);
-                $deltaTime = $time - $game->timestamp;
-                if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
-                    $this->update($deltaTime / 1000, $gamer);
-                    $this->db->updateGameHash(md5(rand()), $game->id);
-                    $this->db->updateTimestamp($game->id, $time);
-                }
-                if ($hash === $game->hash) {
-                    return [
-                        'hash' => $hash
-                    ];
-                }
+        $game = $this->db->getGameById($this->db->getGamerByUserId($userId)->game_id);
+        if ($game) {
+            $this->objects = $this->db->getGameObjects($game->id);
+            $this->gamers = $this->db->getGamers($game->id, $this->objects);
+            $time = $this->getTime($game->start_time);
+            $deltaTime = $time - $game->timestamp;
+            if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
+                $this->update($deltaTime / 1000);
+                $this->db->updateGameHash(md5(rand()), $game->id);
+                $this->db->updateTimestamp($game->id, $time);
+            }
+            if ($hash === $game->hash) {
                 return [
-                    'scene' => $this->objects,
-                    'hash' => $game->hash
+                    'hash' => $hash
                 ];
             }
+            return [
+                'scene' => $this->objects,
+                'hash' => $game->hash
+            ];
         }
         return ['error' => 805];
     }
