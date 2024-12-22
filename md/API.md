@@ -39,7 +39,8 @@
     * 4.19. updateScene
     * 4.20. action
     * 4.21. getInventory
-    * 4.22. removeConsent
+    * 4.22. move
+    * 4.23. removeConsent
 
 
 
@@ -162,6 +163,7 @@ Item: {
 | dropFromGroup | Выгнать из группы |
 | updateScene | Обновить сцену |
 | action | Действие |
+| move | Движение игрока |
 
 ### 3.1. Общие ошибки
 * `101` - если не передан параметр `method`
