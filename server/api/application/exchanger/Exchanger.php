@@ -13,7 +13,7 @@ class Exchanger {
             $this->db->provideConsent($userId);
             return true;
         }
-        return ['error' => 'already ready'];
+        return ['error' => 808];
     }
     
 
