@@ -11,8 +11,8 @@ class Player extends PhysicalBehaviour implements IRenderer {
     }
 
     update(game: TUpdateParameters): void {
-        const axis: TPoint = { x: game.input.getAxisX(), y: game.input.getAxisY() };
-        this.setVelocity(axis);
+        /*const axis: TPoint = { x: game.input.getAxisX(), y: game.input.getAxisY() };
+        this.setVelocity(axis);*/
         super.update(game);
     }
 }

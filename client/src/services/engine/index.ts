@@ -1,4 +1,4 @@
-import { Input, Physic } from "./structures";
+import { Physic } from "./structures";
 
 export type TPoint = {
     x: number,
@@ -7,7 +7,6 @@ export type TPoint = {
 
 export type TUpdateParameters = {
     deltaTime: number,
-    input: Input,
     physic: Physic
 }
 
