@@ -11,7 +11,7 @@ class Inventory {
     }
 
     public function equipItem($userId, $itemId) {
-        $gamer = $this->db->getGamerByUser Id($userId);
+        $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $maxItems = $this->db->getSettings()->max_equipped_items;
             $equippedItems = $this->db->getEquippedItems($gamer->id);
