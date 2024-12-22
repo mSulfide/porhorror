@@ -34,7 +34,7 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
         if (currentLobby?.status === ELobbyStatus.startGame) {
             setGamePage();
         }
-        
+
         if (user) {
             server.startLobbyList(updateLobbyListHandler);
         }
@@ -56,14 +56,14 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
             EStatus.creator :
             EStatus.member;
 
-            return <div className="wrapper-lobby">
-            {currentLobby && <LobbyInfo lobby={currentLobby} status={userStatus} />}
-            {lobbies.map((lobby: TLobby, index: number) => lobby.status === ELobbyStatus.open && lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={userStatus} />)}
-            {!currentLobby && (<div>
-                <input ref={nameGroupRef} placeholder='Название группы:'className='lobby-input' />
-                <Button onClick={createLobbyHandler} text='Создать группу' />
-            </div>)}
-        </div>;
+    return <div className="wrapper-lobby">
+        {currentLobby && <LobbyInfo lobby={currentLobby} status={userStatus} />}
+        {lobbies.map((lobby: TLobby, index: number) => lobby.status === ELobbyStatus.open && lobby !== currentLobby && <LobbyItem key={index} lobby={lobby} status={userStatus} />)}
+        {!currentLobby && (<div>
+            <input ref={nameGroupRef} placeholder='Название группы:' className='lobby-input' />
+            <Button onClick={createLobbyHandler} text='Создать группу' />
+        </div>)}
+    </div>;
 }
 
 export default Lobby;

@@ -33,9 +33,7 @@ const Inventory: React.FC = () => {
     const inventory = store.getInventory();
 
     return (<div>
-        
         <div>
-            
             <div>
                 {inventory?.map((item, index) => (<div key={index}>
                     {item.name}
