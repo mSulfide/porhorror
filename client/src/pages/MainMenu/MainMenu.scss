@@ -92,7 +92,7 @@ $gray-fill: #ffffff8f;
     margin-top: 30px;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.711);
     
   }
 
@@ -116,9 +116,15 @@ $gray-fill: #ffffff8f;
   }
 
   .section-title {
-    margin-bottom: 5px;
-    font-weight: normal;
-    text-align: center;
+
+      margin-bottom: 5px;
+      display: flex;
+      font-family: 'Iceland';
+      justify-content: center;
+      text-align: center;
+      font-size: clamp(1em, 3vw, 6em); 
+      color: rgb(0, 0, 0);
+
   }
   .settings{
     text-align: right;

@@ -13,43 +13,60 @@
     font-family: 'CormorantGaramond';
     margin: 0;
     padding: 0;
-    background-size: cover;
-    display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+  
+   
 
     .chat-title {
         display: flex;
         font-family: 'Iceland';
         justify-content: center;
         text-align: center;
-        font-size: clamp(2em, 10vw, 6em); 
-        color: white;
+        font-size: clamp(1em, 3vw, 6em); 
+        color: rgb(0, 0, 0);
       }
     .chat{
-        background-color:#ffffff8f;
-        border: solid rgb(255, 255, 255) 3px;
-        margin-top: 30px;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        max-width: 600px; 
-        margin-bottom: 20px; 
+        font-family: 'CormorantGaramond';
+        font-size: 0.9em;
+       
     }
-    .back-link2 {
-        width: fit-content; 
-        padding: 10px 20px;  
-        background-color:rgba(0, 0, 0, 0.3); 
+    
+    .chat-input {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 40px;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        font-size: 0.7em;
         color: rgb(222, 0, 0);
-        border: none;
-        border-radius: 5px;
-        border: solid rgb(255, 255, 255) 3px; 
-        cursor: pointer;
-        font-size: 0.6em; 
-        margin-top: 10px; 
-        text-decoration: none; 
-    }
+        box-sizing: border-box;
+        background-color: #000000c7;
+        padding-left: 25px;
+      }
+    
+      .chat-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+ 
+      }
+      .chat-messages {
+        font-family: 'NTSomic';
+        font-size: 0.8em;
+        padding: 8px;
+        font-weight: bold;
+        border-radius: 30px;
+        margin-bottom: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;}
+      
+   
   }
 

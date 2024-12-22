@@ -32,7 +32,7 @@ const Chat: React.FC<IBasePage> = ({ setPage }: IBasePage) => {
         }
     });
 
-    const input = useMemo(() => <input ref={messageRef} placeholder='сообщение' />, []);
+    const input = useMemo(() => <input ref={messageRef} placeholder='Type a message...' className='chat-input'/>, []);
 
     const sendClickHandler = () => {
         if (messageRef.current) {
@@ -56,7 +56,7 @@ const Chat: React.FC<IBasePage> = ({ setPage }: IBasePage) => {
 
     return ( 
         <div className="wrapper-chat">
-             <h1 className="chat-title">Chat</h1>
+             <h5 className="chat-title">Chat</h5>
 
     <div className='chat'>
     
@@ -65,14 +65,14 @@ const Chat: React.FC<IBasePage> = ({ setPage }: IBasePage) => {
             <span>{user.name}</span>
         </div>
         <div className='chat-messages'>
-            {messages.reverse().map((message, index) => <div key={index}>{`${message.author} (${message.created}): ${message.message}`}</div>)}
+            {messages.reverse().map((message, index) => <div key={index}>
+                {`${message.author} (${message.created}): ${message.message}`}</div>)}
         </div>
         {input}
         <div className='chat-buttons'>
             <Button onClick={sendClickHandler} text='Отправить' />
         </div>
     </div>
-    <button className="back-link2" onClick={backClickHandler}> &#8592; Назад </button> {/* Moved outside the .chat div */}
         </div>
 
 );
