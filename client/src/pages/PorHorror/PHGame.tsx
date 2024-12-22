@@ -15,8 +15,8 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const onAxisChange = (axisX: number, axisY: number) => console.log(axisX, axisY);
-    const onButtonChange = (state: boolean) => console.log(state);
+    const onAxisChange = (axisX: number, axisY: number) => server.move(axisX, axisY);
+    const onButtonChange = (state: boolean) => state && server.action();
     const input = new Input({ onAxisChange, onButtonChange });
 
     useKeyboard(input);
