@@ -1,3 +1,4 @@
+import Resources from "../resources/Resources";
 import { TInventory, TItem, TLobby, TMessages, TUser } from "../server/types";
 
 const TOKEN = 'token';
@@ -9,6 +10,7 @@ class Store {
     lobbyHash: string = 'empty lobby hash';
     gameHash: string = 'empty game hash';
     inventory: TItem[] = [];
+    resources: Resources = new Resources();
 
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
