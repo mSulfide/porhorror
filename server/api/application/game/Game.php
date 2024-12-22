@@ -62,7 +62,6 @@ class Game {
         return ['error'=> 810];
     }
 
-
     public function move($userId, $axisX, $axisY) {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
