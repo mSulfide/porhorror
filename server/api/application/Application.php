@@ -250,7 +250,7 @@ class Application {
         if ($params['token'] && ($params['slotId'])) { 
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->game->equipItem($user->id, $params['slotId']);
+                return $this->inventory->equipItem($user->id, $params['slotId']);
             }
             return ['error' => 705]; 
         }

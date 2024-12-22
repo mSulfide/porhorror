@@ -12,22 +12,19 @@ class Inventory {
 
     public function equipItem($userId, $slotId) {
         $gamer = $this->db->getGamerByUserId($userId);
-        if ($gamer) {
-            $maxSlots = $this->db->getSettings()->max_equipped_slots;
-            $equippedSlots = $this->db->equippedSlots($gamer->id);
-            if (count($equippedSlots) < $maxSlots) {
-                $slot = $this->db->getSlotById($slotId);
-                if ($slot) {
-                    $this->db->updateSlotState($slotId, 'pocket');
-                    return true;
-                } else {
-                    return ['error' => 820]; 
-                }
-            } else {
-                return ['error' => 830]; 
-            }
+        if (!$gamer) {
+            return ['error' => 705]; 
         }
-        return ['error' => 705]; 
+        $maxSlots = $this->db->getSettings()->max_equipped_slots;
+        $equippedSlots = $this->db->equippedSlots($gamer->id);
+        if (count($equippedSlots) >= $maxSlots) {
+            return ['error' => 830]; 
+        }
+        $slot = $this->db->getSlotById($slotId);
+        if (!$slot) {
+            return ['error' => 820]; 
+        }
+        $this->db->updateSlotState($slotId, 'pocket');
+        return true; 
     }
-    
 }

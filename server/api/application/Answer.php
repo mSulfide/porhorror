@@ -38,7 +38,7 @@ class Answer {
         '805' => 'game is no exists',
         '809' => 'status is not ready',
         '810' => 'gamer is no exists',
-        '820' => 'Item not found',
+        '820' => 'Slot not found',
         '830' => 'maximum number of elements',
         '905' => 'gamer is already connected to game',
         '1001' => 'params login or password not set',
