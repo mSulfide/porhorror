@@ -35,7 +35,6 @@ class Game {
             $deltaTime = $time - $game->timestamp;
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
                 $this->update($deltaTime / 1000);
-                $this->db->updateGameHash(md5(rand()), $game->id);
                 $this->db->updateTimestamp($game->id, $time);
             }
             if ($hash === $game->hash) {
@@ -55,6 +54,7 @@ class Game {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $this->db->action($userId);
+            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
             return true;
         }
         return ['error'=> 810];
@@ -64,16 +64,17 @@ class Game {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $magnitude = sqrt($axisX * $axisX + $axisY * $axisY);
-        
-        if ($magnitude > 0) { 
-            $xEllipse = $axisX / $magnitude; 
-            $yEllipse = $axisY / $magnitude; 
-        } else {
-            $xEllipse = 0; 
-            $yEllipse = 0; 
-        }
+            
+            if ($magnitude > 0) { 
+                $xEllipse = $axisX / $magnitude; 
+                $yEllipse = $axisY / $magnitude; 
+            } else {
+                $xEllipse = 0; 
+                $yEllipse = 0; 
+            }
                    
             $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
+            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
         
             return true;
         }
