@@ -294,4 +294,17 @@ class DB {
             [$velocity->x, $velocity->y, $objectId]
         );
     }
+    public function getLotById($lotId) {
+        $query = "SELECT * FROM lots WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $lotId]);
+        return $stmt->fetch(PDO::FETCH_OBJ); 
+    }
+    
+    public function deleteLot($lotId) {
+        $query = "DELETE FROM lots WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $lotId]);
+    }
+    
 }

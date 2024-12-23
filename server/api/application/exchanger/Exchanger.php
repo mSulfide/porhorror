@@ -25,4 +25,18 @@ class Exchanger {
         }
         return ['error'=> '809'];
     }
+
+    public function deleteLot($lotId, $userId) {
+        
+        $lot = $this->db->getLotById($lotId);
+        if ($lot) {
+           
+            if ($lot->ownerId === $userId) {
+                $this->db->deleteLot($lotId); 
+                return ['success' => true];
+            }
+            return ['error' => 1008];
+        }
+        return ['error' => 1007]; 
+    }
 }

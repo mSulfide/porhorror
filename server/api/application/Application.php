@@ -293,4 +293,16 @@ class Application {
     public function updateLots($params) {
         return ['error' => 103];
     }
+    
+    public function deleteLot($params) {
+        if ($params['token'] && $params['lotId']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->exchanger->deleteLot($params['lotId'], $user->id);
+            }
+            return ['error' => 705]; // Пользователь не найден
+        }
+        return ['error' => 242]; // Неверные параметры
+    }
+    
 }
