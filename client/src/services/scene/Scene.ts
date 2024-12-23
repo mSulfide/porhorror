@@ -1,12 +1,14 @@
-import { add, mlt } from "../engine/math";
 import { TTransform } from "./types";
 
 class Scene {
     private scene: TTransform[] = [];
     private dTimeStamp: number;
 
-    constructor(scene: TTransform[]) {
+    constructor() {
         this.dTimeStamp = Date.now();
+    }
+
+    set(scene: TTransform[]) {
         this.scene = scene;
     }
 
@@ -15,7 +17,10 @@ class Scene {
         this.dTimeStamp = Date.now();
 
         this.scene.forEach(
-            transform => transform.position = add(transform.position, mlt(transform.velocity, deltaTime))
+            transform => {
+                transform.position.x = transform.position.x + transform.velocity.x * deltaTime;
+                transform.position.y = transform.position.y + transform.velocity.y * deltaTime;
+            }
         );
     }
 }
