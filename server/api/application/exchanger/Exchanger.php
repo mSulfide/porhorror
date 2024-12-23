@@ -17,26 +17,25 @@ class Exchanger {
     }
     
 
-    public function removeConsent($userId){
+    public function removeConsent($userId) {
         $status = $this->db->getStatusExchange($userId);
-        if($status === 'ready'){
+        if ($status === 'ready') {
             $this->db->removeConsent($userId);
-            return true;
+            return true; 
         }
-        return ['error'=> '809'];
+        return ['error' => 809]; 
     }
 
     public function deleteLot($lotId, $userId) {
-        
         $lot = $this->db->getLotById($lotId);
         if ($lot) {
-           
             if ($lot->ownerId === $userId) {
-                $this->db->deleteLot($lotId); 
-                return ['success' => true];
+                $this->db->deleteLot($lotId);
+                return true; 
             }
-            return ['error' => 1008];
+            return ['error' => 1008]; 
         }
         return ['error' => 1007]; 
     }
 }
+
