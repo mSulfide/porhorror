@@ -28,11 +28,28 @@ class Game {
     public function updateScene($userId, $hash) {
         $game = $this->db->getGameById($this->db->getGamerByUserId($userId)->game_id);
         if ($game) {
-            $this->objects = $this->db->getGameObjects($game->id);
-            $this->gamers = $this->db->getGamers($game->id, $this->objects);
             $time = $this->getTime($game->start_time);
             $deltaTime = $time - $game->timestamp;
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
+                $objects = $this->db->getGameObjects($game->id);
+                foreach ($objects as $object) {
+                    $this->objects[] = new GameObject($this->db, $object);
+                }
+
+                $gamers = $this->db->getGamers($game->id);
+                foreach ($gamers as $gamer) {
+                    $currentObject = null;
+                    foreach ($this->objects as $object) {
+                        if ($object->id === $gamer->objectId) {
+                            $currentObject = $object;
+                            break;
+                        }
+                    }
+                    if ($currentObject) {
+                        $this->gamers[] = new Gamer($gamer, $currentObject);
+                    }
+                }
+
                 $this->update($deltaTime / 1000);
                 $this->db->updateTimestamp($game->id, $time);
             }
@@ -43,6 +60,7 @@ class Game {
             }
             return [
                 'scene' => $this->objects,
+                'gamers' => $this->gamers,
                 'hash' => $game->hash
             ];
         }

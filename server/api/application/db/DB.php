@@ -225,14 +225,10 @@ class DB {
 
     public function getGameObjects($gameId) {
         $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
-        $answer = [];
-        foreach ($objects as $object) {
-            $answer[] = new GameObject($this, $object);
-        }
-        return $answer;
+        return $objects;
     }
 
-    public function getGamers($gameId, $objects) {
+    public function getGamers($gameId) {
         $gamers = $this->queryAll("SELECT
                 g.id,
                 g.user_id AS userId,
@@ -245,12 +241,8 @@ class DB {
             FROM gamers AS g
             INNER JOIN game_objects AS go ON g.object_id=go.id
             WHERE go.game_id=?
-        ", [$gameId]);
-        $answer = [];
-        foreach ($gamers as $gamer) {
-            $answer[] = new Gamer($gamer, $objects);
-        }
-        return $answer;
+        ", [$gameId]);    
+        return $gamers;
     }
 
     public function getGameById($gameId) {
