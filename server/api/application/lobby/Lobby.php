@@ -46,7 +46,7 @@ class Lobby {
         if (!($this->isCreator($userId, $lobby->id))) {
             $group = $this->db->createGroup($name, $userId);
             if ($group) {
-                $this->db->addMemberToLobby($group, $userId, true);
+                $this->db->addMemberToLobby($group, $userId, 'creator');
                 $this->db->updateLobbyHash(md5(rand()));
                 return true;
             }
@@ -78,7 +78,7 @@ class Lobby {
             if ($lobby->status === 'open') {
                 $existingLobby = $this->db->getLobbyByUserId($userId);
                 if (!$existingLobby) {
-                    $this->db->addMemberToLobby($lobbyId, $userId, 0);
+                    $this->db->addMemberToLobby($lobbyId, $userId, 'member');
                     $this->db->updateLobbyHash(md5(rand()));
                     return true;
                 }
@@ -133,7 +133,7 @@ class Lobby {
     private function isCreator($userId, $lobbyId) {
         $users = $this->db->getUsersFromLobby($lobbyId);
         foreach ($users as $user) {
-            if ($user->id === $userId && $user->creator == 1) {
+            if ($user->id === $userId && $user->status == 'creator') {
                 return true;
             }
         }

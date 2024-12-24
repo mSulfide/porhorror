@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 22 2024 г., 19:12
+-- Время создания: Дек 24 2024 г., 13:48
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -201,7 +201,7 @@ CREATE TABLE `lobby_members` (
   `id` int NOT NULL,
   `lobby_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `is_creator` tinyint(1) NOT NULL DEFAULT '0'
+  `status` varchar(52) NOT NULL DEFAULT 'member'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
