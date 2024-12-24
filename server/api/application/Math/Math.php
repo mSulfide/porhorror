@@ -54,14 +54,11 @@ class Math {
             return null; 
         }
 
-        // расчет координат центра линии, соединяющей центры кругов
         $centerX = ($position1->x + $position2->x) / 2;
         $centerY = ($position1->y + $position2->y) / 2;
 
-        // расчет расстояния между центрами кругов
         $distance = sqrt(pow($position1->x - $position2->x, 2) + pow($position1->y - $position2->y, 2));
 
-        // расчет длины отрезка от центра первого круга до точки пересечения
         $length1 = ($radius1 * $radius1 - $radius2 * $radius2 + $distance * $distance) / (2 * $distance);
 
         // вычисление координат точки пересечения
@@ -69,6 +66,51 @@ class Math {
         $y = $position1->y + (($position2->y - $position1->y) / $distance) * $length1;
 
         return new Point($x, $y);
+    }
+
+    //функция для проверки пересечения круга и отрезка
+    public function getCircleLineIntersection(Point $circleCenter, float $radius, Point $lineStart, Point $lineEnd): ?Point {
+        $lineVec = $this->sub($lineEnd, $lineStart);
+        $circleToLineStart = $this->sub($lineStart, $circleCenter);
+
+        $lineLengthSquared = $this->smod($lineVec);
+        
+        $t = $this->dot($circleToLineStart, $lineVec) / $lineLengthSquared;// проекция центра круга на линию
+
+        // Находим ближайшую точку на отрезке
+        if ($t < 0) {
+            $nearestPoint = $lineStart;
+        } elseif ($t > 1) {
+            $nearestPoint = $lineEnd;
+        } else {
+            $nearestPoint = new Point(
+                $lineStart->x + $t * $lineVec->x,
+                $lineStart->y + $t * $lineVec->y
+            );
+        }
+
+        $nearestToCircle = $this->sub($nearestPoint, $circleCenter);
+
+        $distanceSquared = $this->smod($nearestToCircle);
+
+        // проверка пересечения круга и отрезка
+        if ($distanceSquared > $radius * $radius) {
+            return null; 
+        }
+
+        // Расчет точки пересечения
+        $d = sqrt($radius * $radius - $distanceSquared);
+        $intersection1 = new Point(
+            $nearestPoint->x + ($d / $this->modl($lineVec)) * ($lineVec->x),
+            $nearestPoint->y + ($d / $this->modl($lineVec)) * ($lineVec->y)
+        );
+
+        $intersection2 = new Point(
+            $nearestPoint->x - ($d / $this->modl($lineVec)) * ($lineVec->x),
+            $nearestPoint->y - ($d / $this->modl($lineVec)) * ($lineVec->y)
+        );
+
+        return $intersection1; 
     }
 
     // производная
