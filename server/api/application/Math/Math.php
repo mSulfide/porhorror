@@ -4,7 +4,44 @@ require_once 'Circle.php';
 require_once 'Point.php';
 
 class Math {
-    public static function getCirclesIntersect(Circle $circle1, Circle $circle2): bool {
+    public function add(Point $a, Point $b): Point {
+        return new Point($a->x + $b->x, $a->y + $b->y);
+    }
+
+    public function sub(Point $a, Point $b): Point {
+        return new Point($a->x - $b->x, $a->y - $b->y);
+    }
+
+    public function mlt(Point $a, float $p): Point {
+        return new Point($a->x * $p, $a->y * $p);
+    }
+
+    public function dot(Point $a, Point $b): float {
+        return $a->x * $b->x + $a->y * $b->y;
+    }
+
+    public function smod(Point $a): float {
+        return $this->dot($a, $a);
+    }
+
+    public function modl(Point $a): float {
+        return sqrt($this->smod($a));
+    }
+
+    public function norm(Point $a): Point {
+        $length = $this->modl($a);
+        return $length !== 0 ? $this->mlt($a, 1 / $length) : new Point(0, 0);
+    }
+
+    public function zero(): Point {
+        return new Point(0, 0);
+    }
+
+    public function one(): Point {
+        return new Point(1, 1);
+    }
+
+    public function getCirclesIntersect(Circle $circle1, Circle $circle2): bool {
         $dx = $circle1->position->x - $circle2->position->x;
         $dy = $circle1->position->y - $circle2->position->y;
         $distanceSquared = $dx * $dx + $dy * $dy;
@@ -13,8 +50,8 @@ class Math {
     }
 
     // функция для определения точки пересечения кругов
-    public static function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
-        if (!self::getCirclesIntersect($circle1, $circle2)) {
+    public function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
+        if (!$this->getCirclesIntersect($circle1, $circle2)) {
             return null; 
         }
 
@@ -41,51 +78,4 @@ class Math {
         $f_plus_eps = $func($x + $eps);
         return (($f_plus_eps - $fx) / $eps);
     }
-
-    // сплайны
-    public static function spline(array $points) {
-        $n = count($points);
-        if ($n < 3) {
-            return ['error' => 303];
-        }
-
-        $coefficients = [];
-        for ($i = 0; $i < $n - 1; $i++) {
-            $x1 = $points[$i]['x'];
-            $y1 = $points[$i]['y'];
-            $x2 = $points[$i + 1]['x'];
-            $y2 = $points[$i + 1]['y'];
-
-            if ($i < $n - 2) {
-                $x3 = $points[$i + 2]['x'];
-                $y3 = $points[$i + 2]['y'];
-            } else {
-                $x3 = $x2;
-                $y3 = $y2; // Для последней секции используем последнюю точку
-            }
-
-            $h1 = $x2 - $x1;
-            $h2 = $x3 - $x2;
-
-            $a1 = ($y2 - $y1) / $h1;
-            $a2 = ($y3 - $y2) / $h2;
-
-            $b1 = 3 * (($y2 - $y1) / ($h1 * $h1)) - 2 * (($y3 - $y1) / ($h1 * $h2)) + (($y3 - $y2) / ($h2 * $h2));
-            $b2 = 3 * (($y3 - $y2) / ($h2 * $h2)) - 2 * (($y3 - $y1) / ($h1 * $h2)) + (($y2 - $y1) / ($h1 * $h1));
-
-            $c1 = (($y3 - $y1) / ($h1 * $h2)) - (($y2 - $y1) / ($h1 * $h1)) - $b1 * $h1 / 3;
-            $c2 = (($y2 - $y1) / ($h1 * $h2)) - (($y3 - $y2) / ($h2 * $h2)) - $b2 * $h2 / 3;
-
-            $coefficients[] = [
-                'a' => $a1,
-                'b' => $b1,
-                'c' => $c1,
-                'd' => $y1,
-            ];
-        }
-
-        return $coefficients;
-    }
 }
-
-?>
