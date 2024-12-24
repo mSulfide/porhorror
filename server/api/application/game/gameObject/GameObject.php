@@ -7,6 +7,7 @@ class GameObject {
     public Point $position, $velocity;
     public int $gameId;
     public float $radius, $angle;
+    public string $image;
 
     function __construct($db, $params) {
         $this->db = $db;

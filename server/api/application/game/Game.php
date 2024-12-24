@@ -4,12 +4,13 @@ require_once ('gameObject\GameObject.php');
 require_once ('gamer\Gamer.php');
 
 class Game {
-    private $db;
+    private $db, $math;
     private $objects = [], $gamers = [];
     private float $deltaTime = 0;
 
     function __construct($db) {
         $this->db = $db;
+        $this->math = new Math();
     }
 
     private function getTime($startTime) {
@@ -24,16 +25,19 @@ class Game {
             $object->update($deltaTime); 
         }
 
-        foreach ($this->objects as $objectA) {
+        /*foreach ($this->objects as $objectA) {
             foreach ($this->objects as $objectB) {
                 if ($objectA !== $objectB) {
                     if ($this->math->getCirclesIntersect($objectA, $objectB)) {
                         $objectA->image = 'tas1';
                         $objectB->image = 'tas1';
+                    } else {
+                        $objectA->image = 'tas';
+                        $objectB->image = 'tas';
                     }
                 }
             }
-        }
+        }*/
     }
 
     public function updateScene($userId, $hash) {
@@ -71,7 +75,6 @@ class Game {
             }
             return [
                 'scene' => $this->objects,
-                'gamers' => $this->gamers,
                 'hash' => $game->hash
             ];
         }
