@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Circle.php';
 require_once 'Point.php';
 
 class Math {
@@ -41,33 +40,33 @@ class Math {
         return new Point(1, 1);
     }
 
-    public function getCirclesIntersect(Circle $circle1, Circle $circle2): bool {
-        $dx = $circle1->position->x - $circle2->position->x;
-        $dy = $circle1->position->y - $circle2->position->y;
+    public function getCirclesIntersect(Point $position1, Point $position2): bool {
+        $dx = $position1->x - $position2->x;
+        $dy = $position1->y - $position2->y;
         $distanceSquared = $dx * $dx + $dy * $dy;
-        $radiusSum = $circle1->radius + $circle2->radius;
+        $radiusSum = $radius1 + $radius2;
         return $distanceSquared <= $radiusSum * $radiusSum;
     }
 
     // функция для определения точки пересечения кругов
-    public function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
-        if (!$this->getCirclesIntersect($circle1, $circle2)) {
+    public function getIntersectionPoint(Point $position1, float $radius1, Point $position2, float $radius2): ?Point {
+        if (!$this->getCirclesIntersect($position1, $radius1, $position2, $radius2)) {
             return null; 
         }
 
         // расчет координат центра линии, соединяющей центры кругов
-        $centerX = ($circle1->position->x + $circle2->position->x) / 2;
-        $centerY = ($circle1->position->y + $circle2->position->y) / 2;
+        $centerX = ($position1->x + $position2->x) / 2;
+        $centerY = ($position1->y + $position2->y) / 2;
 
         // расчет расстояния между центрами кругов
-        $distance = sqrt(pow($circle1->position->x - $circle2->position->x, 2) + pow($circle1->position->y - $circle2->position->y, 2));
+        $distance = sqrt(pow($position1->x - $position2->x, 2) + pow($position1->y - $position2->y, 2));
 
         // расчет длины отрезка от центра первого круга до точки пересечения
-        $length1 = ($circle1->radius * $circle1->radius - $circle2->radius * $circle2->radius + $distance * $distance) / (2 * $distance);
+        $length1 = ($radius1 * $radius1 - $radius2 * $radius2 + $distance * $distance) / (2 * $distance);
 
         // вычисление координат точки пересечения
-        $x = $circle1->position->x + (($circle2->position->x - $circle1->position->x) / $distance) * $length1;
-        $y = $circle1->position->y + (($circle2->position->y - $circle1->position->y) / $distance) * $length1;
+        $x = $position1->x + (($position2->x - $position1->x) / $distance) * $length1;
+        $y = $position1->y + (($position2->y - $position1->y) / $distance) * $length1;
 
         return new Point($x, $y);
     }
