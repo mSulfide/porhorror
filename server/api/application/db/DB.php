@@ -294,4 +294,16 @@ class DB {
             [$velocity->x, $velocity->y, $objectId]
         );
     }
+
+    public function equippedSlots($userId) {
+        return $this->queryAll("SELECT * FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId]);
+    }
+    
+    public function getSlotById($slotId) {
+        return $this->query("SELECT * FROM inventory WHERE id = ?", [$slotId]);
+    }
+    
+    public function updateSlotState($slotId, $newState) {
+        $this->execute("UPDATE inventory SET status = ? WHERE id = ?", [$newState, $slotId]);
+    }
 }
