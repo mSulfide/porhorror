@@ -23,6 +23,17 @@ class Game {
         foreach ($this->objects as $object) {
             $object->update($deltaTime); 
         }
+
+        foreach ($this->objects as $objectA) {
+            foreach ($this->objects as $objectB) {
+                if ($objectA !== $objectB) {
+                    if ($this->math->getCirclesIntersect($objectA, $objectB)) {
+                        $objectA->image = 'tas1';
+                        $objectB->image = 'tas1';
+                    }
+                }
+            }
+        }
     }
 
     public function updateScene($userId, $hash) {

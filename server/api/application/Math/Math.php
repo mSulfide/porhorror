@@ -3,67 +3,62 @@
 require_once 'Point.php';
 
 class Math {
-    public function add(Point $a, Point $b): Point {
+    public function add($a, $b) {
         return new Point($a->x + $b->x, $a->y + $b->y);
     }
 
-    public function sub(Point $a, Point $b): Point {
+    public function sub($a, $b) {
         return new Point($a->x - $b->x, $a->y - $b->y);
     }
 
-    public function mlt(Point $a, float $p): Point {
+    public function mlt($a, $p) {
         return new Point($a->x * $p, $a->y * $p);
     }
 
-    public function dot(Point $a, Point $b): float {
+    public function dot($a, $b) {
         return $a->x * $b->x + $a->y * $b->y;
     }
 
-    public function smod(Point $a): float {
+    public function smod($a) {
         return $this->dot($a, $a);
     }
 
-    public function modl(Point $a): float {
+    public function modl($a) {
         return sqrt($this->smod($a));
     }
 
-    public function norm(Point $a): Point {
+    public function norm($a) {
         $length = $this->modl($a);
         return $length !== 0 ? $this->mlt($a, 1 / $length) : new Point(0, 0);
     }
 
-    public function zero(): Point {
+    public function zero() {
         return new Point(0, 0);
     }
 
-    public function one(): Point {
+    public function one() {
         return new Point(1, 1);
     }
 
-    public function getCirclesIntersect(Point $position1, Point $position2): bool {
-        $dx = $position1->x - $position2->x;
-        $dy = $position1->y - $position2->y;
-        $distanceSquared = $dx * $dx + $dy * $dy;
-        $radiusSum = $radius1 + $radius2;
+    public function getCirclesIntersect($circleA, $circleB) {
+        $distanceSquared = $this->smod($this->sub($circleA->position, $circleB->position));
+        $radiusSum = $circleA->$radius + $circleB->$radius;
         return $distanceSquared <= $radiusSum * $radiusSum;
     }
 
     // функция для определения точки пересечения кругов
-    public function getIntersectionPoint(Point $position1, float $radius1, Point $position2, float $radius2): ?Point {
-        if (!$this->getCirclesIntersect($position1, $radius1, $position2, $radius2)) {
+    public function getIntersectionPoint($circleA, $circleB) {
+        if (!$this->getCirclesIntersect($circleA, $circleB)) {
             return null; 
         }
 
-        $centerX = ($position1->x + $position2->x) / 2;
-        $centerY = ($position1->y + $position2->y) / 2;
+        $distance = $this->modl($this->sub($circleA->position, $circleB->position));
 
-        $distance = sqrt(pow($position1->x - $position2->x, 2) + pow($position1->y - $position2->y, 2));
-
-        $length1 = ($radius1 * $radius1 - $radius2 * $radius2 + $distance * $distance) / (2 * $distance);
+        $length = ($circleA->radius * $circleA->radius - $circleB->radius * $circleB->radius + $distance * $distance) / (2 * $distance);
 
         // вычисление координат точки пересечения
-        $x = $position1->x + (($position2->x - $position1->x) / $distance) * $length1;
-        $y = $position1->y + (($position2->y - $position1->y) / $distance) * $length1;
+        $x = $circleA->position->x + (($circleB->position->x - $circleA->position->x) / $distance) * $length;
+        $y = $circleA->position->y + (($circleB->position->y - $circleA->position->y) / $distance) * $length;
 
         return new Point($x, $y);
     }
