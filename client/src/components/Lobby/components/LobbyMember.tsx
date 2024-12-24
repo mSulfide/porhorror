@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { ServerContext } from "../../../App";
-import { TMember } from "../../../services/server/types"
-import { EStatus } from "../Lobby";
+import { EMemberStatus, TMember } from "../../../services/server/types"
 import Button from "../../Button/Button";
 
 interface ILobbyMember {
-    status: EStatus;
+    status: EMemberStatus;
     member: TMember;
 }
 
@@ -15,9 +14,9 @@ const LobbyMember: React.FC<ILobbyMember> = ({ member, status }: ILobbyMember) =
     const dropFromLobbyHandler = () => server.dropFromGroup(member.id);
 
     return <div>
-        {member.creator && <span>Создатель: </span>}
+        {member.status === EMemberStatus.creator && <span>Создатель: </span>}
         <span>{member.name}</span>
-        {!member.creator && status === EStatus.creator && <Button onClick={dropFromLobbyHandler} text="Выгнать" />}
+        {member.status !== EMemberStatus.creator && status === EMemberStatus.creator && <Button onClick={dropFromLobbyHandler} text="Выгнать" />}
     </div>
 }
 

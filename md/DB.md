@@ -73,7 +73,7 @@
 | id | integer | PK |
 | lobby_id | integer | |
 | user_id | integer | |
-| is_creator | bool | false by default |
+| status | varchar |  |
 
 
 **Таблица game**
