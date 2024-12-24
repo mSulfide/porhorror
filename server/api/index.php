@@ -31,6 +31,7 @@ function result($params) {
             case 'getInventory': return $app->getInventory($params);
             case 'changeInventory': return $app->changeInventory($params);
             case 'equipItem': return $app->equipItem($params);
+            case 'takeOffItem': return $app->takeOffItem($params);
             // лобби
             case 'updateGroups': return $app->updateGroups($params); // loop
             case 'createGroup': return $app->createGroup($params);

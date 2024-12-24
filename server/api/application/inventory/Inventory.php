@@ -26,4 +26,17 @@ class Inventory {
         }
         return ['error' => 830]; 
     }
+
+    public function takeOffItem($userId, $slotId) {
+        $slot = $this->db->getSlotById($slotId);
+        if ($slot) {
+            if ($slot->user_id === $userId) {
+                $this->db->updateSlotState($slot->id, 'inventory');
+                return true; 
+            }
+            return ['error' => 821]; 
+        }
+        
+        return ['error' => 820]; 
+    }
 }

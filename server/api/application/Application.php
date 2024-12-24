@@ -131,6 +131,17 @@ class Application {
         return ['error' => 242];
     }
 
+    public function takeOffItem($params) {
+        if ($params['token'] && $params['slotId']) {
+            $user = $this->user->getUser ($params['token']);
+            if ($user) {
+                return $this->inventory->takeOffItem($user->id, $params['slotId']);
+            }
+            return ['error' => 705]; 
+        }
+        return ['error' => 242]; 
+    }
+
     //лобби
     public function startGame($params) {
         if ($params['token']) {
