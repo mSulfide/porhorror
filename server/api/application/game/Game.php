@@ -2,7 +2,6 @@
 
 require_once ('gameObject\GameObject.php');
 require_once ('gamer\Gamer.php');
-require_once ('math\GMath.php');
 
 class Game {
     private $db;
