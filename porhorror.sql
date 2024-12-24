@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 22 2024 г., 19:12
+-- Время создания: Дек 24 2024 г., 13:39
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -20,18 +20,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `porhorror`
 --
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `exchange`
---
-
-CREATE TABLE `exchange` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -100,7 +88,6 @@ CREATE TABLE `game_mobs` (
 CREATE TABLE `game_objects` (
   `id` int NOT NULL,
   `game_id` int NOT NULL,
-  `image` varchar(32) NOT NULL DEFAULT 'tas',
   `x` float NOT NULL DEFAULT '0',
   `y` float NOT NULL DEFAULT '0',
   `velocity_x` float NOT NULL DEFAULT '0',
@@ -148,7 +135,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
-(1, '6a3fe40ac0cd020c168534b13a4da91d', 'f97fa6062e7cd67b1d49ffc41241f988');
+(1, '6a3fe40ac0cd020c168534b13a4da91d', '6f7a405cf5ff6d8ddabb010d8592b3aa');
 
 -- --------------------------------------------------------
 
@@ -201,7 +188,7 @@ CREATE TABLE `lobby_members` (
   `id` int NOT NULL,
   `lobby_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `is_creator` tinyint(1) NOT NULL DEFAULT '0'
+  `status` varchar(52) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'member'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -237,7 +224,7 @@ CREATE TABLE `users` (
   `login` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `name` varchar(32) NOT NULL,
-  `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+  `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -251,17 +238,12 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (4, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', 'b3f17bc7b072d2e9253740df93b0d00b'),
 (5, 'admin', 'bbad8d72c1fac1d081727158807a8798', 'Админчик', 'd3ed3676021d70ecdfefa203462ccced'),
 (6, 'OREL', '2da7d9988b511f3e37808c8636abcd2c', 'Лев', '31d359b58e0aced66a482d2d2e2f08eb'),
-(7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01');
+(7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01'),
+(8, 'doke', '121c01a07610cf1673695f91bffb3774', 'doke', '6add8e75182e41a9e565a6e6effadeea');
 
 --
 -- Индексы сохранённых таблиц
 --
-
---
--- Индексы таблицы `exchange`
---
-ALTER TABLE `exchange`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `game`
@@ -346,22 +328,16 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT для таблицы `exchange`
---
-ALTER TABLE `exchange`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT для таблицы `game`
 --
 ALTER TABLE `game`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
@@ -379,7 +355,7 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
@@ -409,13 +385,13 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
@@ -427,7 +403,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

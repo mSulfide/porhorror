@@ -139,7 +139,7 @@ class DB {
         $users = $this->queryAll('SELECT
                     u.id AS id,
                     u.name AS name,
-                    lm.is_creator AS creator
+                    lm.status AS status  
                 FROM users AS u
                 INNER JOIN lobby_members AS lm ON lm.lobby_id=?
                 WHERE u.id = lm.user_id
@@ -161,7 +161,7 @@ class DB {
 
     public function addMemberToLobby($lobbyId, $userId, $isCreator) {
         $this->execute(
-            "INSERT INTO lobby_members (lobby_id, user_id, is_creator) VALUES (?, ?, ?)",
+            "INSERT INTO lobby_members (lobby_id, user_id, status) VALUES (?, ?, ?)", 
             [$lobbyId, $userId, $isCreator]
         );
     }
