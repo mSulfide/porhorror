@@ -20,9 +20,6 @@ class Game {
         foreach ($this->gamers as $gamer) {
             $gamer->update($deltaTime, $this->objects);
         }
-        foreach ($this->objects as $object) {
-            $object->update($deltaTime); 
-        }
     }
 
     public function updateScene($userId, $hash) {

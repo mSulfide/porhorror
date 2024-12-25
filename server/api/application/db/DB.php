@@ -228,6 +228,11 @@ class DB {
         return $objects;
     }
 
+    public function getGameObject($objectId) {
+        $object = $this->query("SELECT * FROM game_objects WHERE id=?", [$objectId]);
+        return $object;
+    }
+
     public function getGamers($gameId) {
         $gamers = $this->queryAll("SELECT
                 g.id,
@@ -256,10 +261,6 @@ class DB {
     public function updateTimestamp($gameId, $time) {
         $this->execute("UPDATE game SET timestamp=? WHERE id=?", [$time, $gameId]);
     }
-
-    public function setPosition($objectId, $position) {
-        $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
-    }
     
     public function updateGamerDirection($gamerId, $axisX, $axisY) {
         $this->execute(
@@ -280,11 +281,23 @@ class DB {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
 
-    public function saveVelocity($objectId, $velocity) {
+    public function setPosition($objectId, $position) {
+        $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
+    }
+
+    public function setVelocity($objectId, $velocity) {
         $this->execute(
             "UPDATE game_objects SET velocity_x=?, velocity_y=? WHERE id=?", 
             [$velocity->x, $velocity->y, $objectId]
         );
+    }
+
+    public function setAngle($objectId, $angle) {
+        $this->execute("UPDATE game_objects SET angle=? WHERE id=?", [$angle, $objectId]);
+    }
+
+    public function setRadius($objectId, $radius) {
+        $this->execute("UPDATE game_objects SET radius=? WHERE id=?", [$radius, $objectId]);
     }
 
     public function equippedSlots($userId) {
