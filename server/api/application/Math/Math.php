@@ -117,11 +117,6 @@ class Math {
 
     public function getAngle($point) {
         $angle = atan2($point->y, $point->x);
-        
-        if ($angle < 0) {
-            $angle += 2 * M_PI; 
-        }
-        
         return $angle;
     }
 }
