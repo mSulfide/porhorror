@@ -21,18 +21,22 @@ class GameObject {
 
     // сеттеры
     public function setPosition($position) {
+        $this->position = $position;
         $this->db->setPosition($this->id, $position);
     }
 
     public function setVelocity($velocity) {
+        $this->velocity = $velocity;
         $this->db->setVelocity($this->id, $velocity);
     }
 
     public function setAngle($angle) {
+        $this->angle = $angle;
         $this->db->setVelocity($this->id, $angle);
     }
 
     public function setRadius($radius) {
+        $this->radius = $radius;
         $this->db->setVelocity($this->id, $radius);
     }
 
