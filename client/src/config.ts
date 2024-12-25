@@ -25,7 +25,7 @@ const CONFIG = {
 
     CHAT_TIMESTAMP: 200, //ms
     LOBBY_LIST_TIMESTAMP: 300, //ms
-    GAME_TIMESTAMP: 75, //ms
+    GAME_TIMESTAMP: 1000, //ms
 
     SPRITE_SIZE: 64, // размер спрайта в пикселях
     LINE_OF_SPRITES: 10, // количество спрайтов в карте спрайтов

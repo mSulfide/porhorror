@@ -12,26 +12,18 @@ class Scene {
         this.scene = scene;
     }
 
-    update(FPS: number): void {
+    update(deltaTime: number): void {
         // GAME_TIMESTAMP: 1000, //ms
         // FPS - частота отрисовки экрана
         // TIME_REQUEST - время ответа сервера
         /*
-        
         dFPS = (GAME_TIMESTAMP + TIME_REQUEST) / FPS
         
             update
               |
               v
         0_____|_____|_____|_____|_____|_____|____1000 + TIME_REQUEST
-        
-        
-        
         */
-
-        const deltaTime = (Date.now() - this.dTimeStamp) / 1000;
-        this.dTimeStamp = Date.now();
-
         this.scene.forEach(
             transform => {
                 transform.position.x = transform.position.x + transform.velocity.x * deltaTime;

@@ -31,8 +31,8 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         const renderers: IRenderer[] = [];
         const virtualScene = new Scene();
 
-        const update = () => {
-            virtualScene.update();
+        const update = (deltaTime: number) => {
+            virtualScene.update(deltaTime);
             screen.render(renderers)
         }
 
