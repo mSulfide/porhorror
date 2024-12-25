@@ -12,7 +12,6 @@ class Server {
     lobbyInterval: NodeJS.Timer | null = null;
     gameInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
-    averageRequestTime: number = 0;
 
     constructor(store: Store) {
         this.store = store;
@@ -29,7 +28,7 @@ class Server {
             }
             const response = await fetch(`${this.HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
             const endTime = Date.now();
-            this.averageRequestTime = Math.floor((this.averageRequestTime + endTime - startTime) / 2);
+            this.store.setResponseTime(endTime - startTime);
 
             const answer: TAnswer<T> = await response.json();
             if (answer.result === 'ok' && answer.data) {
