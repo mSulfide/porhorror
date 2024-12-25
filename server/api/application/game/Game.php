@@ -30,7 +30,7 @@ class Game {
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
                 $objects = $this->db->getGameObjects($game->id);
                 foreach ($objects as $object) {
-                    $this->objects[] = new GameObject($this->db, $object);
+                    //$this->objects[] = new GameObject($this->db, $this->id);
                 }
 
                 $gamers = $this->db->getGamers($game->id);
