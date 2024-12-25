@@ -61,4 +61,9 @@ class GameObject {
         $this->position = $this->math->add($this->position, $offset);
         $this->setPosition($this->position);
     }
+
+    public function lookAt($point) {
+        $this->angle = $this->math->getAngle($point);
+        $this->setAngle($this->angle);
+    }
 }
