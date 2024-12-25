@@ -25,4 +25,20 @@ class Exchanger {
         }
         return ['error'=> '809'];
     }
+
+    public function addLotComment($token, $lotId, $comment) {
+        $user = $this->db->getUserByToken($token);
+        if (!$user) {
+            return ['error' => 705];
+        }
+
+        $lot = $this->db->getLotById($lotId);
+        if (!$lot) {
+            return ['error' => 807]; 
+        }
+
+        $this->db->addLotComment($lotId, $user->id, $comment);
+        return true;
+    }
+
 }
