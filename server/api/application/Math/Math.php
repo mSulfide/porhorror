@@ -109,9 +109,19 @@ class Math {
     }
 
     // производная
-    public static function derivative($func, $x, $eps) {
+    public function derivative($func, $x, $eps) {
         $fx = $func($x);
         $f_plus_eps = $func($x + $eps);
         return (($f_plus_eps - $fx) / $eps);
+    }
+
+    public function getAngle($point) {
+        $angle = atan2($point->y, $point->x);
+        
+        if ($angle < 0) {
+            $angle += 2 * M_PI; 
+        }
+        
+        return $angle;
     }
 }
