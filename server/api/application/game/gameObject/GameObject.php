@@ -10,23 +10,15 @@ class GameObject {
         $this->db = $db;
         $this->id = $id;
 
-        $this->paramsFromDB();
+        $params = $this->db->getGameObject($this->id);
+        $this->position = new Point($params->x, $params->y);
+        $this->velocity = new Point($params->velocity_x, $params->velocity_y);
+        $this->angle = $params->angle;
+        $this->radius = $params->radius;
 
         $this->math = new Math();
     }
 
-    private function paramsFromDB() {
-        $params = $this->db->getGameObject($this->id);
-        if ($params) {
-            foreach ($params as $param) {
-                $this->position = new Point($param->x, $param->y);
-                $this->velocity = new Point($param->velocity_x, $param->velocity_y);
-                $this->angle = $param->angle;
-                $this->radius = $param->radius;
-            }
-        }
-    }
-    
     // сеттеры
     public function setPosition($position) {
         $this->db->setPosition($this->id, $position);
