@@ -10,7 +10,7 @@ const useLoop = (): [(loop: (deltaTime: number) => void) => void, () => void] =>
     
     const startLoop = (loop: (deltaTime: number) => void) => {
         const dTime = Date.now();
-        loop((server.averageRequestTime + GAME_TIMESTAMP) * (dTime - time));
+        loop((dTime - time) / 1000);
         time = dTime;
         idLoop = window.requestAnimationFrame(() => startLoop(loop));
     }
