@@ -10,7 +10,7 @@ require_once ('game/Game.php');
 require_once ('exchanger/Exchanger.php');
 
 class Application {
-    private $user, $chat, $inventory, $lobby, $game, $exchanger;
+    private $user, $chat, $inventory, $lobby, $game, $exchanger, $math;
 
     function __construct() {
         $db = new DB();
@@ -20,6 +20,7 @@ class Application {
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);
         $this->exchanger = new Exchanger($db);
+        $this->math = new Math();
     }
 
     public function autoLogin($params) {
@@ -118,6 +119,28 @@ class Application {
 
     public function changeInventory($params) {
         return ['error' => 103];
+    }
+    
+    public function equipItem($params) {
+        if ($params['token'] && $params['slotId']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->inventory->equipItem($user->id, $params['slotId']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function takeOffItem($params) {
+        if ($params['token'] && $params['slotId']) {
+            $user = $this->user->getUser ($params['token']);
+            if ($user) {
+                return $this->inventory->takeOffItem($user->id, $params['slotId']);
+            }
+            return ['error' => 705]; 
+        }
+        return ['error' => 242]; 
     }
 
     //лобби
@@ -245,6 +268,11 @@ class Application {
             return ['error' => 705];
         }
         return ['error' => 242];
+    }
+
+    // для проверок
+    public function check($params) {
+        return $this->math->check();
     }
 
     //обменник

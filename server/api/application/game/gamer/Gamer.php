@@ -5,13 +5,8 @@ class Gamer {
     public float $axisX, $axisY;
     public bool $isAction;
 
-    function __construct($params, $objects) {
-        foreach ($objects as $object) {
-            if ($object->id === $params->objectId) {
-                $this->object = $object;
-                break;
-            }
-        }
+    function __construct($params, $object) {
+        $this->object = $object;
         $this->axisX = $params->axisX;
         $this->axisY = $params->axisY;
         $this->isAction = $params->isAction;

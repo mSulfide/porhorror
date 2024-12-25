@@ -139,7 +139,7 @@ class DB {
         $users = $this->queryAll('SELECT
                     u.id AS id,
                     u.name AS name,
-                    lm.is_creator AS creator
+                    lm.status AS status  
                 FROM users AS u
                 INNER JOIN lobby_members AS lm ON lm.lobby_id=?
                 WHERE u.id = lm.user_id
@@ -161,7 +161,7 @@ class DB {
 
     public function addMemberToLobby($lobbyId, $userId, $isCreator) {
         $this->execute(
-            "INSERT INTO lobby_members (lobby_id, user_id, is_creator) VALUES (?, ?, ?)",
+            "INSERT INTO lobby_members (lobby_id, user_id, status) VALUES (?, ?, ?)", 
             [$lobbyId, $userId, $isCreator]
         );
     }
@@ -225,14 +225,10 @@ class DB {
 
     public function getGameObjects($gameId) {
         $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
-        $answer = [];
-        foreach ($objects as $object) {
-            $answer[] = new GameObject($this, $object);
-        }
-        return $answer;
+        return $objects;
     }
 
-    public function getGamers($gameId, $objects) {
+    public function getGamers($gameId) {
         $gamers = $this->queryAll("SELECT
                 g.id,
                 g.user_id AS userId,
@@ -245,12 +241,8 @@ class DB {
             FROM gamers AS g
             INNER JOIN game_objects AS go ON g.object_id=go.id
             WHERE go.game_id=?
-        ", [$gameId]);
-        $answer = [];
-        foreach ($gamers as $gamer) {
-            $answer[] = new Gamer($gamer, $objects);
-        }
-        return $answer;
+        ", [$gameId]);    
+        return $gamers;
     }
 
     public function getGameById($gameId) {
@@ -294,6 +286,7 @@ class DB {
             [$velocity->x, $velocity->y, $objectId]
         );
     }
+//<<<<<< HEAD
     public function getLotById($lotId) {
         
         return $this->query("SELECT * FROM lots WHERE id = ?", [$lotId]);
@@ -304,4 +297,18 @@ class DB {
         $this->execute("DELETE FROM lots WHERE id = ?", [$lotId]);
     }
     
+//=======
+
+    public function equippedSlots($userId) {
+        return $this->queryAll("SELECT * FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId]);
+    }
+    
+    public function getSlotById($slotId) {
+        return $this->query("SELECT * FROM inventory WHERE id = ?", [$slotId]);
+    }
+    
+    public function updateSlotState($slotId, $newState) {
+        $this->execute("UPDATE inventory SET status = ? WHERE id = ?", [$newState, $slotId]);
+    }
+//>>>>>>> develop
 }

@@ -18,7 +18,7 @@ class GameObject {
         $this->radius = $params->radius;
         $this->angle = $params->angle;
 
-        $this->math = new GMath();
+        $this->math = new Math();
     }
 
     function __destruct() {

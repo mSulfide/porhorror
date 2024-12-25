@@ -1,15 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import { Button } from '..';
-import { ELobbyStatus, TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types";
+import { ELobbyStatus, EMemberStatus, TLobbies, TLobbiesResponse, TLobby } from "../../services/server/types";
 import LobbyItem from './components/LobbyItem';
 import LobbyInfo from './components/LobbyInfo';
 import './Lobby.scss';
-export enum EStatus {
-    none,
-    member,
-    creator
-}
 
 export interface ILobby {
     setGamePage: () => void;
@@ -50,11 +45,7 @@ const Lobby: React.FC<ILobby> = ({ setGamePage }: ILobby) => {
 
     const currentLobby = lobbies.find(lobby => lobby.members.findIndex(member => member.id === user.id) > -1);
 
-    const userStatus: EStatus = !currentLobby ?
-        EStatus.none :
-        currentLobby.members.find(member => member.id === user.id)?.creator ?
-            EStatus.creator :
-            EStatus.member;
+    const userStatus = currentLobby?.members.find(member => member.id === user.id)?.status || EMemberStatus.none;
 
     return <div className="wrapper-lobby">
         {currentLobby && <LobbyInfo lobby={currentLobby} status={userStatus} />}

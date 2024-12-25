@@ -2,7 +2,6 @@
 
 require_once ('gameObject\GameObject.php');
 require_once ('gamer\Gamer.php');
-require_once ('math\GMath.php');
 
 class Game {
     private $db;
@@ -29,13 +28,29 @@ class Game {
     public function updateScene($userId, $hash) {
         $game = $this->db->getGameById($this->db->getGamerByUserId($userId)->game_id);
         if ($game) {
-            $this->objects = $this->db->getGameObjects($game->id);
-            $this->gamers = $this->db->getGamers($game->id, $this->objects);
             $time = $this->getTime($game->start_time);
             $deltaTime = $time - $game->timestamp;
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
+                $objects = $this->db->getGameObjects($game->id);
+                foreach ($objects as $object) {
+                    $this->objects[] = new GameObject($this->db, $object);
+                }
+
+                $gamers = $this->db->getGamers($game->id);
+                foreach ($gamers as $gamer) {
+                    $currentObject = null;
+                    foreach ($this->objects as $object) {
+                        if ($object->id === $gamer->objectId) {
+                            $currentObject = $object;
+                            break;
+                        }
+                    }
+                    if ($currentObject) {
+                        $this->gamers[] = new Gamer($gamer, $currentObject);
+                    }
+                }
+
                 $this->update($deltaTime / 1000);
-                $this->db->updateGameHash(md5(rand()), $game->id);
                 $this->db->updateTimestamp($game->id, $time);
             }
             if ($hash === $game->hash) {
@@ -45,6 +60,7 @@ class Game {
             }
             return [
                 'scene' => $this->objects,
+                'gamers' => $this->gamers,
                 'hash' => $game->hash
             ];
         }
@@ -55,6 +71,7 @@ class Game {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $this->db->action($userId);
+            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
             return true;
         }
         return ['error'=> 810];
@@ -64,16 +81,17 @@ class Game {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $magnitude = sqrt($axisX * $axisX + $axisY * $axisY);
-        
-        if ($magnitude > 0) { 
-            $xEllipse = $axisX / $magnitude; 
-            $yEllipse = $axisY / $magnitude; 
-        } else {
-            $xEllipse = 0; 
-            $yEllipse = 0; 
-        }
+            
+            if ($magnitude > 0) { 
+                $xEllipse = $axisX / $magnitude; 
+                $yEllipse = $axisY / $magnitude; 
+            } else {
+                $xEllipse = 0; 
+                $yEllipse = 0; 
+            }
                    
             $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
+            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
         
             return true;
         }

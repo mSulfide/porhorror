@@ -40,8 +40,13 @@ export type TInventory = {
     slots: TItem[];
 }
 
+export enum EMemberStatus {
+    none = 'none',
+    member = 'member',
+    creator = 'creator'
+}
 export type TMember = Omit<TUser, 'token'> & {
-    creator: boolean;
+    status: EMemberStatus;
 }
 
 export enum ELobbyStatus {

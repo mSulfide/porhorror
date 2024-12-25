@@ -30,6 +30,8 @@ function result($params) {
             // инвентарь
             case 'getInventory': return $app->getInventory($params);
             case 'changeInventory': return $app->changeInventory($params);
+            case 'equipItem': return $app->equipItem($params);
+            case 'takeOffItem': return $app->takeOffItem($params);
             // лобби
             case 'updateGroups': return $app->updateGroups($params); // loop
             case 'createGroup': return $app->createGroup($params);
@@ -46,6 +48,10 @@ function result($params) {
             case 'drop': return $app->drop($params);
             case 'pickup': return $app->pickup($params);
             case 'action': return $app->action($params);
+
+            // для проверок
+            case 'check': return $app->check($params);
+
             //обменник
             case 'createLot': return $app->createLot($params);
             case 'deleteLot': return $app->deleteLot($params);

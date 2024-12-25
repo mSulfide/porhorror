@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import { ServerContext } from '../../../App';
 import { Button } from '../..';
-import { TLobby } from "../../../services/server/types";
-import { EStatus } from '../Lobby';
+import { EMemberStatus, TLobby } from "../../../services/server/types";
 
 interface ILobbyItem {
     lobby: TLobby;
-    status: EStatus;
+    status: EMemberStatus;
 }
 
 const LobbyItem: React.FC<ILobbyItem> = ({ lobby, status }: ILobbyItem) => {
@@ -14,10 +13,10 @@ const LobbyItem: React.FC<ILobbyItem> = ({ lobby, status }: ILobbyItem) => {
 
     const joinToLobbyHandler = async () => {
         switch (status) {
-            case EStatus.creator:
+            case EMemberStatus.creator:
                 await server.deleteGroup();
                 break;
-            case EStatus.member:
+            case EMemberStatus.member:
                 await server.leaveGroup();
                 break;
         }

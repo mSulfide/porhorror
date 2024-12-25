@@ -1,13 +1,12 @@
 import { useContext } from "react";
 import { ServerContext } from "../../../App";
-import { ELobbyStatus, TLobby } from "../../../services/server/types";
+import { ELobbyStatus, EMemberStatus, TLobby } from "../../../services/server/types";
 import Button from "../../Button/Button";
 import LobbyMember from "./LobbyMember";
-import { EStatus } from "../Lobby";
 
 interface ILobbyInfo {
     lobby: TLobby;
-    status: EStatus;
+    status: EMemberStatus;
 }
 
 const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
@@ -18,11 +17,11 @@ const LobbyInfo: React.FC<ILobbyInfo> = ({ lobby, status }: ILobbyInfo) => {
     return <>
         <span>{`Лобби ${lobby.name}`}</span>
         {lobby.members.map((member, index) => <LobbyMember key={index} member={member} status={status} />)}
-        {lobby.status === ELobbyStatus.open && (status === EStatus.creator ?
+        {lobby.status === ELobbyStatus.open && (status === EMemberStatus.creator ?
             <Button onClick={deleteLobbyHandler} text="Удалить группу" /> :
             <Button onClick={leaveLobbyHandler} text="Покинуть группу" />
         )}
-        {lobby.status === ELobbyStatus.open && status === EStatus.creator && <Button onClick={startGameHandler} text="Запустить игру" />}
+        {lobby.status === ELobbyStatus.open && status === EMemberStatus.creator && <Button onClick={startGameHandler} text="Запустить игру" />}
     </>;
 }
 
