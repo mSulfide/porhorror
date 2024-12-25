@@ -1,8 +1,11 @@
-const useLoop = (): [(loop: () => void) => void, () => void] => {
+const useLoop = (): [(loop: (deltaTime: number) => void) => void, () => void] => {
     let idLoop: number;
+    let time = Date.now();
     
-    const startLoop = (loop: () => void) => {
-        loop();
+    const startLoop = (loop: (deltaTime: number) => void) => {
+        const dTime = Date.now();
+        loop((dTime - time) / 1000);
+        time = dTime;
         idLoop = window.requestAnimationFrame(() => startLoop(loop));
     }
     const stopLoop = () => window.cancelAnimationFrame(idLoop);

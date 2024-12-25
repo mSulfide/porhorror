@@ -4,44 +4,44 @@ require_once 'Circle.php';
 require_once 'Point.php';
 
 class Math {
-    public function add(Point $a, Point $b): Point {
+    public function add($a, $b) {
         return new Point($a->x + $b->x, $a->y + $b->y);
     }
 
-    public function sub(Point $a, Point $b): Point {
+    public function sub($a, $b) {
         return new Point($a->x - $b->x, $a->y - $b->y);
     }
 
-    public function mlt(Point $a, float $p): Point {
+    public function mlt(Point $a, float $p) {
         return new Point($a->x * $p, $a->y * $p);
     }
 
-    public function dot(Point $a, Point $b): float {
+    public function dot($a, $b) {
         return $a->x * $b->x + $a->y * $b->y;
     }
 
-    public function smod(Point $a): float {
+    public function smod($a) {
         return $this->dot($a, $a);
     }
 
-    public function modl(Point $a): float {
+    public function modl($a) {
         return sqrt($this->smod($a));
     }
 
-    public function norm(Point $a): Point {
+    public function norm($a) {
         $length = $this->modl($a);
         return $length !== 0 ? $this->mlt($a, 1 / $length) : new Point(0, 0);
     }
 
-    public function zero(): Point {
+    public function zero() {
         return new Point(0, 0);
     }
 
-    public function one(): Point {
+    public function one() {
         return new Point(1, 1);
     }
 
-    public function getCirclesIntersect(Circle $circle1, Circle $circle2): bool {
+    public function getCirclesIntersect($circle1, $circle2): bool {
         $dx = $circle1->position->x - $circle2->position->x;
         $dy = $circle1->position->y - $circle2->position->y;
         $distanceSquared = $dx * $dx + $dy * $dy;
@@ -50,43 +50,13 @@ class Math {
     }
 
     public function check() {
-        $testCases = [
-            [
-                'circle1' => new Circle(new Point(0, 0), 5), 
-                'circle2' => new Circle(new Point(3, 4), 5), 
-                'expected' => true, 
-            ],
-            [
-                'circle1' => new Circle(new Point(0, 0), 1), 
-                'circle2' => new Circle(new Point(3, 3), 1),
-                'expected' => false, 
-            ],
-            [
-                'circle1' => new Circle(new Point(1, 1), 2), 
-                'circle2' => new Circle(new Point(1, 3), 2), 
-                'expected' => true, 
-            ],
-            [
-                'circle1' => new Circle(new Point(0, 0), 1), 
-                'circle2' => new Circle(new Point(0, 3), 1),
-                'expected' => false,
-            ],
-        ];
+        $answer = $this->mlt(new Point(1, 1), 5);
 
-        foreach ($testCases as $testCase) {
-            $result = $this->getCirclesIntersect($testCase['circle1'], $testCase['circle2']);
-            if ($result !== $testCase['expected']) {
-                return [
-                    'message' => "всё херня давай по новой"
-                ];
-            }
-        }
-
-        return ['success' => 'всё норм живём живём'];
+        return ['answer' => $answer];
     }
 
     // функция для определения точки пересечения кругов
-    public function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
+    public function getIntersectionPoint($circle1, $circle2) {
         if (!$this->getCirclesIntersect($circle1, $circle2)) {
             return null; 
         }
@@ -109,9 +79,14 @@ class Math {
     }
 
     // производная
-    public static function derivative($func, $x, $eps) {
+    public function derivative($func, $x, $eps) {
         $fx = $func($x);
         $f_plus_eps = $func($x + $eps);
         return (($f_plus_eps - $fx) / $eps);
+    }
+
+    public function getAngle($point) {
+        $angle = atan2($point->y, $point->x);
+        return $angle;
     }
 }

@@ -1,18 +1,42 @@
 <?php
 
-class Gamer {
-    public GameObject $object;
-    public float $axisX, $axisY;
-    public bool $isAction;
+class Gamer extends GameObject {
+    private $db;
+    private int $id, $userId;
+    private GameObject $object;
+    private float $axisX, $axisY;
+    private bool $isAction;
+    
+    function __construct($db, $id) {
+        $params = $db->getGamerById($id);
 
-    function __construct($params, $object) {
-        $this->object = $object;
-        $this->axisX = $params->axisX;
-        $this->axisY = $params->axisY;
-        $this->isAction = $params->isAction;
+        $this->axisX = $params->axis_x;
+        $this->axisY = $params->axis_y;
+        $this->isAction = $params->is_action;
+
+        $this->db = $db;
+        $this->id = $id;
+
+        parent::__construct($db, $params->object_id);
     }
 
-    public function update($deltaTime) {
-        $this->object->velocity = new Point($this->axisX, $this->axisY);
+    // сеттер
+    public function setIsAction($isAction) {
+        $this->isAction = $isAction;
+        $this->db->setIsAction($this->userId, $isAction); 
+    }
+
+    public function action() {
+        if ($this->isAction === true) {
+            $this->setIsAction(false);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function move($deltaTime) {
+        $this->setVelocity(new Point($this->axisX, $this->axisY));
+        parent::move($deltaTime);
     }
 }

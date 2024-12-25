@@ -10,10 +10,15 @@ class Store {
     lobbyHash: string = 'empty lobby hash';
     gameHash: string = 'empty game hash';
     inventory: TItem[] = [];
+    responseTime: number = 0;
     resources: Resources = new Resources();
 
     loadResources(onload: () => void) {
         this.resources.load(onload);
+    }
+
+    setResponseTime(responseTime: number) {
+        this.responseTime = Math.floor((this.responseTime + responseTime) / 2);
     }
 
     setToken(token: string): void {
