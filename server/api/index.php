@@ -48,6 +48,10 @@ function result($params) {
             case 'drop': return $app->drop($params);
             case 'pickup': return $app->pickup($params);
             case 'action': return $app->action($params);
+
+            // для проверок
+            case 'check': return $app->check($params);
+
             //обменник
             case 'createLot': return $app->createLot($params);
             case 'deleteLot': return $app->deleteLot($params);
