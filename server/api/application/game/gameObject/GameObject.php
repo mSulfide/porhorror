@@ -2,35 +2,68 @@
 
 class GameObject {
     private $db, $math;
-    public int $id;
+    private int $id;
+    private Point $position, $velocity;
+    private float $radius, $angle;
 
-    public Point $position, $velocity;
-    public int $gameId;
-    public float $radius, $angle;
-
-    function __construct($db, $params) {
+    function __construct($db, $id) {
         $this->db = $db;
-        $this->id = $params->id;
-        $this->image = $params->image;
+        $this->id = $id;
+
+        $params = $this->db->getGameObject($this->id);
         $this->position = new Point($params->x, $params->y);
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
-        $this->gameId = $params->game_id;
-        $this->radius = $params->radius;
         $this->angle = $params->angle;
+        $this->radius = $params->radius;
 
         $this->math = new Math();
     }
 
-    function __destruct() {
-        $this->db->saveVelocity($this->id, $this->velocity);
-        $this->db->setPosition($this->id, $this->position);
+    // сеттеры
+    public function setPosition($position) {
+        $this->position = $position;
+        $this->db->setPosition($this->id, $position);
     }
-    
-    public function update($deltaTime) {
-        $this->move($this->math->mlt($this->velocity, $deltaTime));
+
+    public function setVelocity($velocity) {
+        $this->velocity = $velocity;
+        $this->db->setVelocity($this->id, $velocity);
+    }
+
+    public function setAngle($angle) {
+        $this->angle = $angle;
+        $this->db->setVelocity($this->id, $angle);
+    }
+
+    public function setRadius($radius) {
+        $this->radius = $radius;
+        $this->db->setVelocity($this->id, $radius);
+    }
+
+    // геттеры
+    public function getPosition() {
+        return $this->position;
+    }
+
+    public function getVelocity() {
+        return $this->velocity;
+    }
+
+    public function getAngle() {
+        return $this->angle;
+    }
+
+    public function getRadius() {
+        return $this->radius;
     }
 
     public function move($offset) {
         $this->position = $this->math->add($this->position, $offset);
+        $this->setPosition($this->position);
+    }
+
+    public function lookAt($point) {
+        $angle = $this->math->getAngle($this->math->sub($point, $this->position));
+        $this->setAngle($angle);
     }
 }
