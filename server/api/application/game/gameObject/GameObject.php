@@ -59,9 +59,9 @@ class GameObject {
         return $this->radius;
     }
 
-    public function move($offset) {
-        $this->position = $this->math->add($this->position, $offset);
-        $this->setPosition($this->position);
+    public function move($deltaTime) {
+        $offset = $this->math->mlt($this->velocity, $deltaTime);
+        $this->setPosition($this->math->add($this->position, $offset));
     }
 
     public function lookAt($point) {

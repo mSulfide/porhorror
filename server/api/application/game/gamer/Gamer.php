@@ -35,9 +35,8 @@ class Gamer extends GameObject {
         }
     }
 
-    public function move($distance) {
-        $direction = new Point($this->axisX, $this->axisY);
-        $movement = $this->math->mlt($direction, $distance);
-        parent::move($movement);
+    public function move($deltaTime) {
+        $this->setVelocity(new Point($this->axisX, $this->axisY));
+        parent::move($deltaTime);
     }
 }
