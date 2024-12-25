@@ -1,10 +1,12 @@
 <?php
 
 class GameObject {
-    private $db, $math;
+    private $db;
     private int $id;
     private Point $position, $velocity;
     private float $radius, $angle;
+
+    protected $math;
 
     function __construct($db, $id) {
         $this->db = $db;

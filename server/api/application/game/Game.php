@@ -14,12 +14,20 @@ class Game {
         return floor((microtime(true) - $startTime) * 1000);
     }
 
-    private function getGamers($objects) {
-
+    private function getGamers($gameId) {
+        $answer = [];
+        $gamers = $this->db->getGamers($gameId);
+        foreach ($gamers as $gamer) {
+            $answer[] = new Gamer($this->db, $gamer->id);
+        }
+        return $answer;
     }
 
     public function update($deltaTime, $gameId) {
-        
+        $gamers = $this->getGamers($gameId);
+        foreach ($gamers as $gamer) {
+            $gamer->move($deltaTime);
+        }
     }
 
     public function updateScene($userId, $hash) {

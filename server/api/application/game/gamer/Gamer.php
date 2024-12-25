@@ -1,7 +1,7 @@
 <?php
 
 class Gamer extends GameObject {
-    private $math, $db;
+    private $db;
     private int $id, $userId;
     private GameObject $object;
     private float $axisX, $axisY;
@@ -38,6 +38,6 @@ class Gamer extends GameObject {
     public function move($distance) {
         $direction = new Point($this->axisX, $this->axisY);
         $movement = $this->math->mlt($direction, $distance);
-        $this->move($movement);
+        parent::move($movement);
     }
 }
