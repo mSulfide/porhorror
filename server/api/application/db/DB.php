@@ -296,6 +296,10 @@ class DB {
         $this->execute("UPDATE game_objects SET angle=? WHERE id=?", [$angle, $objectId]);
     }
 
+    public function setIsAction($userId, $isAction) {
+        $this->execute("UPDATE gamers SET isAction=? WHERE user_id=?", [$isAction, $userId]);
+    }
+
     public function setRadius($objectId, $radius) {
         $this->execute("UPDATE game_objects SET radius=? WHERE id=?", [$radius, $objectId]);
     }
