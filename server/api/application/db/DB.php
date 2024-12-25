@@ -246,9 +246,13 @@ class DB {
         return $answers;
     }
 
-    public function getGameObject($objectId) {
+    public function getGameObjectById($objectId) {
         $object = $this->query("SELECT * FROM game_objects WHERE id=?", [$objectId]);
         return $object;
+    }
+    
+    public function getGamerById($gamerId) {
+        return $this->query("SELECT * FROM gamers WHERE id=?", [$gamerId]);
     }
 
     public function getGamers($gameId) {

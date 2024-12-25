@@ -10,7 +10,7 @@ class GameObject {
         $this->db = $db;
         $this->id = $id;
 
-        $params = $this->db->getGameObject($this->id);
+        $params = $this->db->getGameObjectById($this->id);
         $this->position = new Point($params->x, $params->y);
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
         $this->angle = $params->angle;

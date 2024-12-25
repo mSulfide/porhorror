@@ -1,24 +1,23 @@
 <?php
 
 class Gamer extends GameObject {
-    private $math;
-    private int $userId;
+    private $math, $db;
+    private int $id, $userId;
     private GameObject $object;
     private float $axisX, $axisY;
     private bool $isAction;
     
-    function __construct($userId) {
-        $this->userId = $userId;
+    function __construct($db, $id) {
+        $params = $db->getGamerById($id);
 
-        $params = $this->db->getGamerByUserId($this->userId);
+        $this->axisX = $params->axis_x;
+        $this->axisY = $params->axis_y;
+        $this->isAction = $params->is_action;
 
-        $this->object = new GameObject(); // а что сюда пихать? типа GameObject($this->db, $params->objectId) ?
+        $this->db = $db;
+        $this->id = $id;
 
-        $this->axisX = $params->axisX;
-        $this->axisY = $params->axisY;
-        $this->isAction = $params->isAction;
-
-        $this->math = new Math();
+        parent::__construct($db, $params->object_id);
     }
 
     // сеттер
@@ -39,10 +38,6 @@ class Gamer extends GameObject {
     public function move($distance) {
         $direction = new Point($this->axisX, $this->axisY);
         $movement = $this->math->mlt($direction, $distance);
-        $this->object->position = $this->math->add($this->object->position, $movement);
-    }
-
-    public function update($deltaTime) {
-        $this->object->velocity = new Point($this->axisX, $this->axisY);
+        $this->move($movement);
     }
 }
