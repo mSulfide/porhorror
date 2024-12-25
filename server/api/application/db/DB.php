@@ -225,7 +225,25 @@ class DB {
 
     public function getGameObjects($gameId) {
         $objects = $this->queryAll("SELECT * FROM game_objects WHERE game_id=?", [$gameId]);
-        return $objects;
+        $answers = [];
+        foreach ($objects as $object) {
+            $answer = new stdClass();
+            $answer->id = $object->id;
+            $answer->gameId = $object->game_id;
+            $answer->image = $object->image;
+            $position = new stdClass();
+            $position->x = $object->x;
+            $position->y = $object->y;
+            $answer->position = $position;
+            $velocity = new stdClass();
+            $velocity->x = $object->velocity_x;
+            $velocity->y = $object->velocity_y;
+            $answer->velocity = $velocity;
+            $answer->radius = $object->radius;
+            $answer->angle = $object->angle;
+            $answers[] = $answer;
+        }
+        return $answers;
     }
 
     public function getGamers($gameId) {
