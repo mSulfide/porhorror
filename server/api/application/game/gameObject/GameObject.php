@@ -63,7 +63,7 @@ class GameObject {
     }
 
     public function lookAt($point) {
-        $this->angle = $this->math->getAngle($this->math->sub($point, $this->position));
+        $angle = $this->math->getAngle($this->math->sub($point, $this->position));
         $this->setAngle($angle);
     }
 }
