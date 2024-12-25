@@ -20,12 +20,17 @@ class Server {
     // посылает запрос и обрабатывает ответ
     private async request<T>(method: string, params: { [key: string]: string } = {}): Promise<T | null> {
         try {
+            const startTime = Date.now();
             params.method = method;
             const token = this.store.getToken();
             if (token) {
                 params.token = token;
             }
             const response = await fetch(`${this.HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
+            const endTime = Date.now();
+
+            console.log(endTime - startTime);
+
             const answer: TAnswer<T> = await response.json();
             if (answer.result === 'ok' && answer.data) {
                 return answer.data;
