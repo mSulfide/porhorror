@@ -42,7 +42,7 @@ class Math {
 
     public function getCirclesIntersect($circleA, $circleB) {
         $distanceSquared = $this->smod($this->sub($circleA->position, $circleB->position));
-        $radiusSum = $circleA->$radius + $circleB->$radius;
+        $radiusSum = $circleA->radius + $circleB->radius;
         return $distanceSquared <= $radiusSum * $radiusSum;
     }
 

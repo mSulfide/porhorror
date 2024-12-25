@@ -25,48 +25,48 @@ class Game {
             $object->update($deltaTime); 
         }
 
-        /*foreach ($this->objects as $objectA) {
-            foreach ($this->objects as $objectB) {
-                if ($objectA !== $objectB) {
-                    if ($this->math->getCirclesIntersect($objectA, $objectB)) {
-                        $objectA->image = 'tas1';
-                        $objectB->image = 'tas1';
-                    } else {
-                        $objectA->image = 'tas';
-                        $objectB->image = 'tas';
-                    }
-                }
+        $objectA = $this->objects[0];
+        $objectB = $this->objects[1];
+        if ($objectA !== $objectB) {
+            if ($this->math->getCirclesIntersect($objectA, $objectB)) {
+                $objectA->image = 'tas1';
+                $objectB->image = 'tas1';
+            } else {
+                $objectA->image = 'tas';
+                $objectB->image = 'tas';
             }
-        }*/
+        }
+          
     }
 
     public function updateScene($userId, $hash) {
         $game = $this->db->getGameById($this->db->getGamerByUserId($userId)->game_id);
         if ($game) {
+            $objects = $this->db->getGameObjects($game->id);
+            foreach ($objects as $object) {
+                $this->objects[] = new GameObject($this->db, $object);
+            }
+
+            $gamers = $this->db->getGamers($game->id);
+            foreach ($gamers as $gamer) {
+                $currentObject = null;
+                foreach ($this->objects as $object) {
+                    if ($object->id === $gamer->objectId) {
+                        $currentObject = $object;
+                        break;
+                    }
+                }
+                if ($currentObject) {
+                    $this->gamers[] = new Gamer($gamer, $currentObject);
+                }
+            }
+
             $time = $this->getTime($game->start_time);
             $deltaTime = $time - $game->timestamp;
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
-                $objects = $this->db->getGameObjects($game->id);
-                foreach ($objects as $object) {
-                    $this->objects[] = new GameObject($this->db, $object);
-                }
-
-                $gamers = $this->db->getGamers($game->id);
-                foreach ($gamers as $gamer) {
-                    $currentObject = null;
-                    foreach ($this->objects as $object) {
-                        if ($object->id === $gamer->objectId) {
-                            $currentObject = $object;
-                            break;
-                        }
-                    }
-                    if ($currentObject) {
-                        $this->gamers[] = new Gamer($gamer, $currentObject);
-                    }
-                }
-
                 $this->update($deltaTime / 1000);
                 $this->db->updateTimestamp($game->id, $time);
+                $this->db->updateGameHash(md5(rand()), $game->id);
             }
             if ($hash === $game->hash) {
                 return [
@@ -85,7 +85,6 @@ class Game {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $this->db->action($userId);
-            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
             return true;
         }
         return ['error'=> 810];
@@ -105,7 +104,6 @@ class Game {
             }
                    
             $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
-            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
         
             return true;
         }
