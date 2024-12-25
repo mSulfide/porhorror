@@ -16,7 +16,6 @@ class CanvasDrawer implements IDrawer {
     draw(option: TDrawOption): void {
         const width = this.canvas.width;
         const height = this.canvas.height;
-        //this.ctx.beginPath();
         this.ctx.drawImage(
             option.image,
             (option.x - option.sx / 2) * width,
@@ -24,7 +23,6 @@ class CanvasDrawer implements IDrawer {
             option.sx * width,
             option.sy * height
         );
-        //this.ctx.fill();
     }
 
     drawLine(
