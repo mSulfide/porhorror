@@ -36,6 +36,33 @@ CREATE TABLE `exchange` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы 'deleteLots'
+--
+CREATE TABLE lots_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    lot_id INT NOT NULL,               
+    user_id INT NOT NULL,              
+    status VARCHAR(255) NOT NULL,      
+    deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    FOREIGN KEY (lot_id) REFERENCES lots(id) 
+);
+
+-- --------------------------------------------------------
+--  
+--Структура таблицы 'lots'
+--
+
+CREATE TABLE lots (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Уникальный идентификатор лота
+    user_id INT NOT NULL,              -- ID пользователя
+    status VARCHAR(255) NOT NULL,      -- Статус лота
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Дата создания лота
+    FOREIGN KEY (user_id) REFERENCES users(id) -- Связь с таблицей пользователей
+);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `game`
 --
 
