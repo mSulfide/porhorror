@@ -49,6 +49,42 @@ class Math {
         return $distanceSquared <= $radiusSum * $radiusSum;
     }
 
+    public function check() {
+        $testCases = [
+            [
+                'circle1' => new Circle(new Point(0, 0), 5), 
+                'circle2' => new Circle(new Point(3, 4), 5), 
+                'expected' => true, 
+            ],
+            [
+                'circle1' => new Circle(new Point(0, 0), 1), 
+                'circle2' => new Circle(new Point(3, 3), 1),
+                'expected' => false, 
+            ],
+            [
+                'circle1' => new Circle(new Point(1, 1), 2), 
+                'circle2' => new Circle(new Point(1, 3), 2), 
+                'expected' => true, 
+            ],
+            [
+                'circle1' => new Circle(new Point(0, 0), 1), 
+                'circle2' => new Circle(new Point(0, 3), 1),
+                'expected' => false,
+            ],
+        ];
+
+        foreach ($testCases as $testCase) {
+            $result = $this->getCirclesIntersect($testCase['circle1'], $testCase['circle2']);
+            if ($result !== $testCase['expected']) {
+                return [
+                    'message' => "всё херня давай по новой"
+                ];
+            }
+        }
+
+        return ['success' => 'всё норм живём живём'];
+    }
+
     // функция для определения точки пересечения кругов
     public function getIntersectionPoint(Circle $circle1, Circle $circle2): ?Point {
         if (!$this->getCirclesIntersect($circle1, $circle2)) {
