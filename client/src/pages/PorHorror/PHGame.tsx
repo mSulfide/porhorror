@@ -5,8 +5,8 @@ import { Button } from "../../components";
 import { CanvasDrawer, MainScreen } from "../../services/drawer";
 import { TGameObject, TUpdateSceneResponse } from "../../services/server/types";
 import { Input, useKeyboard } from "../../services/input";
+import { Scene } from "../../services/scene";
 import useLoop from "./hooks/useLoop";
-import Scene from "../../services/scene/Scene";
 import { IRenderer } from "../../services/drawer/MainScreen/IRenderer";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
