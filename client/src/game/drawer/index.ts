@@ -1,4 +1,4 @@
-import Renderer from "./MainScreen/Renderer";
+import Renderer from "./Renderer/Renderer";
 import CanvasDrawer from "./drawers/CanvasDrawer";
 
 export { Renderer, CanvasDrawer }

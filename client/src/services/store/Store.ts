@@ -1,4 +1,4 @@
-import Resources from "../resources/Resources";
+import Resources from "../../game/resources/Resources";
 import { TInventory, TItem, TLobby, TMessages, TUser } from "../server/types";
 
 const TOKEN = 'token';

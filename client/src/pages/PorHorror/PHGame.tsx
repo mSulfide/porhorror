@@ -2,12 +2,12 @@ import { useContext, useEffect, useRef } from "react";
 import { ServerContext, StoreContext } from "../../App";
 import { IBasePage, PAGES } from "../PageManager";
 import { Button } from "../../components";
-import { CanvasDrawer, Renderer } from "../../services/drawer";
 import { TGameObject, TUpdateSceneResponse } from "../../services/server/types";
-import { Input, useKeyboard } from "../../services/input";
-import { Scene } from "../../services/scene";
+import { CanvasDrawer, Renderer } from "../../game/drawer";
+import { Input, useKeyboard } from "../../game/input";
+import { Scene } from "../../game/scene";
 import useLoop from "./hooks/useLoop";
-import { IRendered } from "../../services/drawer/MainScreen/IRendered";
+import { IRendered } from "../../game/drawer/Renderer/IRendered";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);

@@ -1,4 +1,4 @@
-import { EImage } from "../resources";
+import { EImage } from "../../game/resources";
 
 export type TError = {
     code: number;
