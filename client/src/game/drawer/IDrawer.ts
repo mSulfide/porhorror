@@ -5,7 +5,11 @@ export type TDrawOption = {
     /** y ∈ [0, 1], where 0 - down, 1 - up */
     y: number,
     sx: number,
-    sy: number
+    sy: number,
+    dx: number,
+    dy: number,
+    dw: number,
+    dh: number
 }
 
 export interface IDrawer {

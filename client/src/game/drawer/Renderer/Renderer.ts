@@ -22,11 +22,15 @@ export default class Renderer {
         cam.vision.forEach(({ radius, size, position, sprite }) => {
             const currectSize = size || mlt(one(), radius);
             sprite && this.drawer.draw({
-                image: sprite,
+                image: sprite.image,
                 x: this.sx(position.x),
                 y: this.sy(position.y),
                 sx: currectSize.x * 2 / cam.width,
-                sy: currectSize.y * 2 / cam.height
+                sy: currectSize.y * 2 / cam.height,
+                dx: sprite.offset.x,
+                dy: sprite.offset.y,
+                dw: sprite.size.x,
+                dh: sprite.size.y
             });
         });
     }
