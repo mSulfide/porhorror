@@ -1,4 +1,3 @@
-import { TPoint } from "../engine";
 import { EImage } from "../resources";
 
 export type TError = {
@@ -66,6 +65,10 @@ export type TLobbiesResponse = {
     hash: string;
 }
 
+type TPoint = {
+    x: number,
+    y: number
+}
 export type TGameObject = {
     image: EImage,
     position: TPoint,

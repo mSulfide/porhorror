@@ -1,4 +1,4 @@
-import { add, mlt, one, zero } from "../../../engine/math";
+import { add, mlt, one, zero } from "../../../math";
 import { IRendered } from "../IRendered";
 import { TCameraParams, TPoint } from "../types";
 

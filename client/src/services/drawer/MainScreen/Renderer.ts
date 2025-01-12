@@ -1,5 +1,5 @@
 import { IDrawer } from "../IDrawer";
-import { mlt, one } from "../../engine/math";
+import { mlt, one } from "../../math";
 import Camera from "./Camera/Camera";
 import { IRendered } from "./IRendered";
 import { TCameraParams } from "./types";
