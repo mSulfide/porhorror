@@ -29,11 +29,14 @@ class Application {
                 if ($param == 'token'){
                     return $this->user->getUser($param['token']);
                 }
-                continue;
+                return null;
             } 
             return ['error' => 242];
         }
-        return;
+    }
+
+    private function isError($param) {
+        return isset($params['error']); 
     }
 
     public function autoLogin($params) {
