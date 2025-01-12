@@ -23,6 +23,19 @@ class Application {
         $this->math = new Math();
     }
 
+    private function checkParams(...$params) {
+        foreach($params as $param) {
+            if (!empty($param)) {
+                if ($param == 'token'){
+                    return $this->user->getUser($param['token']);
+                }
+                continue;
+            } 
+            return ['error' => 242];
+        }
+        return;
+    }
+
     public function autoLogin($params) {
         if ($params['token']) {
             return $this->user->autoLogin($params['token']);
