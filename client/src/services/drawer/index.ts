@@ -1,4 +1,4 @@
-import MainScreen from "./MainScreen/MainScreen";
+import Renderer from "./MainScreen/Renderer";
 import CanvasDrawer from "./drawers/CanvasDrawer";
 
-export { MainScreen, CanvasDrawer }
+export { Renderer, CanvasDrawer }

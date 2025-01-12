@@ -1,12 +1,12 @@
 import { add, mlt, one, zero } from "../../../engine/math";
-import { IRenderer } from "../IRenderer";
+import { IRendered } from "../IRendered";
 import { TCameraParams, TPoint } from "../types";
 
 class Camera {
     position: TPoint;
     width: number;
     height: number;
-    vision: IRenderer[] = [];
+    vision: IRendered[] = [];
 
     constructor({ width, height, position }: TCameraParams) {
         this.position = position || zero();
@@ -14,7 +14,7 @@ class Camera {
         this.height = height;
     }
 
-    update(scene: IRenderer[]): void {
+    update(scene: IRendered[]): void {
         this.vision = [];
         scene.forEach(renderer => {
             const { x, y } = renderer.position;

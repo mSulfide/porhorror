@@ -2,12 +2,12 @@ import { useContext, useEffect, useRef } from "react";
 import { ServerContext, StoreContext } from "../../App";
 import { IBasePage, PAGES } from "../PageManager";
 import { Button } from "../../components";
-import { CanvasDrawer, MainScreen } from "../../services/drawer";
+import { CanvasDrawer, Renderer } from "../../services/drawer";
 import { TGameObject, TUpdateSceneResponse } from "../../services/server/types";
 import { Input, useKeyboard } from "../../services/input";
 import { Scene } from "../../services/scene";
 import useLoop from "./hooks/useLoop";
-import { IRenderer } from "../../services/drawer/MainScreen/IRenderer";
+import { IRendered } from "../../services/drawer/MainScreen/IRendered";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -27,8 +27,8 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     useEffect(() => {
         const camera = { width: 8.32, height: 6.24 };
-        const screen = new MainScreen(new CanvasDrawer(canvasRef.current!), camera);
-        const renderers: IRenderer[] = [];
+        const screen = new Renderer(new CanvasDrawer(canvasRef.current!), camera);
+        const renderers: IRendered[] = [];
         const virtualScene = new Scene();
 
         const update = (deltaTime: number) => {
