@@ -1,6 +1,6 @@
 import { TPoint } from "./types";
 
-export interface IRenderer {
+export interface IRendered {
     position: TPoint;
     sprite: HTMLImageElement;
     size?: TPoint;

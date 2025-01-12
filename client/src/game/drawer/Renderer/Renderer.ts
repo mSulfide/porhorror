@@ -1,10 +1,10 @@
 import { IDrawer } from "../IDrawer";
-import { mlt, one } from "../../engine/math";
+import { mlt, one } from "../../../services/math";
 import Camera from "./Camera/Camera";
-import { IRenderer } from "./IRenderer";
+import { IRendered } from "./IRendered";
 import { TCameraParams } from "./types";
 
-export default class MainScreen {
+export default class Renderer {
     private drawer: IDrawer;
     private camera: Camera;
 
@@ -13,7 +13,7 @@ export default class MainScreen {
         this.camera = new Camera(cameraParams);
     }
 
-    public render(scene: IRenderer[]) {
+    public render(scene: IRendered[]) {
         this.drawer.clear();
         this.drawCells(0.25, 1);
         this.drawCells();

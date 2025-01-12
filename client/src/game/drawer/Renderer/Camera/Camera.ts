@@ -1,28 +1,26 @@
-import { IUpdatable, IRenderer, TPoint, TUpdateParameters } from "../..";
-import { add, mlt, one, zero } from "../../math";
-import { Scene } from "../../structures";
+import { add, mlt, one, zero } from "../../../../services/math";
+import { IRendered } from "../IRendered";
+import { TCameraParams, TPoint } from "../types";
 
-class Camera implements IUpdatable {
+class Camera {
     position: TPoint;
-    scene: Scene;
     width: number;
     height: number;
-    vision: IRenderer[] = [];
+    vision: IRendered[] = [];
 
-    constructor(width: number, height: number, scene: Scene, position?: TPoint) {
+    constructor({ width, height, position }: TCameraParams) {
         this.position = position || zero();
-        this.scene = scene;
         this.width = width;
         this.height = height;
     }
 
-    update(game: TUpdateParameters): void {
+    update(scene: IRendered[]): void {
         this.vision = [];
-        this.scene.forEachRenederers(renderer => {
+        scene.forEach(renderer => {
             const { x, y } = renderer.position;
             const x0 = this.position.x;
             const y0 = this.position.y;
-            const offset = add(mlt({ x: this.width, y: this.height }, 0.5), mlt(one(), renderer.viewRadius));
+            const offset = add(mlt({ x: this.width, y: this.height }, 0.5), mlt(one(), renderer.radius));
             if (
                 x0 - offset.x <= x && x <= x0 + offset.x &&
                 y0 - offset.y <= y && y <= y0 + offset.y
