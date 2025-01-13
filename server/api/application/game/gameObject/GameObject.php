@@ -21,6 +21,16 @@ class GameObject {
         $this->math = new Math();
     }
 
+    // двигает вектор скорости к желаемому направлению (desiredVelocity) на дельту (delta)
+    public function moveVelocity($desiredVelocity, $delta) { 
+        $sub = $this->math->sub($desiredVelocity, $this->velocity);
+        if ($this->math->modl($sub) > $delta) {
+            $this->setVelocity($this->math->add($this->math->mlt($this->math->norm($sub), $delta), $this->velocity));
+        } else {
+            $this->setVelocity($desiredVelocity);
+        }
+    }
+
     // сеттеры
     public function setPosition($position) {
         $this->position = $position;
@@ -34,12 +44,12 @@ class GameObject {
 
     public function setAngle($angle) {
         $this->angle = $angle;
-        $this->db->setVelocity($this->id, $angle);
+        $this->db->setAngle($this->id, $angle);
     }
 
     public function setRadius($radius) {
         $this->radius = $radius;
-        $this->db->setVelocity($this->id, $radius);
+        $this->db->setRadius($this->id, $radius);
     }
 
     // геттеры
@@ -64,8 +74,10 @@ class GameObject {
         $this->setPosition($this->math->add($this->position, $offset));
     }
 
-    public function lookAt($point) {
-        $angle = $this->math->getAngle($this->math->sub($point, $this->position));
-        $this->setAngle($angle);
+    public function lookAt($direction) {
+        if ($direction->x != 0 || $direction->y != 0) {
+            $angle = $this->math->getAngle($direction);
+            $this->setAngle($angle);
+        }
     }
 }

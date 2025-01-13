@@ -30,7 +30,7 @@ class Math {
 
     public function norm($a) {
         $length = $this->modl($a);
-        return $length !== 0 ? $this->mlt($a, 1 / $length) : new Point(0, 0);
+        return $length != 0 ? $this->mlt($a, 1 / $length) : new Point(0, 0);
     }
 
     public function zero() {
