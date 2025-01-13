@@ -13,5 +13,5 @@ export const getSprite = (image: EImage, offset: number[], size: number[]) => ({
 
 export const sprites = {
     [ESprite.tas]: getSprite(EImage.tas, [0, 0], [32, 32]),
-    [ESprite.player]: getSprite(EImage.assets, [101, 10], [21, 12])
+    [ESprite.player]: getSprite(EImage.assets, [101, 6], [21, 21])
 }
