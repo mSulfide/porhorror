@@ -99,35 +99,7 @@ class Application {
         }
         return $this->chat->getMessages($params['hash']);
     }
-
-    public function derivative($params){
-        if ($params['func'] && $params['x'] && $params['eps']) {
-            return $this->math->derivative($params['func'], $params['x'], $params['eps']);
-        }
-        return ['error' => 242];
-    }
-
-    public function spline(array $params){
-        if ($params['points'] && is_array($params['points'])){
-            return $this->math->spline($params['points']);
-        }
-        return ['error' => 242];
-    }
-
-    public function getCirclesIntersect($params) {
-        if (isset($params['circle1']) && isset($params['circle2'])) {
-            return $this->math->getCirclesIntersect($params['circle1'], $params['circle2']);
-        }
-        return ['error' => 242];
-    }
-
-    public function getIntersectionPoint($params) {
-        if (isset($params['circle1']) && isset($params['circle2'])) {
-            return $this->math->getIntersectionPoint($params['circle1'], $params['circle2']);
-        }
-        return ['error' => 242];
-    }
-
+    
     // инвентарь
     public function getInventory($params) {
         $user = $this->checkParams($params, 'token');
