@@ -5,9 +5,11 @@ require_once ('gamer\Gamer.php');
 
 class Game {
     private $db;
+    private $math;
 
     function __construct($db) {
         $this->db = $db;
+        $this->math = new Math();
     }
 
     private function getTime($startTime) {
@@ -39,6 +41,20 @@ class Game {
         $gamers = $this->getGamers($gameId);
         foreach ($gamers as $gamer) {
             $gamer->move($deltaTime);
+        }
+
+        foreach ($gamers as $gamerA) {
+            foreach ($gamers as $gamerB) {
+                if ($gamerA !== $gamerB) {
+                    $a = new Circle($gamerA->getPosition(), $gamerA->getRadius());
+                    $b = new Circle($gamerB->getPosition(), $gamerB->getRadius());
+                    if ($this->math->getCirclesIntersect($a, $b)) {
+                        $gamerA->setImage('player');
+                    } else {
+                        $gamerA->setImage('tas');
+                    }
+                }
+            }
         }
     }
 

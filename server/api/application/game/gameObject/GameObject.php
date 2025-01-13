@@ -5,6 +5,7 @@ class GameObject {
     private int $id;
     private Point $position, $velocity;
     private float $radius, $angle;
+    private string $image;
 
     protected $math;
 
@@ -17,6 +18,7 @@ class GameObject {
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
         $this->angle = $params->angle;
         $this->radius = $params->radius;
+        $this->image = $params->image;
 
         $this->math = new Math();
     }
@@ -49,7 +51,12 @@ class GameObject {
 
     public function setRadius($radius) {
         $this->radius = $radius;
-        $this->db->setVelocity($this->id, $radius);
+        $this->db->setRadius($this->id, $radius);
+    }
+
+    public function setImage($image) {
+        $this->image = $image;
+        $this->db->setImage($this->id, $image);
     }
 
     // геттеры
@@ -67,6 +74,10 @@ class GameObject {
 
     public function getRadius() {
         return $this->radius;
+    }
+
+    public function getImage() {
+        return $this->image;
     }
 
     public function move($deltaTime) {
