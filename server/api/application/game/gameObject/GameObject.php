@@ -21,6 +21,16 @@ class GameObject {
         $this->math = new Math();
     }
 
+    // двигает вектор скорости к желаемому направлению (desiredVelocity) на дельту (delta)
+    public function moveVelocity($desiredVelocity, $delta) { 
+        $sub = $this->math->sub($desiredVelocity, $this->velocity);
+        if ($this->math->modl($sub) > $delta) {
+            $this->setVelocity($this->math->add($this->math->mlt($this->math->norm($sub), $delta), $this->velocity));
+        } else {
+            $this->setVelocity($desiredVelocity);
+        }
+    }
+
     // сеттеры
     public function setPosition($position) {
         $this->position = $position;
