@@ -23,98 +23,90 @@ class Application {
         $this->math = new Math();
     }
 
-    public function autoLogin($params) {
-        if ($params['token']) {
-            return $this->user->autoLogin($params['token']);
+    private function checkParams($params, ...$keys) {
+        $user = null;
+        foreach ($keys as $key) {
+            switch ($key) {
+                case 'token': 
+                    $token = $params[$key];
+                    if (!$token) {
+                        return ['error' => 250];
+                    }
+                    $user = $this->user->getUser($token);
+                    if (!$user) {
+                        return ['error' => 705];
+                    }
+                break;
+
+                default: 
+                    if (!$params[$key]) {
+                        return ['error' => 242];
+                    }
+                break;
+            }
         }
-        return ['error' => 242];
+        return $user;
+    }
+
+    private function isError($params) {
+        return is_array($params) && array_key_exists('error', $params); 
+    }
+
+    public function autoLogin($params) {
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->user->autoLogin($params['token']);
     }
 
     public function login($params) {
-        if ($params['login'] && $params['hash'] && $params['rnd']) {
-            return $this->user->login($params['login'], $params['hash'], $params['rnd']);
+        $user = $this->checkParams($params, 'token', 'hash', 'rnd');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->user->login($params['login'], $params['hash'], $params['rnd']);
     }
 
     public function logout($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->user->logout($params['token']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->user->logout($params['token']);
     }
 
     public function registration($params) {
-        if ($params['login'] && $params['hash'] && $params['name']) {
-            return $this->user->registration($params['login'], $params['hash'], $params['name']);
+        $user = $this->checkParams($params, 'token', 'hash', 'name');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->user->registration($params['login'], $params['hash'], $params['name']);
     }
 
     public function sendMessage($params) {
-        if ($params['token'] && $params['message']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->chat->sendMessage($user->id, $params['message']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'message');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->chat->sendMessage($user->id, $params['message']);
     }
 
     public function getMessages($params) {
-        if ($params['token'] && $params['hash']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->chat->getMessages($params['hash']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->chat->getMessages($params['hash']);
     }
-
-    public function derivative($params){
-        if ($params['func'] && $params['x'] && $params['eps']) {
-            return $this->math->derivative($params['func'], $params['x'], $params['eps']);
-        }
-        return ['error' => 242];
-    }
-
-    public function spline(array $params){
-        if ($params['points'] && is_array($params['points'])){
-            return $this->math->spline($params['points']);
-        }
-        return ['error' => 242];
-    }
-
-    public function getCirclesIntersect($params) {
-        if (isset($params['circle1']) && isset($params['circle2'])) {
-            return $this->math->getCirclesIntersect($params['circle1'], $params['circle2']);
-        }
-        return ['error' => 242];
-    }
-
-    public function getIntersectionPoint($params) {
-        if (isset($params['circle1']) && isset($params['circle2'])) {
-            return $this->math->getIntersectionPoint($params['circle1'], $params['circle2']);
-        }
-        return ['error' => 242];
-    }
-
+    
     // инвентарь
     public function getInventory($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->inventory->getInventory($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->inventory->getInventory($user->id);
     }
 
     public function changeInventory($params) {
@@ -122,115 +114,85 @@ class Application {
     }
     
     public function equipItem($params) {
-        if ($params['token'] && $params['slotId']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->inventory->equipItem($user->id, $params['slotId']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'slotId');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->inventory->equipItem($user->id, $params['slotId']);
     }
 
     public function takeOffItem($params) {
-        if ($params['token'] && $params['slotId']) {
-            $user = $this->user->getUser ($params['token']);
-            if ($user) {
-                return $this->inventory->takeOffItem($user->id, $params['slotId']);
-            }
-            return ['error' => 705]; 
+        $user = $this->checkParams($params, 'token', 'slotId');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242]; 
+        return $this->inventory->takeOffItem($user->id, $params['slotId']);
     }
 
     //лобби
     public function startGame($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->startGame($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->startGame($user->id);
     }
     
     public function updateGroups($params) {
-        if ($params['token'] && $params['hash']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->updateGroups($params['hash']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->updateGroups($params['hash']);
     }
 
     public function createGroup($params) {
-        if ($params['name'] && $params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->createGroup($params['name'], $user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'name');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->createGroup($params['name'], $user->id);
     }
 
     public function deleteGroup($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->deleteGroup($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->deleteGroup($user->id);
     }
     
     public function joinToGroup($params) {
-        if ($params['lobbyId'] && $params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->joinToGroup($params['lobbyId'], $user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'lobbyId');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->joinToGroup($params['lobbyId'], $user->id);
     }
 
     public function leaveGroup($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->lobby->leaveGroup($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->leaveGroup($user->id);
     }
     
     public function dropFromGroup($params) {
-        if ($params['userId'] && $params['token']) {
-            $creator = $this->user->getUser($params['token']);
-            if ($creator) {
-                return $this->lobby->dropFromGroup($creator->id, $params['userId']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'userId');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->lobby->dropFromGroup($creator->id, $params['userId']);
     }
 
     // игра
     public function updateScene($params) {
-        if ($params['token'] && $params['hash']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->game->updateScene($user->id, $params['hash']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->game->updateScene($user->id, $params['hash']);
     }
 
     public function getRoom($params) {
@@ -242,14 +204,11 @@ class Application {
     }
 
     public function move($params) {
-        if ($params['token'] && isset($params['axisX']) && isset($params['axisY'])) { //axisX
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->game->move($user->id, $params['axisX'], $params['axisY']);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token', 'axisX', 'axisY');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->game->move($user->id, $params['axisX'], $params['axisY']);
     }
 
     public function drop($params) {
@@ -260,19 +219,17 @@ class Application {
         return ['error' => 103];
     }
     public function action($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->game->action($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->game->action($user->id);
+           
     }
 
     // для проверок
     public function check($params) {
-        return $this->math->check();
+        return $this->isError(['error' => 103]);
     }
 
     //обменник
@@ -293,25 +250,19 @@ class Application {
     }
 
     public function provideConsent($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser ($params['token']);
-            if ($user) {
-                return $this->exchanger->provideConsent($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->exchanger->provideConsent($user->id);
     }
 
     public function removeConsent($params) {
-        if ($params['token']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->exchanger->removeConsent($user->id);
-            }
-            return ['error' => 705];
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
         }
-        return ['error' => 242];
+        return $this->exchanger->removeConsent($user->id);
     }
 
     public function addLotComment($params) {
