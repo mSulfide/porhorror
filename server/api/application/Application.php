@@ -61,7 +61,7 @@ class Application {
     }
 
     public function login($params) {
-        $user = $this->checkParams($params, 'token', 'hash', 'rnd');
+        $user = $this->checkParams($params, 'login', 'hash', 'rnd');
         if ($this->isError($user)) {
             return $user;
         }
@@ -77,7 +77,7 @@ class Application {
     }
 
     public function registration($params) {
-        $user = $this->checkParams($params, 'token', 'hash', 'name');
+        $user = $this->checkParams($params, 'login', 'hash', 'name');
         if ($this->isError($user)) {
             return $user;
         }
@@ -183,7 +183,7 @@ class Application {
         if ($this->isError($user)) {
             return $user;
         }
-        return $this->lobby->dropFromGroup($creator->id, $params['userId']);
+        return $this->lobby->dropFromGroup($user->id, $params['userId']);
     }
 
     // игра
