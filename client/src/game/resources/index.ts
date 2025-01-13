@@ -1,9 +1,4 @@
-import tas from "../../assets/img/tas.png";
+import Resources from "./Resources";
+import { EImage } from "./images";
 
-export enum EImage {
-    tas = 'tas'
-}
-
-export const srcs = {
-    [EImage.tas]: tas
-}
+export { Resources, EImage }

@@ -8,6 +8,7 @@ import { Input, useKeyboard } from "../../game/input";
 import { Scene } from "../../game/scene";
 import useLoop from "./hooks/useLoop";
 import { IRendered } from "../../game/drawer/Renderer/IRendered";
+import { ESprite } from "../../game/resources/sprites";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -41,7 +42,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         const updateScene = ({ scene }: TUpdateSceneResponse) => {
             renderers.splice(0, renderers.length);
             scene.forEach(({ position, radius, image }: TGameObject) => {
-                const sprite = store.resources.getSprite();
+                const sprite = store.resources.getSprite(ESprite.tas);
                 if (sprite) {
                     renderers.push({ position, radius, sprite });
                 } else {

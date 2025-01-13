@@ -1,5 +1,6 @@
-import { EImage, srcs } from ".";
+import { EImage, srcs } from "./images";
 import { TSprite } from "../drawer/Renderer/types";
+import { ESprite, sprites } from "./sprites";
 
 type TResource = {
     id: EImage,
@@ -28,8 +29,10 @@ class Resources {
         return resource?.ready ? resource.image : null;
     }
 
-    getSprite(): TSprite {
-        return { image: this.storage[0].image, offset: { x: 16, y: 16 }, size: { x: 32, y: 32 } };
+    getSprite(sprite: ESprite): TSprite | null {
+        const { image, offset, size } = sprites[sprite];
+        const map = this.getImage(image);
+        return map && { image: map, offset, size };
     }
 }
 
