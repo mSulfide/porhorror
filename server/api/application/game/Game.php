@@ -24,7 +24,6 @@ class Game {
     }
 
     public function endGame($gameId) {
-
         $game = $this->db->getGameById($gameId);
         if ($game) {
             $this->db->deleteGame($gameId);
