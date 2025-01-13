@@ -46,12 +46,12 @@ export default class Renderer {
     private drawCells(cellSize: number = 1, lineWidth: number = 2) {
         if (this.drawer.drawLine) {
             const cam = this.camera;
-            for (let i = Math.ceil((-cam.width / 2 - cam.position.x) / cellSize); i <= Math.floor((cam.width / 2 + cam.position.x) / cellSize); i++) {
+            for (let i = Math.ceil((-cam.width / 2 + cam.position.x) / cellSize); i <= Math.floor((cam.width / 2 + cam.position.x) / cellSize); i++) {
                 const x = this.sx(i * cellSize);
                 this.drawer.drawLine(x, 0, x, 1, "#5555", lineWidth);
             }
-            for (let i = Math.ceil((-cam.height / 2 - cam.position.y) / cellSize); i <= Math.floor((cam.height / 2 + cam.position.y) / cellSize); i++) {
-                const y = this.sy(i * cellSize);
+            for (let i = Math.ceil((-cam.height / 2 + cam.position.y) / cellSize); i <= Math.floor((cam.height / 2 + cam.position.y) / cellSize); i++) {
+                const y = 1 - this.sy(i * cellSize);
                 this.drawer.drawLine(0, y, 1, y, "#5555", lineWidth);
             }
         }
