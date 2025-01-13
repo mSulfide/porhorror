@@ -9,6 +9,7 @@ import { Scene } from "../../game/scene";
 import useLoop from "./hooks/useLoop";
 import { IRendered } from "../../game/drawer/Renderer/IRendered";
 import { ESprite } from "../../game/resources/sprites";
+import { zero } from "../../services/math";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -50,6 +51,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
                 }
             });
             virtualScene.set(scene);
+            screen.camera.position = renderers[0]?.position || zero();
             screen.render(renderers);
         }
 

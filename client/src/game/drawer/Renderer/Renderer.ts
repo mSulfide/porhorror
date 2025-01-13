@@ -6,7 +6,7 @@ import { TCameraParams } from "./types";
 
 export default class Renderer {
     private drawer: IDrawer;
-    private camera: Camera;
+    public readonly camera: Camera;
 
     constructor(drawer: IDrawer, cameraParams: TCameraParams) {
         this.drawer = drawer;
