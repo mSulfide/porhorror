@@ -1,8 +1,8 @@
-import { TPoint } from "./types";
+import { TPoint, TSprite } from "./types";
 
 export interface IRendered {
     position: TPoint;
-    sprite: HTMLImageElement;
+    sprite: TSprite;
     size?: TPoint;
     radius: number;
 }

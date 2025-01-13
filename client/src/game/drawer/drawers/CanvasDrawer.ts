@@ -17,7 +17,11 @@ class CanvasDrawer implements IDrawer {
         const width = this.canvas.width;
         const height = this.canvas.height;
         this.ctx.drawImage(
-            option.image,
+            option.image, 
+            option.dx,
+            option.dy,
+            option.dw,
+            option.dh,
             (option.x - option.sx / 2) * width,
             (1 - option.y - option.sy / 2) * height,
             option.sx * width,

@@ -8,3 +8,9 @@ export type TCameraParams = {
     height: number,
     position?: TPoint
 }
+
+export type TSprite = {
+    image: HTMLImageElement,
+    offset: TPoint,
+    size: TPoint
+}
