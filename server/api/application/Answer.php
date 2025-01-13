@@ -7,6 +7,7 @@ class Answer {
         '103' => 'Method has no implementation',
         '242' => 'Params not set fully',
         '243' => 'Incorrect data about circles',
+        '250' => 'token is invalid',
         '303' => 'Incorrect number of points',
         '404' => 'not found',
         '500' => "You don't have enough rights",
