@@ -23,6 +23,19 @@ class Game {
         return $answer;
     }
 
+    public function endGame($gameId) {
+
+        $game = $this->db->getGameById($gameId);
+        if ($game) {
+            $this->db->deleteGame($gameId);
+            $this->db->deleteGamers($gameId);
+            $this->db->deleteLobbyByGameId($gameId);
+            //$this->db->deleteGameItems($gameId);
+            return true;
+        }
+        return ['error' => 805];
+    }
+
     public function update($deltaTime, $gameId) {
         $gamers = $this->getGamers($gameId);
         foreach ($gamers as $gamer) {
@@ -80,7 +93,6 @@ class Game {
         
             return true;
         }
-        
         return ['error' => 810];
     }
 }

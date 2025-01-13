@@ -39,7 +39,7 @@ class Application {
                 break;
 
                 default: 
-                    if (!$params[$key]) {
+                    if (!isset($params[$key])) {
                         return ['error' => 242];
                     }
                 break;
@@ -229,7 +229,7 @@ class Application {
 
     // для проверок
     public function check($params) {
-        return $this->isError(['error' => 103]);
+        return $this->game->endGame($params['gameId']);
     }
 
     //обменник

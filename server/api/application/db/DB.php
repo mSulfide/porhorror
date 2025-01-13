@@ -337,4 +337,24 @@ class DB {
     public function updateSlotState($slotId, $newState) {
         $this->execute("UPDATE inventory SET status = ? WHERE id = ?", [$newState, $slotId]);
     }
+
+    public function deleteGame($gameId) {
+        $this->execute("DELETE FROM game WHERE id=?", [$gameId]);
+    }
+
+    public function deleteGamers($gameId) {
+        $this->execute("DELETE g.*, go.* 
+                FROM gamers AS g 
+                INNER JOIN game_objects AS go ON go.id = g.object_id 
+            WHERE go.game_id=?"
+        , [$gameId]);
+    }
+
+    public function deleteLobbyByGameId($gameId) {
+        $this->execute("DELETE lm.*, l.* 
+                FROM lobby_members AS lm 
+                INNER JOIN lobby AS l ON l.id = lm.lobby_id 
+            WHERE l.game_id=?"
+        , [$gameId]);
+    }
 }
