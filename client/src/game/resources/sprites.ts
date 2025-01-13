@@ -1,7 +1,8 @@
 import { EImage } from "./images"
 
 export enum ESprite {
-    tas = 'tas'
+    tas = 'tas',
+    player = 'player'
 }
 
 export const getSprite = (image: EImage, offset: number[], size: number[]) => ({
@@ -11,5 +12,6 @@ export const getSprite = (image: EImage, offset: number[], size: number[]) => ({
 });
 
 export const sprites = {
-    [ESprite.tas]: getSprite(EImage.tas, [0, 0], [32, 32])
+    [ESprite.tas]: getSprite(EImage.tas, [0, 0], [32, 32]),
+    [ESprite.player]: getSprite(EImage.assets, [101, 10], [21, 12])
 }
