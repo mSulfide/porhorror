@@ -7,7 +7,7 @@ import PHGame from './PorHorror/PHGame';
 import Registration from './Registaration/Registration';
 import MainMenu from './MainMenu/MainMenu';
 import Chat from './Chat/Chat';
-
+import Exchanger from './Exchanger/Exchanger';
 
 export enum PAGES {
     PRELOADER,
@@ -16,7 +16,8 @@ export enum PAGES {
     PORHORROR,
     MAIN_MENU,
     CHAT,
-    NOT_FOUND
+    NOT_FOUND,
+    EXCHANGER
 }
 
 export interface IBasePage {
@@ -35,6 +36,7 @@ const PageManager: React.FC = () => {
             {page === PAGES.MAIN_MENU && <MainMenu setPage={setPage} />}
             {page === PAGES.CHAT && <Chat setPage={setPage} />}
             {page === PAGES.NOT_FOUND && <NotFound setPage={setPage} />}
+            {page === PAGES.EXCHANGER && <Exchanger setPage={setPage} />}
         </>
     );
 }
