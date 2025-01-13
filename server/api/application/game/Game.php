@@ -48,7 +48,9 @@ class Game {
                 if ($gamerA !== $gamerB) {
                     $a = new Circle($gamerA->getPosition(), $gamerA->getRadius());
                     $b = new Circle($gamerB->getPosition(), $gamerB->getRadius());
-                    if ($this->math->getCirclesIntersect($a, $b)) {
+                    $point = $this->math->getIntersectionPoint($a, $b);
+                    if ($point) {
+                        $norm = $this->math->norm($this->math->sub($a->position, $b->position));
                         $gamerA->setImage('player');
                     } else {
                         $gamerA->setImage('tas');
