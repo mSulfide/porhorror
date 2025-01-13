@@ -73,7 +73,7 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
 
                         </div>
                     </div>
-                    <div className="section exchanger">
+                    <div>
                     <button className="button" onClick={() => setPage(PAGES.EXCHANGER)}>Перейти к обменнику</button>
                     </div>
                 </div>
