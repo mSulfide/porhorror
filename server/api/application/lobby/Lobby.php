@@ -43,16 +43,16 @@ class Lobby {
     
     public function createGroup($name, $userId) { 
         $lobby = $this->db->getLobbyByUserId($userId);
-        if (!($this->isCreator($userId, $lobby->id))) {
-            $group = $this->db->createGroup($name, $userId);
-            if ($group) {
-                $this->db->addMemberToLobby($group, $userId, 'creator');
-                $this->db->updateLobbyHash(md5(rand()));
-                return true;
-            }
-            return ['error' => 1105];
+        if ($lobby) {
+            return ['error' => 710]; 
         }
-        return ['error' => 713];
+        $group = $this->db->createGroup($name, $userId);
+        if ($group) {
+            $this->db->addMemberToLobby($group, $userId, 'creator');
+            $this->db->updateLobbyHash(md5(rand()));
+            return true;
+        }
+        return ['error' => 1105];
     }
 
     public function deleteGroup($userId) {
