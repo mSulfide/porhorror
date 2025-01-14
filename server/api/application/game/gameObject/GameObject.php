@@ -46,7 +46,7 @@ class GameObject {
 
     public function setAngle($angle) {
         $this->angle = $angle;
-        $this->db->setVelocity($this->id, $angle);
+        $this->db->setAngle($this->id, $angle);
     }
 
     public function setRadius($radius) {
@@ -85,8 +85,10 @@ class GameObject {
         $this->setPosition($this->math->add($this->position, $offset));
     }
 
-    public function lookAt($point) {
-        $angle = $this->math->getAngle($this->math->sub($point, $this->position));
-        $this->setAngle($angle);
+    public function lookAt($direction) {
+        if ($direction->x != 0 || $direction->y != 0) {
+            $angle = $this->math->getAngle($direction);
+            $this->setAngle($angle);
+        }
     }
 }

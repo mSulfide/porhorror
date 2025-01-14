@@ -65,12 +65,19 @@ class Game {
         if ($game) {
             $time = $this->getTime($game->start_time);
             $deltaTime = $time - $game->timestamp;
+           
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
                 $this->update($deltaTime / 1000, $game->id);
                 $this->db->updateTimestamp($game->id, $time);
                 $this->db->updateGameHash(md5(rand()), $game->id);
             }
             $objects = $this->db->getGameObjects($game->id);
+
+            $allTime = $this->db->getSettings()->game_timestamp;
+            if ($time > $allTime * 1000) {
+                $this->endGame($game->id);
+            }
+
             if ($hash === $game->hash) {
                 return [
                     'hash' => $hash
