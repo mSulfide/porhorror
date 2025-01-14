@@ -20,13 +20,13 @@ export default class Renderer {
         this.camera.update(scene);
         const cam = this.camera;
         cam.vision.forEach(({ radius, size, position, sprite }) => {
-            const currectSize = size || mlt(one(), radius);
+            const currectSize = size || mlt(one(), radius * 2);
             sprite && this.drawer.draw({
                 image: sprite.image,
                 x: this.sx(position.x),
                 y: this.sy(position.y),
-                sx: currectSize.x * 2 / cam.width,
-                sy: currectSize.y * 2 / cam.height,
+                sx: currectSize.x / cam.width,
+                sy: currectSize.y / cam.height,
                 dx: sprite.offset.x,
                 dy: sprite.offset.y,
                 dw: sprite.size.x,
