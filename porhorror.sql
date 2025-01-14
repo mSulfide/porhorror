@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 24 2024 г., 13:48
+-- Время создания: Янв 14 2025 г., 13:27
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -32,6 +32,36 @@ CREATE TABLE `exchange` (
   `user_id` int NOT NULL,
   `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `exchanger_comments`
+--
+
+CREATE TABLE `exchanger_comments` (
+  `id` int NOT NULL,
+  `lot_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `exchanger_lots`
+--
+
+CREATE TABLE `exchanger_lots` (
+  `id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `exchanger_lots`
+--
+
+INSERT INTO `exchanger_lots` (`id`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -264,6 +294,18 @@ ALTER TABLE `exchange`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `exchanger_comments`
+--
+ALTER TABLE `exchanger_comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `exchanger_lots`
+--
+ALTER TABLE `exchanger_lots`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `game`
 --
 ALTER TABLE `game`
@@ -350,6 +392,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `exchange`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `exchanger_comments`
+--
+ALTER TABLE `exchanger_comments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `exchanger_lots`
+--
+ALTER TABLE `exchanger_lots`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `game`
