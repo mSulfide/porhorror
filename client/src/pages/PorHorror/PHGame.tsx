@@ -51,7 +51,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
                 }
             });
             virtualScene.set(scene);
-            screen.camera.position = renderers[0]?.position || zero();
+            screen.camera.position = renderers[count]?.position || zero();
             screen.render(renderers);
         }
 
