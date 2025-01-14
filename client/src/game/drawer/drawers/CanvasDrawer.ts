@@ -7,6 +7,7 @@ class CanvasDrawer implements IDrawer {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d')!;
+        this.ctx.imageSmoothingEnabled = false;
     }
 
     clear(): void {
