@@ -12,7 +12,7 @@ const getRendered = (sprite: ESprite, position: number[], size: number[]) => ({
 
 const maps = {
     [EMap.default]: [
-        getRendered(ESprite.tas, [2, 3], [1, 1])
+        getRendered(ESprite.wateringCanENV, [0, 0], [1, 1]),
     ]
 }
 

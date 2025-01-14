@@ -15,7 +15,7 @@ export enum EImage {
 export const srcs = {
     [EImage.tas]: tas,
     [EImage.environment]: environment,
-    [EImage.items]: environment,
-    [EImage.patterns]: environment,
-    [EImage.walls]: environment
+    [EImage.items]: items,
+    [EImage.patterns]: patterns,
+    [EImage.walls]: walls
 }
