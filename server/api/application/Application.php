@@ -316,11 +316,11 @@ class Application {
 
     public function addLotComment($params) {
         $user = $this->checkParams($params, 'token', 'lotId', 'comment');
-        if (is_array($user)) {
+        if ($this->isError($user)) {
             return $user; 
         }
         return $this->exchanger->addLotComment($params['token'], $params['lotId'], $params['comment']);
-    }
+    }    
     
     public function updateLots($params) {
         return ['error' => 103];
