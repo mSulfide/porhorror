@@ -1,36 +1,83 @@
 <?php
 
 class GameObject {
-    private $db, $math;
-    public int $id;
+    private $db;
+    private int $id;
+    private Point $position, $velocity;
+    private float $radius, $angle;
 
-    public Point $position, $velocity;
-    public int $gameId;
-    public float $radius, $angle;
+    protected $math;
 
-    function __construct($db, $params) {
+    function __construct($db, $id) {
         $this->db = $db;
-        $this->id = $params->id;
-        $this->image = $params->image;
+        $this->id = $id;
+
+        $params = $this->db->getGameObjectById($this->id);
         $this->position = new Point($params->x, $params->y);
         $this->velocity = new Point($params->velocity_x, $params->velocity_y);
-        $this->gameId = $params->game_id;
-        $this->radius = $params->radius;
         $this->angle = $params->angle;
+        $this->radius = $params->radius;
 
         $this->math = new Math();
     }
 
-    function __destruct() {
-        $this->db->saveVelocity($this->id, $this->velocity);
-        $this->db->setPosition($this->id, $this->position);
-    }
-    
-    public function update($deltaTime) {
-        $this->move($this->math->mlt($this->velocity, $deltaTime));
+    // двигает вектор скорости к желаемому направлению (desiredVelocity) на дельту (delta)
+    public function moveVelocity($desiredVelocity, $delta) { 
+        $sub = $this->math->sub($desiredVelocity, $this->velocity);
+        if ($this->math->modl($sub) > $delta) {
+            $this->setVelocity($this->math->add($this->math->mlt($this->math->norm($sub), $delta), $this->velocity));
+        } else {
+            $this->setVelocity($desiredVelocity);
+        }
     }
 
-    public function move($offset) {
-        $this->position = $this->math->add($this->position, $offset);
+    // сеттеры
+    public function setPosition($position) {
+        $this->position = $position;
+        $this->db->setPosition($this->id, $position);
+    }
+
+    public function setVelocity($velocity) {
+        $this->velocity = $velocity;
+        $this->db->setVelocity($this->id, $velocity);
+    }
+
+    public function setAngle($angle) {
+        $this->angle = $angle;
+        $this->db->setAngle($this->id, $angle);
+    }
+
+    public function setRadius($radius) {
+        $this->radius = $radius;
+        $this->db->setRadius($this->id, $radius);
+    }
+
+    // геттеры
+    public function getPosition() {
+        return $this->position;
+    }
+
+    public function getVelocity() {
+        return $this->velocity;
+    }
+
+    public function getAngle() {
+        return $this->angle;
+    }
+
+    public function getRadius() {
+        return $this->radius;
+    }
+
+    public function move($deltaTime) {
+        $offset = $this->math->mlt($this->velocity, $deltaTime);
+        $this->setPosition($this->math->add($this->position, $offset));
+    }
+
+    public function lookAt($direction) {
+        if ($direction->x != 0 || $direction->y != 0) {
+            $angle = $this->math->getAngle($direction);
+            $this->setAngle($angle);
+        }
     }
 }

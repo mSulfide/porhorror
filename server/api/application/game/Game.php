@@ -5,8 +5,6 @@ require_once ('gamer\Gamer.php');
 
 class Game {
     private $db;
-    private $objects = [], $gamers = [];
-    private float $deltaTime = 0;
 
     function __construct($db) {
         $this->db = $db;
@@ -16,12 +14,31 @@ class Game {
         return floor((microtime(true) - $startTime) * 1000);
     }
 
-    public function update($deltaTime) {
-        foreach ($this->gamers as $gamer) {
-            $gamer->update($deltaTime, $this->objects);
+    private function getGamers($gameId) {
+        $answer = [];
+        $gamers = $this->db->getGamers($gameId);
+        foreach ($gamers as $gamer) {
+            $answer[] = new Gamer($this->db, $gamer->id);
         }
-        foreach ($this->objects as $object) {
-            $object->update($deltaTime); 
+        return $answer;
+    }
+
+    public function endGame($gameId) {
+        $game = $this->db->getGameById($gameId);
+        if ($game) {
+            $this->db->deleteGame($gameId);
+            $this->db->deleteGamers($gameId);
+            $this->db->deleteLobbyByGameId($gameId);
+            //$this->db->deleteGameItems($gameId);
+            return true;
+        }
+        return ['error' => 805];
+    }
+
+    public function update($deltaTime, $gameId) {
+        $gamers = $this->getGamers($gameId);
+        foreach ($gamers as $gamer) {
+            $gamer->move($deltaTime);
         }
     }
 
@@ -30,37 +47,26 @@ class Game {
         if ($game) {
             $time = $this->getTime($game->start_time);
             $deltaTime = $time - $game->timestamp;
+           
             if ($this->db->getSettings()->game_update_timestamp < $deltaTime) {
-                $objects = $this->db->getGameObjects($game->id);
-                foreach ($objects as $object) {
-                    $this->objects[] = new GameObject($this->db, $object);
-                }
-
-                $gamers = $this->db->getGamers($game->id);
-                foreach ($gamers as $gamer) {
-                    $currentObject = null;
-                    foreach ($this->objects as $object) {
-                        if ($object->id === $gamer->objectId) {
-                            $currentObject = $object;
-                            break;
-                        }
-                    }
-                    if ($currentObject) {
-                        $this->gamers[] = new Gamer($gamer, $currentObject);
-                    }
-                }
-
-                $this->update($deltaTime / 1000);
+                $this->update($deltaTime / 1000, $game->id);
                 $this->db->updateTimestamp($game->id, $time);
+                $this->db->updateGameHash(md5(rand()), $game->id);
             }
+            $objects = $this->db->getGameObjects($game->id);
+
+            $allTime = $this->db->getSettings()->game_timestamp;
+            if ($time > $allTime * 1000) {
+                $this->endGame($game->id);
+            }
+
             if ($hash === $game->hash) {
                 return [
                     'hash' => $hash
                 ];
             }
             return [
-                'scene' => $this->objects,
-                'gamers' => $this->gamers,
+                'scene' => $objects,
                 'hash' => $game->hash
             ];
         }
@@ -71,7 +77,6 @@ class Game {
         $gamer = $this->db->getGamerByUserId($userId);
         if ($gamer) {
             $this->db->action($userId);
-            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
             return true;
         }
         return ['error'=> 810];
@@ -91,11 +96,9 @@ class Game {
             }
                    
             $this->db->updateGamerDirection($gamer->id, $xEllipse, $yEllipse);
-            $this->db->updateGameHash(md5(rand()), $gamer->game_id);
         
             return true;
         }
-        
         return ['error' => 810];
     }
 }
