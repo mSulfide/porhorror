@@ -315,12 +315,13 @@ class Application {
     }
 
     public function addLotComment($params) {
-        if ($params['token'] && $params['lotId'] && $params['comment']) {
-            return $this->exchanger->addLotComment($params['token'], $params['lotId'], $params['comment']);
+        $user = $this->checkParams($params, 'token', 'lotId', 'comment');
+        if (is_array($user)) {
+            return $user; 
         }
-        return ['error' => 242];
+        return $this->exchanger->addLotComment($params['token'], $params['lotId'], $params['comment']);
     }
-
+    
     public function updateLots($params) {
         return ['error' => 103];
     }
