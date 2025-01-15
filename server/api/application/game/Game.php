@@ -51,9 +51,9 @@ class Game {
                     $point = $this->math->getIntersectionPoint($a, $b);
                     if ($point) {
                         $norm = $this->math->norm($this->math->sub($a->position, $b->position));
-                        $gamerA->setImage('player');
+                        $gamerA->setImage('potPlantENV');
                     } else {
-                        $gamerA->setImage('tas');
+                        $gamerA->setImage('dryPotPlantENV');
                     }
                 }
             }
