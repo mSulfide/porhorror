@@ -299,6 +299,17 @@ class DB {
         $this->execute("UPDATE exchange SET status='not ready' WHERE user_id=?", [$userId]);
     }
 
+    public function getLotById($lotId) {
+        return $this->query("SELECT * FROM exchanger_lots WHERE id=?", [$lotId]);
+    }
+
+    public function addLotComment($lotId, $userId, $comment) {
+        $this->execute(
+            "INSERT INTO exchanger_comments (lot_id, user_id, content) VALUES (?, ?, ?)",
+            [$lotId, $userId, $comment]
+        );
+    }
+    
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }

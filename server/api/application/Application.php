@@ -266,9 +266,13 @@ class Application {
     }
 
     public function addLotComment($params) {
-        return ['error' => 103];
-    }
-
+        $user = $this->checkParams($params, 'token', 'lotId', 'comment');
+        if ($this->isError($user)) {
+            return $user; 
+        }
+        return $this->exchanger->addLotComment($user, $params['lotId'], $params['comment']);
+    }        
+    
     public function updateLots($params) {
         return ['error' => 103];
     }
