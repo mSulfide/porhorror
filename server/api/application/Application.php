@@ -270,8 +270,8 @@ class Application {
         if ($this->isError($user)) {
             return $user; 
         }
-        return $this->exchanger->addLotComment($params['token'], $params['lotId'], $params['comment']);
-    }    
+        return $this->exchanger->addLotComment($user, $params['lotId'], $params['comment']);
+    }        
     
     public function updateLots($params) {
         return ['error' => 103];

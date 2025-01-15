@@ -26,13 +26,13 @@ class Exchanger {
         return ['error'=> '809'];
     }
 
-    public function addLotComment($token, $lotId, $comment) {
+    public function addLotComment($user, $lotId, $comment) {
         $lot = $this->db->getLotById($lotId);
         if ($lot) {
             $this->db->addLotComment($lotId, $user->id, $comment);
             return true;
         }
         return ['error' => 807]; 
-    }
+    }    
     
 }
