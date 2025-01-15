@@ -40,7 +40,7 @@ class Game {
     public function update($deltaTime, $gameId) {
         $gamers = $this->getGamers($gameId);
         foreach ($gamers as $gamer) {
-            $gamer->move($deltaTime);
+            $gamer->setDirection($deltaTime);
         }
 
         foreach ($gamers as $gamerA) {
@@ -51,12 +51,21 @@ class Game {
                     $point = $this->math->getIntersectionPoint($a, $b);
                     if ($point) {
                         $norm = $this->math->norm($this->math->sub($a->position, $b->position));
+                        $velocity = $gamerA->getVelocity();
+                        $scal = $this->math->dot($norm, $velocity);
+                        if ($scal < 0) {
+                            $gamerA->setVelocity($this->math->sub($velocity, $this->math->mlt($norm, $scal)));
+                        }
                         $gamerA->setImage('potPlantENV');
                     } else {
                         $gamerA->setImage('dryPotPlantENV');
                     }
                 }
             }
+        }
+        
+        foreach ($gamers as $gamer) {
+            $gamer->move($deltaTime);
         }
     }
 
