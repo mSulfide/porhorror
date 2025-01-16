@@ -1,15 +1,24 @@
-import { TTransform } from "./types";
+import { TGameObject } from "../../services/server/types";
+
+type TSceneObject = Omit<TGameObject, 'id'>;
 
 class Scene {
-    private scene: TTransform[] = [];
-    private dTimeStamp: number;
+    private scene: { [id: string]: TSceneObject } = {};
 
-    constructor() {
-        this.dTimeStamp = Date.now();
-    }
-
-    set(scene: TTransform[]) {
-        this.scene = scene;
+    set(scene: TGameObject[]) {
+        scene.forEach(({ id, image, position, velocity, radius, angle }) => {
+            const gameObject = this.scene[id];
+            if (gameObject) {
+                gameObject.image = image;
+                gameObject.position = position;
+                gameObject.velocity = velocity;
+                gameObject.radius = radius;
+                gameObject.angle = angle;
+            }
+            else {
+                this.scene[id] = { image, position, velocity, radius, angle };
+            }
+        });
     }
 
     update(deltaTime: number): void {
@@ -24,12 +33,11 @@ class Scene {
               v
         0_____|_____|_____|_____|_____|_____|____1000 + TIME_REQUEST
         */
-        this.scene.forEach(
-            transform => {
-                transform.position.x = transform.position.x + transform.velocity.x * deltaTime;
-                transform.position.y = transform.position.y + transform.velocity.y * deltaTime;
-            }
-        );
+        Object.keys(this.scene).forEach((id) => {
+            const transform = this.scene[id];
+            transform.position.x = transform.position.x + transform.velocity.x * deltaTime;
+            transform.position.y = transform.position.y + transform.velocity.y * deltaTime;
+        });
     }
 }
 
