@@ -3,6 +3,7 @@
 require_once ('gameObject/GameObject.php');
 require_once ('gamer/Gamer.php');
 require_once ('physic/Physic.php');
+require_once ('droppedItem/DroppedItem.php'); 
 
 class Game {
     private $db;
@@ -118,5 +119,12 @@ class Game {
             return true;
         }
         return ['error' => 810];
+    }
+
+    public function dropItem($userId, $itemId, $positionX, $positionY) {
+        $gamer = $this->db->getGamerByUserId($userId);
+        if ($gamer) {
+            $droppedItem = new DroppedItem($this->db, $itemId, $positionX, $positionY);
+        }
     }
 }
