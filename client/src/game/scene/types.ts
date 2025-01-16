@@ -1,7 +1,4 @@
-export type TPoint = {
-    x: number,
-    y: number
-}
+import { TPoint } from "../../services/math"
 
 export type TTransform = {
     position: TPoint,
