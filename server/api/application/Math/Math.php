@@ -67,6 +67,9 @@ class Math {
 
         // расчет расстояния между центрами кругов
         $distance = sqrt(pow($circle1->position->x - $circle2->position->x, 2) + pow($circle1->position->y - $circle2->position->y, 2));
+        if ($distance == 0) {
+            return $circle1->position;
+        }
 
         // расчет длины отрезка от центра первого круга до точки пересечения
         $length1 = ($circle1->radius * $circle1->radius - $circle2->radius * $circle2->radius + $distance * $distance) / (2 * $distance);

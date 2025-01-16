@@ -337,6 +337,10 @@ class DB {
         $this->execute("UPDATE game_objects SET radius=? WHERE id=?", [$radius, $objectId]);
     }
 
+    public function setImage($objectId, $image) {
+        $this->execute("UPDATE game_objects SET image=? WHERE id=?", [$image, $objectId]);
+    }
+
     public function equippedSlots($userId) {
         return $this->queryAll("SELECT * FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId]);
     }
