@@ -1,7 +1,8 @@
 <?php
 
-require_once ('gameObject\GameObject.php');
-require_once ('gamer\Gamer.php');
+require_once ('gameObject/GameObject.php');
+require_once ('gamer/Gamer.php');
+require_once ('physic/Physic.php');
 
 class Game {
     private $db;
@@ -43,24 +44,14 @@ class Game {
             $gamer->setDirection($deltaTime);
         }
 
-        foreach ($gamers as $gamerA) {
-            foreach ($gamers as $gamerB) {
-                if ($gamerA !== $gamerB) {
-                    $a = new Circle($gamerA->getPosition(), $gamerA->getRadius());
-                    $b = new Circle($gamerB->getPosition(), $gamerB->getRadius());
-                    $point = $this->math->getIntersectionPoint($a, $b);
-                    if ($point) {
-                        $norm = $this->math->norm($this->math->sub($a->position, $b->position));
-                        $velocity = $gamerA->getVelocity();
-                        $scal = $this->math->dot($norm, $velocity);
-                        if ($scal < 0) {
-                            $gamerA->setVelocity($this->math->sub($velocity, $this->math->mlt($norm, $scal)));
-                        }
-                        $gamerA->setImage('potPlantENV');
-                    } else {
-                        $gamerA->setImage('dryPotPlantENV');
-                    }
-                }
+        $physic = new Physic();
+        $collisions = $physic->findCollisions($gamers);
+        foreach ($collisions as $collision) {
+            $norm = $collision->norm;
+            $velocity = $collision->gamer->getVelocity();
+            $scal = $this->math->dot($norm, $velocity);
+            if ($scal < 0) {
+                $collision->gamer->setVelocity($this->math->sub($velocity, $this->math->mlt($norm, $scal)));
             }
         }
         
