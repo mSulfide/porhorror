@@ -191,7 +191,9 @@ class DB {
                 go.game_id AS game_id,
                 g.object_id AS objectId,
                 g.axis_x AS axis_x, 
-                g.axis_y AS axis_y   
+                g.axis_y AS axis_y,
+                g.item_id AS item_id,
+                g.hand_status AS hand_status  
             FROM gamers AS g
             INNER JOIN users AS u ON u.id = g.user_id
             INNER JOIN game_objects AS go ON go.id = g.object_id
@@ -339,6 +341,13 @@ class DB {
 
     public function setImage($objectId, $image) {
         $this->execute("UPDATE game_objects SET image=? WHERE id=?", [$image, $objectId]);
+    }
+
+    public function setItem($itemId, $gamerId) {
+        $this->execute(
+            "UPDATE gamers SET item_id=?, hand_status='hold item' WHERE id=?",
+            [$itemId, $gamerId]
+        );
     }
 
     public function equippedSlots($userId) {

@@ -6,6 +6,7 @@ class Gamer extends GameObject {
     private GameObject $object;
     private float $axisX, $axisY;
     private bool $isAction;
+    private string $handStatus;
     
     function __construct($db, $id) {
         $params = $db->getGamerById($id);
@@ -13,6 +14,8 @@ class Gamer extends GameObject {
         $this->axisX = $params->axis_x;
         $this->axisY = $params->axis_y;
         $this->isAction = $params->is_action;
+        $this->itemId = $params->item_id;
+        $this->handStatus = $params->hand_status;
 
         $this->db = $db;
         $this->id = $id;
@@ -39,5 +42,17 @@ class Gamer extends GameObject {
         $point = new Point($this->axisX, $this->axisY);
         parent::moveVelocity($point, $deltaTime * 1);
         $this->lookAt($this->math->add($point, $this->getPosition()));
+    }
+
+    public function setItem($userId, $itemId) {
+        $gamer = $this->db->getGamerByUserId($userId);
+        if ($gamer) {
+            if ($gamer->hand_status === 'empty') {
+                $this->db->setItem($itemId, $gamer->id);
+                return true;
+            }
+            return ['error' => 906];
+        }
+        return ['error' => 810];
     }
 }
