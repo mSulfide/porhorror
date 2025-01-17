@@ -61,7 +61,7 @@ export const getSprite = (image: EImage, offset: number[], size: number[]) => ({
 
 export const sprites = {
     // ENVIRONMENT
-    [ESprite.tas]: getSprite(EImage.tas, [0, 0], [32, 32]),
+    [ESprite.tas]: getSprite(EImage.tas, [0, 0], [64, 64]),
     [ESprite.wardrobeENV]: getSprite(EImage.environment, [0, 0], [32, 32]),
     [ESprite.tableRightENV]: getSprite(EImage.environment, [32, 0], [64, 32]),
     [ESprite.tableLeftENV]: getSprite(EImage.environment, [96, 0], [64, 32]),
