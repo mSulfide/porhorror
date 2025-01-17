@@ -38,6 +38,6 @@ class Gamer extends GameObject {
     public function setDirection($deltaTime) {
         $point = new Point($this->axisX, $this->axisY);
         parent::moveVelocity($point, $deltaTime * 1);
-        $this->lookAt($this->math->add($point, $this->getPosition()));
+        $this->lookAt($point);
     }
 }

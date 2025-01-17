@@ -87,7 +87,7 @@ class GameObject {
 
     public function lookAt($direction) {
         if ($direction->x != 0 || $direction->y != 0) {
-            $angle = $this->math->getAngle($direction);
+            $angle = $this->math->getAngle($direction) + M_PI_2;
             $this->setAngle($angle);
         }
     }
