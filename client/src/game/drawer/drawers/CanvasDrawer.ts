@@ -18,19 +18,19 @@ class CanvasDrawer implements IDrawer {
         const width = this.canvas.width;
         const height = this.canvas.height;
         const alpha = angle * Math.PI / 180;
-        const sizeX = sx * Math.cos(alpha) + sy * Math.sin(alpha);
-        const sizeY = sx * Math.sin(alpha) - sy * Math.cos(alpha);
-        const posX = x - sizeX / 2;
-        const posY = 1 - y + sizeY / 2;
+        const sizeX = sx * Math.cos(alpha) * width + sy * Math.sin(alpha) * height;
+        const sizeY = sx * Math.sin(alpha) * width - sy * Math.cos(alpha) * height;
+        const posX = x * width - sizeX / 2;
+        const posY = (1 - y) * height + sizeY / 2;
         this.ctx.save();
-        this.ctx.translate(posX * width, posY * height);
+        this.ctx.translate(posX, posY);
         this.ctx.rotate(-alpha);
-        this.ctx.translate(-posX * width, -posY * height);
+        this.ctx.translate(-posX, -posY);
         this.ctx.drawImage(
             image,
             dx, dy,
             dw, dh,
-            posX * width, posY * height,
+            posX, posY,
             sx * width, sy * height
         );
         this.ctx.restore();
