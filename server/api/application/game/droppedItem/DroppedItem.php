@@ -3,7 +3,6 @@
 class DroppedItem extends GameObject {
     private $db;
     private int $id, $object_id, $item_id;
-    private string $status;
 
     public function __construct($db, $id) {
         $this->db = $db;
@@ -12,7 +11,6 @@ class DroppedItem extends GameObject {
         $params = $this->db->getItemById($this->id); 
         $this->objectId = $params->object_id;
         $this->itemId = $params->item_id;
-        $this->status = $params->status;
         
         parent::__construct($db, $params->object_id);
     }
@@ -24,10 +22,6 @@ class DroppedItem extends GameObject {
 
     public function getItemId() {
         return $this->itemId;
-    }
-
-    public function getStatus() {
-        return $this->status;
     }
 
     public function deleteDroppedItem() {
