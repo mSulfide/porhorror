@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 17 2025 г., 17:09
+-- Время создания: Янв 17 2025 г., 18:51
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- База данных: `porhorror`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `dispenser`
+--
+
+CREATE TABLE `dispenser` (
+  `id` int NOT NULL,
+  `object_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `gamer_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -98,6 +111,13 @@ CREATE TABLE `gamers` (
   `hand_status` varchar(32) NOT NULL DEFAULT 'empty'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `gamers`
+--
+
+INSERT INTO `gamers` (`id`, `user_id`, `object_id`, `status`, `hp`, `quest_count`, `is_action`, `axis_x`, `axis_y`, `item_id`, `hand_status`) VALUES
+(7, 4, 11, 'gaming', NULL, 0, 0, 0, 0, NULL, 'empty');
+
 -- --------------------------------------------------------
 
 --
@@ -141,6 +161,13 @@ CREATE TABLE `game_objects` (
   `radius` float NOT NULL DEFAULT '0.5',
   `angle` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `game_objects`
+--
+
+INSERT INTO `game_objects` (`id`, `game_id`, `image`, `x`, `y`, `velocity_x`, `velocity_y`, `radius`, `angle`) VALUES
+(11, 1, 'tas', 0, 0, 0, 0, 0.5, 0);
 
 -- --------------------------------------------------------
 
@@ -291,6 +318,12 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 --
 
 --
+-- Индексы таблицы `dispenser`
+--
+ALTER TABLE `dispenser`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `exchange`
 --
 ALTER TABLE `exchange`
@@ -391,6 +424,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `dispenser`
+--
+ALTER TABLE `dispenser`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `exchange`
 --
 ALTER TABLE `exchange`
@@ -418,7 +457,7 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
@@ -436,7 +475,7 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
