@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 16 2025 г., 20:53
+-- Время создания: Янв 17 2025 г., 17:09
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -106,8 +106,9 @@ CREATE TABLE `gamers` (
 
 CREATE TABLE `game_items` (
   `id` int NOT NULL,
-  `game_id` int NOT NULL,
-  `item_id` int NOT NULL
+  `object_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `status` varchar(32) NOT NULL DEFAULT 'can pick up'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -180,7 +181,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
-(1, '6a3fe40ac0cd020c168534b13a4da91d', '61aa18e806afeb4b1433fa0baaac1e69');
+(1, '6a3fe40ac0cd020c168534b13a4da91d', 'bfb27bc92ca32e3026307ea660ddfafb');
 
 -- --------------------------------------------------------
 
@@ -411,19 +412,19 @@ ALTER TABLE `exchanger_lots`
 -- AUTO_INCREMENT для таблицы `game`
 --
 ALTER TABLE `game`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
 --
 ALTER TABLE `game_items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `game_mobs`
@@ -435,7 +436,7 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
@@ -465,13 +466,13 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
