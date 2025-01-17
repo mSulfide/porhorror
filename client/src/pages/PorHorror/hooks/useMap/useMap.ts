@@ -6,13 +6,14 @@ import maps, { EMap } from "./maps";
 const useMap = (map: EMap): [IRendered[], number] => {
     const resources = useContext(StoreContext).resources;
     const rendereds: IRendered[] = [];
-    maps[map].forEach(({ sprite, position, size }) => {
+    maps[map].forEach(({ sprite, position, size, angle }) => {
         const currectSprite = resources.getSprite(sprite);
         currectSprite && rendereds.push({
             sprite: currectSprite,
             position,
             size,
-            radius: 1
+            radius: 1,
+            angle
         });
     });
     return [rendereds, rendereds.length];

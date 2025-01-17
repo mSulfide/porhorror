@@ -6,4 +6,5 @@ export interface IRendered {
     sprite: TSprite;
     size?: TPoint;
     radius: number;
+    angle?: number;
 }
