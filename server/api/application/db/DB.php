@@ -317,6 +317,12 @@ class DB {
     public function updateLotStatus($lotId, $status) {
         $this->execute("UPDATE exchanger_lots SET status = ? WHERE id = ?", [$status, $lotId]);
     }
+    public function deleteLot($lotId) {
+        $query = "DELETE FROM lots WHERE id = :lotId";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':lotId', $lotId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
     
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);

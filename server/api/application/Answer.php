@@ -30,6 +30,7 @@ class Answer {
         '801' => 'unknown state',
         '802' => 'game is already exists',
         '805' => 'game is no exists',
+        '806' => 'Invalid request format',
         '807' => 'lot not found',
         '808' => 'status is already ready',
         '809' => 'status is not ready',

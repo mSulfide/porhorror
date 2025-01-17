@@ -276,13 +276,13 @@ class Application {
     public function updateLots($params) {
         return ['error' => 103];
     }
-    
-    public function removeLot($params) {
-        $user = $this->checkParams($params, 'token', 'lotId');
-        if ($this->isError($user)) {
-            return $user;
-        }
-        return $this->exchanger->removeLot($user, $params['lotId']);
+
+   public function removeLot($params) {
+    $user = $this->checkParams($params, 'token', 'lotId');
+    if ($this->isError($user)) {
+        return $user;
     }
-    
+    return $this->exchanger->removeLot($user, $params['lotId']);
+}
+
 }
