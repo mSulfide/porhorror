@@ -38,6 +38,7 @@ class Answer {
         '821' => 'the slot does not belong to the user',
         '830' => 'exceeded the limit of slots',
         '905' => 'gamer is already connected to game',
+        '906' => 'the gamers hands are already full',
         '1001' => 'Is it unique login?',
         '1002' => 'Wrong login or password',
         '1003' => 'Error to logout user',
