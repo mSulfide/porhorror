@@ -29,9 +29,17 @@ class Resources {
         return resource?.ready ? resource.image : null;
     }
 
-    getSprite(spriteId: ESprite): TSprite | null {
+    getSprite(spriteId: ESprite): TSprite[] | TSprite | null {
         const sprite = sprites[spriteId];
-        if (sprite) {
+        if (sprite instanceof Array) {
+            const sprites: TSprite[] = [];
+            sprite.forEach(sprite => {
+                const { image, offset, size } = sprite;
+                const map = this.getImage(image);
+                map && sprites.push({ image: map, offset, size });
+            });
+            return sprites;
+        } else if (sprite) {
             const { image, offset, size } = sprite;
             const map = this.getImage(image);
             return map && { image: map, offset, size };

@@ -6,13 +6,14 @@ class Sprite {
     size: TPoint;
     offset: TPoint = zero();
 
-    constructor(image: EImage, size: TPoint) {
+    constructor(image: EImage, size: TPoint, offset?: TPoint) {
         this.image = image;
         this.size = size;
+        offset && this.setPosition(offset.x, offset.y);
     }
 
     setPosition(x: number, y: number) {
-        this.offset = { x, y };
+        this.offset = { x: this.size.x * x, y: this.size.y * y };
     }
 }
 

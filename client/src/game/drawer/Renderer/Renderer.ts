@@ -21,18 +21,35 @@ export default class Renderer {
         const cam = this.camera;
         cam.vision.forEach(({ radius, size, position, sprite, angle }) => {
             const currectSize = size || mlt(one(), radius * 2);
-            sprite && this.drawer.draw({
-                image: sprite.image,
-                x: this.sx(position.x),
-                y: this.sy(position.y),
-                sx: currectSize.x / cam.width,
-                sy: currectSize.y / cam.height,
-                dx: sprite.offset.x,
-                dy: sprite.offset.y,
-                dw: sprite.size.x,
-                dh: sprite.size.y,
-                angle: angle || 0
-            });
+            if (sprite instanceof Array) {
+                sprite.forEach(sprite => {
+                    this.drawer.draw({
+                        image: sprite.image,
+                        x: this.sx(position.x),
+                        y: this.sy(position.y),
+                        sx: currectSize.x / cam.width,
+                        sy: currectSize.y / cam.height,
+                        dx: sprite.offset.x,
+                        dy: sprite.offset.y,
+                        dw: sprite.size.x,
+                        dh: sprite.size.y,
+                        angle: angle || 0
+                    });
+                });
+            } else if (sprite) {
+                this.drawer.draw({
+                    image: sprite.image,
+                    x: this.sx(position.x),
+                    y: this.sy(position.y),
+                    sx: currectSize.x / cam.width,
+                    sy: currectSize.y / cam.height,
+                    dx: sprite.offset.x,
+                    dy: sprite.offset.y,
+                    dw: sprite.size.x,
+                    dh: sprite.size.y,
+                    angle: angle || 0
+                });
+            }
         });
     }
 
