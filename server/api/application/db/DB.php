@@ -361,12 +361,12 @@ class DB {
         );
     }
 
-    public function putItem($gamerId) {
+    /*public function putItem($gamerId) {
         $this->execute(
             "UPDATE gamers SET item_id=NULL, hand_status='empty' WHERE id=?",
             [$gamerId]
         );
-    }
+    }*/
 
     public function getItemById($itemId) {
         $item = $this->query("SELECT * FROM game_items WHERE item_id=?", [$itemId]);

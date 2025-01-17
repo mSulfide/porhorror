@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 17 2025 г., 19:43
+-- Время создания: Янв 17 2025 г., 20:03
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -107,8 +107,7 @@ CREATE TABLE `gamers` (
   `is_action` tinyint(1) NOT NULL DEFAULT '0',
   `axis_x` float NOT NULL DEFAULT '0',
   `axis_y` float NOT NULL DEFAULT '0',
-  `item_id` int DEFAULT NULL,
-  `hand_status` varchar(32) NOT NULL DEFAULT 'empty'
+  `item_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------

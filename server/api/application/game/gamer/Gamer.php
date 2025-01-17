@@ -49,15 +49,8 @@ class Gamer extends GameObject {
         $this->lookAt($this->math->add($point, $this->getPosition()));
     }
 
-    public function setItem($userId, $itemId) {
-        $gamer = $this->db->getGamerByUserId($userId);
-        if ($gamer) {
-            if ($gamer->hand_status === 'empty') {
-                $this->db->setItem($itemId, $gamer->id);
-                return true;
-            }
-            return ['error' => 906];
-        }
-        return ['error' => 810];
+    public function setItem($itemId) {
+        $this->itemId = $itemId;
+        $this->db->setItem($itemId, $this->id);
     }
 }
