@@ -1,13 +1,16 @@
 <?php
 
-require_once ('gameObject\GameObject.php');
-require_once ('gamer\Gamer.php');
+require_once ('gameObject/GameObject.php');
+require_once ('gamer/Gamer.php');
+require_once ('physic/Physic.php');
 
 class Game {
     private $db;
+    private $math;
 
     function __construct($db) {
         $this->db = $db;
+        $this->math = new Math();
     }
 
     private function getTime($startTime) {
@@ -37,6 +40,21 @@ class Game {
 
     public function update($deltaTime, $gameId) {
         $gamers = $this->getGamers($gameId);
+        foreach ($gamers as $gamer) {
+            $gamer->setDirection($deltaTime);
+        }
+
+        $physic = new Physic();
+        $collisions = $physic->findCollisions($gamers);
+        foreach ($collisions as $collision) {
+            $norm = $collision->norm;
+            $velocity = $collision->gamer->getVelocity();
+            $scal = $this->math->dot($norm, $velocity);
+            if ($scal < 0) {
+                $collision->gamer->setVelocity($this->math->sub($velocity, $this->math->mlt($norm, $scal)));
+            }
+        }
+        
         foreach ($gamers as $gamer) {
             $gamer->move($deltaTime);
         }

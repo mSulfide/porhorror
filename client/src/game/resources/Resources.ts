@@ -29,10 +29,14 @@ class Resources {
         return resource?.ready ? resource.image : null;
     }
 
-    getSprite(sprite: ESprite): TSprite | null {
-        const { image, offset, size } = sprites[sprite];
-        const map = this.getImage(image);
-        return map && { image: map, offset, size };
+    getSprite(spriteId: ESprite): TSprite | null {
+        const sprite = sprites[spriteId];
+        if (sprite) {
+            const { image, offset, size } = sprite;
+            const map = this.getImage(image);
+            return map && { image: map, offset, size };
+        }
+        return null;
     }
 }
 
