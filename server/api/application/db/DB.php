@@ -388,6 +388,11 @@ class DB {
         , [$gameItemId]);
     }
 
+    public function getDispenserById($dispenserId) {
+        $dispenser = $this->query("SELECT * FROM dispenser WHERE id=?", [$dispenserId]);
+        return $dispenser;
+    }
+
     public function equippedSlots($userId) {
         return $this->queryAll("SELECT * FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId]);
     }
