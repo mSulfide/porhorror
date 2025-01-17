@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 14 2025 г., 13:27
+-- Время создания: Янв 17 2025 г., 23:06
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -178,7 +178,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
-(1, '6a3fe40ac0cd020c168534b13a4da91d', 'f97fa6062e7cd67b1d49ffc41241f988');
+(1, '8ce31b19dcbed8653ae2dbe137dee7e8', '4c5553a221898909afc3cfce56f3075d');
 
 -- --------------------------------------------------------
 
@@ -254,7 +254,8 @@ CREATE TABLE `messages` (
 INSERT INTO `messages` (`id`, `user_id`, `message`, `created`) VALUES
 (1, 1, 'Я ЛюБлю жРАтЬ С0баЧиЕ ДеРЬмО', '2024-11-06 07:22:45'),
 (2, 4, 'всем тевирп!', '2024-11-23 14:43:19'),
-(3, 1, '123', '2024-12-04 14:40:51');
+(3, 1, '123', '2024-12-04 14:40:51'),
+(4, 8, 'х', '2025-01-17 19:46:22');
 
 -- --------------------------------------------------------
 
@@ -281,7 +282,8 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (4, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', 'b3f17bc7b072d2e9253740df93b0d00b'),
 (5, 'admin', 'bbad8d72c1fac1d081727158807a8798', 'Админчик', 'd3ed3676021d70ecdfefa203462ccced'),
 (6, 'OREL', '2da7d9988b511f3e37808c8636abcd2c', 'Лев', '31d359b58e0aced66a482d2d2e2f08eb'),
-(7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01');
+(7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01'),
+(8, '123', '4297f44b13955235245b2497399d7a93', '123', '7274d5e1500921f0d215925aae3de1c5');
 
 --
 -- Индексы сохранённых таблиц
@@ -409,13 +411,13 @@ ALTER TABLE `exchanger_lots`
 -- AUTO_INCREMENT для таблицы `game`
 --
 ALTER TABLE `game`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
@@ -433,7 +435,7 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
@@ -463,25 +465,25 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
