@@ -16,14 +16,11 @@
 | id | integer | PK |
 | chat_hash | string | |
 | lobby_hash | string | |
-| ... | string | какие-то другие хеши |
-
 
 **Таблица global_settings**
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| version | integer | |
 | lobby_max_count | integer | 4 by default |
 | quest_max_count | integer | 4 by default |
 | game_timestamp | integer | длительность игры |
@@ -37,11 +34,11 @@
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| name | string | |
 | login | string | unique |
 | password | string | |
+| name | string | |
 | token | string | |
-| rating | integer | |
+
 
 
 ### Инвентарь
@@ -64,6 +61,7 @@
 | id | integer | PK |
 | name | string | |
 | status | string | 'open', 'cancel', 'start game', etc. |
+| game_id | integer | |
 
 
 **Таблица lobby_members**
@@ -72,34 +70,34 @@
 | id | integer | PK |
 | lobby_id | integer | |
 | user_id | integer | |
-| is_creator | bool | false by default |
+| status | string | | 
 
 
 **Таблица game**
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| start_time | integer | |
+| status | string | 'open', 'end', etc. |
+| hash | string | |
 | timestamp | integer | |
 | borders | string | массив коэффициентов для сплайна |
 | quest_count | integer | количество выполненных квестов |
-| status | string | 'open', 'end', etc. |
-| hash | string | |
+| start_time | integer | |
 
 
 **Таблица gamers**
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| game_id | integer | |
 | user_id | integer | |
-| hp | integer | |
-| x | float | |
-| y | float | |
-| angle | float | угол поворота игрока на сцене |
-| speed | float | скорость перемещения |
-| quest_count | integer | количество выполненных квестов |
+| object_id | integer | |
 | status | string | 'gaming', 'dead', etc. |
+| hp | integer | |
+| quest_count | integer | количество выполненных квестов |
+| is_action | boolen| |
+| axis_x | float | |
+| axis_y | float | |
+
 
 
 **Таблица items**
@@ -125,10 +123,35 @@
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| game_id | integer | |
+| object_id | integer | |
 | item_id | integer | |
 | hp | integer | |
+
+
+**Таблица game_objects**
+| Название | Тип | Комментарий |
+| - | - | - |
+| id | integer | PK |
+| game_id | integer | |
+| image | string | |
 | x | float | |
 | y | float | |
+| velocity_x | float | |
+| velocity_y | float | |
+| radius | angle | радиус коллайдера |
 | angle | float | угол поворота игрока на сцене |
-| speed | float | скорость перемещения |
+
+**Таблица exchange**
+| Название | Тип | Комментарий |
+| - | - | - |
+| id | integer | PK |
+| user_id | integer | |
+| status | string | |
+
+**Таблица messages**
+| Название | Тип | Комментарий |
+| - | - | - |
+| id | integer | PK |
+| user_id | integer | |
+| message | string | |
+| created | date | |
