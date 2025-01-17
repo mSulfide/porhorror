@@ -1,6 +1,6 @@
-import { add, mlt, one, zero, TPoint } from "../../../../services/math";
+import { add, mlt, one, zero } from "../../../../services/math";
 import { IRendered } from "../IRendered";
-import { TCameraParams } from "../types";
+import { TCameraParams, TPoint } from "../types";
 
 class Camera {
     position: TPoint;

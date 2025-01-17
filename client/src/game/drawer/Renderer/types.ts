@@ -1,4 +1,7 @@
-import { TPoint } from "../../../services/math"
+export type TPoint = {
+    x: number,
+    y: number
+}
 
 export type TCameraParams = {
     width: number,

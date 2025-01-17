@@ -4,11 +4,12 @@ export type TDrawOption = {
     x: number,
     /** y ∈ [0, 1], where 0 - down, 1 - up */
     y: number,
-    sx: number, sy: number,
-    dx: number, dy: number,
-    dw: number, dh: number,
-    /** 0 - rigth, 90 - up, 180 - left, -90 - down */
-    angle: number
+    sx: number,
+    sy: number,
+    dx: number,
+    dy: number,
+    dw: number,
+    dh: number
 }
 
 export interface IDrawer {

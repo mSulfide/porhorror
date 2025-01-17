@@ -1,4 +1,4 @@
-export type TPoint = { x: number, y: number }
+type TPoint = { x: number, y: number }
 
 const add = (a: TPoint, b: TPoint): TPoint => ({ x: a.x + b.x, y: a.y + b.y });
 

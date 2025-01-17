@@ -70,7 +70,6 @@ type TPoint = {
     y: number
 }
 export type TGameObject = {
-    id: number,
     image: ESprite,
     position: TPoint,
     velocity: TPoint,

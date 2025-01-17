@@ -42,10 +42,10 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
         const updateScene = ({ scene }: TUpdateSceneResponse) => {
             renderers.splice(count, renderers.length - count);
-            scene.forEach(({ position, radius, image, angle }: TGameObject) => {
+            scene.forEach(({ position, radius, image }: TGameObject) => {
                 const sprite = store.resources.getSprite(image);
                 if (sprite) {
-                    renderers.push({ position, radius, sprite, angle: angle * 180 / Math.PI });
+                    renderers.push({ position, radius, sprite });
                 } else {
                     console.warn("can't upload the image");
                 }

@@ -19,7 +19,7 @@ export default class Renderer {
         this.drawCells();
         this.camera.update(scene);
         const cam = this.camera;
-        cam.vision.forEach(({ radius, size, position, sprite, angle }) => {
+        cam.vision.forEach(({ radius, size, position, sprite }) => {
             const currectSize = size || mlt(one(), radius * 2);
             sprite && this.drawer.draw({
                 image: sprite.image,
@@ -30,8 +30,7 @@ export default class Renderer {
                 dx: sprite.offset.x,
                 dy: sprite.offset.y,
                 dw: sprite.size.x,
-                dh: sprite.size.y,
-                angle: angle || 0
+                dh: sprite.size.y
             });
         });
     }
@@ -52,7 +51,7 @@ export default class Renderer {
                 this.drawer.drawLine(x, 0, x, 1, "#5555", lineWidth);
             }
             for (let i = Math.ceil((-cam.height / 2 + cam.position.y) / cellSize); i <= Math.floor((cam.height / 2 + cam.position.y) / cellSize); i++) {
-                const y = this.sy(i * cellSize);
+                const y = 1 - this.sy(i * cellSize);
                 this.drawer.drawLine(0, y, 1, y, "#5555", lineWidth);
             }
         }

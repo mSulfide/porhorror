@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../Button/Button";
-import { TPoint } from "../../services/math";
+import { TPoint } from "../../config";
 
 interface UserPointsProps {
     onPointsSubmit: (points: TPoint[]) => void;
