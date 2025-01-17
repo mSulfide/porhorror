@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 17 2025 г., 23:06
+-- Время создания: Янв 18 2025 г., 00:51
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -53,15 +53,16 @@ CREATE TABLE `exchanger_comments` (
 --
 
 CREATE TABLE `exchanger_lots` (
-  `id` int NOT NULL
+  `id` int NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `exchanger_lots`
 --
 
-INSERT INTO `exchanger_lots` (`id`) VALUES
-(1);
+INSERT INTO `exchanger_lots` (`id`, `status`) VALUES
+(1, 'removed');
 
 -- --------------------------------------------------------
 
@@ -283,7 +284,8 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (5, 'admin', 'bbad8d72c1fac1d081727158807a8798', 'Админчик', 'd3ed3676021d70ecdfefa203462ccced'),
 (6, 'OREL', '2da7d9988b511f3e37808c8636abcd2c', 'Лев', '31d359b58e0aced66a482d2d2e2f08eb'),
 (7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01'),
-(8, '123', '4297f44b13955235245b2497399d7a93', '123', '7274d5e1500921f0d215925aae3de1c5');
+(8, '123', '4297f44b13955235245b2497399d7a93', '123', '25aa0a4d67c1abd2fc6590143640ead2'),
+(9, 'testuser', 'testpassword', 'Test User', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -483,7 +485,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
