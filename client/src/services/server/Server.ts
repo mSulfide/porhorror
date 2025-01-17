@@ -250,8 +250,8 @@ class Server {
         this.request('removeConsent');
     }
     
-    addLotComment(): void {
-        this.request('addLotComment');
+    addLotComment(lotId:number, comment:string): void {
+        this.request('addLotComment',{lotId:`${lotId}`,comment:`${comment}`});
     }
     
     updateLots(): void {
