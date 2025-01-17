@@ -65,7 +65,7 @@ export const getSprite = (image: EImage, offset: number[], size: number[]) => ({
 export const sprites = {
     [ESprite.tas]: getSprite(EImage.tas, [0, 0], [64, 64]),
     // CHARACTERS
-    [ESprite.player]: new Sprite(EImage.players),
+    [ESprite.player]: new Sprite(EImage.players, { x: 32, y: 32 }),
     // ENVIRONMENT
     [ESprite.wardrobeENV]: getSprite(EImage.environment, [0, 0], [32, 32]),
     [ESprite.tableRightENV]: getSprite(EImage.environment, [32, 0], [64, 32]),
