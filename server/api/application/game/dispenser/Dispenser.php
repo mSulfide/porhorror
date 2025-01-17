@@ -10,7 +10,7 @@ class Dispenser extends GameObject {
         $this->id = $id;
         $this->game = new Game();
 
-        $params = $this->db->getDispenserById($this->id); // доб в БД
+        $params = $this->db->getDispenserById($this->id);
         $this->objectId = $params->object_id;
         $this->itemId = $params->item_id;
         $this->gamerId = $params->gamer_id;

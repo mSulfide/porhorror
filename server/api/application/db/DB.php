@@ -361,6 +361,13 @@ class DB {
         );
     }
 
+    public function putItem($gamerId) {
+        $this->execute(
+            "UPDATE gamers SET item_id=NULL, hand_status='empty' WHERE id=?",
+            [$gamerId]
+        );
+    }
+
     public function getItemById($itemId) {
         $item = $this->query("SELECT * FROM game_items WHERE item_id=?", [$itemId]);
         return $item;
@@ -391,6 +398,11 @@ class DB {
     public function getDispenserById($dispenserId) {
         $dispenser = $this->query("SELECT * FROM dispenser WHERE id=?", [$dispenserId]);
         return $dispenser;
+    }
+
+    public function getReceiverById($receiverId) {
+        $receiver = $this->query("SELECT * FROM receiver WHERE id=?", [$receiverId]);
+        return $receiver;
     }
 
     public function equippedSlots($userId) {

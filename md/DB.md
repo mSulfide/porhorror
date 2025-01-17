@@ -149,3 +149,11 @@
 | object_id | integer | |
 | item_id | integer | |
 | gamer_id | integer | |
+
+**Таблица receiver**
+| Название | Тип | Комментарий |
+| - | - | - |
+| id | integer | PK |
+| object_id | integer | |
+| game_item_id | integer | |
+| gamer_id | integer | |
