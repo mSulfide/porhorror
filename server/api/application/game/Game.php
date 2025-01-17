@@ -121,10 +121,16 @@ class Game {
         return ['error' => 810];
     }
 
-    public function dropItem($userId, $itemId, $positionX, $positionY) {
-        $gamer = $this->db->getGamerByUserId($userId);
-        if ($gamer) {
-            $droppedItem = new DroppedItem($this->db, $itemId, $positionX, $positionY);
-        }
+    public function dropItem($objectId, $itemId) {
+        $droppedItemId = $this->insertDroppedItem($objectId, $itemId);
+        $newDroppedItem = new DroppedItem($this->db, $droppedItemId);
+    }
+
+    public function insertDroppedItem($objectId, $itemId) {
+        $this->db->insertDroppedItem($objectId, $itemId);
+    }
+
+    public function deleteDroppedItem($objectId) {
+        $this->db->deleteDroppedItem($objectId);
     }
 }

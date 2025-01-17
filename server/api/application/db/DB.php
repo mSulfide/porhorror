@@ -341,6 +341,43 @@ class DB {
         $this->execute("UPDATE game_objects SET image=? WHERE id=?", [$image, $objectId]);
     }
 
+    public function getItemById($itemId) {
+        $item = $this->query("SELECT * FROM game_items WHERE item_id=?", [$itemId]);
+        return $item;
+    }
+
+    public function insertDroppedItem($objectId, $itemId, $gameId) {
+        $this->execute(
+            "INSERT INTO game_items (object_id, item_id) VALUES (?, ?)",
+            [$objectId, $itemId]
+        );
+
+        $lastInsertId = $this->pdo->lastInsertId();
+
+        $this->execute(
+            "INSERT INTO game_objects (game_id) VALUES (?)",
+            [$gameId]
+        );
+
+        return $lastInsertId;
+    }
+
+    public function deleteDroppedItem($objectId) {
+        $this->execute("DELETE gi.*, go.* 
+                FROM game_items AS gi 
+                INNER JOIN game_objects AS go ON go.id = gi.object_id 
+            WHERE go.id=?"
+        , [$objectId]);
+    }
+
+    /*public function deleteGamers($gameId) {
+        $this->execute("DELETE g.*, go.* 
+                FROM gamers AS g 
+                INNER JOIN game_objects AS go ON go.id = g.object_id 
+            WHERE go.game_id=?"
+        , [$gameId]);
+    }*/
+
     public function equippedSlots($userId) {
         return $this->queryAll("SELECT * FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId]);
     }

@@ -1,40 +1,32 @@
 <?php
 
 class DroppedItem extends GameObject {
-    private string $name, $image;
+    private $db;
+    private int $id, $object_id, $item_id;
+    private string $status;
 
-    public function __construct($db, int $itemId) {
-        parent::__construct($db, $itemId);
+    public function __construct($db, $id) {
+        $this->db = $db;
+        $this->id = $id;
 
-        $itemData = $this->db->getItemById($itemId);
-        if ($itemData) {
-            $this->name = $itemData->name;
-            $this->image = $itemData->image;
-        } else {
-            throw new Exception("Item not found");
-        }
+        $params = $this->db->getItemById($this->id); 
+        $this->objectId = $params->object_id;
+        $this->itemId = $params->item_id;
+        $this->status = $params->status;
+        
+        parent::__construct($db, $params->object_id);
     }
 
-    public function save() {
-        // сохр сост выпавшего предмета в бд
-        $this->db->insertDroppedItem($this->id, $this->getPosition()->x, $this->getPosition()->y);
+    // геттеры
+    public function getObjectId() {
+        return $this->objectId;
     }
 
-    public function delete() {
-        $this->db->deleteDroppedItem($this->id);
+    public function getItemId() {
+        return $this->itemId;
     }
 
-    // Геттеры
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getImage() {
-        return $this->image;
-    }
-
-    public function setPosition(Point $position) {
-        parent::setPosition($position);
-        $this->save(); // Сохр
+    public function getStatus() {
+        return $this->status;
     }
 }
