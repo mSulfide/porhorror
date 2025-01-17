@@ -34,5 +34,19 @@ class Exchanger {
         }
         return ['error' => 807]; 
     }    
+
+    public function removeLot($user, $lotId) {
+        $lot = $this->db->getLotById($lotId);
+        if ($lot) {
+            
+            if ($lot->user_id == $user->id) {
+                $this->db->updateLotStatus($lotId, 'removed'); 
+                return true;
+            } else {
+                return ['error' => 806];
+            }
+        }
+        return ['error' => 807];
+    }
     
 }

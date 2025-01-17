@@ -313,7 +313,11 @@ class DB {
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
-
+    
+    public function updateLotStatus($lotId, $status) {
+        $this->execute("UPDATE exchanger_lots SET status = ? WHERE id = ?", [$status, $lotId]);
+    }
+    
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
