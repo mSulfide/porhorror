@@ -142,7 +142,7 @@ const getMap = (): TMapObject[] => {
     // печатный салон
     map.push({ sprite: ESprite.tableEmptyENV, position: { x: -3, y: -6.5 }, size: { x: 2, y: 1 }, angle: 0});
     map.push({ sprite: ESprite.tableEmptyENV, position: { x: -0.5, y: -6 }, size: { x: 2, y: 1 }, angle: 90});
-    map.push({ sprite: ESprite.xeroxENV, position: { x: -0.5, y: -6.5 }, size: { x: 1, y: 1 }, angle: 90});
+    map.push({ sprite: ESprite.xeroxENV, position: { x: -0.5, y: -6.5 }, size: { x: 1, y: 1 }, angle: -90});
     map.push({ sprite: ESprite.printerENV, position: { x: -2.5, y: -6.5 }, size: { x: 1, y: 1 }, angle: 0});
     map.push({ sprite: ESprite.printerENV, position: { x: -3.5, y: -6.5 }, size: { x: 1, y: 1 }, angle: 0});
     map.push({ sprite: ESprite.bookShelf2ENV, position: { x: -3.5, y: -5 }, size: { x: 2, y: 1 }, angle: 90});
@@ -174,8 +174,6 @@ const getMap = (): TMapObject[] => {
     map.push({ sprite: ESprite.fizrukENV, position: { x: -5.5, y: -0.5 }, size: { x: 1, y: 1 }, angle: 180});
     map.push({ sprite: ESprite.allaENV, position: { x: 9.5, y: 5.5 }, size: { x: 1, y: 1 }, angle: 180});
     map.push({ sprite: ESprite.pascalENV, position: { x: -9.5, y: 6.5 }, size: { x: 1, y: 1 }, angle: 180});
-
-
     return map;
 };
 
