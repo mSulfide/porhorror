@@ -266,7 +266,9 @@ class DB {
                 g.hp,
                 g.is_action AS isAction,
                 g.axis_x AS axisX,
-                g.axis_y AS axisY
+                g.axis_y AS axisY,
+                g.item_id AS itemId,
+                g.hand_status AS handStatus
             FROM gamers AS g
             INNER JOIN game_objects AS go ON g.object_id=go.id
             WHERE go.game_id=?
@@ -276,6 +278,15 @@ class DB {
 
     public function getGameById($gameId) {
         return $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
+    }
+
+    public function getGameIdByGamerId($gamerId) {
+        return $this->query("SELECT
+                go.game_id AS gameId
+            FROM game_objects AS go
+            INNER JOIN gamers AS g ON g.object_id = go.id
+            WHERE g.id=?
+        ", [$gamerId]);
     }
 
     public function action($userId) {

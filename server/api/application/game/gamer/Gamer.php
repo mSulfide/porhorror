@@ -29,6 +29,11 @@ class Gamer extends GameObject {
         $this->db->setIsAction($this->userId, $isAction); 
     }
 
+    // геттер
+    public function getId() {
+        return $this->id;
+    }
+
     public function action() {
         if ($this->isAction === true) {
             $this->setIsAction(false);
