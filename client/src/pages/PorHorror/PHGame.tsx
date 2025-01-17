@@ -8,7 +8,7 @@ import { Input, useKeyboard } from "../../game/input";
 import { Scene } from "../../game/scene";
 import { zero } from "../../services/math";
 import useLoop from "./hooks/useLoop";
-import { EMap, useMap } from "./hooks/useMap";
+import { useMap } from "./hooks/useMap";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -26,7 +26,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     useKeyboard(input);
 
-    const [renderers, count] = useMap(EMap.default);
+    const [renderers, count] = useMap();
 
     useEffect(() => {
         const camera = { width: 8.32, height: 6.24 };
