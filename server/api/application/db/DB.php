@@ -346,37 +346,27 @@ class DB {
         return $item;
     }
 
-    public function insertDroppedItem($objectId, $itemId, $gameId) {
-        $this->execute(
-            "INSERT INTO game_items (object_id, item_id) VALUES (?, ?)",
-            [$objectId, $itemId]
-        );
-
-        $lastInsertId = $this->pdo->lastInsertId();
-
+    public function insertDroppedItem($gameId, $itemId) {
         $this->execute(
             "INSERT INTO game_objects (game_id) VALUES (?)",
             [$gameId]
         );
 
-        return $lastInsertId;
+        $this->execute(
+            "INSERT INTO game_items (object_id, item_id) VALUES (?, ?)",
+            [$this->pdo->lastInsertId(), $itemId]
+        );
+
+        return $this->pdo->lastInsertId();
     }
 
-    public function deleteDroppedItem($objectId) {
+    public function deleteDroppedItem($gameItemId) {
         $this->execute("DELETE gi.*, go.* 
                 FROM game_items AS gi 
                 INNER JOIN game_objects AS go ON go.id = gi.object_id 
-            WHERE go.id=?"
-        , [$objectId]);
+            WHERE gi.id=?"
+        , [$gameItemId]);
     }
-
-    /*public function deleteGamers($gameId) {
-        $this->execute("DELETE g.*, go.* 
-                FROM gamers AS g 
-                INNER JOIN game_objects AS go ON go.id = g.object_id 
-            WHERE go.game_id=?"
-        , [$gameId]);
-    }*/
 
     public function equippedSlots($userId) {
         return $this->queryAll("SELECT * FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId]);

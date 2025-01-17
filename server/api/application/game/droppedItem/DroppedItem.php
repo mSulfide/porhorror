@@ -29,4 +29,8 @@ class DroppedItem extends GameObject {
     public function getStatus() {
         return $this->status;
     }
+
+    public function deleteDroppedItem() {
+        $this->db->deleteDroppedItem($this->id);
+    }
 }
