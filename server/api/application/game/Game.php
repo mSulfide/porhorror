@@ -3,6 +3,7 @@
 require_once ('gameObject/GameObject.php');
 require_once ('gamer/Gamer.php');
 require_once ('physic/Physic.php');
+require_once ('droppedItem/DroppedItem.php'); 
 
 class Game {
     private $db;
@@ -118,5 +119,11 @@ class Game {
             return true;
         }
         return ['error' => 810];
+    }
+
+    public function dropItem($itemId) {
+        $objectId = $this->db->createObject($this->id);
+        $droppedItemId = $this->db->addDropppedItem($objectId, $itemId);
+        $droppedItem = new DroppedItem($this->db, $droppedItemId);
     }
 }
