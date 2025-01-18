@@ -2,7 +2,7 @@
 
 class DroppedItem extends GameObject {
     private $db;
-    private int $id, $object_id, $item_id;
+    private int $id, $objectId, $itemId;
 
     public function __construct($db, $id) {
         $this->db = $db;

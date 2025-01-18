@@ -121,8 +121,8 @@ class Game {
         return ['error' => 810];
     }
 
-    public function dropItem($gameId, $itemId) {
-        $droppedItemId = $this->db->insertDroppedItem($gameId, $itemId);
+    public function dropItem($itemId) {
+        $droppedItemId = $this->db->insertDroppedItem($this->id, $itemId);
         $droppedItem = new DroppedItem($this->db, $droppedItemId);
     }
 }

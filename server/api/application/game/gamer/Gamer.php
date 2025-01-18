@@ -6,19 +6,18 @@ class Gamer extends GameObject {
     private GameObject $object;
     private float $axisX, $axisY;
     private bool $isAction;
-    private string $handStatus;
     
-    function __construct($db, $id) {
+    function __construct($db, $id, $game) {
         $params = $db->getGamerById($id);
 
         $this->axisX = $params->axis_x;
         $this->axisY = $params->axis_y;
         $this->isAction = $params->is_action;
         $this->itemId = $params->item_id;
-        $this->handStatus = $params->hand_status;
 
         $this->db = $db;
         $this->id = $id;
+        $this->game = $game;
 
         parent::__construct($db, $params->object_id);
     }
@@ -29,9 +28,13 @@ class Gamer extends GameObject {
         $this->db->setIsAction($this->userId, $isAction); 
     }
 
-    // геттер
+    // геттеры
     public function getId() {
         return $this->id;
+    }
+
+    public function getItemId() {
+        return $this->itemId;
     }
 
     public function action() {
@@ -52,5 +55,9 @@ class Gamer extends GameObject {
     public function setItem($itemId) {
         $this->itemId = $itemId;
         $this->db->setItem($itemId, $this->id);
+    }
+
+    public function dropItem($itemId) {
+        $this->game->dropItem($itemId);
     }
 }

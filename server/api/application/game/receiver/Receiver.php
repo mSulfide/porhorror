@@ -30,14 +30,16 @@ class Receiver extends GameObject {
     }
 
     public function action(Gamer $gamer) {
-        if ($gamer->item_id) {
-            $gamer = $gamer->setItem();
+        if ($gamer->id === $this->gamerId) {
+            $this->putItem($gamer);
         }
-        //$this->putItem($gamerId);
     }
 
     public function putItem(Gamer $gamer) {
-        $gamerId = $gamer->getId();
-        $this->db->putItem($gamerId);
+        $itemId = $gamer->getItemId();
+        if ($itemId === $this->gameItemId) {
+            $gamer->setItem(null);
+        }
+        
     }
 }

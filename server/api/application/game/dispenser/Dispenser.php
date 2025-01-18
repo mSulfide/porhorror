@@ -3,12 +3,12 @@
 class Dispenser extends GameObject {
     private $db;
     private $game;
-    private int $id, $object_id, $item_id, $gamer_id;
+    private int $id, $objectId, $itemId, $gamerId;
 
-    public function __construct($db, $id) {
+    public function __construct($db, $id, $game) {
         $this->db = $db;
         $this->id = $id;
-        $this->game = new Game();
+        $this->game = $game;
 
         $params = $this->db->getDispenserById($this->id);
         $this->objectId = $params->object_id;
@@ -32,15 +32,12 @@ class Dispenser extends GameObject {
     }
 
     public function action(Gamer $gamer) {
-        $gamerId = $gamer->getId();
-        $this->dropItem($gamerId);
+        if ($gamer->id === $this->gamerId) {
+            $this->dropItem($gamer);
+        }
     }
 
-    public function dropItem($gamerId) {
-        $gamer = $this->db->getGamerById($gamerId);
-        $gameId = $this->db->getGameIdByGamerId($gamerId);
-        if ($gamer->id === $this->gamer_id) {
-            $this->game->dropItem($gameId, $this->item_id);
-        }
+    public function dropItem() {
+        $this->game->dropItem($this->itemId);
     }
 }
