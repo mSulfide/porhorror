@@ -59,5 +59,6 @@ class Gamer extends GameObject {
 
     public function dropItem($itemId) {
         $this->game->dropItem($itemId);
+        $this->setItem(null);
     }
 }

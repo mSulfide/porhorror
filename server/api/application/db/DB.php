@@ -192,8 +192,7 @@ class DB {
                 g.object_id AS objectId,
                 g.axis_x AS axis_x, 
                 g.axis_y AS axis_y,
-                g.item_id AS item_id,
-                g.hand_status AS hand_status  
+                g.item_id AS item_id
             FROM gamers AS g
             INNER JOIN users AS u ON u.id = g.user_id
             INNER JOIN game_objects AS go ON go.id = g.object_id
@@ -366,17 +365,8 @@ class DB {
         return $item;
     }
 
-    public function insertDroppedItem($gameId, $itemId) {
-        $this->execute(
-            "INSERT INTO game_objects (game_id) VALUES (?)",
-            [$gameId]
-        );
-
-        $this->execute(
-            "INSERT INTO game_items (object_id, item_id) VALUES (?, ?)",
-            [$this->pdo->lastInsertId(), $itemId]
-        );
-
+    public function addDropppedItem($objectId, $itemId) {
+        $this->execute("INSERT INTO game_items (object_id, item_id) VALUES (?, ?)", [$objectId, $itemId]);
         return $this->pdo->lastInsertId();
     }
 

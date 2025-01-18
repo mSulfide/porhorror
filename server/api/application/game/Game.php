@@ -122,7 +122,8 @@ class Game {
     }
 
     public function dropItem($itemId) {
-        $droppedItemId = $this->db->insertDroppedItem($this->id, $itemId);
+        $objectId = $this->db->createObject($this->id);
+        $droppedItemId = $this->db->addDropppedItem($objectId, $itemId);
         $droppedItem = new DroppedItem($this->db, $droppedItemId);
     }
 }
