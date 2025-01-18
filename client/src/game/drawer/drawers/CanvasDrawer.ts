@@ -14,20 +14,26 @@ class CanvasDrawer implements IDrawer {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    draw(option: TDrawOption): void {
+    draw({ image, x, y, dx, dy, dw, dh, sx, sy, angle }: TDrawOption): void {
         const width = this.canvas.width;
         const height = this.canvas.height;
+        const alpha = angle * Math.PI / 180;
+        const sizeX = sx * Math.cos(alpha) * width + sy * Math.sin(alpha) * height;
+        const sizeY = sx * Math.sin(alpha) * width - sy * Math.cos(alpha) * height;
+        const posX = x * width - sizeX / 2;
+        const posY = (1 - y) * height + sizeY / 2;
+        this.ctx.save();
+        this.ctx.translate(posX, posY);
+        this.ctx.rotate(-alpha);
+        this.ctx.translate(-posX, -posY);
         this.ctx.drawImage(
-            option.image, 
-            option.dx,
-            option.dy,
-            option.dw,
-            option.dh,
-            (option.x - option.sx / 2) * width,
-            (1 - option.y - option.sy / 2) * height,
-            option.sx * width,
-            option.sy * height
+            image,
+            dx, dy,
+            dw, dh,
+            posX, posY,
+            sx * width, sy * height
         );
+        this.ctx.restore();
     }
 
     drawLine(
@@ -41,8 +47,8 @@ class CanvasDrawer implements IDrawer {
         this.ctx.lineWidth = lineWidth;
         const width = this.canvas.width;
         const height = this.canvas.height;
-        this.ctx.moveTo(x1 * width, y1 * height);
-        this.ctx.lineTo(x2 * width, y2 * height);
+        this.ctx.moveTo(x1 * width, (1 - y1) * height);
+        this.ctx.lineTo(x2 * width, (1 - y2) * height);
         this.ctx.closePath();
         this.ctx.stroke();
     }

@@ -8,7 +8,7 @@ import { Input, useKeyboard } from "../../game/input";
 import { Scene } from "../../game/scene";
 import { zero } from "../../services/math";
 import useLoop from "./hooks/useLoop";
-import { EMap, useMap } from "./hooks/useMap";
+import { useMap } from "./hooks/useMap";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -26,7 +26,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     useKeyboard(input);
 
-    const [renderers, count] = useMap(EMap.default);
+    const [renderers, count] = useMap();
 
     useEffect(() => {
         const camera = { width: 8.32, height: 6.24 };
@@ -42,10 +42,10 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
         const updateScene = ({ scene }: TUpdateSceneResponse) => {
             renderers.splice(count, renderers.length - count);
-            scene.forEach(({ position, radius, image }: TGameObject) => {
+            scene.forEach(({ position, radius, image, angle }: TGameObject) => {
                 const sprite = store.resources.getSprite(image);
                 if (sprite) {
-                    renderers.push({ position, radius, sprite });
+                    renderers.push({ position, radius, sprite, angle: angle * 180 / Math.PI });
                 } else {
                     console.warn("can't upload the image");
                 }
