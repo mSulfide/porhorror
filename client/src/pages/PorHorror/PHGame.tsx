@@ -9,12 +9,13 @@ import { Scene } from "../../game/scene";
 import { zero } from "../../services/math";
 import useLoop from "./hooks/useLoop";
 import { useMap } from "./hooks/useMap";
+import Timer from "../../components/Timer/Timer";
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const user = store.getUser();
-
+    
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -67,6 +68,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     return (
         <div>
+            <Timer time={300}/>
             <canvas ref={canvasRef} width={600} height={450} />
             <Button onClick={backClickHandler} text='Назад' />
         </div>
