@@ -266,8 +266,7 @@ class DB {
                 g.is_action AS isAction,
                 g.axis_x AS axisX,
                 g.axis_y AS axisY,
-                g.item_id AS itemId,
-                g.hand_status AS handStatus
+                g.item_id AS itemId
             FROM gamers AS g
             INNER JOIN game_objects AS go ON g.object_id=go.id
             WHERE go.game_id=?
