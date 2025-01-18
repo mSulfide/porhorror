@@ -22,7 +22,7 @@ class Game {
         $answer = [];
         $gamers = $this->db->getGamers($gameId);
         foreach ($gamers as $gamer) {
-            $answer[] = new Gamer($this->db, $gamer->id);
+            $answer[] = new Gamer($this->db, $gamer->id, $this);
         }
         return $answer;
     }
