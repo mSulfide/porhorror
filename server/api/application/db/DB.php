@@ -418,4 +418,8 @@ class DB {
             WHERE l.game_id=?"
         , [$gameId]);
     }
+
+    public function getAllGamerQuests($gamerId) {
+        return $this->queryAll("SELECT * FROM quests WHERE gamer_id=?", [$gamerId]);
+    }
 }

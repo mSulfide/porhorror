@@ -276,4 +276,13 @@ class Application {
     public function updateLots($params) {
         return ['error' => 103];
     }
+
+    //квест
+    public function getQuests($params) {
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->game->getQuests($user->id);
+    }
 }

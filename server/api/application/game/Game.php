@@ -126,4 +126,13 @@ class Game {
         $droppedItemId = $this->db->addDropppedItem($objectId, $itemId);
         $droppedItem = new DroppedItem($this->db, $droppedItemId);
     }
+
+    public function getQuests($userId) {
+        $gamer = $this->db->getGamerByUserId($userId);
+        if ($gamer) {
+            return $this->db->getAllGamerQuests($gamer->id); 
+        }
+        return ['error' => 810];
+    }
+    
 }
