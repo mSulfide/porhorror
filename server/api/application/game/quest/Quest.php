@@ -4,6 +4,7 @@ class Quest {
     private $db;
     private int $id, $nextQuestId, $gamerId;
     private bool $completed;
+    private string $description;
     
     function __construct($db, $id) {
         $params = $db->getQuestById($id);
@@ -11,6 +12,7 @@ class Quest {
         $this->nextQuestId = $params->next_quest_id;
         $this->completed = $params->completed;
         $this->gamerId = $params->gamer_id;
+        $this->description = $params->description;
 
         $this->db = $db;
         $this->id = $id;

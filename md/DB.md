@@ -155,5 +155,14 @@
 | - | - | - |
 | id | integer | PK |
 | object_id | integer | |
-| game_item_id | integer | |
+| item_id | integer | |
 | gamer_id | integer | |
+
+**Таблица quests**
+| Название | Тип | Комментарий |
+| - | - | - |
+| id | integer | PK |
+| next_quest_id | integer | |
+| completed | integer | |
+| gamer_id | integer | |
+| description | string | |

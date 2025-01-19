@@ -369,12 +369,12 @@ class DB {
         return $this->pdo->lastInsertId();
     }
 
-    public function deleteDroppedItem($gameItemId) {
+    public function deleteDroppedItem($itemId) {
         $this->execute("DELETE gi.*, go.* 
                 FROM game_items AS gi 
                 INNER JOIN game_objects AS go ON go.id = gi.object_id 
             WHERE gi.id=?"
-        , [$gameItemId]);
+        , [$itemId]);
     }
 
     public function getDispenserById($dispenserId) {
@@ -444,5 +444,25 @@ class DB {
         FROM quests
         WHERE gamer_id=? 
         ", [$gamerId]);
+    }
+
+    public function createDispenser($objectId, $itemId, $gamerId) {
+        $this->execute(
+            "INSERT INTO dispenser (object_id, item_id, gamer_id) VALUES (?, ?, ?)",
+            [$objectId, $itemId, $gamerId]
+        );
+        return $this->pdo->lastInsertId();
+    }
+
+    public function createReceiver($objectId, $itemId, $gamerId) {
+        $this->execute(
+            "INSERT INTO dispenser (object_id, item_id, gamer_id) VALUES (?, ?, ?)",
+            [$objectId, $itemId, $gamerId]
+        );
+        return $this->pdo->lastInsertId();
+    }
+
+    public function addQuestDescription($gamerId, $description, $questId) {
+        $this->execute("UPDATE quests SET gamer_id=?, description=? WHERE id=?", [$gamerId, $description, $questId]);
     }
 }

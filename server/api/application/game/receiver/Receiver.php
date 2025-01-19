@@ -2,14 +2,14 @@
 
 class Receiver extends GameObject {
     private $db;
-    private int $id, $gameItemId, $gamerId;
+    private int $id, $itemId, $gamerId;
 
     public function __construct($db, $id) {
         $this->db = $db;
         $this->id = $id;
 
         $params = $this->db->getReceiverById($this->id); 
-        $this->gameItemId = $params->game_item_id;
+        $this->itemId = $params->item_id;
         $this->gamerId = $params->gamer_id;
         
         parent::__construct($db, $params->object_id);
@@ -23,9 +23,8 @@ class Receiver extends GameObject {
 
     public function putItem(Gamer $gamer) {
         $itemId = $gamer->getItemId();
-        if ($itemId === $this->gameItemId) {
+        if ($itemId === $this->itemId) {
             $gamer->setItem(null);
-        }
-        
+        }  
     }
 }

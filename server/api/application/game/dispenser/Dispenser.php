@@ -18,8 +18,8 @@ class Dispenser extends GameObject {
     }
 
     public function action(Gamer $gamer) {
-        if ($gamer->id === $this->gamerId) {
-            $this->dropItem($gamer);
+        if ($gamer->getId() === $this->gamerId) {
+            $this->dropItem();
         }
     }
 

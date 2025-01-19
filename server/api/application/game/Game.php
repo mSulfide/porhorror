@@ -4,6 +4,9 @@ require_once ('gameObject/GameObject.php');
 require_once ('gamer/Gamer.php');
 require_once ('physic/Physic.php');
 require_once ('droppedItem/DroppedItem.php'); 
+require_once ('dispenser/Dispenser.php'); 
+require_once ('receiver/Receiver.php'); 
+require_once ('quest/Quest.php'); 
 
 class Game {
     private $db;
@@ -25,6 +28,17 @@ class Game {
             $answer[] = new Gamer($this->db, $gamer->id, $this);
         }
         return $answer;
+    }
+
+    private function createQuest($gamerId, $description) {
+        $objectId = $this->db->createObject($this->id);
+
+        $dispenserId = $this->db->createDispenser($objectId, 1 /*$itemId*/, $gamerId);
+
+        $receiverId = $this->db->createReceiver($objectId, 1 /*$itemId*/, $gamerId);
+
+        $questId = $this->db->createQuest($gamerId, null);
+        $this->db->addQuestDescription($gamerId, $description, $questId);
     }
 
     public function endGame($gameId) {
