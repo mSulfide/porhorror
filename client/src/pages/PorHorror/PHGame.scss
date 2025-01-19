@@ -1,0 +1,165 @@
+@font-face {
+    font-family: 'Iceland';
+    src: url('../../assets/fonts/Iceland-Regular.ttf');
+  
+    @font-face {
+      font-family: 'CormorantGaramond';
+      src: url('../../assets/fonts/CormorantGaramond-Regular.ttf');
+    }
+  }
+
+  .wrapper3{
+    font-family: 'NTSomic';
+    margin: 0;
+    padding: 0;
+    background-image: url('../../assets/img/background/resident_evil_village.jpeg');
+    background-size: cover;
+    //background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+    .game-container {
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        width: 100%;
+      
+    }
+.game{
+  width: 100%; /* Занимает всю ширину контейнера .app */
+  box-sizing: border-box; /* Включает padding и border в ширину */
+  flex-direction: column;
+  justify-content: flex;
+  align-items: center;
+  background-color:  #ffffff8f;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.711);
+  border: solid rgb(255, 255, 255) 3px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    border-radius: 20px;
+    width: calc(100% - 1px); /* Занимает почти всю ширину, с отступом */
+    max-width: 900px;       /* Максимальная ширина на больших экранах */
+    min-width: 300px;
+    min-height: 300px;
+    border-radius: 20px;
+}
+
+  .game-heading {
+    font-family: 'CormorantGaramond';
+    font-size: 1.2em;
+    text-align: center;
+    
+}
+.timer{
+        font-family: 'Iceland';
+        font-size: 1em;
+}
+
+
+.canvas-container {
+    border: 2px solid black; 
+    border-radius: 10px;   
+      overflow: hidden; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .controls {
+    display: flex;
+    margin-top: 120px;
+      justify-content: space-between;
+      width: 80%;
+      padding: 10px 0;
+      box-sizing: border-box; /* для правильного отображения вложенных элементов*/
+  }
+
+  .progress-bar-container {
+    position: absolute;
+    bottom: 20px; 
+    left: 20px; 
+    width: 300px;  
+    height: 80px; 
+  background-color: #ffffff8f;
+    border: solid rgb(255, 255, 255) 3px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
+    .progress-heading{
+        font-family: 'CormorantGaramond';
+        font-size: 0.8em;
+        text-align: center;
+    }
+}
+.tasks-container {
+    position: absolute;
+    bottom: 20px;  
+    right: 20px; 
+    width: 200px;  
+    height: 100px; 
+   background-color: #ffffff8f;
+    border: solid rgb(255, 255, 255) 3px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    .task-heading{
+        font-family: 'CormorantGaramond';
+        font-size: 0.8em;
+        text-align: center;
+    }
+  
+}
+ 
+ /* Для экранов меньше 768px (мобильные) */
+ @media (max-width: 768px) {
+     .game {
+         padding: 15px;
+          min-width: 90%;
+     }
+       .game .game-heading {
+          font-size: 1em;
+      }
+         .game .timer {
+          font-size: 0.9em;
+      }
+        .controls {
+           flex-direction: column;   /* Переносим плашки в колонку */
+            align-items: center;     /* Выравниваем плашки по центру */
+         padding: 10px 0;
+     }
+     .progress-bar-container {
+         width: 180px;
+         height: 60px;
+       margin-bottom: 10px; /* Добавляем отступ между плашками*/
+     }
+      .tasks-container {
+         width: 140px;
+        height: 70px;
+     }
+ 
+ }
+ 
+ /* Для экранов меньше 480px (маленькие мобильные) */
+ @media (max-width: 480px) {
+    .game {
+        padding: 10px;
+            min-width: 95%;
+     }
+       .game .timer {
+           font-size: 0.8em;
+       }
+        .controls {
+           padding: 5px 0;
+        }
+        .progress-bar-container {
+            width: 120px;
+            height: 50px;
+          margin-bottom: 5px;  /* Уменьшаем отступ */
+     }
+      .tasks-container {
+         width: 100px;
+        height: 60px;
+      }
+ }

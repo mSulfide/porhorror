@@ -10,6 +10,7 @@ import { zero } from "../../services/math";
 import useLoop from "./hooks/useLoop";
 import { useMap } from "./hooks/useMap";
 import Timer from "../../components/Timer/Timer";
+import './PHGame.scss';
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
@@ -66,13 +67,25 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         }
     });
 
-    return (
-        <div>
-            <Timer time={300}/>
-            <canvas ref={canvasRef} width={600} height={450} />
-            <Button onClick={backClickHandler} text='Назад' />
-        </div>
-    );
-}
+    return ( 
+        <div className="wrapper3">
+            <div className="game-container">
+                <div className="game">
+                    <div className="game-heading">Game</div>
+                    <div className="timer"> <Timer time={300}/></div>
+                    <div className="canvas-container"><canvas ref={canvasRef} width={800} height={600} /></div>
+                    </div>
+                    <div className="controls">
+                        <div className="progress-bar-container">
+                            <div className="progress-heading">progress bar</div>
+                            </div>
+                            <div className="tasks-container">
+                                <div className="task-heading">tasks</div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                );
+                            }
 
 export default PHGame;
