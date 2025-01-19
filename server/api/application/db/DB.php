@@ -418,4 +418,31 @@ class DB {
             WHERE l.game_id=?"
         , [$gameId]);
     }
+
+    // квесты
+    public function getQuestById($questId) {
+        return $this->query("SELECT * FROM quests WHERE id=?", [$questId]);
+    }
+
+    public function createQuest($gamerId, $nextQuestId) {
+        $this->execute(
+            "INSERT INTO quests (gamer_id, next_quest_id) VALUES (?, ?)",
+            [$gamerId, $nextQuestId]
+        );
+        return $this->pdo->lastInsertId();
+    }
+
+    public function getCompletedGamerQuests($gamerId) {
+        return $this->query("SELECT COUNT(*) AS countCompletedQuests
+        FROM quests
+        WHERE gamer_id=? AND completed=1
+        ", [$gamerId]);
+    }
+
+    public function getAllGamerQuests($gamerId) {
+        return $this->query("SELECT COUNT(*) AS allGamerQuests
+        FROM quests
+        WHERE gamer_id=? 
+        ", [$gamerId]);
+    }
 }
