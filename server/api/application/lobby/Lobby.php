@@ -1,6 +1,8 @@
 <?php
 
 class Lobby {
+    private $db;
+
     function __construct($db) {
         $this->db = $db;
     }
@@ -15,6 +17,7 @@ class Lobby {
                     $users = $this->db->getUsersFromLobby($lobby->id);
                     foreach($users as $user) {
                         $objectId = $this->db->createObject($gameId);
+                        $this->db->setImage($objectId, 'player');
                         $this->db->addGamer($objectId, $user->id);
                     }
                     $this->db->updateLobbyHash(md5(rand()));
