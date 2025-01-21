@@ -237,9 +237,7 @@ class Application {
         return ['error' => 103];
     }
 
-    public function deleteLot($params) {
-        return ['error' => 103];
-    }
+    
 
     public function addLotItem($params) {
         return ['error' => 103];
@@ -277,12 +275,11 @@ class Application {
         return ['error' => 103];
     }
 
-   public function removeLot($params) {
-    $user = $this->checkParams($params, 'token', 'lotId');
-    if ($this->isError($user)) {
-        return $user;
+    public function deleteLot($params) {
+        $user = $this->checkParams($params, 'token', 'lotId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->deleteLot($user, $params['lotId']);
     }
-    return $this->exchanger->removeLot($user, $params['lotId']);
-}
-
 }

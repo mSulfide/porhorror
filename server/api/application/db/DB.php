@@ -317,6 +317,7 @@ class DB {
     public function updateLotStatus($lotId, $status) {
         $this->execute("UPDATE exchanger_lots SET status = ? WHERE id = ?", [$status, $lotId]);
     }
+    
     public function deleteLot($lotId) {
         $query = "DELETE FROM lots WHERE id = :lotId";
         $stmt = $this->pdo->prepare($query);
