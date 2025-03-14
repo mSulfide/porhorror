@@ -44,21 +44,27 @@ class Exchanger {
         return ['error' => 807];
     }
     
-    public function createLot($user, $itemsToGive, $itemsToReceive) {
+    public function createLot($user) {
         $inventory = $this->db->getInventory($user->id);
-        foreach ($itemsToGive as $item) {
-            if (!in_array($item, array_column($inventory, 'id'))) {
+        $lotId = $this->db->createLot($user->id);
+        return ['lotId' => $lotId];
+    }
+    
+    public function addLotItem($user, $lotId, $itemId, $type) {
+        $lot = $this->db->getLotById($lotId);
+        if (!$lot || $lot->user_id !== $user->id) {
+            return ['error' => 807]; 
+        }
+
+        if ($type === 'give') {
+            $inventory = $this->db->getInventory($user->id);
+            $itemIds = array_column($inventory, 'id');
+            if (!in_array($itemId, $itemIds)) {
                 return ['error' => 810]; 
             }
         }
-        $lotId = $this->db->createLot($user->id);
-        foreach ($itemsToGive as $itemId) {
-            $this->db->addLotItem($lotId, $itemId, 'give');
-        }
-        foreach ($itemsToReceive as $itemId) {
-            $this->db->addLotItem($lotId, $itemId, 'receive');
-        }
-        return ['lotId' => $lotId];
+        $this->db->addLotItem($lotId, $itemId, $type);
+        return true; 
     }
 
     public function removeItemFromLot($userId, $lotId, $itemId) {

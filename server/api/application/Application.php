@@ -239,9 +239,7 @@ class Application {
 
     
 
-    public function addLotItem($params) {
-        return ['error' => 103];
-    }
+
 
     public function removeLotItem($params) {
         return ['error' => 103];
@@ -325,5 +323,14 @@ class Application {
         }
     
         return ['hasFreeSpace' => $this->inventory->hasFreeSpace($user->id)];
+    }
+    
+    public function addLotItem($params) {
+        $user = $this->checkParams($params, 'token', 'lotId', 'itemId', 'type');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->exchanger->addLotItem($user, $params['lotId'], $params['itemId'], $params['type']);
     }
 }
