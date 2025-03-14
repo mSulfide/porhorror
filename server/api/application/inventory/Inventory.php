@@ -10,23 +10,33 @@ class Inventory {
         return ['slots' => $inventory];
     }
 
-    public function equipItem($userId, $slotId) {
-        $maxSlots = $this->db->getSettings()->max_equipped_slots;
-        $equippedSlots = $this->db->equippedSlots($userId);
-        if (!$equippedSlots || count($equippedSlots) < $maxSlots) {
-            $slot = $this->db->getSlotById($slotId);
-            if ($slot) {
-                if ($slot->user_id === $userId) {
-                    $this->db->updateSlotState($slot->id, 'pocket');
-                    return true; 
-                }
-                return ['error' => 821]; 
-            }
-            return ['error' => 820];
+    public function equipItem($slotId, $userId) {
+        
+        $slot = $this->db->getSlotById($slotId);
+        if (!$slot || $slot->user_id !== $userId) {
+            return ['error' => 820]; 
         }
-        return ['error' => 830]; 
+    
+      
+        if ($slot->status === 'pocket') {
+            return ['error' => 821]; 
+        }
+    
+        $maxPocketItems = $this->db->getSettings()->inventory_max_count;
+    
+      
+        $equippedSlotsCount = $this->db->query("SELECT COUNT(*) AS count FROM inventory WHERE user_id = ? AND status = 'pocket'", [$userId])->count;
+    
+       
+        if ($equippedSlotsCount >= $maxPocketItems) {
+            return ['error' => 830]; 
+        }
+    
+        
+        $this->db->execute("UPDATE inventory SET status = ? WHERE id = ?", ['pocket', $slotId]);
+    
+        return true; 
     }
-
     public function takeOffItem($userId, $slotId) {
         $slot = $this->db->getSlotById($slotId);
         if ($slot) {
@@ -65,4 +75,5 @@ class Inventory {
     public function moveItem($slotId, $newState) {
         $this->db->updateSlotState($slotId, $newState);
     }
+    
 }

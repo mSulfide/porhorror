@@ -118,6 +118,7 @@ class Application {
         if ($this->isError($user)) {
             return $user;
         }
+    
         return $this->inventory->equipItem($user->id, $params['slotId']);
     }
 
