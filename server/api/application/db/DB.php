@@ -383,4 +383,21 @@ class DB {
             WHERE l.game_id=?"
         , [$gameId]);
     }
+
+    public function createLot($userId) {
+        $this->execute("INSERT INTO exchanger_lots (status) VALUES ('active')");
+        $lotId = $this->pdo->lastInsertId();
+        $this->execute("INSERT INTO exchange (user_id, status) VALUES (?, 'ready')", [$userId]);
+        
+        return $lotId;
+    }
+    
+    public function addLotItem($lotId, $itemId, $type) {
+        $this->execute("INSERT INTO exchanger_lot_items (lot_id, item_id, type) VALUES (?, ?, ?)", 
+                       [$lotId, $itemId, $type]);
+    }
+    
+    public function setLotOwner($lotId, $userId) {
+        return $this->execute("UPDATE exchanger_lots SET user_id=? WHERE id=?", [$userId, $lotId]);
+    }
 }

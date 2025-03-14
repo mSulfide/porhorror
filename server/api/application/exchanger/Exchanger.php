@@ -44,4 +44,21 @@ class Exchanger {
         return ['error' => 807];
     }
     
+    public function createLot($user, $itemsToGive, $itemsToReceive) {
+        $inventory = $this->db->getInventory($user->id);
+        foreach ($itemsToGive as $item) {
+            if (!in_array($item, array_column($inventory, 'id'))) {
+                return ['error' => 810]; 
+            }
+        }
+        $lotId = $this->db->createLot($user->id);
+        foreach ($itemsToGive as $itemId) {
+            $this->db->addLotItem($lotId, $itemId, 'give');
+        }
+        foreach ($itemsToReceive as $itemId) {
+            $this->db->addLotItem($lotId, $itemId, 'receive');
+        }
+        return ['lotId' => $lotId];
+    }
+    
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 18 2025 г., 00:51
+-- Время создания: Мар 14 2025 г., 18:36
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -29,9 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `exchange` (
   `id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
   `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'not ready'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `exchange`
+--
+
+INSERT INTO `exchange` (`id`, `user_id`, `status`) VALUES
+(1, 1, 'ready'),
+(2, 1, 'ready');
 
 -- --------------------------------------------------------
 
@@ -54,6 +62,7 @@ CREATE TABLE `exchanger_comments` (
 
 CREATE TABLE `exchanger_lots` (
   `id` int NOT NULL,
+  `user_id` int NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -61,8 +70,23 @@ CREATE TABLE `exchanger_lots` (
 -- Дамп данных таблицы `exchanger_lots`
 --
 
-INSERT INTO `exchanger_lots` (`id`, `status`) VALUES
-(1, 'removed');
+INSERT INTO `exchanger_lots` (`id`, `user_id`, `status`) VALUES
+(2, 9, 'active'),
+(3, 9, 'active'),
+(4, 9, 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `exchanger_lot_items`
+--
+
+CREATE TABLE `exchanger_lot_items` (
+  `id` int NOT NULL,
+  `lot_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `type` enum('give','receive') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -179,7 +203,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
-(1, '8ce31b19dcbed8653ae2dbe137dee7e8', '4c5553a221898909afc3cfce56f3075d');
+(1, '8ce31b19dcbed8653ae2dbe137dee7e8', '475ed3f4040482b35633dd9ff7f56107');
 
 -- --------------------------------------------------------
 
@@ -193,6 +217,16 @@ CREATE TABLE `inventory` (
   `item_id` int NOT NULL,
   `status` varchar(32) NOT NULL DEFAULT 'inventory'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `user_id`, `item_id`, `status`) VALUES
+(1, 10, 3, 'inventory'),
+(2, 10, 5, 'inventory'),
+(3, 11, 1, 'inventory'),
+(4, 3, 2, 'inventory');
 
 -- --------------------------------------------------------
 
@@ -208,6 +242,14 @@ CREATE TABLE `items` (
   `quest_id` int DEFAULT NULL,
   `boost_type` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `items`
+--
+
+INSERT INTO `items` (`id`, `name`, `image`, `type`, `quest_id`, `boost_type`) VALUES
+(1, 'Desired Item 1', 'item1.png', 'type1', NULL, NULL),
+(2, 'Desired Item 2', 'item2.png', 'type2', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -284,8 +326,10 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (5, 'admin', 'bbad8d72c1fac1d081727158807a8798', 'Админчик', 'd3ed3676021d70ecdfefa203462ccced'),
 (6, 'OREL', '2da7d9988b511f3e37808c8636abcd2c', 'Лев', '31d359b58e0aced66a482d2d2e2f08eb'),
 (7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01'),
-(8, '123', '4297f44b13955235245b2497399d7a93', '123', '25aa0a4d67c1abd2fc6590143640ead2'),
-(9, 'testuser', 'testpassword', 'Test User', NULL);
+(8, '123', '4297f44b13955235245b2497399d7a93', '123', 'b11e51316fe38df9e4ac224fdabcf285'),
+(9, 'testuser', 'testpassword', 'Test User', NULL),
+(10, 'testuser', 'password', 'Test User', NULL),
+(11, 'testuser', 'password', 'Test User', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -308,6 +352,14 @@ ALTER TABLE `exchanger_comments`
 --
 ALTER TABLE `exchanger_lots`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `exchanger_lot_items`
+--
+ALTER TABLE `exchanger_lot_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `lot_id` (`lot_id`),
+  ADD KEY `item_id` (`item_id`);
 
 --
 -- Индексы таблицы `game`
@@ -395,7 +447,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `exchange`
 --
 ALTER TABLE `exchange`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `exchanger_comments`
@@ -407,7 +459,13 @@ ALTER TABLE `exchanger_comments`
 -- AUTO_INCREMENT для таблицы `exchanger_lots`
 --
 ALTER TABLE `exchanger_lots`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `exchanger_lot_items`
+--
+ALTER TABLE `exchanger_lot_items`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `game`
@@ -419,7 +477,7 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
@@ -437,7 +495,7 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
@@ -455,25 +513,25 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
@@ -485,7 +543,18 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `exchanger_lot_items`
+--
+ALTER TABLE `exchanger_lot_items`
+  ADD CONSTRAINT `exchanger_lot_items_ibfk_1` FOREIGN KEY (`lot_id`) REFERENCES `exchanger_lots` (`id`),
+  ADD CONSTRAINT `exchanger_lot_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

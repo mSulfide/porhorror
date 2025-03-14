@@ -233,9 +233,9 @@ class Application {
     }
 
     //обменник
-    public function createLot($params) {
+    /*public function createLot($params) {
         return ['error' => 103];
-    }
+    }*/
 
     
 
@@ -281,5 +281,13 @@ class Application {
             return $user;
         }
         return $this->exchanger->deleteLot($user, $params['lotId']);
+    }
+    public function createLot($params) {
+        $user = $this->checkParams($params, 'token', 'itemsToGive', 'itemsToReceive');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->exchanger->createLot($user->id, $params['itemsToGive'], $params['itemsToReceive']);
     }
 }
