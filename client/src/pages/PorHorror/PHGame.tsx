@@ -8,13 +8,15 @@ import { Input, useKeyboard } from "../../game/input";
 import { Scene } from "../../game/scene";
 import { zero } from "../../services/math";
 import useLoop from "./hooks/useLoop";
-import { EMap, useMap } from "./hooks/useMap";
+import { useMap } from "./hooks/useMap";
+import Timer from "../../components/Timer/Timer";
+import './PHGame.scss';
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const user = store.getUser();
-
+    
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -26,7 +28,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
     useKeyboard(input);
 
-    const [renderers, count] = useMap(EMap.default);
+    const [renderers, count] = useMap();
 
     useEffect(() => {
         const camera = { width: 8.32, height: 6.24 };
@@ -42,10 +44,10 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
         const updateScene = ({ scene }: TUpdateSceneResponse) => {
             renderers.splice(count, renderers.length - count);
-            scene.forEach(({ position, radius, image }: TGameObject) => {
+            scene.forEach(({ position, radius, image, angle }: TGameObject) => {
                 const sprite = store.resources.getSprite(image);
                 if (sprite) {
-                    renderers.push({ position, radius, sprite });
+                    renderers.push({ position, radius, sprite, angle: angle * 180 / Math.PI });
                 } else {
                     console.warn("can't upload the image");
                 }
@@ -65,12 +67,25 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
         }
     });
 
-    return (
-        <div>
-            <canvas ref={canvasRef} width={600} height={450} />
-            <Button onClick={backClickHandler} text='Назад' />
-        </div>
-    );
-}
+    return ( 
+        <div className="wrapper3">
+            <div className="game-container">
+                <div className="game">
+                    <div className="game-heading">Game</div>
+                    <div className="timer"> <Timer time={300}/></div>
+                    <div className="canvas-container"><canvas ref={canvasRef} width={800} height={600} /></div>
+                    </div>
+                    <div className="controls">
+                        <div className="progress-bar-container">
+                            <div className="progress-heading">progress bar</div>
+                            </div>
+                            <div className="tasks-container">
+                                <div className="task-heading">tasks</div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                );
+                            }
 
 export default PHGame;

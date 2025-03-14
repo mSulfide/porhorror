@@ -3,7 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
+
 -- Время создания: Мар 14 2025 г., 19:23
+
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -20,6 +22,19 @@ SET time_zone = "+00:00";
 --
 -- База данных: `porhorror`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `dispenser`
+--
+
+CREATE TABLE `dispenser` (
+  `id` int NOT NULL,
+  `object_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `gamer_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -116,7 +131,8 @@ CREATE TABLE `gamers` (
   `quest_count` int NOT NULL DEFAULT '0',
   `is_action` tinyint(1) NOT NULL DEFAULT '0',
   `axis_x` float NOT NULL DEFAULT '0',
-  `axis_y` float NOT NULL DEFAULT '0'
+  `axis_y` float NOT NULL DEFAULT '0',
+  `item_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -127,7 +143,7 @@ CREATE TABLE `gamers` (
 
 CREATE TABLE `game_items` (
   `id` int NOT NULL,
-  `game_id` int NOT NULL,
+  `object_id` int NOT NULL,
   `item_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -201,7 +217,9 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
+
 (1, '8ce31b19dcbed8653ae2dbe137dee7e8', '475ed3f4040482b35633dd9ff7f56107');
+
 
 -- --------------------------------------------------------
 
@@ -301,6 +319,19 @@ INSERT INTO `messages` (`id`, `user_id`, `message`, `created`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `receiver`
+--
+
+CREATE TABLE `receiver` (
+  `id` int NOT NULL,
+  `object_id` int NOT NULL,
+  `game_item_id` int NOT NULL,
+  `gamer_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -320,7 +351,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (1, 'sulfide', '6f1f3d80cbb51102cf626135afbae1aa', 'Миша', 'bb491694003b1b9d760a2c1131f9cb46'),
 (2, 'vasya', 'fcb03559c0317682f5d65a88aca50012', 'Вася', '18685462b2f563fca81b1b7011d83a6a'),
 (3, 'petya', 'd7ba312b012b3374ef53eb2e3f9830a5', 'Петя', 'cc79d5f20b41d4728ae7eb7157cde2a0'),
-(4, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', 'b3f17bc7b072d2e9253740df93b0d00b'),
+(4, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', '90b39a085fd2310c8aae4aa2d7675184'),
 (5, 'admin', 'bbad8d72c1fac1d081727158807a8798', 'Админчик', 'd3ed3676021d70ecdfefa203462ccced'),
 (6, 'OREL', '2da7d9988b511f3e37808c8636abcd2c', 'Лев', '31d359b58e0aced66a482d2d2e2f08eb'),
 (7, 'mclovin69', 'a857517ce57309a238a54ad58ffe08dd', 'Баффало', 'f4ed446dfbe44045979b9b23fb1d1a01'),
@@ -332,6 +363,12 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `dispenser`
+--
+ALTER TABLE `dispenser`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `exchange`
@@ -432,6 +469,12 @@ ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `receiver`
+--
+ALTER TABLE `receiver`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -440,6 +483,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `dispenser`
+--
+ALTER TABLE `dispenser`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `exchange`
@@ -469,6 +518,7 @@ ALTER TABLE `exchanger_lot_items`
 -- AUTO_INCREMENT для таблицы `game`
 --
 ALTER TABLE `game`
+
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -481,7 +531,7 @@ ALTER TABLE `gamers`
 -- AUTO_INCREMENT для таблицы `game_items`
 --
 ALTER TABLE `game_items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `game_mobs`
@@ -494,6 +544,7 @@ ALTER TABLE `game_mobs`
 --
 ALTER TABLE `game_objects`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
@@ -523,19 +574,30 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
+
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
+
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `receiver`
+--
+ALTER TABLE `receiver`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

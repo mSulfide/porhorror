@@ -16,7 +16,8 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-  
+    overflow-y: auto;
+    max-height: 500px;
    
 
     .chat-title {
@@ -57,6 +58,8 @@
  
       }
       .chat-messages {
+        overflow-y: auto;
+        max-height: 150px;
         font-family: 'NTSomic';
         font-size: 0.8em;
         padding: 8px;

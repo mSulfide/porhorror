@@ -191,7 +191,8 @@ class DB {
                 go.game_id AS game_id,
                 g.object_id AS objectId,
                 g.axis_x AS axis_x, 
-                g.axis_y AS axis_y   
+                g.axis_y AS axis_y,
+                g.item_id AS item_id
             FROM gamers AS g
             INNER JOIN users AS u ON u.id = g.user_id
             INNER JOIN game_objects AS go ON go.id = g.object_id
@@ -264,7 +265,8 @@ class DB {
                 g.hp,
                 g.is_action AS isAction,
                 g.axis_x AS axisX,
-                g.axis_y AS axisY
+                g.axis_y AS axisY,
+                g.item_id AS itemId
             FROM gamers AS g
             INNER JOIN game_objects AS go ON g.object_id=go.id
             WHERE go.game_id=?
@@ -274,6 +276,15 @@ class DB {
 
     public function getGameById($gameId) {
         return $this->query("SELECT * FROM game WHERE id=?", [$gameId]);
+    }
+
+    public function getGameIdByGamerId($gamerId) {
+        return $this->query("SELECT
+                go.game_id AS gameId
+            FROM game_objects AS go
+            INNER JOIN gamers AS g ON g.object_id = go.id
+            WHERE g.id=?
+        ", [$gamerId]);
     }
 
     public function action($userId) {
@@ -354,6 +365,41 @@ class DB {
 
     public function setImage($objectId, $image) {
         $this->execute("UPDATE game_objects SET image=? WHERE id=?", [$image, $objectId]);
+    }
+
+    public function setItem($itemId, $gamerId) {
+        $this->execute(
+            "UPDATE gamers SET item_id=? WHERE id=?",
+            [$itemId, $gamerId]
+        );
+    }
+
+    public function getItemById($itemId) {
+        $item = $this->query("SELECT * FROM game_items WHERE item_id=?", [$itemId]);
+        return $item;
+    }
+
+    public function addDropppedItem($objectId, $itemId) {
+        $this->execute("INSERT INTO game_items (object_id, item_id) VALUES (?, ?)", [$objectId, $itemId]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function deleteDroppedItem($gameItemId) {
+        $this->execute("DELETE gi.*, go.* 
+                FROM game_items AS gi 
+                INNER JOIN game_objects AS go ON go.id = gi.object_id 
+            WHERE gi.id=?"
+        , [$gameItemId]);
+    }
+
+    public function getDispenserById($dispenserId) {
+        $dispenser = $this->query("SELECT * FROM dispenser WHERE id=?", [$dispenserId]);
+        return $dispenser;
+    }
+
+    public function getReceiverById($receiverId) {
+        $receiver = $this->query("SELECT * FROM receiver WHERE id=?", [$receiverId]);
+        return $receiver;
     }
 
     public function equippedSlots($userId) {
