@@ -61,4 +61,18 @@ class Exchanger {
         return ['lotId' => $lotId];
     }
     
+    public function removeItemFromLot($userId, $lotId, $itemId) {
+        $lot = $this->db->getLotById($lotId);
+        if (!$lot || $lot->user_id !== $userId) {
+            return ['error' => 807]; 
+        }
+    
+        $result = $this->db->removeLotItem($lotId, $itemId);
+        if (is_array($result) && isset($result['error'])) {
+            return $result; 
+        }
+    
+        return true;
+    }
+    
 }

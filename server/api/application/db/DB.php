@@ -292,6 +292,10 @@ class DB {
     }
     
     public function provideConsent($userId) {
+        $user = $this->getUserByToken($userId);
+    if (!$user) {
+        return ['error' => 808]; 
+    }
         $this->execute("UPDATE exchange SET status='ready' WHERE user_id=?", [$userId]);
     }
     
@@ -385,19 +389,24 @@ class DB {
     }
 
     public function createLot($userId) {
-        $this->execute("INSERT INTO exchanger_lots (status) VALUES ('active')");
-        $lotId = $this->pdo->lastInsertId();
-        $this->execute("INSERT INTO exchange (user_id, status) VALUES (?, 'ready')", [$userId]);
-        
-        return $lotId;
+        $this->execute("INSERT INTO exchanger_lots (user_id, status) VALUES (?, 'active')", [$userId]);
+        return $this->pdo->lastInsertId();
     }
     
     public function addLotItem($lotId, $itemId, $type) {
         $this->execute("INSERT INTO exchanger_lot_items (lot_id, item_id, type) VALUES (?, ?, ?)", 
                        [$lotId, $itemId, $type]);
     }
-    
+
     public function setLotOwner($lotId, $userId) {
         return $this->execute("UPDATE exchanger_lots SET user_id=? WHERE id=?", [$userId, $lotId]);
+    }
+
+    public function removeLotItem($lotId, $itemId) {
+        $lot = $this->getLotById($lotId);
+        if (!$lot) {
+            return ['error' => 813]; 
+        }
+        $this->execute("DELETE FROM exchanger_lot_items WHERE lot_id=? AND item_id=?", [$lotId, $itemId]);
     }
 }

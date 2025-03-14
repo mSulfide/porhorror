@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 14 2025 г., 18:36
+-- Время создания: Мар 14 2025 г., 19:23
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -71,9 +71,7 @@ CREATE TABLE `exchanger_lots` (
 --
 
 INSERT INTO `exchanger_lots` (`id`, `user_id`, `status`) VALUES
-(2, 9, 'active'),
-(3, 9, 'active'),
-(4, 9, 'active');
+(8, 9, 'active');
 
 -- --------------------------------------------------------
 
@@ -459,13 +457,13 @@ ALTER TABLE `exchanger_comments`
 -- AUTO_INCREMENT для таблицы `exchanger_lots`
 --
 ALTER TABLE `exchanger_lots`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `exchanger_lot_items`
 --
 ALTER TABLE `exchanger_lot_items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `game`

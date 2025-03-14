@@ -282,6 +282,7 @@ class Application {
         }
         return $this->exchanger->deleteLot($user, $params['lotId']);
     }
+    
     public function createLot($params) {
         $user = $this->checkParams($params, 'token', 'itemsToGive', 'itemsToReceive');
         if ($this->isError($user)) {
@@ -289,5 +290,14 @@ class Application {
         }
     
         return $this->exchanger->createLot($user->id, $params['itemsToGive'], $params['itemsToReceive']);
+    }
+
+    public function removeItemFromLot($params) {
+        $user = $this->checkParams($params, 'token', 'lotId', 'itemId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->exchanger->removeItemFromLot($user->id, $params['lotId'], $params['itemId']);
     }
 }
