@@ -409,4 +409,27 @@ class DB {
         }
         $this->execute("DELETE FROM exchanger_lot_items WHERE lot_id=? AND item_id=?", [$lotId, $itemId]);
     }
+
+    public function addItemToInventory($userId, $itemId) {
+        $user = $this->getUserByToken($userId);
+        if (!$user) {
+            return ['error' => 825]; 
+        }
+        $this->execute("INSERT INTO inventory (user_id, item_id, status) VALUES (?, ?, ?)", 
+                       [$userId, $itemId, 'inventory']);
+    }
+
+    public function removeItemFromInventory($slotId) {
+        $slot = $this->getSlotById($slotId);
+        if (!$slot) {
+            return ['error' => 820]; 
+        }
+        $this->execute("DELETE FROM inventory WHERE id=?", [$slotId]);
+    }
+
+    public function getUsedSlotsCount($userId) {
+        return $this->query("SELECT COUNT(*) AS count FROM inventory WHERE user_id=? AND status='inventory'", [$userId])->count;
+    }
+
+
 }

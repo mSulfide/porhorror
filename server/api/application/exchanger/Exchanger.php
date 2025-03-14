@@ -60,7 +60,7 @@ class Exchanger {
         }
         return ['lotId' => $lotId];
     }
-    
+
     public function removeItemFromLot($userId, $lotId, $itemId) {
         $lot = $this->db->getLotById($lotId);
         if (!$lot || $lot->user_id !== $userId) {
@@ -74,5 +74,6 @@ class Exchanger {
     
         return true;
     }
+    
     
 }

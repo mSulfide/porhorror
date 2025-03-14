@@ -282,7 +282,7 @@ class Application {
         }
         return $this->exchanger->deleteLot($user, $params['lotId']);
     }
-    
+
     public function createLot($params) {
         $user = $this->checkParams($params, 'token', 'itemsToGive', 'itemsToReceive');
         if ($this->isError($user)) {
@@ -299,5 +299,31 @@ class Application {
         }
     
         return $this->exchanger->removeItemFromLot($user->id, $params['lotId'], $params['itemId']);
+    }
+    public function addItemToInventory($params) {
+        $user = $this->checkParams($params, 'token', 'itemId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->inventory->addItem($user->id, $params['itemId']);
+    }
+    
+    public function removeItemFromInventory($params) {
+        $user = $this->checkParams($params, 'token', 'slotId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->inventory->removeItem($params['slotId']);
+    }
+    
+    public function checkInventorySpace($params) {
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return ['hasFreeSpace' => $this->inventory->hasFreeSpace($user->id)];
     }
 }
