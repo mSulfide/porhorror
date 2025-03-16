@@ -62,6 +62,9 @@ function result($params) {
             case 'addLotComment': return $app->addLotComment($params);
             case 'updateLots': return $app->updateLots($params);
 
+            //квест
+            case 'getQuests': return $app->getQuests($params);
+
             default: return ['error' => 102];
         }
     }
