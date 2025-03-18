@@ -5,6 +5,7 @@ const TOKEN = 'token';
 
 class Store {
     user: TUser | null = null;
+    gamerId: number = 0;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
     lobbyHash: string = 'empty lobby hash';
@@ -37,6 +38,14 @@ class Store {
 
     getUser(): TUser | null {
         return this.user;
+    }
+
+    setGamerId(id: number): void {
+        this.gamerId = id;
+    }
+
+    getGamerId(): number | null {
+        return this.gamerId > 0 ? this.gamerId : null;
     }
 
     clearUser(): void {

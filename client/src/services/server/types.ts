@@ -79,6 +79,7 @@ export type TGameObject = {
 }
 
 export type TUpdateSceneResponse = {
-    scene: TGameObject[];
-    hash: string;
+    scene: TGameObject[],
+    hash: string,
+    gamerId: number
 }

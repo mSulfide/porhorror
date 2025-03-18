@@ -31,7 +31,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const [renderers, count] = useMap();
 
     useEffect(() => {
-        const camera = { width: 8.32, height: 6.24 };
+        const camera = { width: 8.32, height: 4.68 };
         const screen = new Renderer(new CanvasDrawer(canvasRef.current!), camera);
         const virtualScene = new Scene();
 
@@ -42,9 +42,12 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
 
         startLoop(update);
 
-        const updateScene = ({ scene }: TUpdateSceneResponse) => {
+        const updateScene = ({ scene, gamerId }: TUpdateSceneResponse) => {
             renderers.splice(count, renderers.length - count);
-            scene.forEach(({ position, radius, image, angle }: TGameObject) => {
+            scene.forEach(({ position, radius, image, angle, id }: TGameObject) => {
+                if (id === gamerId) {
+                    screen.camera.position = position || zero();
+                }
                 const sprite = store.resources.getSprite(image);
                 if (sprite) {
                     renderers.push({ position, radius, sprite, angle: angle * 180 / Math.PI });
@@ -53,7 +56,6 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
                 }
             });
             virtualScene.set(scene);
-            screen.camera.position = renderers[count]?.position || zero();
             screen.render(renderers);
         }
 
@@ -73,7 +75,7 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
                 <div className="game">
                     <div className="game-heading">Game</div>
                     <div className="timer"> <Timer time={300}/></div>
-                    <div className="canvas-container"><canvas ref={canvasRef} width={800} height={600} /></div>
+                    <div className="canvas-container"><canvas ref={canvasRef} width={800} height={450} /></div>
                     </div>
                     <div className="controls">
                         <div className="progress-bar-container">
