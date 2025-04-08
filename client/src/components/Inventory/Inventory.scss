@@ -4,3 +4,39 @@ justify-content: center;
 margin-top: 20px;
 margin-left: 10px;
 }
+
+.section-title {
+
+    margin-bottom: 5px;
+    display: flex;
+    font-family: 'Iceland';
+    justify-content: center;
+    text-align: center;
+    font-size: clamp(1em, 3vw, 6em); 
+    color: rgb(0, 0, 0);
+
+}
+
+.combined-equipment-inventory {
+    display: grid;
+    justify-content: center;
+        align-items: center;
+        row-gap: 20px;
+
+    .equipment-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); 
+      grid-gap: 15px;
+      margin-bottom: 10px;
+  
+      
+      > div {
+        background-color: #777; 
+        height: 100px;
+        width: 100px;
+        border: solid rgb(224, 224, 224) 3px;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }

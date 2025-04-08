@@ -41,29 +41,6 @@ $gray-fill: #ffffff8f;
   color: $text-color;
   min-height: 100vh;
 
-
-  .combined-equipment-inventory {
-    display: grid;
-    justify-content: center;
-        align-items: center;
-        row-gap: 20px;
-
-    .equipment-section {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); 
-      grid-gap: 15px;
-      margin-bottom: 10px;
-  
-      
-      > div {
-        background-color: #777; 
-        height: 100px;
-        width: 100px;
-        border: solid rgb(224, 224, 224) 3px;
-        justify-content: center;
-        align-items: center;
-      }
-    }
   }
    
 
@@ -84,7 +61,7 @@ $gray-fill: #ffffff8f;
     row-gap: 20px; 
     grid-gap: 20px; 
   }
-  }
+  
 
   .section {
     background-color: $gray-fill;

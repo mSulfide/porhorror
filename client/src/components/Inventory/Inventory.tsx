@@ -21,8 +21,8 @@ const Inventory: React.FC = () => {
         })();
     });
 
-    const inventoryClick = (itemId: number) => {
-        server.changeInventory(itemId);
+    const inventoryClick = (itemId: number, fromEquipment: boolean) => {
+        server.changeInventory(itemId, fromEquipment);
         setIsLoading(true);
     }
 
@@ -32,16 +32,31 @@ const Inventory: React.FC = () => {
 
     const inventory = store.getInventory();
 
-    return (<div>
-        <div>
-            <div>
-                {inventory?.map((item, index) => (<div key={index}>
-                    {item.name}
-                    <Button text={item.status === EStatus.pocket ? 'Снять' : 'Надеть'} onClick={() => inventoryClick(item.id)} />
-                </div>))}
+    return (
+        <div className="section equipment">
+            <div className="section-title">Equipment</div>
+            <div className="combined-equipment-inventory">
+                <div className="equipment-section">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+
+                <div className="inventory">
+                    <div className="section-title">Inventory</div>
+                        <div>
+                            {inventory?.map((item, index) => (
+                                <div key={index}>
+                                    {item.name}
+                                    <Button text={item.status === EStatus.pocket ? 'Снять' : 'Надеть'} onClick={() => inventoryClick(item.id, true)} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>)
+        )
 }
 
 export default Inventory;

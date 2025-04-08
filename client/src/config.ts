@@ -19,7 +19,7 @@ export type TWINDOW = {
 
 const CONFIG = {
     //dev
-    HOST: 'http://porhorror.local/api',
+    HOST: 'http://server/api',
     // UdSU
     //HOST: 'http://porhorror:81/api',
 
