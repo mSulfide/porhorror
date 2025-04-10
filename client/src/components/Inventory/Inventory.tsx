@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import Button from '../Button/Button';
+import Item from '../Item/Item';
 
 import './Inventory.scss';
 
@@ -21,36 +22,34 @@ const Inventory: React.FC = () => {
         })();
     });
 
-    const inventoryClick = (itemId: number, fromEquipment: boolean) => {
-        server.changeInventory(itemId, fromEquipment);
-        setIsLoading(true);
-    }
-
     if (isLoading) {
         return (<>...Загрузка</>);
     }
 
     const inventory = store.getInventory();
+    const pocketItems = inventory.filter(item => item.status === EStatus.pocket);
+    const unequipItems = inventory.filter(item => item.status === EStatus.inventory);
 
     return (
         <div className="section equipment">
             <div className="section-title">Equipment</div>
             <div className="combined-equipment-inventory">
                 <div className="equipment-section">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    {[...pocketItems, ...Array(3 - pocketItems.length).fill(null)].map((item, index) => (
+                        item ? (
+                            <Item item={item} setIsLoading={setIsLoading} toEquip={false}/>
+                        ) : (
+                            <div key={`empty-${index}`} className="empty-slot"></div>
+                        )
+                    ))}
                 </div>
 
 
                 <div className="inventory">
                     <div className="section-title">Inventory</div>
                         <div>
-                            {inventory?.map((item, index) => (
-                                <div key={index}>
-                                    {item.name}
-                                    <Button text={item.status === EStatus.pocket ? 'Снять' : 'Надеть'} onClick={() => inventoryClick(item.id, true)} />
-                                </div>
+                            {unequipItems?.map(item => (
+                                <Item item={item} setIsLoading={setIsLoading} toEquip={true}/>
                             ))}
                         </div>
                     </div>

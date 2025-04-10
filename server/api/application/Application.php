@@ -110,24 +110,20 @@ class Application {
     }
 
     public function changeInventory($params) {
-        return ['error' => 103];
-    }
-    
-    public function equipItem($params) {
-        $user = $this->checkParams($params, 'token', 'slotId');
+        $user = $this->checkParams($params, 'token', 'itemId', 'toEquip');
         if ($this->isError($user)) {
             return $user;
         }
-    
-        return $this->inventory->equipItem($user->id, $params['slotId']);
-    }
 
-    public function takeOffItem($params) {
-        $user = $this->checkParams($params, 'token', 'slotId');
-        if ($this->isError($user)) {
-            return $user;
+        $toEquip = $params['toEquip'];
+
+        if ($toEquip === "true") { 
+            return $this->inventory->equipItem($user->id, $params['itemId']);
         }
-        return $this->inventory->takeOffItem($user->id, $params['slotId']);
+        else if ($toEquip === "false") { 
+            return $this->inventory->takeOffItem($user->id, $params['itemId']);
+        }
+        return ['error' => 666]; 
     }
 
     //лобби

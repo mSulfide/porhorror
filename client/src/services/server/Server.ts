@@ -137,8 +137,8 @@ class Server {
         return !!result;
     }
 
-    changeInventory(itemId: number, fromEquipment: boolean): void {
-        this.request('changeInventory', { itemId: `${itemId}`, fromEquipment: `${fromEquipment}`});
+    changeInventory(itemId: number, toEquip: boolean): void {
+        this.request('changeInventory', { itemId: `${itemId}`, toEquip: `${toEquip}`});
     }
 
     startGame(): void {
