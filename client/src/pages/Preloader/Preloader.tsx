@@ -9,7 +9,7 @@ const Preloader: React.FC<IBasePage> = (props: IBasePage) => {
     const store = useContext(StoreContext);
 
     useEffect(() => {
-        setTimeout(() => store.loadResources(() => setPage(PAGES.LOGIN)), 3000);
+        setTimeout(() => store.loadResources(() => setPage(PAGES.LOGIN)), 3);
     });
 
     return (

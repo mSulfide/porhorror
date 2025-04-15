@@ -33,21 +33,8 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
             <div className="mainMenuContainer">
                 <div className="column-1">
                     <h1 className="main-menu-title">PorHorror</h1>
-                    <div className="section equipment">
-                        <div className="section-title">Equipment</div>
-                        <div className="combined-equipment-inventory">
-                            <div className="equipment-section">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-
-
-                            <div className="inventory">
-                                <div className="section-title">Inventory</div>
-                                <Inventory />
-                            </div>
-                        </div></div>
+                    
+                    <Inventory />
 
                     <div className="section chat">
                         <Chat setPage={setPage} />

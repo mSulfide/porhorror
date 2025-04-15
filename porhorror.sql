@@ -3,9 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
-
--- Время создания: Мар 14 2025 г., 19:23
-
+-- Время создания: Апр 15 2025 г., 07:21
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -135,6 +133,13 @@ CREATE TABLE `gamers` (
   `item_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `gamers`
+--
+
+INSERT INTO `gamers` (`id`, `user_id`, `object_id`, `status`, `hp`, `quest_count`, `is_action`, `axis_x`, `axis_y`, `item_id`) VALUES
+(3, 2, 3, 'gaming', NULL, 0, 0, 0, 0, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -178,6 +183,13 @@ CREATE TABLE `game_objects` (
   `angle` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `game_objects`
+--
+
+INSERT INTO `game_objects` (`id`, `game_id`, `image`, `x`, `y`, `velocity_x`, `velocity_y`, `radius`, `angle`) VALUES
+(3, 2, 'tas', -0.027641, 5.72262, 0, 0, 0.5, 1.57563);
+
 -- --------------------------------------------------------
 
 --
@@ -217,9 +229,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `lobby_hash`) VALUES
-
-(1, '8ce31b19dcbed8653ae2dbe137dee7e8', '475ed3f4040482b35633dd9ff7f56107');
-
+(1, '8ce31b19dcbed8653ae2dbe137dee7e8', '0c832882996c4bdc3c3e5b65ff90d886');
 
 -- --------------------------------------------------------
 
@@ -239,10 +249,10 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `user_id`, `item_id`, `status`) VALUES
-(1, 10, 3, 'inventory'),
-(2, 10, 5, 'inventory'),
-(3, 11, 1, 'inventory'),
-(4, 3, 2, 'inventory');
+(1, 2, 4, 'pocket'),
+(2, 2, 3, 'pocket'),
+(3, 2, 1, 'inventory'),
+(4, 2, 2, 'inventory');
 
 -- --------------------------------------------------------
 
@@ -264,8 +274,13 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `name`, `image`, `type`, `quest_id`, `boost_type`) VALUES
-(1, 'Desired Item 1', 'item1.png', 'type1', NULL, NULL),
-(2, 'Desired Item 2', 'item2.png', 'type2', NULL, NULL);
+(1, 'Cookie', 'cookieITM', 'type1', NULL, NULL),
+(2, 'Photo1', 'horizPhotoITM', 'type2', NULL, NULL),
+(3, 'Photo2', 'verticPhotoITM', 'type 3', NULL, NULL),
+(4, 'Coffee', 'coffeeITM', 'type 4', NULL, NULL),
+(5, 'Water Can', 'wateringCanITM', 'type 5', NULL, NULL),
+(6, 'Paper', 'paperITM', 'type 6', NULL, NULL),
+(7, 'Grade Book', 'gradeBookITM', 'type 7', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -292,6 +307,13 @@ CREATE TABLE `lobby_members` (
   `user_id` int NOT NULL,
   `status` varchar(52) NOT NULL DEFAULT 'member'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `lobby_members`
+--
+
+INSERT INTO `lobby_members` (`id`, `lobby_id`, `user_id`, `status`) VALUES
+(4, 4, 2, 'creator');
 
 -- --------------------------------------------------------
 
@@ -349,7 +371,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`) VALUES
 (1, 'sulfide', '6f1f3d80cbb51102cf626135afbae1aa', 'Миша', 'bb491694003b1b9d760a2c1131f9cb46'),
-(2, 'vasya', 'fcb03559c0317682f5d65a88aca50012', 'Вася', '18685462b2f563fca81b1b7011d83a6a'),
+(2, 'vasya', 'fcb03559c0317682f5d65a88aca50012', 'Вася', '072b9740860ef986d48a58333ccaebdf'),
 (3, 'petya', 'd7ba312b012b3374ef53eb2e3f9830a5', 'Петя', 'cc79d5f20b41d4728ae7eb7157cde2a0'),
 (4, 'mclovin228', '66413a3ea6b587bb58fe85773307c76f', 'chris', '90b39a085fd2310c8aae4aa2d7675184'),
 (5, 'admin', 'bbad8d72c1fac1d081727158807a8798', 'Админчик', 'd3ed3676021d70ecdfefa203462ccced'),
@@ -518,14 +540,13 @@ ALTER TABLE `exchanger_lot_items`
 -- AUTO_INCREMENT для таблицы `game`
 --
 ALTER TABLE `game`
-
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `gamers`
 --
 ALTER TABLE `gamers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `game_items`
@@ -543,8 +564,7 @@ ALTER TABLE `game_mobs`
 -- AUTO_INCREMENT для таблицы `game_objects`
 --
 ALTER TABLE `game_objects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `global_settings`
@@ -568,53 +588,25 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT для таблицы `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby`
 --
 ALTER TABLE `lobby`
-
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `lobby_members`
 --
 ALTER TABLE `lobby_members`
-
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT для таблицы `receiver`
---
-ALTER TABLE `receiver`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `exchanger_lot_items`
---
-ALTER TABLE `exchanger_lot_items`
-  ADD CONSTRAINT `exchanger_lot_items_ibfk_1` FOREIGN KEY (`lot_id`) REFERENCES `exchanger_lots` (`id`),
-  ADD CONSTRAINT `exchanger_lot_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
