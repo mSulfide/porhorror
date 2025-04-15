@@ -137,8 +137,8 @@ class Server {
         return !!result;
     }
 
-    changeInventory(itemId: number, toEquip: boolean): void {
-        this.request('changeInventory', { itemId: `${itemId}`, toEquip: `${toEquip}`});
+    async changeInventory(itemId: number, toEquip: boolean): Promise<void> {
+        await this.request('changeInventory', { itemId: `${itemId}`, toEquip: `${toEquip}`});
     }
 
     startGame(): void {

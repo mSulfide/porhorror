@@ -32,6 +32,7 @@ export type TMessagesResponse = {
 export type TItem = {
     id: number;
     name: string;
+    image: ESprite;
     status: 'pocket' | 'inventory';
 };
 
