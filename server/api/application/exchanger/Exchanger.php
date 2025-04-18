@@ -44,7 +44,7 @@ class Exchanger {
         $this->db->deleteLot($lotId);
         $this->db->updateSlotState($lot->sell_inv_id, 'inventory');
         $this->db->updateExchangerHash(md5(rand()));
-        
+        $this->db->updateInventoryHash(md5(rand()), $userId);
     }
     
     public function createLot($sellerId, $sellItemId, $needItemId) {
@@ -72,6 +72,7 @@ class Exchanger {
         if ($result) {
             $this->db->updateSlotState($sellItemId, 'exchange');
             $this->db->updateExchangerHash(md5(rand()));
+            $this->db->updateInventoryHash(md5(rand()), $sellerId);
             return [true];
         }
         return [false];
@@ -162,7 +163,8 @@ class Exchanger {
         $this->db->updateLotStatus($lotId, 'accepted');
         $this->db->updateSlotState($lot->sell_inv_id, 'inventory');
         $this->db->updateExchangerHash(md5(rand()));
-    
+        $this->db->updateInventoryHash(md5(rand()), $myUserId);
+
         return true;
     }
 

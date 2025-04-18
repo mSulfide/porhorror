@@ -30,6 +30,7 @@ function result($params) {
             // инвентарь
             case 'getInventory': return $app->getInventory($params);
             case 'changeInventory': return $app->changeInventory($params);
+            case 'updateInventory': return $app->updateInventory($params);
             // case 'equipItem': return $app->equipItem($params);
             // case 'takeOffItem': return $app->takeOffItem($params);
             // лобби

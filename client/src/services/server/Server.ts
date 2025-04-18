@@ -2,10 +2,9 @@ import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
 import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse, 
-    TUpdateExchangerResponse,
-    TItem,  } from "./types";
+    TUpdateExchangerResponse, TItem, TUpdateInventoryResponse} from "./types";
 
-const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, EXCHANGER_TIMESTAMP, HOST } = CONFIG;
+const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, EXCHANGER_TIMESTAMP, HOST, INVENTORY_TIMESTAMP } = CONFIG;
 
 class Server {
     HOST = HOST;
@@ -14,6 +13,7 @@ class Server {
     lobbyInterval: NodeJS.Timer | null = null;
     gameInterval: NodeJS.Timer | null = null;
     exchangerInterval: NodeJS.Timer | null = null;
+    inventoryInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
@@ -301,6 +301,32 @@ class Server {
     async exchange(lotId: number): Promise<boolean | null> {
         const result = await this.request<boolean>('exchange', {"lotId": `${lotId}`})
         return result;
+    }
+
+    async updateInventory(): Promise<TUpdateInventoryResponse | null> {
+        const hash = this.store.getInventoryHash();
+        const result = await this.request<TUpdateInventoryResponse>('updateInventory', { hash });
+        if (result) {
+            return result;
+        }
+        return null;
+    }
+
+    startInventoryUpdate(cb: (result: TUpdateInventoryResponse) => void): void {
+        this.inventoryInterval = setInterval(async () => {
+            const result = await this.updateInventory();
+            if (result) {
+                this.store.setInventoryHash(result.hash);
+                cb(result);
+            }
+        }, INVENTORY_TIMESTAMP);
+    }
+
+    stopInventoryUpdate(): void {
+        if (this.inventoryInterval) {
+            clearInterval(this.inventoryInterval);
+            this.inventoryInterval = null;
+        }
     }
 
 }

@@ -110,3 +110,8 @@ export enum EItemAction{
     unequip = "unequip",
     exchange = "exchange"
 }
+
+export type TUpdateInventoryResponse = {
+    slots: TItem[];
+    hash: string;
+}

@@ -519,4 +519,12 @@ class DB {
         return $this->query("SELECT * FROM users WHERE id=?", [$userId]);
     }
 
+    public function getInventoryHash($userId) {
+        return $this->query("SELECT inventory_hash FROM users WHERE id=?", [$userId]);
+    }
+
+    public function updateInventoryHash($hash, $userId) {
+        return $this->query("UPDATE users SET inventory_hash=? WHERE id=?", [$hash, $userId]);
+    }
+
 }

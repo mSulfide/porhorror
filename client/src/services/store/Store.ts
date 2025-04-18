@@ -10,6 +10,7 @@ class Store {
     lobbyHash: string = 'empty_lobby_hash';
     gameHash: string = 'empty_game_hash';
     exchangerHash: string = 'empty_exchanger_hash';
+    inventoryHash: string = 'empty_inventory_hash';
     inventory: TItem[] = [];
     itemsList: TItem[] = [];
     responseTime: number = 0;
@@ -109,6 +110,14 @@ class Store {
 
     setExchangerHash(hash: string): void {
         this.exchangerHash = hash;
+    }
+
+    getInventoryHash(): string {
+        return this.inventoryHash;
+    }
+
+    setInventoryHash(hash: string): void {
+        this.inventoryHash = hash;
     }
 }
 

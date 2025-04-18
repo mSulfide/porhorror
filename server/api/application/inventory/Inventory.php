@@ -34,7 +34,7 @@ class Inventory {
     
         $this->db->updateSlotState($slotId, 'pocket');
         // $this->db->execute("UPDATE inventory SET status = ? WHERE id = ?", ['pocket', $slotId]);
-    
+        $this->db->updateInventoryHash(md5(rand()), $userId);
         return true; 
     }
 
@@ -43,6 +43,7 @@ class Inventory {
         if ($slot) {
             if ($slot->user_id === $userId) {
                 $this->db->updateSlotState($slot->id, 'inventory');
+                $this->db->updateInventoryHash(md5(rand()), $userId);
                 return true; 
             }
             return ['error' => $slot->user_id]; 
@@ -77,4 +78,20 @@ class Inventory {
         $this->db->updateSlotState($slotId, $newState);
     }
     
+    public function updateInventory($userId, $hash) {
+        $currentHash = $this->db->getInventoryHash($userId);
+        if ($hash === $currentHash) {
+            return [
+                'hash' => $hash
+            ];
+        }
+    
+        $inventory = $this->db->getInventory($userId);
+
+        return [
+            'slots' => $inventory,
+            'hash' => $currentHash
+        ];
+    }
+
 }

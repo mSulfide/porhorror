@@ -357,4 +357,12 @@ class Application {
         return $this->exchanger->exchange($user->id, $params['lotId']);
     }
 
+    public function updateInventory($params) {
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->inventory->updateInventory($user->id, $params['hash']);
+    }
+
 }
