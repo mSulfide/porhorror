@@ -32,7 +32,7 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
         <div className="wrapper-menu">
             <div className="mainMenuContainer">
                 <div className="column-1">
-                    <h1 className="main-menu-title">Horror</h1>
+                    <h1 className="main-menu-title">PorHorror</h1>
                     <Inventory />
                     
                     <div className="section chat">
