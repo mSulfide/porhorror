@@ -6,12 +6,22 @@ const TOKEN = 'token';
 class Store {
     user: TUser | null = null;
     messages: TMessages = [];
-    chatHash: string = 'empty chat hash';
-    lobbyHash: string = 'empty lobby hash';
-    gameHash: string = 'empty game hash';
+    chatHash: string = 'empty_chat_hash';
+    lobbyHash: string = 'empty_lobby_hash';
+    gameHash: string = 'empty_game_hash';
+    exchangerHash: string = 'empty_exchanger_hash';
     inventory: TItem[] = [];
+    itemsList: TItem[] = [];
     responseTime: number = 0;
     resources: Resources = new Resources();
+
+    setItemsList(ItemsList: TItem[]) {
+        this.itemsList = ItemsList;
+    }
+
+    getItemsList() {
+        return this.itemsList;
+    }
 
     loadResources(onload: () => void) {
         this.resources.load(onload);
@@ -91,6 +101,14 @@ class Store {
 
     getInventory(): TItem[] {
         return this.inventory;
+    }
+
+    getExchangerHash(): string {
+        return this.exchangerHash;
+    }
+
+    setExchangerHash(hash: string): void {
+        this.exchangerHash = hash;
     }
 }
 

@@ -37,6 +37,8 @@ class Answer {
         '810' => 'gamer is no exists',
         '820' => 'the slot was not found',
         '821' => 'the slot does not belong to the user',
+        '822' => 'the slot already are exchanging',
+        '823' => 'the incorrect type of item',
         '830' => 'exceeded the limit of slots',
         '905' => 'gamer is already connected to game',
         '906' => 'the gamers hands are already full',

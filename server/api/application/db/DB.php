@@ -334,10 +334,10 @@ class DB {
     }
     
     public function deleteLot($lotId) {
-        $query = "DELETE FROM lots WHERE id = :lotId";
+        $query = "DELETE FROM exchanger_lots WHERE id = :lotId";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':lotId', $lotId, PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->execute();   
     }
     
     public function setPosition($objectId, $position) {
@@ -434,8 +434,8 @@ class DB {
         , [$gameId]);
     }
 
-    public function createLot($userId) {
-        $this->execute("INSERT INTO exchanger_lots (user_id, status) VALUES (?, 'active')", [$userId]);
+    public function createLot($sellerId, $sellItemId, $needItemId) {
+        $this->execute("INSERT INTO exchanger_lots (seller_id, sell_item_id, need_item_id) VALUES (?, ?, ?)", [$sellerId, $sellItemId, $needItemId]);
         return $this->pdo->lastInsertId();
     }
     
@@ -459,7 +459,7 @@ class DB {
     public function addItemToInventory($userId, $itemId) {
         $user = $this->getUserByToken($userId);
         if (!$user) {
-            return ['error' => 825]; 
+            return ['error' => 825];
         }
         $this->execute("INSERT INTO inventory (user_id, item_id, status) VALUES (?, ?, ?)", 
                        [$userId, $itemId, 'inventory']);
@@ -476,6 +476,37 @@ class DB {
     public function getUsedSlotsCount($userId) {
         return $this->query("SELECT COUNT(*) AS count FROM inventory WHERE user_id=? AND status='inventory'", [$userId])->count;
     }
+    
+    public function getExchangerHash() {
+        return $this->query("SELECT exchanger_hash AS answer FROM hashes WHERE id=1")->answer;
+    }
 
+    public function updateExchangerHash($hash) {
+        $this->execute("UPDATE hashes SET exchanger_hash=?", [$hash]);
+    }
+
+    public function getLots() {
+        return $this->queryAll("SELECT
+              el.id AS id,
+              s.id AS sellerId,
+              s.name AS sellerName,
+              si.id AS id1,
+              si.name AS n1,
+              si.image AS i1,
+              ni.id AS id2,
+              ni.name AS n2,
+              ni.image AS i2
+            FROM exchanger_lots el
+            JOIN users AS s ON el.seller_id = s.id
+            JOIN items AS si ON el.sell_item_id = si.id
+            JOIN items AS ni ON el.need_item_id = ni.id
+            WHERE el.status = ?;
+        ", ["active"]
+        );
+    }
+
+    public function getItemsList() {
+        return $this->queryAll("SELECT * FROM items");
+    }
 
 }

@@ -24,6 +24,9 @@ class Application {
     }
 
     private function checkParams($params, ...$keys) {
+        if (is_object($params)) {
+            $params = (array)$params;
+        }
         $user = null;
         foreach ($keys as $key) {
             switch ($key) {
@@ -279,12 +282,12 @@ class Application {
     }
 
     public function createLot($params) {
-        $user = $this->checkParams($params, 'token', 'itemsToGive', 'itemsToReceive');
+        $user = $this->checkParams($params, 'token', 'sellItemId', 'needItemId');
         if ($this->isError($user)) {
             return $user;
         }
     
-        return $this->exchanger->createLot($user->id, $params['itemsToGive'], $params['itemsToReceive']);
+        return $this->exchanger->createLot($user->id, $params['sellItemId'], $params['needItemId']);
     }
 
     public function removeItemFromLot($params) {
@@ -330,4 +333,29 @@ class Application {
     
         return $this->exchanger->addLotItem($user, $params['lotId'], $params['itemId'], $params['type']);
     }
+
+    public function updateExchanger($params) {
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->updateExchanger($params['hash']);
+    }
+
+    public function getItemsList($params) {
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->getItemsList();
+    }
+
+    public function exchange($params) {
+        $user = $this->checkParams($params, 'token', 'lotId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        // return $this->exchanger->exchange();
+    }
+
 }

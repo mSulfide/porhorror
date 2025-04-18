@@ -1,9 +1,11 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse, 
+    TUpdateExchangerResponse,
+    TItem,  } from "./types";
 
-const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
+const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, EXCHANGER_TIMESTAMP, HOST } = CONFIG;
 
 class Server {
     HOST = HOST;
@@ -11,6 +13,7 @@ class Server {
     chatInterval: NodeJS.Timer | null = null;
     lobbyInterval: NodeJS.Timer | null = null;
     gameInterval: NodeJS.Timer | null = null;
+    exchangerInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
@@ -226,12 +229,39 @@ class Server {
     }
 
     //обменник
-    createLot(): void {
-        this.request('createLot');
+
+    async updateExchanger(): Promise<TUpdateExchangerResponse | null> {
+        const hash = this.store.getExchangerHash();
+        const result = await this.request<TUpdateExchangerResponse>('updateExchanger', { hash});
+        if (result) {
+            return result;
+        }
+        return null;
+    }
+
+    startExchagerUpdate(cb: (result: TUpdateExchangerResponse) => void): void {
+        this.exchangerInterval = setInterval(async () => {
+            const result = await this.updateExchanger();
+            if (result) {
+                this.store.setExchangerHash(result.hash);
+                cb(result);
+            }
+        }, EXCHANGER_TIMESTAMP);
+    }
+
+    stopExchangerUpdate(): void {
+        if (this.exchangerInterval) {
+            clearInterval(this.exchangerInterval);
+            this.exchangerInterval = null;
+        }
+    }
+
+    createLot(sellItemId: number, needItemId: number): void {
+        const result = this.request('createLot', {"sellItemId": `${sellItemId}`, "needItemId": `${needItemId}`});
     }
     
-    deleteLot(): void {
-        this.request('deleteLot');
+    deleteLot(lotId: number): void {
+        this.request('deleteLot', {"lotId": `${lotId}`});
     }
     
     addLotItem(): void {
@@ -257,6 +287,16 @@ class Server {
     updateLots(): void {
         this.request('updateLots');
     }
+
+    async getItemsList(): Promise<TItem[]> {
+        const result = await this.request<TItem[]>('getItemsList');
+        if (result) {
+            this.store.setItemsList(result);
+            return result;
+        }
+        return [];
+    }
+
 }
 
 export default Server;
