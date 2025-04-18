@@ -47,7 +47,6 @@ const Item: React.FC<IItem> = (props) => {
             itemImage = '';
             break;
     }
-    console.log(item.image)
 
     return (
         <div key={item.id} className="item">

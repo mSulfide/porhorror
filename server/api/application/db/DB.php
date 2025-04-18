@@ -100,6 +100,7 @@ class DB {
         return $this->queryAll("SELECT
                 inv.id AS id,
                 inv.status AS status,
+                inv.item_id AS itemId,
                 i.name AS name,
                 i.image AS image,
                 i.boost_type AS boostType
@@ -435,7 +436,7 @@ class DB {
     }
 
     public function createLot($sellerId, $sellItemId, $needItemId) {
-        $this->execute("INSERT INTO exchanger_lots (seller_id, sell_item_id, need_item_id) VALUES (?, ?, ?)", [$sellerId, $sellItemId, $needItemId]);
+        $this->execute("INSERT INTO exchanger_lots (seller_id, sell_inv_id, need_item_id) VALUES (?, ?, ?)", [$sellerId, $sellItemId, $needItemId]);
         return $this->pdo->lastInsertId();
     }
     
@@ -490,7 +491,7 @@ class DB {
               el.id AS id,
               s.id AS sellerId,
               s.name AS sellerName,
-              si.id AS id1,
+              sii.id AS id1,
               si.name AS n1,
               si.image AS i1,
               ni.id AS id2,
@@ -498,7 +499,8 @@ class DB {
               ni.image AS i2
             FROM exchanger_lots el
             JOIN users AS s ON el.seller_id = s.id
-            JOIN items AS si ON el.sell_item_id = si.id
+            JOIN inventory AS sii ON el.sell_inv_id = sii.id
+            JOIN items AS si ON sii.item_id = si.id
             JOIN items AS ni ON el.need_item_id = ni.id
             WHERE el.status = ?;
         ", ["active"]
@@ -507,6 +509,14 @@ class DB {
 
     public function getItemsList() {
         return $this->queryAll("SELECT * FROM items");
+    }
+
+    public function changeItemOwner($invId, $userId) {
+        return $this->execute("UPDATE inventory SET user_id=? where id=?", [$userId, $invId]);
+    }
+
+    public function getUserById($userId) {
+        return $this->query("SELECT * FROM users WHERE id=?", [$userId]);
     }
 
 }

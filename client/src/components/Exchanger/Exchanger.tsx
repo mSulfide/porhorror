@@ -43,10 +43,12 @@ const Exchanger: React.FC = () => {
     });
 
     const itemList = store.getItemsList();
+    console.log(lots)
 
     const createLot = async () => {
         if (sellItem && needItem && user) {
             await server.createLot(sellItem.id, needItem.id);
+            console.log(needItem)
             setCreateLot(false);
             setSellItem(null);
             setNeedItem(null);
@@ -55,8 +57,16 @@ const Exchanger: React.FC = () => {
         }
     };
 
+    const cancelCreateLot = async () => {
+        setCreateLot(false);
+        setSellItem(null);
+        setNeedItem(null);
+        setChooseSellItem(false);
+        setChooseNeedItem(false);
+    };
+
     const exchange = async (lotId: number) => {
-        // await server.exchange(lot.id);
+        await server.exchange(lotId);
     };
 
     const deleteLot = (lotId: number) => {
@@ -77,7 +87,7 @@ const Exchanger: React.FC = () => {
             
             {isCreateLot && (
                 <div className="create_lot">
-                    <Button text="Отмена" onClick={() => setCreateLot(false)} />
+                    <Button text="Отмена" onClick={() => cancelCreateLot()} />
                     <div className="selected_items">
                         {sellItem && <Item item={sellItem} />}
                         --
@@ -88,7 +98,7 @@ const Exchanger: React.FC = () => {
                         <div className="choose_section">
                             <span>Выбери предмет для обмена</span>
                             {inventory?.map((item, index) => {
-                                if (isItemInInventory(item.id) && item.status != EItemStatus.exchange) {
+                                if (isItemInInventory(item.id) && item.status !== EItemStatus.exchange) {
                                     return (
                                         <div key={index} className="item_option">
                                             <Item item={item} />
@@ -127,7 +137,6 @@ const Exchanger: React.FC = () => {
 
             <div className="lots_section">
                 {lots?.map((lot, index) => {
-
                     return (
                         <div key={index} className="lot_card">
                             {lot.sellerId === user?.id && <Button text='удалить лот' onClick={() => deleteLot(lot.id)}/>}
@@ -139,7 +148,7 @@ const Exchanger: React.FC = () => {
                                 <span> обменять на </span>
                                 <Item item={lot.needItem} />
                             </div>
-                            {lot.sellerId != user?.id && <Button text='обменять' onClick={() => exchange(lot.id)}/>}
+                            {lot.sellerId !== user?.id && <Button text='Обменять' onClick={() => exchange(lot.id)}/>}
                         </div>
                     );
                 })}

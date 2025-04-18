@@ -278,16 +278,15 @@ class Application {
         if ($this->isError($user)) {
             return $user;
         }
-        return $this->exchanger->deleteLot($user, $params['lotId']);
+        return $this->exchanger->deleteLot($user->id, $params['lotId']);
     }
 
     public function createLot($params) {
-        $user = $this->checkParams($params, 'token', 'sellItemId', 'needItemId');
+        $user = $this->checkParams($params, 'token', 'sellInvId', 'needItemId');
         if ($this->isError($user)) {
             return $user;
         }
-    
-        return $this->exchanger->createLot($user->id, $params['sellItemId'], $params['needItemId']);
+        return $this->exchanger->createLot($user->id, $params['sellInvId'], $params['needItemId']);
     }
 
     public function removeItemFromLot($params) {
@@ -355,7 +354,7 @@ class Application {
         if ($this->isError($user)) {
             return $user;
         }
-        // return $this->exchanger->exchange();
+        return $this->exchanger->exchange($user->id, $params['lotId']);
     }
 
 }

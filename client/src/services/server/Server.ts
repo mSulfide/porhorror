@@ -256,8 +256,9 @@ class Server {
         }
     }
 
-    createLot(sellItemId: number, needItemId: number): void {
-        const result = this.request('createLot', {"sellItemId": `${sellItemId}`, "needItemId": `${needItemId}`});
+    createLot(sellInvId: number, needItemId: number): void {
+        console.log(sellInvId, needItemId);
+        const result = this.request('createLot', {"sellInvId": `${sellInvId}`, "needItemId": `${needItemId}`});
     }
     
     deleteLot(lotId: number): void {
@@ -295,6 +296,11 @@ class Server {
             return result;
         }
         return [];
+    }
+
+    async exchange(lotId: number): Promise<boolean | null> {
+        const result = await this.request<boolean>('exchange', {"lotId": `${lotId}`})
+        return result;
     }
 
 }

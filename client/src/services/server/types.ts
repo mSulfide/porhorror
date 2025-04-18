@@ -39,6 +39,7 @@ export enum EItemStatus {
 export type TItem = {
     id: number;
     name: string;
+    itemId: number;
     image: ESprite;
     status: EItemStatus;
 };

@@ -37,15 +37,14 @@ class Exchanger {
 
     public function deleteLot($userId, $lotId) {
         $lot = $this->db->getLotById($lotId);
-        if (!$lot) {
-            return ['error' => 807];
-        }
-        if ($lot->owner_id === $userId) return ['error' => 821];
+        if (!$lot) {return ['error' => 820];}
         
-        $result = $this->db->deleteLot($lotId);
-        if ($result) {
-            $this->db->updateSlotState($lot->sell_item_id, 'inventory');
-        }
+        if ($lot->owner_id === $userId) {return ['error' => 821];}
+
+        $this->db->deleteLot($lotId);
+        $this->db->updateSlotState($lot->sell_inv_id, 'inventory');
+        $this->db->updateExchangerHash(md5(rand()));
+        
     }
     
     public function createLot($sellerId, $sellItemId, $needItemId) {
@@ -59,15 +58,6 @@ class Exchanger {
             }
         }
         if (!$itemExists) return ["error" => 821];
-
-        // $itemExists = false;
-        // foreach ($inventory as $item) {
-        //     if ($item->item_id == $needItemId) {
-        //         $itemExists = true;
-        //         break;
-        //     }
-        // }
-        // if (!$itemExists) return ["error" => 823];
 
         $slot = $this->db->getSlotById($sellItemId);
         if (!$slot | $slot->user_id !== $sellerId) {
@@ -149,6 +139,31 @@ class Exchanger {
     public function getItemsList() {
 
         return $this->db->getItemsList();
+    }
+
+    public function exchange($myUserId, $lotId) {
+        $lot = $this->db->getLotById($lotId);
+        if (!$lot) { return ['error' => 807]; }
+        
+        $ownerId = $this->db->getUserById($lot->seller_id)->id;
+        $myInventory = $this->db->getInventory($myUserId);
+
+        $myItemId = -1;
+        foreach ($myInventory as $item) {
+            if ($item->itemId == $lot->need_item_id) {
+                $myItemId = $item->id;
+                break;
+            }
+        }
+        if ($myItemId < 0) return ["error" => $myItemId]; //823
+        
+        $this->db->changeItemOwner($lot->sell_inv_id, $myUserId);
+        $this->db->changeItemOwner($myItemId, $ownerId);
+        $this->db->updateLotStatus($lotId, 'accepted');
+        $this->db->updateSlotState($lot->sell_inv_id, 'inventory');
+        $this->db->updateExchangerHash(md5(rand()));
+    
+        return true;
     }
 
 }
