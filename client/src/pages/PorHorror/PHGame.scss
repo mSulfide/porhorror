@@ -163,3 +163,55 @@
         height: 60px;
       }
  }
+
+ .equipment-section {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 15px;
+  
+  .slot {
+    width: 100px;
+    height: 100px;
+    background-color: #eee;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s ease;
+    position: relative; 
+    padding: 5px;
+
+    &.filled {
+      border: 2px solid #bbb;
+      background-color: #fdfdfd;
+      
+      .item-icon {
+        width: 60px; 
+        height: 60px;
+        object-fit: contain;
+      }
+    }
+
+    &.empty {
+      opacity: 0.4;
+    }
+  }
+
+  .off_button {
+    padding: 2px 8px;
+    background-color: #222;
+    color: #e63946;
+    font-size: 14px;
+    font-family: 'Iceland';
+    border-radius: 8px;
+    border: 2px solid #e63946;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  
+    &:hover {
+      background-color: #333;
+    }
+  }
+}

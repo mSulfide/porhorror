@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ServerContext, StoreContext } from "../../App";
 import { IBasePage, PAGES } from "../PageManager";
 import { Button } from "../../components";
-import { TGameObject, TUpdateSceneResponse } from "../../services/server/types";
+import { TGameObject, TUpdateSceneResponse, TUpdateInventoryResponse, TItem, EItemStatus } from "../../services/server/types";
 import { CanvasDrawer, Renderer } from "../../game/drawer";
 import { Input, useKeyboard } from "../../game/input";
 import { Scene } from "../../game/scene";
@@ -10,13 +10,18 @@ import { zero } from "../../services/math";
 import useLoop from "./hooks/useLoop";
 import { useMap } from "./hooks/useMap";
 import Timer from "../../components/Timer/Timer";
+import Item from "../../components/Item/Item";
 import './PHGame.scss';
 
 const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     const user = store.getUser();
-    
+
+    const pocketItems = store.getInventory().filter(item => item.status === EItemStatus.pocket);
+    console.log(pocketItems)
+
+
     const backClickHandler = () => props.setPage(PAGES.MAIN_MENU);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -65,6 +70,8 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
             server.stopSceneUpdate();
             stopLoop();
         }
+
+        
     });
 
     return ( 
@@ -76,9 +83,20 @@ const PHGame: React.FC<IBasePage> = (props: IBasePage) => {
                     <div className="canvas-container"><canvas ref={canvasRef} width={800} height={600} /></div>
                     </div>
                     <div className="controls">
-                        <div className="progress-bar-container">
+                        {/* <div className="progress-bar-container">
                             <div className="progress-heading">progress bar</div>
+                        </div> */}
+                        <div className="equipment-section">
+                    {[...pocketItems, ...Array(3 - pocketItems.length).fill(null)].map((item, index) => (
+                        item ? (
+                            <div key={item.id} className="slot filled">
+                                <Item item={item}/>
                             </div>
+                        ) : (
+                            <div key={`empty-${index}`} className="slot empty"></div>
+                        )
+                    ))}
+                </div>
                             <div className="tasks-container">
                                 <div className="task-heading">tasks</div>
                                 </div>
