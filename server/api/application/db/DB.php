@@ -486,6 +486,16 @@ class DB {
         $this->execute("UPDATE hashes SET exchanger_hash=?", [$hash]);
     }
 
+    public function getLotTime($lotId) {
+        $result = $this->query("SELECT create_date FROM exchanger_lots WHERE id=?", [$lotId]);
+        
+        if (!$result || !isset($result->create_date)) {
+            throw new Exception("Лот не найден или дата не установлена");
+        }
+        
+        return new DateTime($result->create_date); // Преобразуем строку в DateTime
+    }
+
     public function getLots() {
         return $this->queryAll("SELECT
               el.id AS id,
@@ -496,7 +506,8 @@ class DB {
               si.image AS i1,
               ni.id AS id2,
               ni.name AS n2,
-              ni.image AS i2
+              ni.image AS i2,
+              el.create_date AS createTime
             FROM exchanger_lots el
             JOIN users AS s ON el.seller_id = s.id
             JOIN inventory AS sii ON el.sell_inv_id = sii.id

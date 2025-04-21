@@ -166,6 +166,7 @@ const Exchanger: React.FC = () => {
                         <span className="lot_owner">
                         {lot.sellerId === user?.id ? "Ваш лот" : `От ${lot.sellerName || 'пользователя'}`}
                         </span>
+                    <span>{lot.time}</span>
                         {lot.sellerId === user?.id && (
                         <button 
                             className="delete_button" 
@@ -208,8 +209,9 @@ const Exchanger: React.FC = () => {
                     )    
                 } else {
                     return (
-                        <div key={index} className="lot_card">
+                    <div key={index} className="lot_card">
                     <div className="lot_header">
+                        <span>{lot.time}</span>
                         <span className="lot_owner">
                         {lot.sellerId === user?.id ? "Ваш лот" : `От ${lot.sellerName || 'пользователя'}`}
                         </span>

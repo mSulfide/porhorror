@@ -118,7 +118,15 @@ class Exchanger {
         }
         $lots = $this->db->getLots();
 
+        
+
         foreach ($lots as &$lot) {
+            
+            $date1 = $this->db->getLotTime($lot->id);
+            $date2 = new DateTime();
+            $interval = $date2->diff($date1);
+            $totalSeconds = ($interval->days * 86400) + ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
+
             $lot->sellItem = [
                 'id' => $lot->id1,
                 'name' => $lot->n1,
@@ -129,6 +137,7 @@ class Exchanger {
                 'name' => $lot->n2,
                 'image' => $lot->i2
             ];
+            $lot->time = $totalSeconds;
         }
 
         return [

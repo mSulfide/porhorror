@@ -98,6 +98,8 @@ export type TLot = {
     sellerName: string;
     sellItem: Omit<TItem, 'status'>
     needItem: Omit<TItem, 'status'>
+    createTime: string;
+    time: number;
 }
 
 export type TUpdateExchangerResponse = {
