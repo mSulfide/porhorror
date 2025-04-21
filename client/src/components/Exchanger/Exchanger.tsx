@@ -39,8 +39,9 @@ const Exchanger: React.FC = () => {
             return () => {
                 server.stopExchangerUpdate();
             };
+            
         })();
-    });
+    }, [user, server, store]);
 
     const itemList = store.getItemsList();
 
@@ -157,52 +158,104 @@ const Exchanger: React.FC = () => {
             )}
 
             <div className="lots_section">
-            {lots?.map((lot, index) => (
-                <div key={index} className="lot_card">
-                <div className="lot_header">
-                    <span className="lot_owner">
-                    {lot.sellerId === user?.id ? "Ваш лот" : `От ${lot.sellerName || 'пользователя'}`}
-                    </span>
-                    {lot.sellerId === user?.id && (
-                    <button 
-                        className="delete_button" 
-                        onClick={() => deleteLot(lot.id)}
-                    >
-                        Удалить
-                    </button>
+            {lots?.map((lot, index) => {
+                if (user?.id === lot.sellerId) {
+                    return (
+                        <div key={index} className="lot_card">
+                    <div className="lot_header">
+                        <span className="lot_owner">
+                        {lot.sellerId === user?.id ? "Ваш лот" : `От ${lot.sellerName || 'пользователя'}`}
+                        </span>
+                        {lot.sellerId === user?.id && (
+                        <button 
+                            className="delete_button" 
+                            onClick={() => deleteLot(lot.id)}
+                        >
+                            Удалить
+                        </button>
+                        )}
+                    </div>
+                    
+                    <div className="lot_content">
+                        <div className="trade_item">
+                        <span className="item_label">Получаете:</span>
+                        <div className="item_container">
+                            <Item item={lot.sellItem} />
+                        </div>
+                        </div>
+                        
+                        <span className="trade_arrow">→</span>
+                        
+                        <div className="trade_item">
+                        <span className="item_label">Отдаете:</span>
+                        <div className="item_container">
+                            <Item item={lot.needItem} />
+                        </div>
+                        </div>
+                    </div>
+                    
+                    {lot.sellerId !== user?.id && (
+                        <div className="lot_footer">
+                        <button 
+                            className="exchange_button" 
+                            onClick={() => exchange(lot.id)}
+                        >
+                            Обменять
+                        </button>
+                        </div>
                     )}
-                </div>
-                
-                <div className="lot_content">
-                    <div className="trade_item">
-                    <span className="item_label">Отдаете:</span>
-                    <div className="item_container">
-                        <Item item={lot.sellItem} />
                     </div>
+                    )    
+                } else {
+                    return (
+                        <div key={index} className="lot_card">
+                    <div className="lot_header">
+                        <span className="lot_owner">
+                        {lot.sellerId === user?.id ? "Ваш лот" : `От ${lot.sellerName || 'пользователя'}`}
+                        </span>
+                        {lot.sellerId === user?.id && (
+                        <button 
+                            className="delete_button" 
+                            onClick={() => deleteLot(lot.id)}
+                        >
+                            Удалить
+                        </button>
+                        )}
                     </div>
                     
-                    <span className="trade_arrow">→</span>
+                    <div className="lot_content">
+                        
+                        <div className="trade_item">
+                        <span className="item_label">Отдаёте:</span>
+                        <div className="item_container">
+                            <Item item={lot.needItem} />
+                        </div>
+                        </div>
+                        <span className="trade_arrow">→</span>
+                        
+                        <div className="trade_item">
+                        <span className="item_label">Получаете:</span>
+                        <div className="item_container">
+                            <Item item={lot.sellItem} />
+                        </div>
+                        </div>
+                    </div>
                     
-                    <div className="trade_item">
-                    <span className="item_label">Получаете:</span>
-                    <div className="item_container">
-                        <Item item={lot.needItem} />
+                    {lot.sellerId !== user?.id && (
+                        <div className="lot_footer">
+                        <button 
+                            className="exchange_button" 
+                            onClick={() => exchange(lot.id)}
+                        >
+                            Обменять
+                        </button>
+                        </div>
+                    )}
                     </div>
-                    </div>
-                </div>
+                    )
+                }
                 
-                {lot.sellerId !== user?.id && (
-                    <div className="lot_footer">
-                    <button 
-                        className="exchange_button" 
-                        onClick={() => exchange(lot.id)}
-                    >
-                        Обменять
-                    </button>
-                    </div>
-                )}
-                </div>
-            ))}
+            } )}
             </div>
         </div>
     );
