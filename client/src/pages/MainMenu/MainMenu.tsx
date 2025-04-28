@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Button, Inventory, Lobby, } from '../../components';
+import { Button, Inventory, Lobby, Exchanger} from '../../components';
 import { IBasePage, PAGES } from '../PageManager';
 import { ServerContext, StoreContext } from '../../App';
-import './MainMenu.scss';
 import Chat from '../Chat/Chat';
 import { KeyObject } from 'crypto';
 
+import './MainMenu.scss';
 
 const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
     const server = useContext(ServerContext);
@@ -33,24 +33,10 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
             <div className="mainMenuContainer">
                 <div className="column-1">
                     <h1 className="main-menu-title">PorHorror</h1>
-                    <div className="section equipment">
-                        <div className="section-title">Equipment</div>
-                        <div className="combined-equipment-inventory">
-                            <div className="equipment-section">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-
-
-                            <div className="inventory">
-                                <div className="section-title">Inventory</div>
-                                <Inventory />
-                            </div>
-                        </div></div>
-
+                    <Inventory />
+                    
                     <div className="section chat">
-                        <Chat setPage={setPage} />
+                    <Chat setPage={setPage} />
 
                     </div>
                     <div className="exit">
@@ -72,6 +58,10 @@ const MainMenu: React.FC<IBasePage> = ({ setPage }) => {
                         <div className="lobby-inputs"> {/* Added container for inputs */}
 
                         </div>
+                    </div>
+                    <div className="section exchanger">
+                        <div className="section-title">Exchanger</div>
+                        <Exchanger/>
                     </div>
                 </div>
             </div>

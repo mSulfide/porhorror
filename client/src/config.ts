@@ -19,13 +19,15 @@ export type TWINDOW = {
 
 const CONFIG = {
     //dev
-    HOST: 'http://porhorror.local/api',
+    HOST: 'http://server/api',
     // UdSU
     //HOST: 'http://porhorror:81/api',
 
     CHAT_TIMESTAMP: 200, //ms
     LOBBY_LIST_TIMESTAMP: 300, //ms
     GAME_TIMESTAMP: 250, //ms
+    EXCHANGER_TIMESTAMP: 300, //ms
+    INVENTORY_TIMESTAMP: 400, //ms
 
     SPRITE_SIZE: 64, // размер спрайта в пикселях
     LINE_OF_SPRITES: 10, // количество спрайтов в карте спрайтов

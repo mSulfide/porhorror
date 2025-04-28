@@ -15,6 +15,7 @@ export type TUser = {
     id: number;
     token: string;
     name: string;
+    exchange_lot_id: number | null;
 }
 
 export type TMessage = {
@@ -29,10 +30,18 @@ export type TMessagesResponse = {
     hash: string;
 }
 
+export enum EItemStatus {
+    pocket = 'pocket',
+    inventory = 'inventory',
+    exchange = 'exchange'
+}
+
 export type TItem = {
     id: number;
     name: string;
-    status: 'pocket' | 'inventory';
+    itemId: number;
+    image: ESprite;
+    status: EItemStatus;
 };
 
 export type TInventory = {
@@ -80,5 +89,31 @@ export type TGameObject = {
 
 export type TUpdateSceneResponse = {
     scene: TGameObject[];
+    hash: string;
+}
+
+export type TLot = {
+    id: number;
+    sellerId: number;
+    sellerName: string;
+    sellItem: Omit<TItem, 'status'>
+    needItem: Omit<TItem, 'status'>
+    createTime: string;
+    time: number;
+}
+
+export type TUpdateExchangerResponse = {
+    lots: TLot[];
+    hash: string;
+}
+
+export enum EItemAction{
+    equip = "equip",
+    unequip = "unequip",
+    exchange = "exchange"
+}
+
+export type TUpdateInventoryResponse = {
+    slots: TItem[];
     hash: string;
 }

@@ -24,6 +24,9 @@ class Application {
     }
 
     private function checkParams($params, ...$keys) {
+        if (is_object($params)) {
+            $params = (array)$params;
+        }
         $user = null;
         foreach ($keys as $key) {
             switch ($key) {
@@ -110,23 +113,20 @@ class Application {
     }
 
     public function changeInventory($params) {
-        return ['error' => 103];
-    }
-    
-    public function equipItem($params) {
-        $user = $this->checkParams($params, 'token', 'slotId');
+        $user = $this->checkParams($params, 'token', 'itemId', 'toEquip');
         if ($this->isError($user)) {
             return $user;
         }
-        return $this->inventory->equipItem($user->id, $params['slotId']);
-    }
 
-    public function takeOffItem($params) {
-        $user = $this->checkParams($params, 'token', 'slotId');
-        if ($this->isError($user)) {
-            return $user;
+        $toEquip = $params['toEquip'];
+
+        if ($toEquip === "true") { 
+            return $this->inventory->equipItem($user->id, $params['itemId']);
         }
-        return $this->inventory->takeOffItem($user->id, $params['slotId']);
+        else if ($toEquip === "false") { 
+            return $this->inventory->takeOffItem($user->id, $params['itemId']);
+        }
+        return ['error' => 666]; 
     }
 
     //лобби
@@ -233,17 +233,13 @@ class Application {
     }
 
     //обменник
-    public function createLot($params) {
+    /*public function createLot($params) {
         return ['error' => 103];
-    }
+    }*/
 
-    public function deleteLot($params) {
-        return ['error' => 103];
-    }
+    
 
-    public function addLotItem($params) {
-        return ['error' => 103];
-    }
+
 
     public function removeLotItem($params) {
         return ['error' => 103];
@@ -276,4 +272,97 @@ class Application {
     public function updateLots($params) {
         return ['error' => 103];
     }
+
+    public function deleteLot($params) {
+        $user = $this->checkParams($params, 'token', 'lotId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->deleteLot($user->id, $params['lotId']);
+    }
+
+    public function createLot($params) {
+        $user = $this->checkParams($params, 'token', 'sellInvId', 'needItemId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->createLot($user->id, $params['sellInvId'], $params['needItemId']);
+    }
+
+    public function removeItemFromLot($params) {
+        $user = $this->checkParams($params, 'token', 'lotId', 'itemId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->exchanger->removeItemFromLot($user->id, $params['lotId'], $params['itemId']);
+    }
+    public function addItemToInventory($params) {
+        $user = $this->checkParams($params, 'token', 'itemId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->inventory->addItem($user->id, $params['itemId']);
+    }
+    
+    public function removeItemFromInventory($params) {
+        $user = $this->checkParams($params, 'token', 'slotId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->inventory->removeItem($params['slotId']);
+    }
+    
+    public function checkInventorySpace($params) {
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return ['hasFreeSpace' => $this->inventory->hasFreeSpace($user->id)];
+    }
+    
+    public function addLotItem($params) {
+        $user = $this->checkParams($params, 'token', 'lotId', 'itemId', 'type');
+        if ($this->isError($user)) {
+            return $user;
+        }
+    
+        return $this->exchanger->addLotItem($user, $params['lotId'], $params['itemId'], $params['type']);
+    }
+
+    public function updateExchanger($params) {
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->updateExchanger($params['hash']);
+    }
+
+    public function getItemsList($params) {
+        $user = $this->checkParams($params, 'token');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->getItemsList();
+    }
+
+    public function exchange($params) {
+        $user = $this->checkParams($params, 'token', 'lotId');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->exchanger->exchange($user->id, $params['lotId']);
+    }
+
+    public function updateInventory($params) {
+        $user = $this->checkParams($params, 'token', 'hash');
+        if ($this->isError($user)) {
+            return $user;
+        }
+        return $this->inventory->updateInventory($user->id, $params['hash']);
+    }
+
 }

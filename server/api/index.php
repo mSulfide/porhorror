@@ -22,16 +22,17 @@ function result($params) {
             case 'sendMessage': return $app->sendMessage($params);
             case 'getMessages': return $app->getMessages($params); // loop
             // math
-            case 'derivative': return $app->derivative($params);
-            case 'spline': return $app->spline($params);
-            case 'getCirclesIntersect': return $app->getCirclesIntersect($params);
-            case 'getIntersectionPoint': return $app->getIntersectionPoint($params);
+            // case 'derivative': return $app->derivative($params);
+            // case 'spline': return $app->spline($params);
+            // case 'getCirclesIntersect': return $app->getCirclesIntersect($params);
+            // case 'getIntersectionPoint': return $app->getIntersectionPoint($params);
 
             // инвентарь
             case 'getInventory': return $app->getInventory($params);
             case 'changeInventory': return $app->changeInventory($params);
-            case 'equipItem': return $app->equipItem($params);
-            case 'takeOffItem': return $app->takeOffItem($params);
+            case 'updateInventory': return $app->updateInventory($params);
+            // case 'equipItem': return $app->equipItem($params);
+            // case 'takeOffItem': return $app->takeOffItem($params);
             // лобби
             case 'updateGroups': return $app->updateGroups($params); // loop
             case 'createGroup': return $app->createGroup($params);
@@ -53,6 +54,8 @@ function result($params) {
             case 'check': return $app->check($params);
 
             //обменник
+            case 'getItemsList': return $app->getItemsList($params);
+            case 'updateExchanger': return $app->updateExchanger($params);
             case 'createLot': return $app->createLot($params);
             case 'deleteLot': return $app->deleteLot($params);
             case 'addLotItem': return $app->addLotItem($params);
@@ -60,7 +63,8 @@ function result($params) {
             case 'provideConsent': return $app->provideConsent($params);
             case 'removeConsent': return $app->removeConsent($params);
             case 'addLotComment': return $app->addLotComment($params);
-            case 'updateLots': return $app->updateLots($params);
+            case 'updateLots': return $app->updateLots(params: $params);
+            case 'exchange': return $app->exchange(params: $params);
 
             default: return ['error' => 102];
         }

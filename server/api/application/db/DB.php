@@ -100,6 +100,7 @@ class DB {
         return $this->queryAll("SELECT
                 inv.id AS id,
                 inv.status AS status,
+                inv.item_id AS itemId,
                 i.name AS name,
                 i.image AS image,
                 i.boost_type AS boostType
@@ -303,6 +304,10 @@ class DB {
     }
     
     public function provideConsent($userId) {
+        $user = $this->getUserByToken($userId);
+    if (!$user) {
+        return ['error' => 808]; 
+    }
         $this->execute("UPDATE exchange SET status='ready' WHERE user_id=?", [$userId]);
     }
     
@@ -324,7 +329,18 @@ class DB {
     public function getStatusExchange($userId) {
         return $this->query("SELECT status AS answer FROM exchange WHERE user_id=?", [$userId])->answer;
     }
-
+    
+    public function updateLotStatus($lotId, $status) {
+        $this->execute("UPDATE exchanger_lots SET status = ? WHERE id = ?", [$status, $lotId]);
+    }
+    
+    public function deleteLot($lotId) {
+        $query = "DELETE FROM exchanger_lots WHERE id = :lotId";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':lotId', $lotId, PDO::PARAM_INT);
+        $stmt->execute();   
+    }
+    
     public function setPosition($objectId, $position) {
         $this->execute("UPDATE game_objects SET x=?, y=? WHERE id=?", [$position->x, $position->y, $objectId]);
     }
@@ -418,4 +434,108 @@ class DB {
             WHERE l.game_id=?"
         , [$gameId]);
     }
+
+    public function createLot($sellerId, $sellItemId, $needItemId) {
+        $this->execute("INSERT INTO exchanger_lots (seller_id, sell_inv_id, need_item_id) VALUES (?, ?, ?)", [$sellerId, $sellItemId, $needItemId]);
+        return $this->pdo->lastInsertId();
+    }
+    
+    public function addLotItem($lotId, $itemId, $type) {
+        $this->execute("INSERT INTO exchanger_lot_items (lot_id, item_id, type) VALUES (?, ?, ?)", 
+                       [$lotId, $itemId, $type]);
+    }
+
+    public function setLotOwner($lotId, $userId) {
+        return $this->execute("UPDATE exchanger_lots SET user_id=? WHERE id=?", [$userId, $lotId]);
+    }
+
+    public function removeLotItem($lotId, $itemId) {
+        $lot = $this->getLotById($lotId);
+        if (!$lot) {
+            return ['error' => 813]; 
+        }
+        $this->execute("DELETE FROM exchanger_lot_items WHERE lot_id=? AND item_id=?", [$lotId, $itemId]);
+    }
+
+    public function addItemToInventory($userId, $itemId) {
+        $user = $this->getUserByToken($userId);
+        if (!$user) {
+            return ['error' => 825];
+        }
+        $this->execute("INSERT INTO inventory (user_id, item_id, status) VALUES (?, ?, ?)", 
+                       [$userId, $itemId, 'inventory']);
+    }
+
+    public function removeItemFromInventory($slotId) {
+        $slot = $this->getSlotById($slotId);
+        if (!$slot) {
+            return ['error' => 820]; 
+        }
+        $this->execute("DELETE FROM inventory WHERE id=?", [$slotId]);
+    }
+
+    public function getUsedSlotsCount($userId) {
+        return $this->query("SELECT COUNT(*) AS count FROM inventory WHERE user_id=? AND status='inventory'", [$userId])->count;
+    }
+    
+    public function getExchangerHash() {
+        return $this->query("SELECT exchanger_hash AS answer FROM hashes WHERE id=1")->answer;
+    }
+
+    public function updateExchangerHash($hash) {
+        $this->execute("UPDATE hashes SET exchanger_hash=?", [$hash]);
+    }
+
+    public function getLotTime($lotId) {
+        $result = $this->query("SELECT create_date FROM exchanger_lots WHERE id=?", [$lotId]);
+        
+        if (!$result || !isset($result->create_date)) {
+            throw new Exception("Лот не найден или дата не установлена");
+        }
+        
+        return new DateTime($result->create_date); // Преобразуем строку в DateTime
+    }
+
+    public function getLots() {
+        return $this->queryAll("SELECT
+              el.id AS id,
+              s.id AS sellerId,
+              s.name AS sellerName,
+              sii.id AS id1,
+              si.name AS n1,
+              si.image AS i1,
+              ni.id AS id2,
+              ni.name AS n2,
+              ni.image AS i2,
+              el.create_date AS createTime
+            FROM exchanger_lots el
+            JOIN users AS s ON el.seller_id = s.id
+            JOIN inventory AS sii ON el.sell_inv_id = sii.id
+            JOIN items AS si ON sii.item_id = si.id
+            JOIN items AS ni ON el.need_item_id = ni.id
+            WHERE el.status = ?;
+        ", ["active"]
+        );
+    }
+
+    public function getItemsList() {
+        return $this->queryAll("SELECT * FROM items");
+    }
+
+    public function changeItemOwner($invId, $userId) {
+        return $this->execute("UPDATE inventory SET user_id=? where id=?", [$userId, $invId]);
+    }
+
+    public function getUserById($userId) {
+        return $this->query("SELECT * FROM users WHERE id=?", [$userId]);
+    }
+
+    public function getInventoryHash($userId) {
+        return $this->query("SELECT inventory_hash FROM users WHERE id=?", [$userId]);
+    }
+
+    public function updateInventoryHash($hash, $userId) {
+        return $this->query("UPDATE users SET inventory_hash=? WHERE id=?", [$hash, $userId]);
+    }
+
 }

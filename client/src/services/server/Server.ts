@@ -1,9 +1,10 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse } from "./types";
+import { TAnswer, TError, TMessagesResponse, TUser, TInventory, TLobbiesResponse, TUpdateSceneResponse, 
+    TUpdateExchangerResponse, TItem, TUpdateInventoryResponse} from "./types";
 
-const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, HOST } = CONFIG;
+const { GAME_TIMESTAMP, LOBBY_LIST_TIMESTAMP, CHAT_TIMESTAMP, EXCHANGER_TIMESTAMP, HOST, INVENTORY_TIMESTAMP } = CONFIG;
 
 class Server {
     HOST = HOST;
@@ -11,6 +12,8 @@ class Server {
     chatInterval: NodeJS.Timer | null = null;
     lobbyInterval: NodeJS.Timer | null = null;
     gameInterval: NodeJS.Timer | null = null;
+    exchangerInterval: NodeJS.Timer | null = null;
+    inventoryInterval: NodeJS.Timer | null = null;
     showErrorCb: (error: TError) => void = () => { };
 
     constructor(store: Store) {
@@ -137,8 +140,8 @@ class Server {
         return !!result;
     }
 
-    changeInventory(itemId: number): void {
-        this.request('changeInventory', { itemId: `${itemId}` });
+    async changeInventory(itemId: number, toEquip: boolean): Promise<void> {
+        await this.request('changeInventory', { itemId: `${itemId}`, toEquip: `${toEquip}`});
     }
 
     startGame(): void {
@@ -226,12 +229,40 @@ class Server {
     }
 
     //обменник
-    createLot(): void {
-        this.request('createLot');
+
+    async updateExchanger(): Promise<TUpdateExchangerResponse | null> {
+        const hash = this.store.getExchangerHash();
+        const result = await this.request<TUpdateExchangerResponse>('updateExchanger', { hash});
+        if (result) {
+            return result;
+        }
+        return null;
+    }
+
+    startExchagerUpdate(cb: (result: TUpdateExchangerResponse) => void): void {
+        this.exchangerInterval = setInterval(async () => {
+            const result = await this.updateExchanger();
+            if (result) {
+                this.store.setExchangerHash(result.hash);
+                cb(result);
+            }
+        }, EXCHANGER_TIMESTAMP);
+    }
+
+    stopExchangerUpdate(): void {
+        if (this.exchangerInterval) {
+            clearInterval(this.exchangerInterval);
+            this.exchangerInterval = null;
+        }
+    }
+
+    createLot(sellInvId: number, needItemId: number): void {
+        console.log(sellInvId, needItemId);
+        const result = this.request('createLot', {"sellInvId": `${sellInvId}`, "needItemId": `${needItemId}`});
     }
     
-    deleteLot(): void {
-        this.request('deleteLot');
+    deleteLot(lotId: number): void {
+        this.request('deleteLot', {"lotId": `${lotId}`});
     }
     
     addLotItem(): void {
@@ -257,6 +288,47 @@ class Server {
     updateLots(): void {
         this.request('updateLots');
     }
+
+    async getItemsList(): Promise<TItem[]> {
+        const result = await this.request<TItem[]>('getItemsList');
+        if (result) {
+            this.store.setItemsList(result);
+            return result;
+        }
+        return [];
+    }
+
+    async exchange(lotId: number): Promise<boolean | null> {
+        const result = await this.request<boolean>('exchange', {"lotId": `${lotId}`})
+        return result;
+    }
+
+    async updateInventory(): Promise<TUpdateInventoryResponse | null> {
+        const hash = this.store.getInventoryHash();
+        const result = await this.request<TUpdateInventoryResponse>('updateInventory', { hash });
+        if (result) {
+            return result;
+        }
+        return null;
+    }
+
+    startInventoryUpdate(cb: (result: TUpdateInventoryResponse) => void): void {
+        this.inventoryInterval = setInterval(async () => {
+            const result = await this.updateInventory();
+            if (result) {
+                this.store.setInventoryHash(result.hash);
+                cb(result);
+            }
+        }, INVENTORY_TIMESTAMP);
+    }
+
+    stopInventoryUpdate(): void {
+        if (this.inventoryInterval) {
+            clearInterval(this.inventoryInterval);
+            this.inventoryInterval = null;
+        }
+    }
+
 }
 
 export default Server;

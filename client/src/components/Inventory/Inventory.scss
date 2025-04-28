@@ -1,6 +1,127 @@
-.button {
-align-items: center;
-justify-content: center;
-margin-top: 20px;
-margin-left: 10px;
+
+.section-title {
+  margin-bottom: 10px;
+  font-family: 'Iceland';
+  text-align: center;
+  font-size: clamp(1.2em, 2.5vw, 3em); 
+  color: #222;
+}
+
+.combined-equipment-inventory {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.equipment-section {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 15px;
+  
+  .slot {
+    width: 100px;
+    height: 100px;
+    background-color: #eee;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s ease;
+    position: relative; 
+    padding: 5px;
+
+    &.filled {
+      border: 2px solid #bbb;
+      background-color: #fdfdfd;
+      
+      .item-icon {
+        width: 60px; 
+        height: 60px;
+        object-fit: contain;
+      }
+    }
+
+    &.empty {
+      opacity: 0.4;
+    }
+  }
+
+  .off_button {
+    padding: 2px 8px;
+    background-color: #222;
+    color: #e63946;
+    font-size: 14px;
+    font-family: 'Iceland';
+    border-radius: 8px;
+    border: 2px solid #e63946;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  
+    &:hover {
+      background-color: #333;
+    }
+  }
+}
+
+.inventory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  > .section-title {
+    margin-bottom: 10px;
+  }
+
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 500px; 
+    padding: 10px;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      .item-icon {
+        width: 60px; 
+        height: 60px;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .item-button {
+    margin-top: 6px;
+    font-size: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    .on_button, .off_button {
+      background-color: #222;
+      color: #e63946;
+      padding: 4px 12px;
+      font-size: 14px;
+      font-family: 'Iceland';
+      border-radius: 8px;
+      border: 2px solid #e63946;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 80px; 
+      text-align: center;
+    
+      &:hover {
+        background-color: #333;
+      }
+    }
+    
+  }
 }
